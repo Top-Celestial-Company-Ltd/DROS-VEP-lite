@@ -133,7 +133,7 @@ Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, O
 
 ## 💎 Product Editions & Licensing
 
-| Feature / Capability | Community ($0 Free) | Hacker ($99/yr - 1k Free Promo) | Professional ($499/yr / Team) | Enterprise Swarm (Commercial) |
+| Feature / Capability | Community ($0 Free) | Hacker ($149/yr or $19/mo - 1k Free Promo) | Professional ($499/yr / Team) | Enterprise Swarm (Commercial) |
 | :--- | :--- | :--- | :--- | :--- |
 | **Target Audience** | Students & Researchers | Freelancers & Small AI Startups | Mid-sized AI Engineering Teams | Fortune 500, Banks, Government |
 | **Concurrent Roles** | **Max 2 Roles** | **Up to 5 Roles** | **Up to 25 Roles** | **Unlimited (500+ Swarm Production)** |
@@ -146,7 +146,7 @@ Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, O
 
 ## 🎁 Claim Your Free 1-Year Hacker License (🔥 First 1,000 Security Pioneers!)
 
-Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($99 Value)**:
+Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($149 Value)**:
 
 1. **Option 1 (Web Dashboard UI)**: Open `http://localhost:8080` and click **"Claim 1-Year Hacker License"**.
 2. **Option 2 (GitHub Discussions Bot)**: Post `conformance_report.json` to [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions).
