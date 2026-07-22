@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  enterprise-erp:
+    image: python:3.10-slim
+    container_name: enterprise-erp
+    volumes:
+      - ./enterprise:/app
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python mock_services.py"
+    ports:
+      - "8081:8081"
+    networks:
+      - vep-network
+
+  dros-guard:
+    image: python:3.10-slim
+    container_name: dros-guard
+    volumes:
+      - ./core:/app
+      - ./reports:/app/reports
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python dros_guard.py"
+    ports:
+      - "8082:8082"
+    environment:
+      - ERP_URL=http://enterprise-erp:8081
+    depends_on:
+      - enterprise-erp
+    networks:
+      - vep-network
+
+  autonomous-agent:
+    image: python:3.10-slim
+    container_name: autonomous-agent
+    volumes:
+      - ./agent:/app
+    working_dir: /app
+    environment:
+      - DROS_GUARD_URL=http://dros-guard:8082
+      - AGENT_ROLE=support-agent
+      - AGENT_PROMPT=List inventory.
+      - AGENT_SCENARIO_ID=unknown
+    command: sh -c "pip install -r requirements.txt && python agent.py"
+    depends_on:
+      - dros-guard
+    networks:
+      - vep-network
+
+  dashboard:
+    image: python:3.10-slim
+    container_name: vep-dashboard
+    volumes:
+      - ./dashboard:/app
+      - ./scenarios:/app/scenarios
+      - ./reports:/app/reports
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python control_center.py"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dros-guard
+    networks:
+      - vep-network
+
+networks:
+  vep-network:
+    name: vep-network
+    driver: bridge

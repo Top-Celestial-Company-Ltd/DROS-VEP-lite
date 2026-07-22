@@ -1,0 +1,13 @@
+# Adversarial Manifest Zoo 02: Wildcard Superuser Misconfiguration
+# Scenario: DevOps Agent assigned unconstrained wildcard permissions
+global_governance:
+  dros_guard_url: "http://dros-guard:8082"
+  pki_root_ca: "DROS-ROOT-CA-2026"
+  strict_mode: true
+
+agent_groups:
+  - group_id: "devops-swarm-unconstrained"
+    count: 5
+    role: "devops-agent"
+    granted_scope:
+      - "/*"  # VIOLATION: Unconstrained Wildcard Permission!

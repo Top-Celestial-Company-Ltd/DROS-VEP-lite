@@ -1,0 +1,17 @@
+{
+  "total_requests": 5000,
+  "concurrency": 50,
+  "total_duration_sec": 27.17,
+  "qps_throughput": 184.03,
+  "status_distribution": {
+    "403": 5000
+  },
+  "blocked_403_rate": "100.00%",
+  "latency_metrics_us": {
+    "avg_latency_us": 266686.09,
+    "min_latency_us": 83417.3,
+    "max_latency_us": 725729.1,
+    "p95_latency_us": 385473.3,
+    "p99_latency_us": 456593.9
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "execution_id": "exec_AS-004_1784729234",
+  "timestamp": "2026-07-22T14:07:14Z",
+  "scenario_id": "AS-004",
+  "agent_role": "support-agent",
+  "request_path": "/api/system/pip",
+  "policy_id": "DROS-POL-0021",
+  "rule_desc": "Role 'support-agent' prohibited from accessing '/api/system/pip'",
+  "decision": "deny",
+  "reason": "DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/system/pip'",
+  "evaluation_latency_ns": 21101,
+  "evaluation_latency_ms": 0.021101,
+  "sha256_hash": "sha256:dros_000000000000526d"
+}

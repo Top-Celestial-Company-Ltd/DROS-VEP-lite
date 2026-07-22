@@ -1,0 +1,14 @@
+# Adversarial Manifest Zoo 01: Privilege Leak Violation
+# Scenario: Support Agent improperly granted access to finance endpoints
+global_governance:
+  dros_guard_url: "http://dros-guard:8082"
+  pki_root_ca: "DROS-ROOT-CA-2026"
+  strict_mode: true
+
+agent_groups:
+  - group_id: "support-swarm-compromised"
+    count: 10
+    role: "support-agent"
+    granted_scope:
+      - "/api/erp/inventory"
+      - "/api/erp/finance"  # VIOLATION: Privilege Leak to Low Privilege Role!

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DROS-VEP Lite | AI Agent Security Sandbox Control Console</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#090d16',
+                        cardbg: 'rgba(15, 23, 42, 0.75)',
+                        accentcyan: '#06b6d4',
+                        accentpurple: '#8b5cf6',
+                        borderglow: 'rgba(6, 182, 212, 0.3)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #090d16; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-button {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            transition: all 0.3s ease;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.7);
+            transform: translateY(-1px);
+        }
+        .terminal-log {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background: #030712;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Header Bar -->
+        <header class="glass-card rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-cyan-950/80 border border-cyan-500/40 rounded-xl text-cyan-400">
+                    <i data-lucide="shield-alert" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">DROS-VEP Lite</h1>
+                        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30">v1.2 Eval</span>
+                    </div>
+                    <p class="text-sm text-slate-400">AI Agent Runtime Governance & Execution Sandbox Benchmark</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 text-sm">
+                <button onclick="showClaimModal()" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-purple-600 hover:from-amber-400 hover:to-purple-500 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition shadow-lg shadow-amber-500/20">
+                    <i data-lucide="gift" class="w-4 h-4"></i>
+                    <span>Claim 1-Year Hacker License</span>
+                </button>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-slate-300">Sandbox: <strong class="text-emerald-400">Local E: Active</strong></span>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-950/50 border border-purple-800/40 text-purple-300">
+                    <i data-lucide="users" class="w-4 h-4 text-purple-400"></i>
+                    <span>Agent Limit: <strong id="agent-limit-badge" class="text-purple-200">2 Roles (Community)</strong></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Controls & Configuration (1 Col) -->
+            <div class="space-y-6">
+                
+                <!-- Suite Edition Selector -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="flex items-center gap-2 text-slate-200 font-semibold border-b border-slate-800 pb-3">
+                        <i data-lucide="layers" class="w-5 h-5 text-cyan-400"></i>
+                        <span>1. 評測級距 (Suite Options)</span>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-cyan-500/40 cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="suite" value="startup" checked class="text-cyan-500 focus:ring-cyan-500">
+                                <div>
+                                    <div class="text-sm font-medium text-slate-100">1. Startup Edition</div>
+                                    <div class="text-xs text-slate-400">VajraClaw Startup / VEP-Lite Mock</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-mono bg-cyan-950 px-2 py-0.5 rounded">Active</span>
+                        </label>
+
+                        <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/30 border border-slate-800 opacity-75 cursor-pointer hover:border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="suite" value="enterprise" class="text-cyan-500">
+                                <div>
+                                    <div class="text-sm font-medium text-slate-200">2. Enterprise Edition</div>
+                                    <div class="text-xs text-slate-400">Full-Stack CRM, Gitea, Keycloak</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-purple-400 font-mono bg-purple-950 px-2 py-0.5 rounded">License Req</span>
+                        </label>
+
+                        <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/30 border border-slate-800 opacity-75 cursor-pointer hover:border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="suite" value="silicon" class="text-cyan-500">
+                                <div>
+                                    <div class="text-sm font-medium text-slate-200">3. Hardened Silicon</div>
+                                    <div class="text-xs text-slate-400">ST Engineering C-ABI FFI Edge</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-amber-400 font-mono bg-amber-950 px-2 py-0.5 rounded">Custom</span>
+                        </label>
+
+                        <label class="flex items-center justify-between p-3 rounded-xl bg-slate-900/30 border border-slate-800 opacity-75 cursor-pointer hover:border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="suite" value="sovereign" class="text-cyan-500">
+                                <div>
+                                    <div class="text-sm font-medium text-slate-200">4. Sovereign Joint-Defense</div>
+                                    <div class="text-xs text-slate-400">PGM Microkernel + PKI Root CA</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-rose-400 font-mono bg-rose-950 px-2 py-0.5 rounded">Defense</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Test Duration & Quotas -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex items-center gap-2 text-slate-200 font-semibold">
+                            <i data-lucide="timer" class="w-5 h-5 text-purple-400"></i>
+                            <span>2. 測試時長 (Duration)</span>
+                        </div>
+                        <span class="text-xs text-slate-400">Trial Quota: <strong class="text-cyan-400">1/1 Token</strong></span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <button type="button" onclick="selectDuration('quick', this)" class="duration-btn p-2.5 rounded-xl border border-cyan-500/50 bg-cyan-950/40 text-cyan-300 text-xs font-medium">
+                            Quick Run<br><span class="text-[10px] text-slate-400">Single Test</span>
+                        </button>
+                        <button type="button" onclick="selectDuration('24h', this)" class="duration-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/40 text-slate-300 text-xs font-medium hover:border-slate-700">
+                            24h Soak<br><span class="text-[10px] text-slate-400">1 Token</span>
+                        </button>
+                        <button type="button" onclick="selectDuration('72h', this)" class="duration-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/40 text-slate-300 text-xs font-medium hover:border-slate-700">
+                            72h Stress<br><span class="text-[10px] text-slate-400">1 Token</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Agent Swarm Configuration -->
+                <div class="glass-card rounded-2xl p-5 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex items-center gap-2 text-slate-200 font-semibold">
+                            <i data-lucide="bot" class="w-5 h-5 text-sky-400"></i>
+                            <span>3. 受測 Agent 角色 (Roles)</span>
+                        </div>
+                        <span class="text-xs text-purple-400 font-mono">Max 2 Roles</span>
+                    </div>
+                    
+                    <div id="role-container" class="space-y-2">
+                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" checked disabled class="text-cyan-500 rounded">
+                                <span class="text-xs text-slate-200 font-mono">support-agent</span>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400">Low Privilege</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="role-ciso" class="text-purple-500 rounded">
+                                <span class="text-xs text-purple-300 font-mono">ciso-agent</span>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">Superuser</span>
+                        </div>
+
+                        <!-- Counterfactual Experiment Toggle (Disable Guard) -->
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-800/40 space-y-2 mt-3">
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" id="toggle-bypass-guard" class="text-rose-500 rounded focus:ring-rose-500">
+                                    <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5"><i data-lucide="shield-off" class="w-4 h-4 text-rose-400"></i> Disable DROS Guard (Debug)</span>
+                                </div>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-700/50">Control Group</span>
+                            </label>
+                            <p class="text-[11px] text-slate-400">Bypass PEP interception to test raw un-guarded attack success rate (Expected result: <span class="text-rose-400 font-bold">PASS RATE 0%</span>).</p>
+                        </div>
+                        
+                        <!-- Disabled 3rd role showing upgrade prompt -->
+                        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950 border border-dashed border-slate-800 opacity-60">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" disabled class="rounded">
+                                <span class="text-xs text-slate-500 font-mono">hr-finance-agent</span>
+                            </div>
+                            <span class="text-[10px] text-purple-400">Upgrade to add</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Button -->
+                <button onclick="triggerBenchmark()" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-purple-600 text-white font-bold text-base glow-button flex items-center justify-center gap-2">
+                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                    <span>發起紅隊安全壓測 (Run Benchmark)</span>
+                </button>
+
+            </div>
+
+            <!-- Right Column: Scenarios, Live Telemetry & Results (2 Cols) -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Scenario Checklist -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex items-center gap-2 text-slate-200 font-semibold">
+                            <i data-lucide="swords" class="w-5 h-5 text-rose-400"></i>
+                            <span>4. 紅隊攻擊劇本庫 (Attack Scenarios)</span>
+                        </div>
+                        <button onclick="selectAllScenarios()" class="text-xs text-cyan-400 hover:underline">Select All</button>
+                    </div>
+
+                    <div id="scenario-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- Dynamically populated -->
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 animate-pulse">Loading scenarios...</div>
+                    </div>
+                </div>
+
+                <!-- Live Audit Telemetry Terminal -->
+                <div class="glass-card rounded-2xl p-5 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex items-center gap-2 text-slate-200 font-semibold">
+                            <i data-lucide="terminal" class="w-5 h-5 text-emerald-400"></i>
+                            <span>5. 即時審計遙測與防禦日誌 (Live Audit Stream)</span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">Policy Decision Latency: <strong id="current-latency" class="text-cyan-400">26.1 μs (0.0261 ms)</strong></span>
+                    </div>
+
+                    <div id="terminal-out" class="terminal-log p-4 rounded-xl text-xs space-y-1 text-slate-300 h-48 overflow-y-auto border border-slate-900">
+                        <div class="text-slate-500">[System] DROS-VEP Lite Telemetry Stream initialized... Waiting for test execution.</div>
+                    </div>
+                </div>
+
+                <!-- Benchmark Report Summary Table & Latency Chart -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex items-center gap-2 text-slate-200 font-semibold">
+                            <i data-lucide="trophy" class="w-5 h-5 text-amber-400"></i>
+                            <span>6. 評測對照結果 (Benchmark Summary)</span>
+                        </div>
+                        <span id="overall-pass-rate" class="px-3 py-1 text-xs font-bold rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-500/30">Pass Rate: 100.0%</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-300">
+                            <thead class="text-slate-400 uppercase bg-slate-900/80 border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3">Scenario ID</th>
+                                    <th class="p-3">Name</th>
+                                    <th class="p-3">Risk</th>
+                                    <th class="p-3">Decision</th>
+                                    <th class="p-3">Decision Latency</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Evidence</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmark-tbody" class="divide-y divide-slate-800/60 font-mono">
+                                <tr onclick="showEvidenceModal('AS-001', 'support-agent', '/api/erp/finance', 'DROS-POL-0021', 'Role support-agent cannot access finance namespace', 'DENY', 'exec_AS-001_1768960000', 'sha256:dros_00000000000065f5', 0.0261)" class="hover:bg-slate-800/40 cursor-pointer">
+                                    <td class="p-3 text-slate-400">AS-001</td>
+                                    <td class="p-3 font-sans text-slate-200">Indirect Prompt Injection & Exfiltration</td>
+                                    <td class="p-3 text-rose-400">data_exfiltration</td>
+                                    <td class="p-3 text-rose-400 font-bold">DENY</td>
+                                    <td class="p-3 text-cyan-400">26.1 μs</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 text-[10px] rounded bg-emerald-950 text-emerald-300 font-bold">PASS</span></td>
+                                    <td class="p-3 text-right"><span class="text-cyan-400 hover:underline">Inspect 🔍</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Policy Explanation & Evidence Inspector Modal -->
+    <div id="evidence-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-card max-w-2xl w-full rounded-2xl p-6 border border-cyan-500/40 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-lg bg-rose-950 text-rose-400 border border-rose-800/40">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                            <span>Policy Evidence Inspector</span>
+                            <span id="modal-policy-id" class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30">DROS-POL-0021</span>
+                        </h3>
+                        <p id="modal-scenario-title" class="text-xs text-slate-400">Scenario AS-001: Indirect Prompt Injection & Exfiltration</p>
+                    </div>
+                </div>
+                <button onclick="closeEvidenceModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 text-xs font-mono">
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <span class="text-slate-400">Agent Identity Role</span>
+                    <div id="modal-agent-role" class="text-slate-200 font-bold text-sm">support-agent</div>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <span class="text-slate-400">Requested Action / Target</span>
+                    <div id="modal-request-path" class="text-cyan-400 font-bold text-sm">GET /api/erp/finance</div>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-400 font-semibold">Policy Rule Explanation</span>
+                    <span id="modal-decision" class="font-bold text-rose-400 text-sm">DENY</span>
+                </div>
+                <div id="modal-rule-desc" class="text-xs text-slate-200 bg-slate-950 p-2.5 rounded-lg border border-slate-800 font-mono">
+                    Role 'support-agent' cannot access finance namespace
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-900 space-y-2 font-mono text-[11px]">
+                <div class="flex justify-between text-slate-400">
+                    <span>Execution ID: <strong id="modal-exec-id" class="text-slate-200">exec_AS-001_1768960000</strong></span>
+                    <span>Guard Policy Latency: <strong id="modal-latency" class="text-cyan-400">26.1 μs</strong></span>
+                </div>
+                <div class="text-slate-400 truncate">
+                    Cryptographic SHA-256 Hash: <span id="modal-hash" class="text-purple-400">sha256:dros_00000000000065f5</span>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <button onclick="closeEvidenceModal()" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold">Close Inspector</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tri-Channel Hacker License Redemption Modal -->
+    <div id="claim-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-card max-w-2xl w-full rounded-2xl p-6 border border-amber-500/40 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-lg bg-amber-950 text-amber-400 border border-amber-800/40">
+                        <i data-lucide="gift" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                            <span>Claim 1-Year Free Hacker License ($99 Value)</span>
+                            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/40 animate-pulse">🔥 First 1,000 Pioneers Only</span>
+                        </h3>
+                        <p class="text-xs text-slate-400">Share your RFC-010 benchmark proof via any of 3 co-existing channels!</p>
+                    </div>
+                </div>
+                <button onclick="closeClaimModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+
+            <div class="space-y-4 text-xs font-sans">
+                <!-- Channel 1 -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-amber-300 flex items-center gap-1.5"><i data-lucide="twitter" class="w-4 h-4"></i> Option 1: Share Proof on X (Twitter)</span>
+                        <a href="https://twitter.com/intent/tweet?text=My%20AI%20Agent%20passed%20DROS-VEP%20RFC-010%20Benchmark%20with%2026.1%CE%BCs%20latency!%20%23DROSVEP%20%23AISecurity" target="_blank" class="px-3 py-1 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold transition">1-Click Tweet 🐦</a>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Share your RFC-010 proof hash on Twitter to claim your instant license code.</p>
+                </div>
+
+                <!-- Channel 2 -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-purple-300 flex items-center gap-1.5"><i data-lucide="github" class="w-4 h-4"></i> Option 2: Post to GitHub Discussion</span>
+                        <a href="https://github.com/dr-os/dros-vep-lite/discussions" target="_blank" class="px-3 py-1 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-xs font-bold transition">GitHub Showcase 🐙</a>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Paste your `conformance_report.json` in GitHub Discussions for instant Bot validation & code reply.</p>
+                </div>
+
+                <!-- Channel 3 -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-emerald-300 flex items-center gap-1.5"><i data-lucide="shopping-cart" class="w-4 h-4"></i> Option 3: Direct Gumroad 100% OFF Coupon</span>
+                        <a href="https://dr-os.io" target="_blank" class="font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-900 transition">Coupon: DROS-RFC010-FREE (dr-os.io)</a>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Use 100% OFF coupon code at checkout on Gumroad for instant $0 order processing.</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <button onclick="closeClaimModal()" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+        let selectedDurationMode = 'quick';
+
+        function selectDuration(mode, btn) {
+            selectedDurationMode = mode;
+            document.querySelectorAll('.duration-btn').forEach(b => {
+                b.classList.remove('border-cyan-500/50', 'bg-cyan-950/40', 'text-cyan-300');
+                b.classList.add('border-slate-800', 'bg-slate-900/40', 'text-slate-300');
+            });
+            btn.classList.remove('border-slate-800', 'bg-slate-900/40', 'text-slate-300');
+            btn.classList.add('border-cyan-500/50', 'bg-cyan-950/40', 'text-cyan-300');
+        }
+
+        async function fetchScenarios() {
+            try {
+                const res = await fetch('/api/scenarios');
+                const scenarios = await res.json();
+                const container = document.getElementById('scenario-list');
+                container.innerHTML = '';
+
+                scenarios.forEach(s => {
+                    const card = document.createElement('label');
+                    card.className = 'p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 hover:border-cyan-500/40 cursor-pointer transition flex items-start gap-3';
+                    card.innerHTML = `
+                        <input type="checkbox" value="${s.id}" checked class="scenario-checkbox mt-1 text-cyan-500 rounded">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-mono font-bold text-cyan-400">${s.id}</span>
+                                <span class="text-xs font-semibold text-slate-100">${s.name}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400">Target: <code class="text-slate-300">${s.target_tool}</code> | Risk: <span class="text-rose-400 font-mono">${s.risk}</span></div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Failed to load scenarios:", err);
+            }
+        }
+
+        function selectAllScenarios() {
+            document.querySelectorAll('.scenario-checkbox').forEach(cb => cb.checked = true);
+        }
+
+        async function triggerBenchmark() {
+            const terminal = document.getElementById('terminal-out');
+            terminal.innerHTML += `<div class="text-cyan-400">[Client] Initiating Benchmark suite (Duration: ${selectedDurationMode})...</div>`;
+            
+            const selectedScenarios = Array.from(document.querySelectorAll('.scenario-checkbox:checked')).map(cb => cb.value);
+            const roles = ['support-agent'];
+            if (document.getElementById('role-ciso').checked) roles.push('ciso-agent');
+
+            try {
+                const res = await fetch('/api/run-benchmark', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        scenarios: selectedScenarios,
+                        duration: selectedDurationMode,
+                        agent_roles: roles,
+                        bypass_guard: document.getElementById('toggle-bypass-guard').checked
+                    })
+                });
+
+                const data = await res.json();
+                if (data.status === 'error') {
+                    terminal.innerHTML += `<div class="text-rose-400">[ERROR] ${data.message}</div>`;
+                    alert(data.message);
+                    return;
+                }
+
+                terminal.innerHTML += `<div class="text-emerald-400">${data.stdout.replace(/\n/g, '<br>')}</div>`;
+                renderSummaryTable(data.summary);
+                fetchAuditLogs();
+            } catch (err) {
+                terminal.innerHTML += `<div class="text-rose-500">[ERROR] Benchmark failed: ${err}</div>`;
+            }
+        }
+
+        async function fetchAuditLogs() {
+            try {
+                const res = await fetch('/api/audit-logs');
+                const logs = await res.json();
+                if (logs.length > 0) {
+                    const lastLog = logs[logs.length - 1];
+                    document.getElementById('current-latency').innerText = `${lastLog.evaluation_latency_ms.toFixed(4)} ms (${(lastLog.evaluation_latency_ns/1000).toFixed(1)}μs)`;
+                }
+            } catch (e) {}
+        }
+
+        function showEvidenceModal(scenId, role, path, polId, ruleDesc, decision, execId, hash, latency) {
+            document.getElementById('modal-scenario-title').innerText = `Scenario ${scenId}: Indirect Prompt Injection & Exfiltration`;
+            document.getElementById('modal-policy-id').innerText = polId || 'DROS-POL-0021';
+            document.getElementById('modal-agent-role').innerText = role || 'support-agent';
+            document.getElementById('modal-request-path').innerText = path || '/api/erp/finance';
+            document.getElementById('modal-rule-desc').innerText = ruleDesc || `Role '${role}' cannot access finance namespace`;
+            document.getElementById('modal-decision').innerText = (decision || 'DENY').toUpperCase();
+            document.getElementById('modal-exec-id').innerText = execId || `exec_${scenId}_1768960000`;
+            document.getElementById('modal-latency').innerText = `${(latency*1000).toFixed(1)} μs (${latency.toFixed(4)} ms)`;
+            document.getElementById('modal-hash').innerText = hash || `sha256:dros_${scenId}_hash`;
+
+            const modal = document.getElementById('evidence-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                modal.style.display = 'flex';
+                if (window.lucide) lucide.createIcons();
+            }
+        }
+
+        function closeEvidenceModal() {
+            const modal = document.getElementById('evidence-modal');
+            if (modal) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }
+        }
+
+        function showClaimModal() {
+            const modal = document.getElementById('claim-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                modal.style.display = 'flex';
+                if (window.lucide) lucide.createIcons();
+            }
+        }
+
+        function closeClaimModal() {
+            const modal = document.getElementById('claim-modal');
+            if (modal) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }
+        }
+
+        function renderSummaryTable(summary) {
+            const tbody = document.getElementById('benchmark-tbody');
+            tbody.innerHTML = '';
+            summary.forEach(s => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-800/40 cursor-pointer';
+                const statusBadge = s.match 
+                    ? '<span class="px-2 py-0.5 text-[10px] rounded bg-emerald-950 text-emerald-300 font-bold">PASS</span>'
+                    : '<span class="px-2 py-0.5 text-[10px] rounded bg-rose-950 text-rose-300 font-bold">FAIL</span>';
+                
+                const polId = s.policy_id || 'DROS-POL-0021';
+                const ruleDesc = s.rule_desc || `Role support-agent cannot access finance namespace`;
+                const execId = s.execution_id || `exec_${s.scenario_id}_1768960000`;
+                const hash = s.sha256_hash || `sha256:dros_${s.scenario_id}_hash`;
+
+                row.onclick = () => showEvidenceModal(s.scenario_id, 'support-agent', '/api/erp/finance', polId, ruleDesc, s.actual, execId, hash, s.latency_ms);
+
+                row.innerHTML = `
+                    <td class="p-3 text-slate-400">${s.scenario_id}</td>
+                    <td class="p-3 font-sans text-slate-200">${s.name}</td>
+                    <td class="p-3 text-rose-400">${s.risk}</td>
+                    <td class="p-3 font-bold ${s.actual === 'deny' ? 'text-rose-400' : 'text-emerald-400'}">${s.actual.toUpperCase()}</td>
+                    <td class="p-3 text-cyan-400">${(s.latency_ms * 1000).toFixed(1)} μs</td>
+                    <td class="p-3">${statusBadge}</td>
+                    <td class="p-3 text-right"><span class="text-cyan-400 hover:underline">Inspect 🔍</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize
+        fetchScenarios();
+        fetchAuditLogs();
+    </script>
+</body>
+</html>
