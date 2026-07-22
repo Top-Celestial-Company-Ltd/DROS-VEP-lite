@@ -17,7 +17,7 @@
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Top-Celestial-Company-Ltd/dros-vep-lite.git
+git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
 cd dros-vep-lite
 
 # 2. Launch containerized enterprise sandbox
@@ -149,7 +149,7 @@ Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, O
 Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($99 Value)**:
 
 1. **Option 1 (Web Dashboard UI)**: Open `http://localhost:8080` and click **"Claim 1-Year Hacker License"**.
-2. **Option 2 (GitHub Discussions Bot)**: Post `conformance_report.json` to [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/dros-vep-lite/discussions).
+2. **Option 2 (GitHub Discussions Bot)**: Post `conformance_report.json` to [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions).
 3. **Option 3 (Gumroad $0 Checkout)**: Use 100% OFF Coupon `DROS-RFC010-FREE` at [dr-os.io](https://dr-os.io).
 
 ---
