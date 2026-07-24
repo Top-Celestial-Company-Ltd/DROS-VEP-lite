@@ -74,17 +74,17 @@ DROS **絕不取代** 傳統網安（WAF、EDR、SIEM）。相反地，它在現
 
 ---
 
-## 🎯 紅隊攻擊劇本庫 (ATS Matrix)
+## 🎯 紅隊攻擊劇本庫與 2026 實戰資安事件重現 (ATS Matrix)
 
-所有攻擊劇本皆對照 **MITRE ATLAS** 威脅分類標準：
+DROS-VEP Lite 直接實機重現並物理阻斷 2026 年指標性資安事件，全數對照 **MITRE ATLAS** 威脅分類標準：
 
-| 劇本 ID | 威脅名稱 (Threat Name) | 目標工具 | 風險類型 | MITRE ATLAS 映射 | 預期決策 |
+| 劇本 ID | 威脅名稱 (Threat Name) | 2026 實戰資安事件映射 | 目標工具 | MITRE ATLAS | DROS 預期決策 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ATS-001** | 間接指令劫持 (Indirect Injection) | `get_finance_records` | Data Exfiltration | **AML.T0051** (LLM Prompt Injection) | **DENY** |
-| **ATS-002** | 憑證與系統邊界外洩 | `read_env_secrets` | Credential Leak | **AML.T0052** (Credential Access) | **DENY** |
-| **ATS-003** | 未授權權限提升與部署 | `deploy_production` | Privilege Escalation | **AML.T0053** (Privilege Escalation) | **DENY** |
-| **ATS-004** | Agent 供應鏈篡改 | `pip_install_package` | Malicious Code Exec | **AML.T0054** (Supply Chain Compromise) | **DENY** |
-| **ATS-005** | 跨域 HR 資料非法存取 | `read_hr_database` | Boundary Violation | **AML.T0055** (Exfiltration via API) | **DENY** |
+| **ATS-001** | AI Agent 0-Day 沙箱逃逸 | **OpenAI GPT-5.6 Sol 逃逸入侵 Hugging Face** | `create_socket_connection` | **AML.T0051** | **DENY (<500ns 物理熔斷)** |
+| **ATS-002** | 勒索軟體全盤加密 | **尼得科超眾 Blackfield $2M ERP 勒索案** | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns 物理熔斷)** |
+| **ATS-003** | LLM 越獄與工具越權 | **Anthropic Fable 5 24小時遭越獄與 Prompt 外洩** | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs 剛性護盾)** |
+| **ATS-004** | AI 自主加密模型權重 | **JadePuffer 完全自主 PyTorch 模型勒索案** | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms 硬性切斷)** |
+| **ATS-005** | 瀏覽器誘騙 SSH 金鑰 | **BioShocking 遊戲模式騙走生產環境金鑰** | `read_ssh_keyfile` | **AML.T0055** | **DENY (物理層硬拒)** |
 
 ---
 

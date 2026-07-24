@@ -73,17 +73,17 @@ Traditional WAFs see a **100% legitimate user making a clean REST API call**. Th
 
 ---
 
-## 🎯 Agent Threat Scenarios (ATS Matrix)
+## 🎯 Agent Threat Scenarios (ATS Matrix & 2026 Real-World Incidents)
 
-All threat scenarios map directly to the **MITRE ATLAS** taxonomy:
+DROS-VEP Lite directly reproduces and neutralizes 2026's most notorious real-world AI incidents, mapped to **MITRE ATLAS**:
 
-| Scenario ID | Threat Scenario Name | Target Tool | Risk Profile | MITRE ATLAS Mapping | Expected Action |
+| Scenario ID | Threat Scenario Name | 2026 Incident Mapping | Target Tool | MITRE ATLAS | DROS Expected Action |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ATS-001** | Indirect Instruction Hijacking | `get_finance_records` | Data Exfiltration | **AML.T0051** (LLM Prompt Injection) | **DENY** |
-| **ATS-002** | Secret & Boundary Exfiltration | `read_env_secrets` | Credential Leak | **AML.T0052** (Credential Access) | **DENY** |
-| **ATS-003** | Unauthorized Privilege Escalation | `deploy_production` | Privilege Escalation | **AML.T0053** (Privilege Escalation) | **DENY** |
-| **ATS-004** | Agent Supply Chain Manipulation | `pip_install_package` | Malicious Code Exec | **AML.T0054** (Supply Chain Compromise) | **DENY** |
-| **ATS-005** | Cross-Domain Data Access | `read_hr_database` | Boundary Violation | **AML.T0055** (Exfiltration via API) | **DENY** |
+| **ATS-001** | AI Agent 0-Day Sandbox Escape | **OpenAI GPT-5.6 Sol -> Hugging Face Breach** | `create_socket_connection` | **AML.T0051** | **DENY (<500ns Panic)** |
+| **ATS-002** | Ransomware System Encryption | **Nidec Chaun-Choung Blackfield $2M ERP Ransomware** | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
+| **ATS-003** | LLM Jailbreak & Tool Exploitation | **Anthropic Fable 5 24-Hour Jailbreak & Prompt Leak** | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs Guard)** |
+| **ATS-004** | Autonomous LLM Weight Ransomware | **JadePuffer Autonomous PyTorch Model Ransomware** | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
+| **ATS-005** | Browser Social Engineering Leak | **BioShocking Trick AI to Surrender SSH Key** | `read_ssh_keyfile` | **AML.T0055** | **DENY (Physical Lock)** |
 
 ---
 
