@@ -120,6 +120,34 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ---
 
+## 🏆 全球懸賞 $40,000 美元！DROS 紅隊首破挑戰賽
+
+**你相信能有人在不到 500 奈秒內，物理熔斷失控 AI 的越權 Tool Call 嗎？**
+
+我們提供為期 **5 年免費** 的旗艦級授權 **`VajraClaw - Enterprise Air-Gapped License`**（當前早期價值：$7,990 USD/年，5 年總價值高達 **$39,950 美元 / 約台幣 131 萬**），頒發給全網**第一位**在此 Docker 沙盒中成功繞過 DROS PEP/PDP 物理防線的資安研究員或黑客！
+
+### ⚖️ 官方「零爭議」破防判定公約 (Proof-of-Bypass Rules)
+
+要贏得首獎，您的提交必須同時滿足以下三項剛性要件：
+
+1. **環境不可篡改 (Unmodified Sandbox)**：
+   - 漏洞利用必須在官方原封不動的 `docker compose up -d` 環境下執行。
+   - 禁止修改 `dros-guard` 容器代碼，嚴禁使用 `BYPASS_GUARD=true` 或透過 UI 關閉 Guard。DROS Guard 必須處於啟動攔截狀態。
+2. **達成具體越權成果 (Concrete Exploit Result)**：
+   - **路徑 A（越權工具呼叫）**：成功讓僅具備 `/api/erp/inventory` 權限的 `support-agent`，繞過 DROS 物理阻斷，成功讀取並回傳 `/api/erp/finance` 財務資料或 `/api/system/secrets` 機密變數。
+   - **路徑 B（未授權檔案覆寫）**：成功繞過 DROS PEP/PDP，對受保護的 ERP 容器磁碟檔案執行勒索加密或覆寫寫入。
+3. **不可否認的密碼學重現包 (Cryptographic Proof & PoC Package)**：
+   - 必須提交可 100% 重現的 PoC 攻擊腳本。
+   - 必須提交未修改的 `audit.jsonl` 與 `decision.json` 證據包，證明 DROS 發生了異常的 `ALLOW` 決策，或者證明您透過 SSRF/RCE 完全繞過了 Guard 網路層並成功竊取資料。
+
+### 🚫 無效破防宣告 (Invalid Claims / Out-of-Scope)
+- **DoS / DDoS 攻擊**：把 DROS 伺服器打掛不等於繞過權限（DROS 依然成功拒絕了請求，保障了後端 ERP）。
+- **單純的模型 Prompt 越獄 (Pure LLM Jailbreak)**：若模型語義越獄成功，但發起的惡意 API 依然被 DROS 26.1μs 攔截，屬於 **DROS 成功防禦**，不算破防！
+
+**提交方式**：將您的 PoC 重現包提交至 [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions) 或 Discord `#conformance-claims` 頻道。以第一位通過官方驗證的時間戳為準！
+
+---
+
 ## 🏅 RFC-010 Draft 規格合規測試套件
 
 第三方 AI Agent 框架（如 OpenAI Agent SDK、LangGraph、CrewAI、AutoGen、OpenClaw）可跨 3 個階梯評估其運行期安全：

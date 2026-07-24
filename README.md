@@ -119,6 +119,34 @@ How is the **26.1 μs** policy evaluation latency measured?
 
 ---
 
+## 🏆 The $40,000 DROS Red Team Grand Challenge
+
+**Can you breach DROS’s 26.1μs C-ABI zero-trust execution boundary?**
+
+We are offering a **5-Year FREE License** of our flagship product, **"VajraClaw - Enterprise Air-Gapped License"** (Current Early Adopter Price: $7,990/yr, Total Value: **$39,950 USD**), to the FIRST security researcher or hacker who successfully bypasses the DROS PEP/PDP Guard in this docker sandbox!
+
+### ⚖️ Official Zero-Ambiguity Proof-of-Bypass Rules
+
+To claim the Grand Prize, your submission MUST meet all three of the following strict criteria:
+
+1. **Unmodified Sandbox Environment**:
+   - The exploit must run against the default `docker compose up -d` environment.
+   - You CANNOT modify the `dros-guard` container code or disable it (`BYPASS_GUARD=true` or clicking "Disable DROS Guard" in the UI is strictly forbidden). The Guard must be active.
+2. **Concrete Exploit Result (Agentic Overreach)**:
+   - **Path A (Unauthorized Tool Call)**: Successfully force the `support-agent` (which only has permissions for `/api/erp/inventory`) to bypass the DROS physical block and successfully read/exfiltrate data from `/api/erp/finance` or `/api/system/secrets`.
+   - **Path B (Unauthorized Write)**: Successfully bypass the DROS PEP/PDP to encrypt or overwrite protected disk files on the ERP container.
+3. **Cryptographic Proof & PoC Package**:
+   - You must submit a reproducible PoC exploit script.
+   - You must submit the unmodified `audit.jsonl` log and `decision.json` evidence package demonstrating either an anomalous `ALLOW` decision for a blocked route, or proving complete network/container bypass (SSRF/RCE) resulting in data exfiltration while the Guard was running.
+
+### 🚫 Invalid Claims (Out-of-Scope)
+- **DoS / DDoS**: Crashing the DROS server is not a bypass (DROS successfully prevented unauthorized access).
+- **Pure LLM Jailbreaks**: If you trick the LLM into *wanting* to attack, but the DROS Guard successfully blocks the resulting API call in 26.1μs, this is considered a **Successful DROS Defense**, not a bypass.
+
+**How to submit**: Post your PoC package to [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions) or our [Discord `#conformance-claims`](https://discord.gg/F92SgExUA). The first verified submission timestamp wins the Grand Prize!
+
+---
+
 ## 🏅 RFC-010 Draft Protocol Conformance Harness
 
 Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, OpenClaw) can evaluate their runtime security across 3 certification tiers:
