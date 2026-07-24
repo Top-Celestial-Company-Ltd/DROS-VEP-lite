@@ -150,7 +150,8 @@ Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($149 Value)**
 
 1. **Option 1 (Web Dashboard UI)**: Open `http://localhost:8080` and click **"Claim 1-Year Hacker License"**.
 2. **Option 2 (GitHub Discussions Bot)**: Post `conformance_report.json` to [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions).
-3. **Option 3 (Gumroad $0 Checkout)**: Use 100% OFF Coupon `DROS-RFC010-FREE` at [dr-os.io](https://dr-os.io).
+3. **Option 3 (Discord Cyber Crucible)**: Join our [Discord Server](https://discord.gg/F92SgExUA) and post report in `#conformance-claims`.
+4. **Option 4 (Gumroad $0 Checkout)**: Use 100% OFF Coupon `DROS-RFC010-FREE` at [dr-os.io](https://dr-os.io).
 
 ---
 

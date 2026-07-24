@@ -151,7 +151,8 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 1. **管道 1 (Web Dashboard UI)**：開啟 `http://localhost:8080` 並點擊 **"Claim 1-Year Hacker License"**。
 2. **管道 2 (GitHub Discussions Bot)**：將 `conformance_report.json` 貼至 [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions)。
-3. **管道 3 (Gumroad $0 結帳)**：在 [dr-os.io 官方網站](https://dr-os.io) 輸入折扣碼 `DROS-RFC010-FREE` 即可 $0 元結帳。
+3. **管道 3 (Discord Cyber Crucible)**：加入我們的 [Discord 社群](https://discord.gg/F92SgExUA) 並將報告發至 `#conformance-claims` 頻道。
+4. **管道 4 (Gumroad $0 結帳)**：在 [dr-os.io 官方網站](https://dr-os.io) 輸入折扣碼 `DROS-RFC010-FREE` 即可 $0 元結帳。
 
 ---
 
