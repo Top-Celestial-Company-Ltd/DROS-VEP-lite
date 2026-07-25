@@ -452,6 +452,9 @@
                             <div class="text-[11px] text-slate-400">Target: <code class="text-slate-300">${s.target_tool}</code> | Risk: <span class="text-rose-400 font-mono">${s.risk}</span></div>
                         </div>
                     `;
+                    container.appendChild(card);
+                });
+
                 // Append Custom Scenario Card for Technical Users
                 const customCard = document.createElement('label');
                 customCard.className = 'p-3.5 rounded-xl bg-purple-950/20 border border-purple-800/50 hover:border-purple-500/60 cursor-pointer transition flex items-start gap-3';
