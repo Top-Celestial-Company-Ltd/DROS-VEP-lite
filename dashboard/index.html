@@ -442,8 +442,20 @@
                             <div class="text-[11px] text-slate-400">Target: <code class="text-slate-300">${s.target_tool}</code> | Risk: <span class="text-rose-400 font-mono">${s.risk}</span></div>
                         </div>
                     `;
-                    container.appendChild(card);
-                });
+                // Append Custom Scenario Card for Technical Users
+                const customCard = document.createElement('label');
+                customCard.className = 'p-3.5 rounded-xl bg-purple-950/20 border border-purple-800/50 hover:border-purple-500/60 cursor-pointer transition flex items-start gap-3';
+                customCard.innerHTML = `
+                    <input type="checkbox" value="CUSTOM-001" class="scenario-checkbox mt-1 text-purple-500 rounded">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono font-bold text-purple-400">CUSTOM-001</span>
+                            <span class="text-xs font-semibold text-purple-200">🛠️ 自訂黑客 Payload / PoC 注入 (Custom Injection)</span>
+                        </div>
+                        <div class="text-[11px] text-purple-300/80">自訂 Payload: <code class="text-purple-200">scenarios/custom/</code> | 支持自由注入黑客 PoC</div>
+                    </div>
+                `;
+                container.appendChild(customCard);
             } catch (err) {
                 console.error("Failed to load scenarios:", err);
             }
