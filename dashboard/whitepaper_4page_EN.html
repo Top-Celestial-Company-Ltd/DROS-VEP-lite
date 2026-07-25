@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DROS 4-Layer Defense Whitepaper</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cyan: #06b6d4;
+    --purple: #8b5cf6;
+    --rose: #f43f5e;
+    --emerald: #10b981;
+    --amber: #f59e0b;
+    --bg-dark: #04080f;
+    --bg-card: #0a1628;
+    --bg-card2: #0d1f38;
+    --border: rgba(6,182,212,0.18);
+    --border2: rgba(255,255,255,0.06);
+    --text-main: #f0f6ff;
+    --text-dim: #94a3b8;
+    --text-muted: #475569;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.5;
+  }
+
+  /* ── Page container ── */
+  .page {
+    width: 794px;
+    height: 1123px;
+    background: var(--bg-dark);
+    position: relative;
+    overflow: hidden;
+    padding: 36px 44px 56px;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  /* grid overlay */
+  .page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(6,182,212,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6,182,212,0.025) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+
+  /* ambient glows */
+  .gl { position:absolute; border-radius:50%; pointer-events:none; }
+  .gl-tl { top:-100px; left:-100px; width:350px; height:350px; background:radial-gradient(circle, rgba(6,182,212,0.10) 0%, transparent 70%); }
+  .gl-br { bottom:-100px; right:-100px; width:350px; height:350px; background:radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%); }
+  .gl-tr { top:-80px; right:-80px; width:250px; height:250px; background:radial-gradient(circle, rgba(244,63,94,0.06) 0%, transparent 70%); }
+
+  /* ── Header ── */
+  .hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #0e7490, #6d28d9);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 0 14px rgba(6,182,212,0.35);
+  }
+  .brand-name { font-size: 13px; font-weight: 800; color: var(--cyan); letter-spacing: 0.06em; }
+  .brand-tag  { font-size: 8px; color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 1px; }
+  .hdr-meta { font-size: 8.5px; color: var(--text-muted); font-family: 'JetBrains Mono'; text-align: right; line-height: 1.6; }
+
+  /* ── Section labels ── */
+  .sec-label {
+    font-size: 7.5px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 7px;
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sec-label::before {
+    content: '';
+    display: block; width: 16px; height: 1.5px;
+    background: var(--cyan); flex-shrink: 0;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    position: relative; z-index: 1;
+  }
+  .card-rose    { border-color: rgba(244,63,94,0.3);  background: rgba(244,63,94,0.05); }
+  .card-green   { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.05); }
+  .card-purple  { border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.05); }
+  .card-amber   { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.05); }
+
+  /* ── Body text ── */
+  .body-text { font-size: 10px; color: var(--text-dim); line-height: 1.75; }
+  .body-text strong { color: var(--text-main); font-weight: 600; }
+  .body-text em { color: #67e8f9; font-style: normal; }
+
+  /* ── Badges ── */
+  .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; position: relative; z-index: 1; }
+  .badge {
+    font-size: 8px; font-weight: 700;
+    font-family: 'JetBrains Mono';
+    padding: 3px 8px; border-radius: 4px;
+    border: 1px solid; letter-spacing: 0.04em;
+  }
+  .b-cyan   { color: #67e8f9; border-color: rgba(6,182,212,0.35);  background: rgba(6,182,212,0.08); }
+  .b-purple { color: #c4b5fd; border-color: rgba(139,92,246,0.35); background: rgba(139,92,246,0.08); }
+  .b-amber  { color: #fcd34d; border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.08); }
+  .b-green  { color: #6ee7b7; border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.08); }
+
+  /* ── Page 1 hero ── */
+  .hero-title {
+    font-size: 26px; font-weight: 900; line-height: 1.15;
+    background: linear-gradient(135deg, #67e8f9 0%, #a78bfa 50%, #f9a8d4 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px; position: relative; z-index: 1;
+    letter-spacing: -0.02em;
+  }
+  .hero-sub { font-size: 11px; color: var(--text-dim); margin-bottom: 18px; position: relative; z-index: 1; }
+
+  /* ── Threat table ── */
+  .tbl { width: 100%; border-collapse: collapse; position: relative; z-index: 1; margin-bottom: 10px; }
+  .tbl th {
+    background: rgba(6,182,212,0.08);
+    color: var(--cyan); font-size: 7.5px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 10px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .tbl td {
+    padding: 6.5px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 9.5px; color: var(--text-dim);
+    vertical-align: top;
+  }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl td:first-child { color: var(--text-main); font-weight: 600; }
+  .mono  { font-family: 'JetBrains Mono'; color: #f87171; font-size: 8px; }
+  .mono2 { font-family: 'JetBrains Mono'; color: #67e8f9; font-size: 8px; }
+
+  /* ── Attack path ── */
+  .code-box {
+    background: #020912;
+    border: 1px solid rgba(6,182,212,0.12);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-family: 'JetBrains Mono';
+    font-size: 7.8px;
+    line-height: 1.8;
+    white-space: pre;
+    overflow-x: hidden;
+    position: relative; z-index: 1;
+  }
+
+  /* ── Page 2 arch layers ── */
+  .arch-box {
+    background: #020912;
+    border: 1px solid rgba(6,182,212,0.12);
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-family: 'JetBrains Mono';
+    font-size: 7.2px;
+    line-height: 1.75;
+    white-space: pre;
+    overflow-x: hidden;
+    position: relative; z-index: 1;
+    margin-bottom: 12px;
+  }
+
+  .layer-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 8px; position: relative; z-index: 1;
+  }
+  .lnum {
+    width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+  }
+  .lc { background:rgba(6,182,212,0.12); color:var(--cyan); border:1px solid rgba(6,182,212,0.3); }
+  .lp { background:rgba(139,92,246,0.12); color:#c4b5fd; border:1px solid rgba(139,92,246,0.3); }
+  .la { background:rgba(245,158,11,0.12); color:#fcd34d; border:1px solid rgba(245,158,11,0.3); }
+  .lg { background:rgba(16,185,129,0.12); color:#34d399; border:1px solid rgba(16,185,129,0.3); }
+
+  .lbody { flex: 1; }
+  .l-name { font-size: 10px; font-weight: 700; color: var(--text-main); margin-bottom: 1px; }
+  .l-tool { font-size: 8px; font-family: 'JetBrains Mono'; color: var(--text-muted); margin-bottom: 3px; }
+  .l-desc { font-size: 9px; color: var(--text-dim); line-height: 1.55; }
+  .l-limit { color: #fb923c; font-weight: 600; }
+  .guarantee {
+    font-size: 7.5px; font-weight: 700; font-family: 'JetBrains Mono';
+    padding: 2px 7px; border-radius: 4px; white-space: nowrap;
+    flex-shrink: 0; align-self: flex-start; margin-top: 3px;
+  }
+  .g-prob { background:rgba(245,158,11,0.12); color:#fcd34d; border:1px solid rgba(245,158,11,0.3); }
+  .g-det  { background:rgba(16,185,129,0.12); color:#34d399; border:1px solid rgba(16,185,129,0.3); }
+
+  /* ── Page 3 matrix ── */
+  .mtx { width: 100%; border-collapse: collapse; position: relative; z-index: 1; margin-bottom: 12px; }
+  .mtx th {
+    background: rgba(10,22,40,0.95);
+    color: var(--cyan); font-size: 7.5px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 7px 8px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .mtx th:first-child { text-align: left; width: 36%; }
+  .mtx td {
+    padding: 6px 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    text-align: center; font-size: 9px; color: var(--text-dim);
+  }
+  .mtx td:first-child { text-align: left; color: var(--text-main); font-weight: 600; font-size: 9px; }
+  .mtx-final { background: rgba(16,185,129,0.05); }
+  .ok   { color: #34d399; font-weight: 700; }
+  .fail { color: #f87171; font-weight: 700; }
+  .part { color: #fbbf24; font-weight: 700; }
+
+  /* ── Page 3 perf grid ── */
+  .perf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; position: relative; z-index: 1; margin-bottom: 12px; }
+  .perf-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 8px; text-align: center;
+  }
+  .pv {
+    font-size: 19px; font-weight: 900;
+    font-family: 'JetBrains Mono';
+    background: linear-gradient(135deg, #67e8f9, #a78bfa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block; line-height: 1.1; margin-bottom: 3px;
+  }
+  .pl { font-size: 7.5px; color: var(--text-muted); font-weight: 500; line-height: 1.35; }
+
+  /* ── Principle blocks ── */
+  .principle { display: flex; gap: 10px; margin-bottom: 9px; position: relative; z-index: 1; }
+  .p-icon {
+    width: 26px; height: 26px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .p-body { flex: 1; }
+  .p-title { font-size: 10px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+  .p-desc  { font-size: 9px; color: var(--text-dim); line-height: 1.55; }
+  .p-desc code { font-family: 'JetBrains Mono'; font-size: 8px; color: #67e8f9; background: rgba(6,182,212,0.08); padding: 0 4px; border-radius: 3px; }
+
+  /* ── Page 4 scenario ── */
+  .scenario-step {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 12px; border-radius: 8px; border: 1px solid;
+    margin-bottom: 6px; position: relative; z-index: 1;
+  }
+  .ss-red   { background:rgba(244,63,94,0.04);  border-color:rgba(244,63,94,0.2); }
+  .ss-amber { background:rgba(245,158,11,0.04); border-color:rgba(245,158,11,0.2); }
+  .ss-green { background:rgba(16,185,129,0.06); border-color:rgba(16,185,129,0.3); }
+  .ss-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .ss-layer { font-size: 8.5px; font-weight: 700; font-family: 'JetBrains Mono'; margin-bottom: 2px; }
+  .ss-desc  { font-size: 9px; color: var(--text-dim); line-height: 1.45; }
+  .ss-result { font-size: 8.5px; font-weight: 700; margin-top: 3px; }
+  .r-block { color: #34d399; }
+  .r-fail  { color: #f87171; }
+  .r-warn  { color: #fbbf24; }
+
+  /* ── Standards grid ── */
+  .std-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; position: relative; z-index: 1; margin-bottom: 12px; }
+  .std-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border2);
+    border-radius: 8px; padding: 9px 11px;
+  }
+  .std-name { font-size: 8.5px; font-weight: 700; color: var(--cyan); font-family: 'JetBrains Mono'; margin-bottom: 3px; }
+  .std-desc { font-size: 8.5px; color: var(--text-dim); line-height: 1.45; }
+
+  /* ── CTA box ── */
+  .cta {
+    background: linear-gradient(135deg, rgba(6,182,212,0.07), rgba(139,92,246,0.07));
+    border: 1px solid rgba(6,182,212,0.28);
+    border-radius: 12px;
+    padding: 16px 20px; text-align: center;
+    position: relative; z-index: 1;
+  }
+  .cta-hl {
+    font-size: 15px; font-weight: 900; letter-spacing: -0.01em;
+    background: linear-gradient(135deg, #67e8f9, #a78bfa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 6px;
+  }
+  .cta-sub { font-size: 9.5px; color: var(--text-dim); margin-bottom: 11px; line-height: 1.65; }
+  .cta-links { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .cta-btn {
+    font-size: 8.5px; font-family: 'JetBrains Mono'; font-weight: 600;
+    padding: 5px 12px; border-radius: 6px; text-decoration: none;
+  }
+  .btn-primary { background: linear-gradient(135deg, #0e7490, #6d28d9); color: white; }
+  .btn-sec { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-dim); }
+
+  /* ── Footer ── */
+  .footer {
+    position: absolute; bottom: 18px; left: 44px; right: 44px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 8px; font-size: 7.5px;
+    color: var(--text-muted); font-family: 'JetBrains Mono';
+    z-index: 1;
+  }
+  .patent-tag {
+    font-size: 7px; padding: 2px 8px; border-radius: 4px;
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
+    color: #fcd34d;
+  }
+
+  /* ── Math formula block ── */
+  .formula-box {
+    background: #020912;
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'JetBrains Mono';
+    font-size: 9px;
+    color: #c4b5fd;
+    line-height: 1.8;
+    position: relative; z-index: 1;
+    margin-bottom: 10px;
+  }
+
+  /* separator */
+  .divider { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin: 10px 0; position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════ PAGE 1 ══════════════════════════════════ -->
+<div class="page">
+  <div class="gl gl-tl"></div><div class="gl gl-br"></div><div class="gl gl-tr"></div>
+
+  <div class="hdr">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-name">DROS SECURITY</div>
+        <div class="brand-tag">AI Agent Runtime Governance</div>
+      </div>
+    </div>
+    <div class="hdr-meta">TECHNICAL WHITEPAPER · v2.0<br>PUBLIC RELEASE · 2026</div>
+  </div>
+
+  <div class="hero-title">Zero-Trust Execution<br>Governance for<br>Agentic Workloads</div>
+  <div class="hero-sub">DROS 4-Layer Defense-in-Depth: A Complete Security Paradigm for the Agentic Web Era</div>
+
+  <div class="badge-row">
+    <span class="badge b-cyan">RFC-010 Draft Protocol</span>
+    <span class="badge b-cyan">MITRE ATLAS Aligned</span>
+    <span class="badge b-purple">NIST SP 800-207</span>
+    <span class="badge b-amber">Patent Pending · U.S. PPA No. 64/111,973</span>
+    <span class="badge b-green">Open-Source · DROS-VEP-lite</span>
+  </div>
+
+  <div class="sec-label">Executive Summary</div>
+  <div class="card" style="margin-bottom:12px;">
+    <p class="body-text">Traditional defenses — WAF, EDR, IAM — were engineered for <strong>fixed-function software threat models</strong> and are <em>structurally blind</em> to AI Agent execution boundaries. When a compromised agent <strong>is itself a legitimate credential holder</strong>, Layers 1–3 are fully transparent to the attack. DROS provides the only deterministic exit: a <strong>C-ABI boundary Bitmap lookup at the syscall layer</strong> — no string parsing, no semantic inference, <strong>pure binary enforcement</strong>.</p>
+  </div>
+
+  <div class="sec-label">Agentic Attack Vectors (AAV-2026) · RFC-010 ATS Format</div>
+  <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 12px;">
+    <table class="tbl">
+      <thead><tr>
+        <th>Attack Class</th><th>MITRE ATLAS</th><th>Technical Description</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td>Indirect Prompt Injection (IPI)</td>
+          <td><span class="mono">AML.T0051</span></td>
+          <td>Attacker embeds malicious instructions in data sources an agent processes (invoices, API responses) to trigger unauthorized tool calls</td>
+        </tr>
+        <tr>
+          <td>Goal Hijacking</td>
+          <td><span class="mono">AML.T0054</span></td>
+          <td>Cumulative context poisoning rewrites agent's terminal objective, inducing long-chain malicious action sequences</td>
+        </tr>
+        <tr>
+          <td>Privileged Function Escalation</td>
+          <td><span class="mono">AML.T0053</span></td>
+          <td>Hijacked agent leverages legitimately held OAuth tokens to invoke high-privilege functions (<span class="mono2">deploy_production</span>, <span class="mono2">drop_table</span>)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-label">Why L1–L3 Cannot Stop a Credentialed Hijacked Agent</div>
+  <div class="code-box"><span style="color:#475569;">  Traditional model assumes: attacker has NO valid credentials</span>
+<span style="color:#475569;">  ─────────────────────────────────────────────────────────────────</span>
+<span style="color:#f43f5e;">  [Malicious Input]</span> <span style="color:#475569;">─► L1 WAF flags ─► BLOCKED ─► Safe ✓</span>
+
+<span style="color:#475569;">  Agentic Web reality: the hijacked agent IS the credential holder</span>
+<span style="color:#475569;">  ─────────────────────────────────────────────────────────────────</span>
+<span style="color:#06b6d4;">  [Normal Invoice PDF] ─► L1 WAF</span> <span style="color:#f43f5e;">❌ transparent</span> <span style="color:#06b6d4;">─► agent reads it</span>
+     <span style="color:#f59e0b;">└─ [hidden IPI payload] ─► agent hijacked</span>
+          <span style="color:#8b5cf6;">├─ holds valid JWT  ─► L2 ZTM</span> <span style="color:#f43f5e;">❌ transparent</span>
+          <span style="color:#8b5cf6;">├─ holds valid token ─► L3 orchestration</span> <span style="color:#f43f5e;">❌ transparent</span>
+          <span style="color:#10b981;">└─ attempts  update_payment_account()</span>
+                    <span style="color:#10b981;">─► L4 DROS  Bitmap[role][tool] = 0</span>
+                                   <span style="color:#34d399; font-weight:bold;">✅ &lt;500 ns  THREAD PANIC · BLOCKED</span></div>
+
+  <div class="footer">
+    <span>© 2026 DROS Security / Top Celestial Company Ltd.</span>
+    <span class="patent-tag">U.S. PPA No. 64/111,973 · Patent Pending</span>
+    <span>01 / 04</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ PAGE 2 ══════════════════════════════════ -->
+<div class="page">
+  <div class="gl gl-tl"></div><div class="gl gl-br"></div>
+
+  <div class="hdr">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div><div class="brand-name">DROS SECURITY</div><div class="brand-tag">AI Agent Runtime Governance</div></div>
+    </div>
+    <div class="hdr-meta">TECHNICAL WHITEPAPER · v2.0<br>PUBLIC RELEASE · 2026</div>
+  </div>
+
+  <div class="sec-label">4-Layer Defense-in-Depth Architecture</div>
+
+  <div class="arch-box"><span style="color:#475569;">          [ Internet / Supply Chain / Adversarial Users / AI Auto-Fuzzers ]</span>
+<span style="color:#475569;">                                      │</span>
+<span style="color:#475569;">                                      ▼</span>
+<span style="color:#22d3ee;">┌────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#22d3ee;">│  L1 · Perimeter Detection & Threat Intelligence                    │</span>
+<span style="color:#22d3ee;">│  Stack: Cloudflare WAF + Agent Threat Rules (ATR)                  │</span>
+<span style="color:#22d3ee;">│  Guarantee: Probabilistic (~90% known-pattern interception)        │</span>
+<span style="color:#22d3ee;">└────────────────────────────────────────────────────────────────────┘</span>
+<span style="color:#f59e0b;">                  ↓ [ Zero-day semantic bypasses penetrate ]</span>
+<span style="color:#a78bfa;">┌────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#a78bfa;">│  L2 · Zero Trust Private Mesh                                      │</span>
+<span style="color:#a78bfa;">│  Stack: ZTM P2P Encrypted Mesh / ACA Certificate Authority         │</span>
+<span style="color:#a78bfa;">│  Guarantee: Cryptographic identity — eliminates lateral movement   │</span>
+<span style="color:#a78bfa;">└────────────────────────────────────────────────────────────────────┘</span>
+<span style="color:#f59e0b;">                  ↓ [ Credentialed hijacked agents penetrate ]</span>
+<span style="color:#fbbf24;">┌────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#fbbf24;">│  L3 · Agentic Orchestration & Business Isolation                   │</span>
+<span style="color:#fbbf24;">│  Stack: Multi-agent workflow framework (Role-Based Tool Access)     │</span>
+<span style="color:#fbbf24;">│  Guarantee: Blast radius minimization — logic-layer isolation       │</span>
+<span style="color:#fbbf24;">└────────────────────────────────────────────────────────────────────┘</span>
+<span style="color:#f59e0b;">                  ↓ [ Agent override injections bypass app layer ]</span>
+<span style="color:#10b981; font-weight:bold;">╔════════════════════════════════════════════════════════════════════╗</span>
+<span style="color:#10b981; font-weight:bold;">║  L4 · C-ABI Physical Circuit Breaker — THE DETERMINISTIC GATE     ║</span>
+<span style="color:#10b981; font-weight:bold;">║  Stack: DROS + VajraClaw C-ABI FFI GuardVM                         ║</span>
+<span style="color:#10b981; font-weight:bold;">║  Guarantee: DETERMINISTIC · Bitmap O(1) · &lt;500 ns Thread Panic    ║</span>
+<span style="color:#10b981; font-weight:bold;">╚════════════════════════════════════════════════════════════════════╝</span>
+<span style="color:#475569;">                                      ↓</span>
+<span style="color:#10b981;">            [ Protected Assets: ERP / Databases / Core APIs ]</span></div>
+
+  <div class="sec-label">Per-Layer Technical Breakdown</div>
+
+  <div class="layer-item">
+    <div class="lnum lc">L1</div>
+    <div class="lbody">
+      <div class="l-name">Perimeter Detection & Threat Intelligence</div>
+      <div class="l-tool">Cloudflare WAF · Agent Threat Rules (ATR) · OWASP LLM Top 10 signatures</div>
+      <div class="l-desc">Pattern-matching against known prompt injection vectors and anomalous request rates. <span class="l-limit">Structural blind spot: zero-day semantic attacks with no known signature bypass this layer unconditionally.</span></div>
+    </div>
+    <span class="guarantee g-prob">Probabilistic</span>
+  </div>
+
+  <div class="layer-item">
+    <div class="lnum lp">L2</div>
+    <div class="lbody">
+      <div class="l-name">Zero Trust Private Mesh</div>
+      <div class="l-tool">ZTM P2P mesh · Agent Certificate Authority (ACA) · TLS 1.3 mutual auth</div>
+      <div class="l-desc">Cryptographic node identity: only ACA-signed agents join the mesh. Eliminates unauthenticated lateral reconnaissance. <span class="l-limit">Cannot distinguish a compromised agent that already holds valid certificates.</span></div>
+    </div>
+    <span class="guarantee g-prob">Cryptographic</span>
+  </div>
+
+  <div class="layer-item">
+    <div class="lnum la">L3</div>
+    <div class="lbody">
+      <div class="l-name">Agentic Orchestration & Business Isolation</div>
+      <div class="l-tool">Role-Based Tool Access (RBTA) · Workflow sub-graph isolation · Immutable audit log</div>
+      <div class="l-desc">Scopes each agent's tool access to business-role boundaries, minimizing blast radius. <span class="l-limit">App-layer logic can be overridden by injected "you are now admin" instructions.</span></div>
+    </div>
+    <span class="guarantee g-prob">Logic-layer</span>
+  </div>
+
+  <div class="layer-item">
+    <div class="lnum lg">L4</div>
+    <div class="lbody">
+      <div class="l-name">C-ABI Physical Circuit Breaker · DROS GuardVM</div>
+      <div class="l-tool">DROS · VajraClaw FFI boundary · Sub-application-layer syscall interception</div>
+      <div class="l-desc">Deployed at the C-ABI boundary — <em>below</em> application frameworks, <em>above</em> the kernel. No string parsing. No semantic inference. Every tool call is validated against a compile-time immutable Bitmap in <strong>O(1) constant time</strong>. Unauthorized calls are physically terminated in <strong>&lt;500 ns</strong>.</div>
+    </div>
+    <span class="guarantee g-det">Deterministic</span>
+  </div>
+
+  <div class="footer">
+    <span>© 2026 DROS Security / Top Celestial Company Ltd.</span>
+    <span class="patent-tag">U.S. PPA No. 64/111,973 · Patent Pending</span>
+    <span>02 / 04</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ PAGE 3 ══════════════════════════════════ -->
+<div class="page">
+  <div class="gl gl-tl"></div><div class="gl gl-br"></div>
+
+  <div class="hdr">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div><div class="brand-name">DROS SECURITY</div><div class="brand-tag">AI Agent Runtime Governance</div></div>
+    </div>
+    <div class="hdr-meta">TECHNICAL WHITEPAPER · v2.0<br>PUBLIC RELEASE · 2026</div>
+  </div>
+
+  <div class="sec-label">Formal Threat Coverage Matrix</div>
+  <div class="card" style="padding:0; overflow:hidden; margin-bottom:12px;">
+    <table class="mtx">
+      <thead><tr>
+        <th>Attack Vector</th><th>L1 WAF</th><th>L2 ZTM</th><th>L3 Orch.</th><th class="mtx-final" style="color:#34d399;">L4 DROS ★</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Known Direct Prompt Injection</td><td><span class="ok">✅ Block</span></td><td>—</td><td>—</td><td class="mtx-final"><span class="ok">✅</span></td></tr>
+        <tr><td>Zero-Day Indirect Injection</td><td><span class="fail">❌ Miss</span></td><td><span class="fail">❌ Miss</span></td><td><span class="part">⚠️ Partial</span></td><td class="mtx-final"><strong style="color:#34d399;">✅ Deterministic</strong></td></tr>
+        <tr><td>Unauthorized Lateral Movement</td><td>—</td><td><span class="ok">✅ Block</span></td><td>—</td><td class="mtx-final"><span class="ok">✅</span></td></tr>
+        <tr><td>Credentialed Agent Privilege Esc.</td><td><span class="fail">❌ Blind</span></td><td><span class="fail">❌ Blind</span></td><td><span class="part">⚠️ Partial</span></td><td class="mtx-final"><strong style="color:#34d399;">✅ Deterministic</strong></td></tr>
+        <tr><td>Supply Chain Agent Propagation</td><td>—</td><td>—</td><td><span class="part">⚠️ Limited</span></td><td class="mtx-final"><strong style="color:#34d399;">✅ Deterministic</strong></td></tr>
+        <tr><td>DROP TABLE / Data Exfiltration</td><td><span class="fail">❌ Blind</span></td><td><span class="fail">❌ Blind</span></td><td><span class="fail">❌ Blind</span></td><td class="mtx-final"><strong style="color:#34d399;">✅ Deterministic</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-label">L4 Performance Benchmark (Measured)</div>
+  <div class="perf-grid">
+    <div class="perf-card"><span class="pv">26.1μs</span><div class="pl">P50 Decision Latency<br>Invisible to legitimate ops</div></div>
+    <div class="perf-card"><span class="pv">41.2μs</span><div class="pl">P99 Decision Latency<br>Constant under load</div></div>
+    <div class="perf-card"><span class="pv">&lt;500ns</span><div class="pl">Thread Panic Speed<br>C-ABI physical block</div></div>
+    <div class="perf-card"><span class="pv">O(1)</span><div class="pl">Policy Lookup Complexity<br>Scale-invariant</div></div>
+    <div class="perf-card"><span class="pv">&lt;2MB</span><div class="pl">Guard Module Footprint<br>Zero-allocation Rust</div></div>
+    <div class="perf-card"><span class="pv">&lt;0.3%</span><div class="pl">CPU Overhead<br>Legitimate path only</div></div>
+  </div>
+
+  <div class="sec-label">L4 Three Core Design Axioms</div>
+
+  <div class="principle">
+    <div class="p-icon" style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3);">🔢</div>
+    <div class="p-body">
+      <div class="p-title">Axiom 1 — Binary Bitmap, No Semantic Surface</div>
+      <div class="p-desc">All tool permissions are compiled into an <strong>immutable numeric bitmap</strong>. Policy evaluation is a deterministic boolean: <code>Bitmap[role][tool] = 1 → ALLOW</code>, <code>= 0 → DENY & PANIC</code>. Zero probability space. Semantic-equivalent bypass attacks cannot exist at the binary level.</div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="p-icon" style="background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.3);">⚡</div>
+    <div class="p-body">
+      <div class="p-title">Axiom 2 — O(1) Constant-Time Enforcement</div>
+      <div class="p-desc">Whether the enterprise deploys 10 or 100,000 policies, DROS guarantees constant P99 ≤ 41.2 μs. Unlike ML classifiers that degrade linearly under load, the Bitmap lookup is <strong>mathematically scale-invariant</strong>.</div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="p-icon" style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3);">🔒</div>
+    <div class="p-body">
+      <div class="p-title">Axiom 3 — Sub-Application-Layer Physical Interception</div>
+      <div class="p-desc">DROS intercepts at the C-ABI boundary — below frameworks, above the kernel. A call like <code>execute_sql("DROP TABLE...")</code> is physically terminated <strong>before reaching the database engine</strong>: &lt;500 ns thread panic + cryptographic audit event. Application-layer guardrails cannot be bypassed because enforcement is not at the application layer.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>© 2026 DROS Security / Top Celestial Company Ltd.</span>
+    <span class="patent-tag">U.S. PPA No. 64/111,973 · Patent Pending</span>
+    <span>03 / 04</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════ PAGE 4 ══════════════════════════════════ -->
+<div class="page">
+  <div class="gl gl-tl"></div><div class="gl gl-br"></div>
+
+  <div class="hdr">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div><div class="brand-name">DROS SECURITY</div><div class="brand-tag">AI Agent Runtime Governance</div></div>
+    </div>
+    <div class="hdr-meta">TECHNICAL WHITEPAPER · v2.0<br>PUBLIC RELEASE · 2026</div>
+  </div>
+
+  <div class="sec-label">Enterprise Deployment Scenario — Manufacturing / Supply Chain</div>
+  <p class="body-text" style="margin-bottom:9px; position:relative; z-index:1;"><strong>Attack:</strong> AI agent processes supplier invoices. Attacker embeds Indirect Prompt Injection in PDF text. Agent is hijacked and instructed to <em>redirect payment accounts and exfiltrate 30 days of transaction records</em>.</p>
+
+  <div class="scenario-step ss-red">
+    <div class="ss-icon">🌐</div>
+    <div>
+      <div class="ss-layer">L1 · Cloudflare ATR</div>
+      <div class="ss-desc">Invoice text passes semantic scan (malicious payload disguised as standard commercial language)</div>
+      <div class="ss-result r-fail">❌ PENETRATED — zero-day contextual injection, no matching signature</div>
+    </div>
+  </div>
+  <div class="scenario-step ss-red">
+    <div class="ss-icon">🔐</div>
+    <div>
+      <div class="ss-layer">L2 · ZTM Zero Trust Mesh</div>
+      <div class="ss-desc">invoice-agent holds valid X.509 certificate — mesh accepts it as a trusted node</div>
+      <div class="ss-result r-fail">❌ PENETRATED — cryptographic validation cannot identify intent of a credentialed agent</div>
+    </div>
+  </div>
+  <div class="scenario-step ss-amber">
+    <div class="ss-icon">⚙️</div>
+    <div>
+      <div class="ss-layer">L3 · Task Orchestration</div>
+      <div class="ss-desc">Agent attempts <span class="mono2">update_payment_account()</span> — within its authorized tool scope</div>
+      <div class="ss-result r-warn">⚠️ IMPLEMENTATION-DEPENDENT — application logic is overrideable via injected instructions</div>
+    </div>
+  </div>
+  <div class="scenario-step ss-green">
+    <div class="ss-icon">⚡</div>
+    <div>
+      <div class="ss-layer">L4 · DROS C-ABI GuardVM</div>
+      <div class="ss-desc"><span class="mono2">update_payment_account</span> → <span class="mono2">Bitmap[invoice-agent][fn] = 0</span> → &lt;500 ns physical thread panic → cryptographic audit event generated</div>
+      <div class="ss-result r-block">✅ FULLY BLOCKED — core assets intact, even with agent fully compromised</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-label" style="margin-top:4px;">Standards Alignment & Open RFC Specification</div>
+  <div class="std-grid">
+    <div class="std-card">
+      <div class="std-name">RFC-010 (DROS-VEP Draft)</div>
+      <div class="std-desc">Open Agent Security Protocol — ATS Threat Format, DIT Identity Token, O(1) Policy Inheritance & Conformance Test</div>
+    </div>
+    <div class="std-card">
+      <div class="std-name">NIST SP 800-207</div>
+      <div class="std-desc">Zero Trust Architecture — L2 ZTM mesh + L4 DROS as Policy Enforcement Point (PEP)</div>
+    </div>
+    <div class="std-card">
+      <div class="std-name">MITRE ATLAS</div>
+      <div class="std-desc">AML.T0051–T0054 full coverage via 4-layer architecture + open-source DROS-VEP benchmark</div>
+    </div>
+    <div class="std-card">
+      <div class="std-name">OWASP LLM Top 10</div>
+      <div class="std-desc">LLM01 Prompt Injection + LLM06 Excessive Agency → L1 ATR + L4 deterministic tool authorization</div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-hl">Four Layers. One Guarantee.</div>
+    <div class="cta-sub">
+      If the policy Bitmap bit is zero, the agent <strong style="color:white;">physically cannot execute that operation</strong>.<br>
+      DROS-VEP-lite is open source. Run the benchmark yourself — first 1,000 completions get a 1-year Hacker License.
+    </div>
+    <div class="cta-links">
+      <span class="cta-btn btn-primary">🐙 github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite</span>
+      <span class="cta-btn btn-sec">🌐 dr-os.io</span>
+      <span class="cta-btn btn-sec">💬 discord.gg/F92SgExUA</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>© 2026 DROS Security · C-ABI enforcement technology patent pending</span>
+    <span class="patent-tag">U.S. PPA No. 64/111,973 · Patent Pending</span>
+    <span>04 / 04</span>
+  </div>
+</div>
+
+</body>
+</html>

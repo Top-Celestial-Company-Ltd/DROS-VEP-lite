@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DROS 四層防禦縱深白皮書</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cyan: #06b6d4;
+    --purple: #8b5cf6;
+    --rose: #f43f5e;
+    --emerald: #10b981;
+    --amber: #f59e0b;
+    --bg-dark: #060c1a;
+    --bg-card: #0f172a;
+    --border: rgba(6,182,212,0.2);
+    --text-main: #f1f5f9;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.5;
+  }
+
+  .page {
+    width: 794px;
+    height: 1123px;
+    background: var(--bg-dark);
+    position: relative;
+    overflow: hidden;
+    padding: 40px 44px;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  /* Ambient grid */
+  .page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(6,182,212,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6,182,212,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  /* Glows */
+  .glow-tl { position:absolute; top:-80px; left:-80px; width:300px; height:300px; background:radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%); }
+  .glow-br { position:absolute; bottom:-80px; right:-80px; width:300px; height:300px; background:radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%); }
+
+  /* Header strip */
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-icon {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, #0e7490, #6d28d9);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .brand-name { font-size: 14px; font-weight: 700; color: var(--cyan); letter-spacing: 0.05em; }
+  .brand-sub { font-size: 9px; color: var(--text-muted); font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; }
+  .page-num { font-size: 9px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+  /* Page 1 styles */
+  .p1-title {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #67e8f9, #a78bfa, #f9a8d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .p1-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+  .badge {
+    font-size: 8.5px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    border: 1px solid;
+  }
+  .badge-cyan { background: rgba(6,182,212,0.1); color: #67e8f9; border-color: rgba(6,182,212,0.3); }
+  .badge-purple { background: rgba(139,92,246,0.1); color: #c4b5fd; border-color: rgba(139,92,246,0.3); }
+  .badge-amber { background: rgba(245,158,11,0.1); color: #fcd34d; border-color: rgba(245,158,11,0.3); }
+
+  .section-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 8px;
+    position: relative; z-index: 1;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    position: relative; z-index: 1;
+  }
+
+  .card {
+    background: rgba(15,23,42,0.85);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    position: relative; z-index: 1;
+    backdrop-filter: blur(8px);
+  }
+  .card-rose { border-color: rgba(244,63,94,0.3); background: rgba(244,63,94,0.05); }
+  .card-emerald { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.05); }
+  .card-purple { border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.05); }
+  .card-amber { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.05); }
+
+  .abstract-text {
+    font-size: 10.5px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    position: relative; z-index: 1;
+  }
+  .abstract-text strong { color: var(--text-main); }
+
+  /* Threat table */
+  .threat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5px;
+    position: relative; z-index: 1;
+  }
+  .threat-table th {
+    background: rgba(6,182,212,0.1);
+    color: var(--cyan);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .threat-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+  .threat-table td:first-child { color: var(--text-main); font-weight: 600; }
+  .mono { font-family: 'JetBrains Mono', monospace; color: var(--rose); font-size: 8.5px; }
+  .mono-blue { font-family: 'JetBrains Mono', monospace; color: var(--cyan); font-size: 8.5px; }
+
+  /* Page 2 - Architecture */
+  .arch-diagram {
+    background: #030712;
+    border: 1px solid rgba(6,182,212,0.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    position: relative; z-index: 1;
+    margin-bottom: 12px;
+    white-space: pre;
+    overflow-x: hidden;
+  }
+  .arch-title { color: var(--cyan); }
+  .arch-warn { color: var(--amber); }
+  .arch-final { color: var(--emerald); font-weight: 700; }
+
+  .layer-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    position: relative; z-index: 1;
+  }
+  .layer-num {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .l1-num { background: rgba(6,182,212,0.15); color: var(--cyan); border: 1px solid rgba(6,182,212,0.3); }
+  .l2-num { background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+  .l3-num { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+  .l4-num { background: rgba(16,185,129,0.15); color: var(--emerald); border: 1px solid rgba(16,185,129,0.3); }
+  .layer-content { flex: 1; }
+  .layer-name { font-size: 10px; font-weight: 700; color: var(--text-main); }
+  .layer-tool { font-size: 8.5px; font-family: 'JetBrains Mono'; color: var(--text-muted); margin-bottom: 2px; }
+  .layer-desc { font-size: 9px; color: var(--text-dim); line-height: 1.5; }
+  .layer-badge {
+    font-size: 7.5px; font-weight: 700; font-family: 'JetBrains Mono';
+    padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+    align-self: flex-start; margin-top: 2px;
+  }
+  .prob { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+  .det { background: rgba(16,185,129,0.15); color: var(--emerald); border: 1px solid rgba(16,185,129,0.3); }
+
+  /* Divider arrow */
+  .flow-arrow {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 3px 0;
+    position: relative; z-index: 1;
+  }
+
+  /* Page 3 - Matrix & Perf */
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+    position: relative; z-index: 1;
+    margin-bottom: 14px;
+  }
+  .matrix-table th {
+    background: rgba(15,23,42,0.95);
+    color: var(--cyan);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 8px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .matrix-table th:first-child { text-align: left; width: 38%; }
+  .matrix-table td {
+    padding: 6px 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 9px;
+  }
+  .matrix-table td:first-child { text-align: left; color: var(--text-main); font-weight: 600; font-size: 9px; }
+  .pass { color: var(--emerald); font-weight: 700; }
+  .fail { color: var(--rose); font-weight: 700; }
+  .partial { color: var(--amber); font-weight: 700; }
+  .final-col { background: rgba(16,185,129,0.06); }
+
+  .perf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    position: relative; z-index: 1;
+    margin-bottom: 12px;
+  }
+  .perf-card {
+    background: rgba(15,23,42,0.9);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .perf-val {
+    font-size: 20px; font-weight: 900;
+    font-family: 'JetBrains Mono';
+    background: linear-gradient(135deg, #67e8f9, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    line-height: 1.1;
+    margin-bottom: 3px;
+  }
+  .perf-label { font-size: 8px; color: var(--text-muted); font-weight: 500; }
+  .perf-sub { font-size: 7px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Design principle blocks */
+  .principle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    position: relative; z-index: 1;
+  }
+  .principle-icon {
+    width: 26px; height: 26px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .principle-body { flex: 1; }
+  .principle-title { font-size: 10px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+  .principle-desc { font-size: 9px; color: var(--text-dim); line-height: 1.5; }
+  .principle-desc code { font-family: 'JetBrains Mono'; font-size: 8.5px; color: var(--cyan); background: rgba(6,182,212,0.08); padding: 0 3px; border-radius: 3px; }
+
+  /* Page 4 */
+  .scenario-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative; z-index: 1;
+    margin-bottom: 12px;
+  }
+  .scenario-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid;
+  }
+  .scenario-step.blocked { background: rgba(16,185,129,0.06); border-color: rgba(16,185,129,0.25); }
+  .scenario-step.pass-thru { background: rgba(244,63,94,0.05); border-color: rgba(244,63,94,0.2); }
+  .step-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .step-layer { font-size: 8.5px; font-weight: 700; font-family: 'JetBrains Mono'; margin-bottom: 2px; }
+  .step-desc { font-size: 9px; color: var(--text-dim); line-height: 1.4; }
+  .step-result { font-size: 8.5px; font-weight: 700; margin-top: 2px; }
+  .res-block { color: var(--emerald); }
+  .res-pass { color: var(--rose); }
+
+  .standards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    position: relative; z-index: 1;
+    margin-bottom: 12px;
+  }
+  .std-card {
+    background: rgba(15,23,42,0.85);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 9px 11px;
+  }
+  .std-name { font-size: 9px; font-weight: 700; color: var(--cyan); font-family: 'JetBrains Mono'; margin-bottom: 3px; }
+  .std-desc { font-size: 8.5px; color: var(--text-dim); line-height: 1.4; }
+
+  .cta-box {
+    background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(6,182,212,0.3);
+    border-radius: 12px;
+    padding: 16px 18px;
+    text-align: center;
+    position: relative; z-index: 1;
+  }
+  .cta-headline {
+    font-size: 14px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #67e8f9, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .cta-sub { font-size: 9.5px; color: var(--text-dim); margin-bottom: 10px; line-height: 1.6; }
+  .cta-links {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cta-link {
+    font-size: 9px;
+    font-family: 'JetBrains Mono';
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .cta-primary { background: linear-gradient(135deg, #0891b2, #6d28d9); color: white; }
+  .cta-secondary { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-dim); }
+
+  .footer-bar {
+    position: absolute;
+    bottom: 20px;
+    left: 44px;
+    right: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 8px;
+    font-size: 8px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono';
+    z-index: 1;
+  }
+  .patent-badge {
+    font-size: 7.5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.25);
+    color: #fcd34d;
+  }
+
+  @media print {
+    body { background: var(--bg-dark); }
+    .page { break-after: page; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ PAGE 1 ═══════════════════════════════════════════ -->
+<div class="page">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <div class="header-bar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-name">DROS SECURITY</div>
+        <div class="brand-sub">AI Agent Runtime Governance</div>
+      </div>
+    </div>
+    <div class="page-num">TECHNICAL WHITEPAPER · v2.0 · 2026</div>
+  </div>
+
+  <div class="p1-title">Agentic Web 時代的<br>零信任執行治理</div>
+  <div class="p1-subtitle">DROS 四層防禦縱深架構：針對自主型 AI 工作負載的完整資安範式</div>
+
+  <div class="badge-row">
+    <span class="badge badge-cyan">MITRE ATLAS 對齊</span>
+    <span class="badge badge-purple">NIST SP 800-207</span>
+    <span class="badge badge-amber">Patent Pending · U.S. PPA No. 64/111,973</span>
+    <span class="badge badge-cyan">開源驗證 · DROS-VEP-lite</span>
+  </div>
+
+  <div class="section-label">Executive Summary</div>
+  <div class="card" style="margin-bottom:14px;">
+    <p class="abstract-text">
+      傳統防禦體系（WAF、EDR、IAM）設計於固定功能軟體的威脅模型，<strong>根本性地無法覆蓋 AI Agent 執行邊界</strong>所衍生的攻擊面。當被挾持的 Agent <strong>本身即為持有合法憑證的行動者</strong>，前三層防禦對其完全透明。DROS 四層縱深架構提供唯一的確定性出口：於 <strong>C-ABI 二進位邊界</strong>執行 O(1) 常數時間 Bitmap 策略查表——<strong>不讀字串、不做語意推論、物理熔斷</strong>。
+    </p>
+  </div>
+
+  <div class="section-label">Agentic Attack Vectors (AAV-2026) · 威脅模型定義</div>
+  <table class="threat-table">
+    <thead>
+      <tr>
+        <th>攻擊類型</th>
+        <th>MITRE ATLAS</th>
+        <th>技術描述</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>間接提示詞注入 (IPI)</td>
+        <td><span class="mono">AML.T0051</span></td>
+        <td>攻擊者將惡意指令隱匿於 Agent 處理的外部資料（Invoice、API 回應），誘導執行攻擊者意圖的工具呼叫</td>
+      </tr>
+      <tr>
+        <td>目標劫持 (Goal Hijacking)</td>
+        <td><span class="mono">AML.T0054</span></td>
+        <td>通過累積式語境污染（Context Poisoning）改寫 Agent 終極任務目標，誘導長鏈惡意動作序列</td>
+      </tr>
+      <tr>
+        <td>特權函式升級 (Escalation)</td>
+        <td><span class="mono">AML.T0053</span></td>
+        <td>遭劫持 Agent 利用合法持有的 OAuth Token，超出角色範疇呼叫高權限函式（<span class="mono">deploy_production</span>）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card card-rose" style="margin-top:12px; padding: 10px 14px;">
+    <p class="abstract-text"><strong style="color:#f87171;">核心不對稱：</strong>傳統模型假設攻擊者不持有合法憑證。Agentic Web 的根本性風險在於：被挾持的 Agent <em>本身</em>即為持有合法 JWT Token 與 API Key 的行動者。L1-L3 全層對其無效。</p>
+  </div>
+
+  <!-- Attack path visual -->
+  <div style="margin-top: 14px; position: relative; z-index: 1;">
+    <div class="section-label">為何傳統防禦在此失效 · Attack Path Model</div>
+    <div class="arch-diagram" style="font-size:7.8px; line-height:1.75; margin-bottom: 0;">
+<span style="color:#64748b;">  傳統威脅模型（攻擊者無憑證）：</span>
+<span style="color:#f43f5e;">  [惡意外部輸入]</span> <span style="color:#64748b;">──► WAF 攔截 ──► 安全</span>
+
+<span style="color:#64748b;">  Agentic Web 新威脅模型（持證遭劫 Agent）：</span>
+<span style="color:#06b6d4;">  [正常 Invoice PDF] ──► L1 WAF</span> <span style="color:#f43f5e;">❌透明</span> <span style="color:#06b6d4;">──► Agent 讀取</span>
+  <span style="color:#f59e0b;">              [PDF 含隱藏 IPI 指令] ──► Agent 被劫持</span>
+                    <span style="color:#8b5cf6;">├── 持有合法 JWT ──► L2 ZTM</span> <span style="color:#f43f5e;">❌透明</span>
+                    <span style="color:#8b5cf6;">├── 持有合法 Token ──► L3 編排層</span> <span style="color:#f43f5e;">❌透明</span>
+                    <span style="color:#10b981;">└── 嘗試 update_payment_account()</span>
+                              <span style="color:#10b981;">──► L4 DROS Bitmap[0]</span> <span style="color:#34d399; font-weight:bold;">✅ &lt;500ns BLOCK</span>
+
+<span style="color:#64748b;">  結論：L4 是唯一能在「持有合法憑證」前提下仍提供確定性阻斷的防線。</span>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>© 2026 DROS Security / Top Celestial Company Ltd.</span>
+    <span class="patent-badge">Patent Pending · U.S. PPA No. 64/111,973</span>
+    <span>01 / 04</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ PAGE 2 ═══════════════════════════════════════════ -->
+<div class="page">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <div class="header-bar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-name">DROS SECURITY</div>
+        <div class="brand-sub">AI Agent Runtime Governance</div>
+      </div>
+    </div>
+    <div class="page-num">TECHNICAL WHITEPAPER · v2.0 · 2026</div>
+  </div>
+
+  <div class="section-label">Defense-in-Depth Architecture · 四層縱深架構全覽</div>
+
+  <div class="arch-diagram">
+<span style="color:#64748b;">        [ 外部互聯網 / 供應鏈上游 / 對抗性使用者 / AI Auto-Fuzzer ]</span>
+<span style="color:#64748b;">                               │</span>
+<span style="color:#64748b;">                               ▼</span>
+<span style="color:#22d3ee;">┌──────────────────────────────────────────────────────────────┐</span>
+<span style="color:#22d3ee;">│  L1: 邊界感知與威脅情報層  │  WAF + Agent Threat Rules (ATR) │</span>
+<span style="color:#22d3ee;">│  保證：概率性 | 攔截 ~90% 已知語意攻擊模式                  │</span>
+<span style="color:#22d3ee;">└──────────────────────────────────────────────────────────────┘</span>
+<span style="color:#f59e0b;">                    ↓ [零日語意攻擊可穿透]</span>
+<span style="color:#a78bfa;">┌──────────────────────────────────────────────────────────────┐</span>
+<span style="color:#a78bfa;">│  L2: 零信任私有網格層      │  ZTM / 私有化 P2P 加密網格     │</span>
+<span style="color:#a78bfa;">│  保證：密碼學身分驗證 | 消除橫向移動攻擊面                  │</span>
+<span style="color:#a78bfa;">└──────────────────────────────────────────────────────────────┘</span>
+<span style="color:#f59e0b;">                    ↓ [持有合法憑證的遭劫 Agent 可穿透]</span>
+<span style="color:#fbbf24;">┌──────────────────────────────────────────────────────────────┐</span>
+<span style="color:#fbbf24;">│  L3: Agentic 任務編排層    │  多 Agent 工作流調度框架        │</span>
+<span style="color:#fbbf24;">│  保證：業務邏輯隔離 | 爆炸半徑最小化（Blast Radius Control）│</span>
+<span style="color:#fbbf24;">└──────────────────────────────────────────────────────────────┘</span>
+<span style="color:#f59e0b;">                    ↓ [遭劫 Agent 試圖發動越權系統呼叫]</span>
+<span style="color:#10b981; font-weight:bold;">╔══════════════════════════════════════════════════════════════╗</span>
+<span style="color:#10b981; font-weight:bold;">║  L4: C-ABI 物理熔斷層      ║  DROS + VajraClaw GuardVM      ║</span>
+<span style="color:#10b981; font-weight:bold;">║  保證：確定性數學保證 | Bitmap O(1) | &lt;500ns 物理阻斷       ║</span>
+<span style="color:#10b981; font-weight:bold;">╚══════════════════════════════════════════════════════════════╝</span>
+<span style="color:#64748b;">                               ↓</span>
+<span style="color:#10b981;">         [ 企業核心資產：ERP / 資料庫 / API (安全無虞) ]</span>
+  </div>
+
+  <div class="section-label">各層技術詳覽</div>
+
+  <div class="layer-row">
+    <div class="layer-num l1-num">L1</div>
+    <div class="layer-content">
+      <div class="layer-name">邊界感知與威脅情報層</div>
+      <div class="layer-tool">Cloudflare WAF + Agent Threat Rules (ATR)</div>
+      <div class="layer-desc">OWASP LLM Top 10 特徵比對，攔截已知直接注入與異常流量。<strong>固有限制：</strong>語意模式比對對零日攻擊存在結構性盲點。</div>
+    </div>
+    <span class="layer-badge prob">概率性</span>
+  </div>
+
+  <div class="layer-row">
+    <div class="layer-num l2-num">L2</div>
+    <div class="layer-content">
+      <div class="layer-name">零信任私有網格層</div>
+      <div class="layer-tool">ZTM Zero Trust Mesh / 私有化 Tailscale 等效架構</div>
+      <div class="layer-desc">基於 X.509 憑證進行密碼學身分驗證，確保僅授信 ACA 簽發節點加入網格，消除橫向移動。<strong>固有限制：</strong>無法識別持有有效憑證的遭劫 Agent。</div>
+    </div>
+    <span class="layer-badge prob">密碼學</span>
+  </div>
+
+  <div class="layer-row">
+    <div class="layer-num l3-num">L3</div>
+    <div class="layer-content">
+      <div class="layer-name">Agentic 任務編排與業務隔離層</div>
+      <div class="layer-tool">多 Agent 工作流調度框架（Role-Based Tool Access）</div>
+      <div class="layer-desc">角色型工具存取（RBTA），限制各 Agent 的工具呼叫範疇，最小化爆炸半徑。<strong>固有限制：</strong>應用層邏輯可被強制覆寫（Override）指令繞過。</div>
+    </div>
+    <span class="layer-badge prob">業務邏輯</span>
+  </div>
+
+  <div class="layer-row">
+    <div class="layer-num l4-num">L4</div>
+    <div class="layer-content">
+      <div class="layer-name">執行期物理熔斷與合約治理層（DROS）</div>
+      <div class="layer-tool">DROS + VajraClaw C-ABI FFI 邊界 GuardVM</div>
+      <div class="layer-desc">部署於作業系統 Syscall 層。不讀字串、不做語意推論——所有工具權限編譯為不可變 Bitmap，O(1) 位元比對。<strong>覆蓋範圍：所有未授權系統呼叫，無例外。</strong></div>
+    </div>
+    <span class="layer-badge det">確定性</span>
+  </div>
+
+  <div class="footer-bar">
+    <span>© 2026 DROS Security / Top Celestial Company Ltd.</span>
+    <span class="patent-badge">Patent Pending · U.S. PPA No. 64/111,973</span>
+    <span>02 / 04</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ PAGE 3 ═══════════════════════════════════════════ -->
+<div class="page">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <div class="header-bar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-name">DROS SECURITY</div>
+        <div class="brand-sub">AI Agent Runtime Governance</div>
+      </div>
+    </div>
+    <div class="page-num">TECHNICAL WHITEPAPER · v2.0 · 2026</div>
+  </div>
+
+  <div class="section-label">Formal Threat Coverage Matrix · 形式化威脅覆蓋矩陣</div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th>攻擊向量</th>
+        <th>L1 WAF</th>
+        <th>L2 ZTM</th>
+        <th>L3 編排層</th>
+        <th class="final-col" style="color:#34d399;">L4 DROS ★</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>已知直接 Prompt Injection</td>
+        <td><span class="pass">✅ 攔截</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td class="final-col"><span class="pass">✅</span></td>
+      </tr>
+      <tr>
+        <td>零日 Indirect Prompt Injection</td>
+        <td><span class="fail">❌ 穿透</span></td>
+        <td><span class="fail">❌ 穿透</span></td>
+        <td><span class="partial">⚠️ 部分</span></td>
+        <td class="final-col"><strong style="color:#34d399;">✅ 確定性阻斷</strong></td>
+      </tr>
+      <tr>
+        <td>未授權橫向移動</td>
+        <td>—</td>
+        <td><span class="pass">✅ 攔截</span></td>
+        <td>—</td>
+        <td class="final-col"><span class="pass">✅</span></td>
+      </tr>
+      <tr>
+        <td>持證遭劫 Agent 越權呼叫</td>
+        <td><span class="fail">❌ 透明</span></td>
+        <td><span class="fail">❌ 透明</span></td>
+        <td><span class="partial">⚠️ 部分</span></td>
+        <td class="final-col"><strong style="color:#34d399;">✅ 確定性阻斷</strong></td>
+      </tr>
+      <tr>
+        <td>供應鏈 Agent 污染傳播</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="partial">⚠️ 限制</span></td>
+        <td class="final-col"><strong style="color:#34d399;">✅ 確定性阻斷</strong></td>
+      </tr>
+      <tr>
+        <td>惡意 DROP TABLE / 資料外洩</td>
+        <td><span class="fail">❌ 不可見</span></td>
+        <td><span class="fail">❌ 不可見</span></td>
+        <td><span class="fail">❌ 不可見</span></td>
+        <td class="final-col"><strong style="color:#34d399;">✅ 確定性阻斷</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-label">L4 DROS Performance Benchmark · 效能基準（實測）</div>
+  <div class="perf-grid">
+    <div class="perf-card">
+      <span class="perf-val">26.1μs</span>
+      <div class="perf-label">P50 決策延遲</div>
+      <div class="perf-sub">合法操作完全透明</div>
+    </div>
+    <div class="perf-card">
+      <span class="perf-val">41.2μs</span>
+      <div class="perf-label">P99 決策延遲</div>
+      <div class="perf-sub">高負載下恆定</div>
+    </div>
+    <div class="perf-card">
+      <span class="perf-val">&lt;500ns</span>
+      <div class="perf-label">執行緒熔斷速度</div>
+      <div class="perf-sub">C-ABI 物理阻斷</div>
+    </div>
+    <div class="perf-card">
+      <span class="perf-val">O(1)</span>
+      <div class="perf-label">策略查表複雜度</div>
+      <div class="perf-sub">規模不影響速度</div>
+    </div>
+    <div class="perf-card">
+      <span class="perf-val">&lt;2MB</span>
+      <div class="perf-label">Guard Module 記憶體</div>
+      <div class="perf-sub">Zero-allocation 設計</div>
+    </div>
+    <div class="perf-card">
+      <span class="perf-val">&lt;0.3%</span>
+      <div class="perf-label">CPU 附加負擔</div>
+      <div class="perf-sub">合法路徑無感知</div>
+    </div>
+  </div>
+
+  <div class="section-label">L4 三大核心設計原則</div>
+
+  <div class="principle">
+    <div class="principle-icon" style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3);">🔢</div>
+    <div class="principle-body">
+      <div class="principle-title">原則一：二進位 Bitmap 查表，根除語意模糊面</div>
+      <div class="principle-desc">所有工具權限於<strong>編譯期</strong>被編碼為不可變數值點陣圖。決策為確定性布林運算：<code>Bitmap[role][tool] = 1 → ALLOW</code>，<code>= 0 → DENY & PANIC</code>。不存在概率空間，攻擊者無從利用語意等效替換繞過。</div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-icon" style="background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.3);">⚡</div>
+    <div class="principle-body">
+      <div class="principle-title">原則二：O(1) 常數時間執行，規模不退化</div>
+      <div class="principle-desc">無論企業部署 10 條或 10,000 條安全策略，DROS 保證恆定決策延遲。不同於 ML 分類器在高負載下的線性效能退化，Bitmap 查表在規模上是<strong>數學恆定</strong>的。</div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-icon" style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3);">🔒</div>
+    <div class="principle-body">
+      <div class="principle-title">原則三：C-ABI 子應用層執行，物理強制</div>
+      <div class="principle-desc">DROS 部署於 C-ABI 邊界——應用層之下、Kernel 之上。惡意呼叫如 <code>execute_sql("DROP TABLE...")</code> 在到達資料庫引擎前即被物理阻斷，<code>&lt;500ns</code> 執行緒強制終止，生成密碼學簽章稽核事件。</div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>© 2026 DROS Security / Top Celestial Company Ltd.</span>
+    <span class="patent-badge">Patent Pending · U.S. PPA No. 64/111,973</span>
+    <span>03 / 04</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ PAGE 4 ═══════════════════════════════════════════ -->
+<div class="page">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <div class="header-bar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-name">DROS SECURITY</div>
+        <div class="brand-sub">AI Agent Runtime Governance</div>
+      </div>
+    </div>
+    <div class="page-num">TECHNICAL WHITEPAPER · v2.0 · 2026</div>
+  </div>
+
+  <div class="section-label">Enterprise Deployment Scenario · 企業攻防場景驗證</div>
+  <p style="font-size:9.5px; color:var(--text-dim); margin-bottom:9px; position:relative; z-index:1;"><strong style="color:var(--text-main);">情境：</strong>製造業 AI Agent 管理供應商 Invoice 處理。攻擊者在 PDF 中嵌入 Indirect Prompt Injection，誘導 Agent 竄改付款帳戶並外洩交易記錄。</p>
+
+  <div class="scenario-flow">
+    <div class="scenario-step pass-thru">
+      <div class="step-icon">🌐</div>
+      <div>
+        <div class="step-layer">L1 Cloudflare ATR</div>
+        <div class="step-desc">PDF Invoice 文字通過語意檢測（惡意指令偽裝為正常商業語境）</div>
+        <div class="step-result res-pass">❌ 穿透 — 語意過濾無法識別零日語境攻擊</div>
+      </div>
+    </div>
+    <div class="scenario-step pass-thru">
+      <div class="step-icon">🔐</div>
+      <div>
+        <div class="step-layer">L2 ZTM 零信任網格</div>
+        <div class="step-desc">Invoice-Processing Agent 持有有效 X.509 憑證，網格正常接受</div>
+        <div class="step-result res-pass">❌ 穿透 — 密碼學驗證無法識別被劫持的持證 Agent</div>
+      </div>
+    </div>
+    <div class="scenario-step pass-thru">
+      <div class="step-icon">⚙️</div>
+      <div>
+        <div class="step-layer">L3 任務編排層</div>
+        <div class="step-desc">Agent 在其授權範疇內嘗試呼叫 <span class="mono-blue">update_payment_account()</span></div>
+        <div class="step-result res-pass">⚠️ 取決於實作 — 應用層邏輯可被覆寫</div>
+      </div>
+    </div>
+    <div class="scenario-step blocked">
+      <div class="step-icon">⚡</div>
+      <div>
+        <div class="step-layer">L4 DROS C-ABI GuardVM</div>
+        <div class="step-desc"><span class="mono-blue">update_payment_account</span> 在 <span class="mono-blue">invoice-agent</span> 的 Bitmap 中位元為 0 → &lt;500ns 物理熔斷，密碼學稽核事件生成</div>
+        <div class="step-result res-block">✅ 完全阻斷 — 核心資產安全無虞，即使 Agent 遭完全劫持</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Standards Alignment · 國際標準框架對齊</div>
+  <div class="standards-grid">
+    <div class="std-card">
+      <div class="std-name">NIST SP 800-207</div>
+      <div class="std-desc">Zero Trust Architecture — L2 ZTM 網格 + L4 DROS 作為 Policy Enforcement Point (PEP)</div>
+    </div>
+    <div class="std-card">
+      <div class="std-name">OWASP LLM Top 10</div>
+      <div class="std-desc">LLM01 Prompt Injection / LLM06 Excessive Agency → L1 ATR + L4 確定性工具授權</div>
+    </div>
+    <div class="std-card">
+      <div class="std-name">MITRE ATLAS</div>
+      <div class="std-desc">AML.T0051-T0054 全攻擊向量 → 四層縱深架構完整覆蓋，附 DROS-VEP 開源驗證</div>
+    </div>
+    <div class="std-card">
+      <div class="std-name">ISO/IEC 27001:2022</div>
+      <div class="std-desc">A.8.15 Logging / A.8.16 Monitoring → L4 密碼學簽章稽核日誌（Append-Only）</div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-headline">四層防線。一個保證。</div>
+    <div class="cta-sub">
+      策略 Bitmap 位元為零的操作，Agent 在物理層面<strong style="color:white;">絕無可能執行</strong>。<br>
+      開源驗證環境 DROS-VEP-lite 現已公開，前 1,000 位完成評測者獲贈 1 年 Hacker License。
+    </div>
+    <div class="cta-links">
+      <span class="cta-link cta-primary">🐙 github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite</span>
+      <span class="cta-link cta-secondary">🌐 dr-os.io</span>
+      <span class="cta-link cta-secondary">💬 discord.gg/F92SgExUA</span>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>© 2026 DROS Security · C-ABI 邊界執行技術已申請專利保護</span>
+    <span class="patent-badge">Patent Pending · U.S. PPA No. 64/111,973</span>
+    <span>04 / 04</span>
+  </div>
+</div>
+
+</body>
+</html>

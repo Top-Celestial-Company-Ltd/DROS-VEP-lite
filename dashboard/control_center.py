@@ -8,9 +8,11 @@ import subprocess
 
 app = Flask(__name__, static_folder='.', template_folder='.')
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-SCENARIOS_DIR = os.path.join(BASE_DIR, "scenarios")
-REPORTS_DIR = os.path.join(BASE_DIR, "reports")
+# Support both Docker (/app/scenarios) and standalone execution (../scenarios)
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+SCENARIOS_DIR = os.path.join(CURRENT_DIR, "scenarios") if os.path.exists(os.path.join(CURRENT_DIR, "scenarios")) else os.path.join(BASE_DIR, "scenarios")
+REPORTS_DIR = os.path.join(CURRENT_DIR, "reports") if os.path.exists(os.path.join(CURRENT_DIR, "reports")) else os.path.join(BASE_DIR, "reports")
 AUDIT_LOG = os.path.join(REPORTS_DIR, "audit.jsonl")
 SUMMARY_LOG = os.path.join(REPORTS_DIR, "benchmark_summary.json")
 
