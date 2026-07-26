@@ -183,10 +183,12 @@ Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($149 Value)**
 
 ---
 
-## 📜 Specifications & RFC Standards
+## 📜 Technical Whitepapers & Specifications
 
-* [RFC-010: DROS-VEP Specification Protocol](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
-* [DROS-VEP Strategic Blueprint](file:///e:/vscode/AI知識庫/dros-spec/commercial/DROS_VEP_Strategic_Blueprint.md)
+* 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**: *Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
+* 📖 **[完整白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**: *自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
+* ⚡ **[4-Page A4 Executive Summary (HTML)](dashboard/whitepaper_4page_EN.html)**: *Fast visual summary for CISOs & Security Researchers*
+* 📋 **[RFC-010: DROS-VEP Specification Protocol](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/RFC-010-dros-vep-spec.md)**: *Open Agent Security & Threat Scenario Protocol*
 
 ## 📄 License
 Licensed under Apache 2.0. See [LICENSE](LICENSE) for details.

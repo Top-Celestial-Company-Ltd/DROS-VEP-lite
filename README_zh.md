@@ -184,10 +184,12 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ---
 
-## 📜 Specifications & RFC Standards
+## 📜 技術白皮書與 RFC 規格標準
 
-* [RFC-010: DROS-VEP Specification Protocol](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
-* [DROS-VEP Strategic Blueprint](file:///e:/vscode/AI知識庫/dros-spec/commercial/DROS_VEP_Strategic_Blueprint.md)
+* 📖 **[完整技術白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**：*自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
+* 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**：*Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
+* ⚡ **[4 頁 A4 極速白皮書 (HTML)](dashboard/whitepaper_4page.html)**：*專為 CISO 與資安研究員設計之視覺化摘要*
+* 📋 **[RFC-010: DROS-VEP 規格協定](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/RFC-010-dros-vep-spec.md)**：*AI Agent 安全與威脅劇本開放標準*
 
-## 📄 License
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
+## 📄 授權條款
+本專案採用 Apache 2.0 條款開源，詳情請參閱 [LICENSE](LICENSE) 文件。
