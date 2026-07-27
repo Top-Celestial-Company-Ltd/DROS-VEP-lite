@@ -17,7 +17,7 @@ In 2026, enterprises are deploying tool-calling autonomous AI agents at unpreced
 This whitepaper presents the **DROS 4-Layer Defense-in-Depth Architecture**, a complete zero-trust execution governance framework purpose-built for the **Agentic Web** era. The four layers deliver deterministic or probabilistic security guarantees against distinct threat levels:
 
 - **L1 (Detective Intelligence Layer):** Probabilistic filtering, intercepting ~90% of known semantic attack patterns
-- **L2 (Zero Trust Mesh Layer):** Cryptographic identity verification, eliminating lateral movement attack surface
+- **L2 (Zero Trust Mesh & PKI Identity Layer):** 3-Tier Certificate Authority (Root CA -> AIA -> BEC Leaf Token) & DIT cryptographic identity verification, eliminating agent identity spoofing and lateral movement
 - **L3 (Task Orchestration Layer):** Business logic isolation, constraining blast radius
 - **L4 (C-ABI Physical Enforcement Layer):** Deterministic binary boundary enforcement, providing mathematical-grade guarantees
 
@@ -141,11 +141,12 @@ Semantic analysis is by nature **probabilistic estimation**. Any detection schem
 
 ### 4.1 Mechanism
 
-ZTM authenticates every agent node based on its **cryptographic identity (X.509 certificate or equivalent ACA signature)**, ensuring:
+ZTM and DROS PKI authenticates every agent node based on a **3-Tier Certificate Authority (Root CA -> AIA Intermediate -> BEC Leaf Certificate)** and **DrosIdentityToken (DIT)** cryptographic binding, ensuring:
 
 - Only nodes with certificates issued by the enterprise Agent Certificate Authority (ACA) may join the mesh
-- All Agent-to-Agent communication traverses TLS 1.3 encrypted tunnels
-- Intra-mesh traffic isolation prevents unauthorized nodes from conducting lateral reconnaissance
+- All Agent-to-Agent tool calls carry a signed **DrosIdentityToken (DIT)** resolving the *Context Loss Problem* (where OS sees generic `python.exe`)
+- Cryptographically binds the agent's identity, role, and pre-compiled skill capability maps to every execution request
+- All Agent-to-Agent communication traverses TLS 1.3 encrypted tunnels, eliminating unauthenticated lateral reconnaissance
 
 ### 4.2 Inherent Limitations
 

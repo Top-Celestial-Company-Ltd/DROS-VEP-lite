@@ -17,7 +17,7 @@
 本白皮書提出 **DROS 四層防禦縱深架構（DROS 4-Layer Defense-in-Depth Paradigm）**，一個專為 **Agentic Web** 時代設計的完整零信任執行治理框架，四層防線分別針對不同威脅層級提供確定性（Deterministic）或概率性（Probabilistic）安全保證：
 
 - **L1（邊界感知層）**：概率性過濾，攔截 ~90% 已知語意攻擊模式
-- **L2（零信任網格層）**：身分密碼學驗證，消除橫向移動攻擊面
+- **L2（零信任網格與 PKI 身分層）**：三階憑證鏈 (Root CA -> AIA -> BEC Leaf Token) 與 DIT 密碼學身分驗證，消除身分冒用與橫向移動攻擊面
 - **L3（任務編排層）**：業務邏輯隔離，限制爆炸半徑
 - **L4（C-ABI 物理熔斷層）**：確定性二進位邊界執行，提供數學級保證
 
@@ -140,11 +140,12 @@ Agent Threat Rules (ATR) 基於 OWASP LLM Top 10 特徵庫與即時全球威脅�
 
 ### 4.1 運作機制
 
-ZTM 基於每一個 Agent 節點的**密碼學身分（X.509 憑證或等效 ACA 簽章）**進行驗證，確保：
+ZTM 與 DROS PKI 基於 **三階憑證授權鏈（Root CA -> AIA 中繼憑證 -> BEC 葉憑證）** 與 **DrosIdentityToken (DIT)** 密碼學繫定，驗證每一個 Agent 節點與系統呼叫：
 
-- 僅持有企業 Agent Certificate Authority (ACA) 簽發憑證的節點可加入網格
-- 所有 Agent-to-Agent 通訊通過 TLS 1.3 加密隧道傳輸
-- 網格內流量隔離，防止未授權節點進行橫向偵察（Lateral Reconnaissance）
+- 只有持有企業級 Agent Certificate Authority (ACA) 簽發憑證的節點方可加入網格
+- 所有 Agent-to-Agent 工具調用均攜帶簽名之 **DrosIdentityToken (DIT)**，解決傳統作業系統「上下文失明 (Context Blindness)」問題（如 OS 僅能視為通用 `python.exe`）
+- 將 Agent 身分、角色與預先編譯之 Skill 權限對映圖以密碼學印章進行鋼性繫定
+- 所有 Agent 之間的通訊均通過 TLS 1.3 加密隧道，消除未經授權節點的橫向偵察行為
 
 ### 4.2 固有限制
 
