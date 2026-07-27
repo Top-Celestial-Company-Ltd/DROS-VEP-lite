@@ -158,6 +158,27 @@ When a `support-agent` holding a valid certificate is fully hijacked via Indirec
 - Can communicate normally within the mesh ✓
 - **Attack behavior is fully transparent to L2** ✗
 
+### 4.3 Federated B2B Multi-VEP Architecture & Supply Chain Defense
+
+When operating across distinct enterprise boundaries (e.g., **Corp-Alpha / OpenAI Workload** interacting with **Corp-Beta / Hugging Face Repository**), DROS elevates Layer 2 into a **Cross-Domain PKI Identity Fingerprinting Gate**:
+
+```
+[ Corp-Beta: Hugging Face Repo ]                   [ Corp-Alpha: Enterprise Buyer ]
+┌───────────────────────────────┐                  ┌──────────────────────────────┐
+│ Agent-Beta (Data Fetcher)     │                  │ DROS GuardVM Alpha (PEP/PDP) │
+│ - Holds DIT-Beta Cert Signature│ ─B2B Tool Call─► │ 1. Verify DIT-Beta Fingerprint│
+└───────────────────────────────┘                  │ 2. Check Bitmap[Beta][API]   │
+                │                                  │ 3. Execute <500ns Panic      │
+   Hijacked via Poisoned Dataset                   └──────────────────────────────┘
+   (ATS-004 Supply Chain Injection)                                │
+                │                                                  ▼
+   Attempts Exfiltration to Alpha ERP              [ FULLY BLOCKED AT C-ABI LAYER ]
+```
+
+1. **Cross-Domain Cryptographic Passport (DIT Fingerprinting):** Every cross-enterprise request carries a 3-tier signed `DrosIdentityToken (DIT)`. Corp-Alpha's GuardVM inspects the SHA-256 root authority fingerprint to instantly detect identity spoofing.
+2. **B2B Non-Repudiation Audit Stamps:** Execution logs append cryptographic signatures from both enterprise GuardVMs, establishing tamper-proof, legally defensible evidence for enterprise SLAs and insurance.
+3. **Instant Supply Chain Revocation (CRL):** If Corp-Beta's agent is compromised, Corp-Alpha can revoke the supplier's CA fingerprint in <1μs without code redeployment, isolating the enterprise from cascading supply chain attacks.
+
 ---
 
 ## 5. Layer 3: Agentic Task Orchestration & Business Isolation Layer

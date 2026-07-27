@@ -157,6 +157,27 @@ ZTM 與 DROS PKI 基於 **三階憑證授權鏈（Root CA -> AIA 中繼憑證 ->
 - 可在網格內正常通訊 ✓
 - **攻擊行為對 L2 完全透明** ✗
 
+### 4.3 B2B 跨企業 PKI 聯邦與供應鏈連動演練架構 (Federated B2B Multi-VEP Architecture)
+
+當運作於跨企業邊界（例如 **Corp-Alpha / OpenAI 核心工作負載** 與 **Corp-Beta / Hugging Face 數據庫** 互動）時，DROS 將第二層防線升維為 **跨域 PKI 密碼學身分指紋網關 (Cross-Domain Identity Fingerprinting Gate)**：
+
+```
+[ Corp-Beta: Hugging Face 數據庫 ]                  [ Corp-Alpha: 買方核心企業 ]
+┌───────────────────────────────┐                  ┌──────────────────────────────┐
+│ Agent-Beta (資料抓取員)       │                  │ DROS GuardVM Alpha (PEP/PDP) │
+│ - 持有 DIT-Beta 密碼學指紋印章 │ ─跨企業調用───►  │ 1. 驗證 DIT-Beta 憑證指紋    │
+└───────────────────────────────┘                  │ 2. 比對 Bitmap[Beta][API]    │
+                │                                  │ 3. <500ns 執行確定性物理熔斷 │
+   經由投毒數據集遭挾持                            └──────────────────────────────┘
+   (ATS-004 跨企業供應鏈劫持案)                                    │
+                │                                                  ▼
+   企圖越權讀取 Alpha ERP 財務密件                 [ 於 C-ABI 層實施 100% 硬阻斷 ]
+```
+
+1. **跨域密碼學通關護照 (DIT 指紋繫定)：** 每筆跨企業請求均攜帶三階簽章之 `DrosIdentityToken (DIT)`。買方 Corp-Alpha 的 GuardVM 透過檢驗 SHA-256 根憑證指紋，一秒辨識並防止任何身分冒用。
+2. **B2B 不可否認性雙重簽章：** 執行日誌同時附上雙方 GuardVM 的密碼學簽章，為企業 SLA 賠償與資安保險提供不可篡改的法律鐵證。
+3. **供應鏈即時動態撤銷 (CRL)：** 一旦發現供應商 Corp-Beta 的 Agent 遭資安通報劫持，買方企業無需重設商業程式碼，可在 <1μs 內於 GuardVM 撤銷該供應商指紋，即刻阻斷級聯式供應鏈感染。
+
 ---
 
 ## 五、第三層：Agentic 任務編排與業務隔離層
