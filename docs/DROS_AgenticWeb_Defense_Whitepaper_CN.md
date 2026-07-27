@@ -5,7 +5,7 @@
 **日期：** 2026-07-25  
 **機密等級：** 公開技術白皮書  
 **作者：** DROS Security Research Team  
-**專利聲明：** C-ABI 邊界執行技術已申請美國臨時專利（U.S. PPA No. 64/111,973，Patent Pending）  
+**專利聲明：** DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. Patent Application No. 64/111,973，Patent Pending）  
 **開源驗證環境：** [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
 
 ---

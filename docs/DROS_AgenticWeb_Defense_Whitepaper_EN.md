@@ -5,7 +5,7 @@
 **Date:** 2026-07-25  
 **Classification:** Public Technical Whitepaper  
 **Author:** DROS Security Research Team  
-**Patent Notice:** C-ABI Boundary Enforcement Technology — U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending)  
+**Patent Notice:** DROS execution governance and security technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending)  
 **Open-Source Verification Environment:** [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
 
 ---
