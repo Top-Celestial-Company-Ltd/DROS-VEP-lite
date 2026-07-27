@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # ENTERPRISE ALPHA (Buyer / Core Enterprise)
+  # ==========================================
+  corp-alpha-erp:
+    image: python:3.10-slim
+    container_name: corp-alpha-erp
+    volumes:
+      - ./enterprise:/app
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python mock_services.py"
+    ports:
+      - "8081:8081"
+    networks:
+      - alpha-network
+
+  corp-alpha-dros-guard:
+    image: python:3.10-slim
+    container_name: corp-alpha-dros-guard
+    volumes:
+      - ./core:/app
+      - ./reports:/app/reports
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python dros_guard.py"
+    ports:
+      - "8082:8082"
+    environment:
+      - ERP_URL=http://corp-alpha-erp:8081
+    depends_on:
+      - corp-alpha-erp
+    networks:
+      - alpha-network
+      - b2b-federation-network
+
+  # ==========================================
+  # ENTERPRISE BETA (Supplier / Vendor Enterprise)
+  # ==========================================
+  corp-beta-erp:
+    image: python:3.10-slim
+    container_name: corp-beta-erp
+    volumes:
+      - ./enterprise:/app
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python mock_services.py"
+    ports:
+      - "9081:8081"
+    networks:
+      - beta-network
+
+  corp-beta-dros-guard:
+    image: python:3.10-slim
+    container_name: corp-beta-dros-guard
+    volumes:
+      - ./core:/app
+      - ./reports:/app/reports
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python dros_guard.py"
+    ports:
+      - "9082:8082"
+    environment:
+      - ERP_URL=http://corp-beta-erp:8081
+    depends_on:
+      - corp-beta-erp
+    networks:
+      - beta-network
+      - b2b-federation-network
+
+  # ==========================================
+  # B2B FEDERATION DASHBOARD
+  # ==========================================
+  b2b-dashboard:
+    image: python:3.10-slim
+    container_name: b2b-dashboard
+    volumes:
+      - ./dashboard:/app
+      - ./scenarios:/app/scenarios
+      - ./reports:/app/reports
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python control_center.py"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - corp-alpha-dros-guard
+      - corp-beta-dros-guard
+    networks:
+      - alpha-network
+      - beta-network
+
+networks:
+  alpha-network:
+    driver: bridge
+  beta-network:
+    driver: bridge
+  b2b-federation-network:
+    driver: bridge

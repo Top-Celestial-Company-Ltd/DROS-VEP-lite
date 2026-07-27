@@ -20,12 +20,21 @@
 git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
 cd dros-vep-lite
 
-# 2. Launch containerized enterprise sandbox
+# Standard Single Enterprise Sandbox (Default Challenge Mode)
 docker compose up -d
+
+# 🏢 Advanced: B2B Multi-Enterprise Supply Chain Mode (Federated Defense)
+docker compose -f docker-compose-b2b.yml up -d
+```
+
+### 🏢 B2B Multi-Enterprise Supply Chain Mode (Federated Defense)
+Want to evaluate cross-enterprise Agent interactions and supply chain attacks?
+* **Corp-Alpha (Buyer)**: Operates GuardVM at `localhost:8082`
+* **Corp-Beta (Supplier)**: Operates GuardVM at `localhost:9082`
+* **Supply Chain Defense**: Simulates Indirect Prompt Injection (IPI) propagating from a compromised Supplier Agent into the Buyer's GuardVM. Even if Supplier Agent holds valid tokens, Corp-Alpha's GuardVM enforces sub-microsecond binary interception!
 
 # 3. Open Interactive Web Dashboard
 # Navigate to http://localhost:8080 in your browser
-```
 
 ```text
 Attack ───► Policy Evaluation ───► Evidence Artifact ───► Deterministic Replay

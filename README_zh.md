@@ -22,8 +22,20 @@ git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
 cd dros-vep-lite
 
 # 2. 啟動容器化企業靶場
+# 標準單企業沙箱（預設首破挑戰賽模式）
 docker compose up -d
 
+# 🏢 進階：B2B 跨企業供應鏈防禦模式 (Federated Defense Mode)
+docker compose -f docker-compose-b2b.yml up -d
+```
+
+### 🏢 B2B 跨企業供應鏈防禦模式 (Federated Defense Mode)
+欲評估跨企業 Agent 互動與供應鏈感染防禦？
+* **Corp-Alpha (買方企業)**：於 `localhost:8082` 運行 DROS GuardVM
+* **Corp-Beta (賣方供應商)**：於 `localhost:9082` 運行 DROS GuardVM
+* **供應鏈防禦展示**：模擬當賣方 Agent 遭間接提示詞注入 (IPI) 挾持、企圖跨企業呼叫買方 API 時，買方 `DROS Guard A` 如何透過 PKI DIT 驗簽與 C-ABI 比對實施亞微秒級確定性阻斷！
+
+```bash
 # 3. 開啟互動式 Web 控制台
 # 在瀏覽器中造訪 http://localhost:8080
 ```
