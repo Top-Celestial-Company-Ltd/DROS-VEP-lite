@@ -179,6 +179,14 @@ When operating across distinct enterprise boundaries (e.g., **Corp-Alpha / OpenA
 2. **B2B Non-Repudiation Audit Stamps:** Execution logs append cryptographic signatures from both enterprise GuardVMs, establishing tamper-proof, legally defensible evidence for enterprise SLAs and insurance.
 3. **Instant Supply Chain Revocation (CRL):** If Corp-Beta's agent is compromised, Corp-Alpha can revoke the supplier's CA fingerprint in <1μs without code redeployment, isolating the enterprise from cascading supply chain attacks.
 
+### 4.4 Supply Chain Network Immune Effect
+
+Traditional security patches holes in enterprise walls; DROS injects cryptographic antibodies directly into every autonomous agent. When buyer enterprises and multi-tier suppliers adopt DROS governance, a **Supply Chain Network Immune Effect** is triggered:
+
+- **Cellular Blast Radius Containment:** Every AI agent operates as an isolated cellular unit. If a Tier-3 supplier agent is hijacked externally (e.g. via Hugging Face dataset poisoning), the exploit is contained entirely within that supplier's DROS boundary, preventing cascading cross-enterprise infection.
+- **Cascading Zero-Trust Adoption:** Mandating DIT cryptographic tokens for cross-enterprise API access drives the entire supply chain ecosystem to naturally conform to deterministic zero-trust governance standards.
+- **Seamless Antibody Defense:** Upon vulnerability disclosure, enterprise GuardVMs update CA revocation fingerprints instantly, deploying a deterministic <1μs network antibody without altering a single line of business application code.
+
 ---
 
 ## 5. Layer 3: Agentic Task Orchestration & Business Isolation Layer
