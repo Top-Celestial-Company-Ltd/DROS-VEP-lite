@@ -31,9 +31,9 @@ docker compose -f docker-compose-b2b.yml up -d
 
 ### 🏢 B2B 跨企業供應鏈防禦模式 (Federated Defense Mode)
 欲評估跨企業 Agent 互動與供應鏈感染防禦？
-* **Corp-Alpha (買方企業)**：於 `localhost:8082` 運行 DROS GuardVM
-* **Corp-Beta (賣方供應商)**：於 `localhost:9082` 運行 DROS GuardVM
-* **供應鏈防禦展示**：模擬當賣方 Agent 遭間接提示詞注入 (IPI) 挾持、企圖跨企業呼叫買方 API 時，買方 `DROS Guard A` 如何透過 PKI DIT 驗簽與 C-ABI 比對實施亞微秒級確定性阻斷！
+* **Corp-Alpha (OpenAI Agent 核心企業)**：於 `localhost:8082` 運行 DROS GuardVM
+* **Corp-Beta (Hugging Face 數據集與模型庫)**：於 `localhost:9082` 運行 DROS GuardVM
+* **EP4 劇本 (ATS-004: OpenAI × Hugging Face 跨企業供應鏈劫持案)**：模擬 OpenAI Agent 在存取 Hugging Face 上遭投毒的數據集/模型時，嵌入的間接提示詞注入 (IPI) 企圖挾持 Agent 竊取 Corp-Alpha 的財務密件。即使 Agent 持有合法 Access Token，Corp-Alpha 的 `DROS Guard` 依舊在 C-ABI 邊界以 **<500ns** 實施確定性硬熔斷阻斷！
 
 ```bash
 # 3. 開啟互動式 Web 控制台

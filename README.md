@@ -29,9 +29,9 @@ docker compose -f docker-compose-b2b.yml up -d
 
 ### 🏢 B2B Multi-Enterprise Supply Chain Mode (Federated Defense)
 Want to evaluate cross-enterprise Agent interactions and supply chain attacks?
-* **Corp-Alpha (Buyer)**: Operates GuardVM at `localhost:8082`
-* **Corp-Beta (Supplier)**: Operates GuardVM at `localhost:9082`
-* **Supply Chain Defense**: Simulates Indirect Prompt Injection (IPI) propagating from a compromised Supplier Agent into the Buyer's GuardVM. Even if Supplier Agent holds valid tokens, Corp-Alpha's GuardVM enforces sub-microsecond binary interception!
+* **Corp-Alpha (OpenAI Agent Workload)**: Operates GuardVM at `localhost:8082`
+* **Corp-Beta (Hugging Face Repository)**: Operates GuardVM at `localhost:9082`
+* **EP4 Scenario (ATS-004: OpenAI × Hugging Face Supply Chain Poisoning)**: Simulates an OpenAI Agent retrieving a poisoned dataset/model from Hugging Face. The embedded Indirect Prompt Injection (IPI) attempts to hijack the agent to exfiltrate Corp-Alpha's financial secrets. Even with valid OAuth tokens, Corp-Alpha's GuardVM intercepts the cross-enterprise attack at the C-ABI boundary in **<500ns**!
 
 # 3. Open Interactive Web Dashboard
 # Navigate to http://localhost:8080 in your browser
