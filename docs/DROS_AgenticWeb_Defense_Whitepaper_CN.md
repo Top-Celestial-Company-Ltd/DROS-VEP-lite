@@ -403,5 +403,5 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 ---
 
 *© 2026 DROS Security / Top Celestial Company Ltd. 版權所有。*  
-*C-ABI 邊界執行技術已申請美國臨時專利保護（U.S. PPA No. 64/111,973, Patent Pending）。*  
+*DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. PPA No. 64/111,973, Patent Pending）。*  
 *本白皮書旨在提供技術資訊，不構成法律或投資建議。*
