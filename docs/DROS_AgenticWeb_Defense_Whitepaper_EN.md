@@ -404,5 +404,5 @@ The performance data cited in this whitepaper is based on the following testing 
 ---
 
 *© 2026 DROS Security / Top Celestial Company Ltd. All rights reserved.*  
-*C-ABI Boundary Enforcement Technology — U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending).*  
+*DROS execution governance and security technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending)*  
 *This whitepaper is provided for technical informational purposes and does not constitute legal or investment advice.*
