@@ -129,6 +129,18 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ---
 
+## 🏅 RFC-010 Draft Protocol Conformance Harness
+
+Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, OpenClaw) can evaluate their runtime security across 3 certification tiers:
+
+* **Level 1 (Core)**: Identity Token (DIT) + PEP Tool Interception + Structured Audit Logging.
+* **Level 2 (Enterprise)**: Policy Explainability (Policy ID) + Evidence Package (SHA-256 Digest) + Multi-Agent Role Isolation.
+* **Level 3 (High Assurance)**: Cryptographic Attestation + Tamper Detection + Deterministic Replay.
+
+> **ℹ️ Disclaimer**: *The included conformance harness validates implementations against the RFC-010 Draft specification. Passing the test indicates conformance to this draft, not certification by an independent standards body.*
+
+---
+
 ## 🏆 The $40,000 DROS Red Team Grand Challenge
 
 **Can you breach DROS’s 26.1μs C-ABI zero-trust execution boundary?**
@@ -157,38 +169,28 @@ To claim the Grand Prize, your submission MUST meet all three of the following s
 
 ---
 
-## 🏅 RFC-010 Draft Protocol Conformance Harness
-
-Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, OpenClaw) can evaluate their runtime security across 3 certification tiers:
-
-* **Level 1 (Core)**: Identity Token (DIT) + PEP Tool Interception + Structured Audit Logging.
-* **Level 2 (Enterprise)**: Policy Explainability (Policy ID) + Evidence Package (SHA-256 Digest) + Multi-Agent Role Isolation.
-* **Level 3 (High Assurance)**: Cryptographic Attestation + Tamper Detection + Deterministic Replay.
-
-> **ℹ️ Disclaimer**: *The included conformance harness validates implementations against the RFC-010 Draft specification. Passing the test indicates conformance to this draft, not certification by an independent standards body.*
-
----
-
 ## 💎 Defense Capability & Feature Comparison Matrix
 
-| Feature / Capability | ⚪ Free Trial | 🟢 Hacker | 🔵 Startup | 🟣 Enterprise | 👑 Sovereign |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Target Audience** | Individual Evaluation | Individual Developers | 10~50 Person Startups | Mid-to-Large Enterprises | Financial / Defense / Govt |
-| **License Duration** | 1 Month Trial | Annual Subscription | Annual Subscription | Annual Subscription | Custom Contract |
-| **Machine UUIDs** | 1 UUID | 1 UUID | 3 UUIDs | 15 UUIDs | Unlimited |
-| **Concurrent Agents** | 2 Agents | 5 Agents | 30 Agents (3×10) | 450 Agents (15×30) | Unlimited |
-| **Level 1: FFI Microkernel Panic** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
-| **Level 1: C-ABI Memory Protection** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
-| **Level 2: Information Flow Control (IFC)** | ❌ | ❌ | ✅ | ✅ | ✅ |
-| **Level 2: Dynamic Data Tainting** | ❌ | ❌ | ✅ | ✅ | ✅ |
-| **Level 2: Cross-Channel Exfiltration Block (POL-0021)** | ❌ | ❌ | ✅ | ✅ | ✅ |
-| **Level 3: Auto-DSL Flywheel Engine** | ❌ | ❌ | ❌ | ⭐ | ⭐ |
-| **Level 3: Dynamic Baseline Fusing** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Level 3: HIL Multi-Signature Approval** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Level 3: CoW 1-Sec Snapshot Rollback** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **100% Air-Gapped Offline Deployment** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Zero-Downtime Hot Reload** | ❌ | ❌ | Manual Reload | ✅ Millisecond-level | ✅ Distributed RCU |
-| **Target Infrastructure** | Local PC | Local / Docker | VM / NAS | K8s / GKE | Air-Gapped / FPGA |
+| Feature / Capability | 🧪 VEP Lite Sandpit | ⚪ Free Trial | 🟢 Hacker | 🔵 Startup | 🟣 Enterprise | 👑 Sovereign |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Target Audience** | Open-Spec Evaluation | Individual Evaluation | Individual Developers | 10~50 Person Startups | Mid-to-Large Enterprises | Financial / Defense / Govt |
+| **License Duration** | Unlimited Free | 1 Month Trial | Annual Subscription | Annual Subscription | Annual Subscription | Custom Contract |
+| **Machine UUIDs** | Local Sandbox | 1 UUID | 1 UUID | 3 UUIDs | 15 UUIDs | Unlimited |
+| **Concurrent Agents** | 2 Roles Demo | 2 Agents | 5 Agents | 30 Agents (3×10) | 450 Agents (15×30) | Unlimited |
+| **Level 1: FFI Microkernel Panic** | **✅ Included** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
+| **Level 1: C-ABI Memory Protection** | **✅ Included** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
+| **Level 1: Real SHA-256 Audit Digest** | **✅ Included** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Level 1: Ed25519 Session Attestation** | **✅ Included** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Level 2: Information Flow Control (IFC)** | **🟡 Spec Demo** | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Level 2: Dynamic Data Tainting** | **🟡 Spec Demo** | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Level 2: Cross-Channel Exfiltration Block (POL-0021)** | **✅ Included (ATS-001)** | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Level 3: Auto-DSL Flywheel Engine** | **❌ Prod Only** | ❌ | ❌ | ❌ | ⭐ | ⭐ |
+| **Level 3: Dynamic Baseline Fusing** | **❌ Prod Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Level 3: HIL Multi-Signature Approval** | **❌ Prod Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Level 3: CoW 1-Sec Snapshot Rollback** | **❌ Prod Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **100% Air-Gapped Offline Deployment** | **✅ Sandbox Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Zero-Downtime Hot Reload** | **❌ Manual** | ❌ | ❌ | Manual Reload | ✅ Millisecond-level | ✅ Distributed RCU |
+| **Target Infrastructure** | Docker Desktop | Local PC | Local / Docker | VM / NAS | K8s / GKE | Air-Gapped / FPGA |
 
 ---
 
