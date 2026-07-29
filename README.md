@@ -169,16 +169,26 @@ Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, O
 
 ---
 
-## 💎 Product Editions & Licensing
+## 💎 Defense Capability & Feature Comparison Matrix
 
-| Feature / Capability | Community ($0 Free) | Hacker ($149/yr or $19/mo - 1k Free Promo) | Professional ($499/yr / Team) | Enterprise Swarm (Commercial) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Target Audience** | Students & Researchers | Freelancers & Small AI Startups | Mid-sized AI Engineering Teams | Fortune 500, Banks, Government |
-| **Concurrent Roles** | **Max 2 Roles** | **Up to 5 Roles** | **Up to 25 Roles** | **Unlimited (500+ Swarm Production)** |
-| **ATS Scenarios** | ATS-001 Single | ATS-001 ~ ATS-005 Full Matrix | ATS-001 ~ ATS-005 + Custom | Unlimited Custom Red Team Crucibles |
-| **Connectors** | REST Mock Enterprise APIs | REST Mock + CI/CD Harness | Keycloak + EspoCRM + Forgejo | Live SAP, Active Directory, K8s |
-| **Replay & SIEM** | Local Telemetry | Offline Replay Engine (`replay.py`) | Replay + Telemetry Heatmap | Unlimited PKI Log & SIEM (Splunk) |
-| **Defense Scope** | AI Agent Tool Governance | AI Agent Tool Governance | AI Agent Tool Governance | **AI Agent + Enterprise Ransomware Defense** |
+| Feature / Capability | ⚪ Free Trial | 🟢 Hacker | 🔵 Startup | 🟣 Enterprise | 👑 Sovereign |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Target Audience** | Individual Evaluation | Individual Developers | 10~50 Person Startups | Mid-to-Large Enterprises | Financial / Defense / Govt |
+| **License Duration** | 1 Month Trial | Annual Subscription | Annual Subscription | Annual Subscription | Custom Contract |
+| **Machine UUIDs** | 1 UUID | 1 UUID | 3 UUIDs | 15 UUIDs | Unlimited |
+| **Concurrent Agents** | 2 Agents | 5 Agents | 30 Agents (3×10) | 450 Agents (15×30) | Unlimited |
+| **Level 1: FFI Microkernel Panic** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
+| **Level 1: C-ABI Memory Protection** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
+| **Level 2: Information Flow Control (IFC)** | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Level 2: Dynamic Data Tainting** | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Level 2: Cross-Channel Exfiltration Block (POL-0021)** | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Level 3: Auto-DSL Flywheel Engine** | ❌ | ❌ | ❌ | ⭐ | ⭐ |
+| **Level 3: Dynamic Baseline Fusing** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Level 3: HIL Multi-Signature Approval** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Level 3: CoW 1-Sec Snapshot Rollback** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **100% Air-Gapped Offline Deployment** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Zero-Downtime Hot Reload** | ❌ | ❌ | Manual Reload | ✅ Millisecond-level | ✅ Distributed RCU |
+| **Target Infrastructure** | Local PC | Local / Docker | VM / NAS | K8s / GKE | Air-Gapped / FPGA |
 
 ---
 
