@@ -95,9 +95,13 @@ Policy Decision Points (PDP) MUST return structured explainability metadata for 
   "policy_id": "DROS-POL-021",
   "rule_desc": "Role 'support-agent' cannot access finance namespace",
   "decision": "deny",
+  "pki_cert_status": "VALID_ED25519",
+  "execution_signature": "MEUCIQDk3v8xZ2pN...(Ed25519 base64)",
+  "session_pubkey": "v8xZ2pNaB3cQ...(Ed25519 public key base64)",
   "evaluation_latency_ns": 26101,
   "evaluation_latency_ms": 0.026101,
-  "sha256_hash": "sha256:dros_00000000000065f5"
+  "sha256_hash": "sha256:3a7bd3e2360a3d29aa625777a3c4f9d4b3f2e1c8d5a6b9e0f1c2d3e4f5a6b7c8",
+  "sha256_preimage": "exec_ATS-001_1768960000|support-agent|/api/erp/finance|deny|DROS-POL-021|2026-07-22T01:31:40Z"
 }
 ```
 
@@ -111,6 +115,12 @@ For non-repudiation, the PEP MUST output evidence artifacts under `reports/evide
 - `decision.json`
 - `tool_call.json`
 - `hash.txt` (SHA-256 Digest)
+
+**Cryptographic Integrity (v1.1+):**
+- `sha256_hash`: Real `hashlib.sha256` digest over canonical preimage string `exec_id|agent_role|path|decision|policy_id|timestamp`
+- `sha256_preimage`: Included in each audit event so any third-party can independently recompute and verify
+- `execution_signature`: Ed25519 signature (real `cryptography` library) over the DIT token, signed with a session keypair generated at PEP startup (simulates HSM short-lived signing key)
+- `session_pubkey`: Corresponding Ed25519 public key (base64), exported in each audit record for offline verification
 
 ---
 

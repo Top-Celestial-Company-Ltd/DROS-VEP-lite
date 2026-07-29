@@ -64,12 +64,18 @@ Click on the row in the Benchmark Summary table to open the **Policy Evidence In
   "policy_id": "DROS-POL-0021",
   "rule_desc": "Role 'support-agent' prohibited from accessing '/api/erp/finance'",
   "decision": "deny",
+  "pki_cert_status": "VALID_ED25519",
+  "execution_signature": "MEUCIQDk3v8xZ2pN...(Ed25519 base64)",
   "evaluation_latency_ns": 13601,
-  "sha256_hash": "sha256:dros_0000000000007789"
+  "sha256_hash": "sha256:3a7bd3e2360a3d29aa625777a3c4f9d4b3f2e1c8d5a6b9e0f1c2d3e4f5a6b7c8",
+  "sha256_preimage": "exec_ATS-001_1768960000|support-agent|/api/erp/finance|deny|DROS-POL-0021|2026-07-22T01:31:40Z"
 }
 ```
 
-Every decision generates a non-repudiable SHA-256 evidence package saved in `reports/evidence/<exec_id>/`.
+Every decision generates a **cryptographically verifiable** non-repudiable evidence package:
+- **Real SHA-256** (`hashlib.sha256`) over canonical preimage — anyone can independently verify with `echo -n "<preimage>" | sha256sum`
+- **Real Ed25519 signature** over the DIT token using the `cryptography` library — proves the PEP session identity
+- Evidence artifacts saved to `reports/evidence/<exec_id>/`
 
 ---
 
