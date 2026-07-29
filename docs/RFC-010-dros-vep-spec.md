@@ -25,6 +25,11 @@ AI Agent Layer             (LangGraph, CrewAI, AutoGen, OpenClaw)
 DROS Governance Layer      (Policy Decision Point / Policy Enforcement Point)
 ```
 
+> [!NOTE]
+> **Evaluation Sandbox vs. Enterprise Production Governance Engine**  
+> VEP (Evaluation Ground) is designed as a human-readable, transparent proving ground using open-spec (RFC-010) policy representations so security teams can audit rules and simulate scenarios without proprietary friction.  
+> In **DROS Enterprise Production**, policies are compiled by `VajraCompiler` into cryptographically signed, immutable, lock-free C-ABI binary microkernels (`policy.bin`) to ensure zero-trust isolation and anti-reverse-engineering protection.
+
 ---
 
 ## 2. Agent Identity & 500+ Swarm Policy Inheritance

@@ -200,5 +200,13 @@ Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($149 Value)**
 * ⚡ **[4-Page A4 Executive Summary (HTML)](dashboard/whitepaper_4page_EN.html)**: *Fast visual summary for CISOs & Security Researchers*
 * 📋 **[RFC-010: DROS-VEP Specification Protocol](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/RFC-010-dros-vep-spec.md)**: *Open Agent Security & Threat Scenario Protocol*
 
+## ❓ Frequently Asked Questions (FAQ)
+
+### Why does VEP use open-spec policy representations rather than compiled `policy.bin` binaries?
+VEP Lite is engineered as a **human-readable, open-spec evaluation sandbox (RFC-010)** to allow security researchers, CISOs, and developers to easily audit policy rules, inspect threat scenarios, and conduct red-teaming without proprietary compiled binaries.  
+In **DROS Enterprise Production**, policies are compiled by `VajraCompiler` into cryptographically signed, immutable, lock-free C-ABI binary microkernels (`policy.bin`) with zero-heap memory allocation and anti-reverse-engineering seals.
+
+---
+
 ## 📄 License
 Licensed under Apache 2.0. See [LICENSE](LICENSE) for details.
