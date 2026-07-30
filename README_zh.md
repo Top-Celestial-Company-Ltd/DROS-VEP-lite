@@ -4,6 +4,7 @@
 > **（您的 AI Agent 能否在真實企業環境中安全運行？用測試證明給我看。）**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Powered by: OpenShip](https://img.shields.io/badge/Powered%20by-OpenShip%20Ecosystem-purple.svg)](https://openship.org)
 [![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
 [![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
@@ -60,9 +61,9 @@ docker compose -f docker-compose-b2b.yml up -d
 
 ---
 
-## 🏗️ 架構與縱深防禦生態 (Defense-in-Depth)
+## 🏗️ 系統架構與生態系 (Architecture & Ecosystem)
 
-DROS **絕不取代** 傳統網安（WAF、EDR、SIEM）。相反地，它在現代 **縱深防禦 (Defense-in-Depth)** 架構中，為 AI Agent 工具執行邊界提供了 **「最後一哩路運行期防線 (Last Mile Runtime Defense)」**：
+DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)** 編排生產級跨企業容器環境 (ERPNext、Keycloak IAM 與 DROS GuardVM)。DROS **並不取代** 傳統資安（WAF、EDR、SIEM），而是為現代**縱深防禦架構（Defense-in-Depth）**中的 AI Agent 執行邊界提供**「最後一哩路運行期防禦」**：
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐

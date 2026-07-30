@@ -3,6 +3,7 @@
 > **"Can your AI Agent safely operate inside a real enterprise? Prove it."**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Powered by: OpenShip](https://img.shields.io/badge/Powered%20by-OpenShip%20Ecosystem-purple.svg)](https://openship.org)
 [![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
 [![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology)
@@ -56,9 +57,9 @@ Most AI benchmarks measure LLM intelligence, coding skills, or prompt toxicity. 
 
 ---
 
-## 🏗️ Architecture & Defense-in-Depth Ecosystem
+## 🏗️ Architecture & Ecosystem
 
-DROS does **NOT** replace traditional cybersecurity (WAF, EDR, SIEM). Instead, it provides the **"Last Mile Runtime Defense"** for AI Agent execution boundaries in a modern **Defense-in-Depth** architecture:
+DROS-VEP Lite leverages the **[OpenShip Ecosystem](https://openship.org)** to orchestrate a production-grade multi-enterprise container environment (ERPNext, Keycloak IAM, and DROS GuardVM). DROS does **NOT** replace traditional cybersecurity (WAF, EDR, SIEM); instead, it provides the **"Last Mile Runtime Defense"** for AI Agent execution boundaries in a modern **Defense-in-Depth** architecture:
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
