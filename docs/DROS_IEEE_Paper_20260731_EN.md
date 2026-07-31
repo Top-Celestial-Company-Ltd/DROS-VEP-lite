@@ -198,11 +198,11 @@ Our work builds upon and extends recent breakthroughs across four primary comput
 
 ---
 
-## 7. Conclusion & Vision (結語與展望)
+## 7. Conclusion & Future Work
 
-In an era where AI agents possess boundless autonomous capabilities like Sun Wukong (the Monkey King), enterprises do not need a bigger golden staff (probabilistic semantic firewalls); they need an unbypassable, physical tightening crown to ensure the agent never strays from its authorized path.
+As autonomous AI workloads assume critical operational roles across enterprise infrastructures, probabilistic application-layer firewalls alone cannot guarantee execution safety. This paper presents the DROS 4-Layer Defense-in-Depth Architecture, establishing a deterministic runtime control plane that combines 3-tier PKI identity attestations with sub-microsecond C-ABI binary boundary enforcement (<500ns panic latency, 26.1μs median policy evaluation).
 
-DROS-VEP represents this physical tightening crown—a deterministic execution control plane forged from $O(1)$ bitmap evaluation and 3-tier PKI cryptographic identity binding. We do not gamble on probabilities; we safeguard the future of the Agentic Web using binary physics.
+By isolating execution capabilities into immutable bitmapped boundaries and validating identity via signed `DrosIdentityTokens (DIT)`, DROS effectively resolves the OS-level attribution gap and contains post-compromise attack vectors, including zero-day Indirect Prompt Injections and cross-enterprise B2B supply chain contagion. Empirical evaluations across continuous 24-hour benchmark runs demonstrate zero-overhead scalability and 100% deterministic interception without requiring modifications to underlying LLM model architectures or application codebases. Future work will focus on expanding dynamic formal verification for inter-agent memory sharing protocols.
 
 ---
 
