@@ -59,7 +59,7 @@ SCENARIOS = [
 
 ASCII_BANNER = """
 ====================================================================================
-  🛡️ DROS-VEP: 24-Hour Continuous Multi-Scenario Automated Soak Test Engine
+  [DROS-VEP] 24-Hour Continuous Multi-Scenario Automated Soak Test Engine
 ====================================================================================
   Target Guard URL : {}
   Planned Duration : {} Hours
@@ -90,23 +90,24 @@ try:
         
         headers = {
             "Content-Type": "application/json",
+            "X-Agent-Role": scenario["agent_role"],
+            "X-Scenario-ID": scenario["scenario_id"],
             "X-DROS-Identity-Token": f"DIT-TOKEN-SOAK-{total_requests+1:08d}"
         }
 
+        target_url = f"http://localhost:8082{scenario['target_endpoint']}"
+
         req_start = time.perf_counter_ns()
         try:
-            resp = requests.post(GUARD_URL, json=payload, headers=headers, timeout=5)
+            resp = requests.get(target_url, headers=headers, timeout=5)
             req_end = time.perf_counter_ns()
             elapsed_ns = req_end - req_start
             latencies_ns.append(elapsed_ns)
 
             if resp.status_code == 200:
-                data = resp.json()
-                decision = data.get("decision", "unknown")
-                if decision == "allow":
-                    allowed_count += 1
-                else:
-                    denied_count += 1
+                allowed_count += 1
+            elif resp.status_code == 403:
+                denied_count += 1
             else:
                 errors += 1
         except Exception as e:
@@ -148,14 +149,14 @@ report = {
     "latency_p99_ms": round(p99_ns / 1e6, 4)
 }
 
-output_path = os.path.join(os.path.dirname(__file__), "..", "reports", "soak_test_24h_report.json")
+output_path = os.path.abspath(os.path.join(os.getcwd(), "reports", "soak_test_24h_report.json"))
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(report, f, indent=2, ensure_ascii=False)
 
 print("\n====================================================================================")
-print(f"✅ 24-Hour Automated Soak Test Completed Successfully!")
-print(f"📊 Summary Report Saved to: {output_path}")
-print(f"📈 Total Requests: {total_requests} | DENY (Intercepted): {denied_count} | ALLOW: {allowed_count}")
-print(f"⚡ Policy Decision Speed -> P50: {report['latency_p50_us']} μs ({report['latency_p50_ms']} ms) | P99: {report['latency_p99_us']} μs ({report['latency_p99_ms']} ms)")
+print(f"[OK] 24-Hour Automated Soak Test Completed Successfully!")
+print(f"[REPORT] Summary Report Saved to: {output_path}")
+print(f"[STATS] Total Requests: {total_requests} | DENY (Intercepted): {denied_count} | ALLOW: {allowed_count}")
+print(f"[SPEED] Policy Decision Speed -> P50: {report['latency_p50_us']} us ({report['latency_p50_ms']} ms) | P99: {report['latency_p99_us']} us ({report['latency_p99_ms']} ms)")
 print("====================================================================================\n")
