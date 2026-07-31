@@ -543,12 +543,38 @@
             try {
                 const res = await fetch('/api/audit-logs');
                 const logs = await res.json();
+                const terminal = document.getElementById('terminal-out');
                 if (logs.length > 0) {
                     const lastLog = logs[logs.length - 1];
                     document.getElementById('current-latency').innerText = `${lastLog.evaluation_latency_ms.toFixed(4)} ms (${(lastLog.evaluation_latency_ns/1000).toFixed(1)}μs)`;
+                    
+                    // Render last 8 logs into the Live Audit Stream terminal
+                    const recentLogs = logs.slice(-8);
+                    let html = `<div class="text-slate-500 font-mono text-[11px] mb-1">[Live Telemetry Active] Streaming GuardVM binary audit events...</div>`;
+                    recentLogs.forEach(l => {
+                        const badgeColor = l.decision === 'deny' ? 'bg-rose-950 text-rose-400 border-rose-800' : 'bg-emerald-950 text-emerald-400 border-emerald-800';
+                        html += `
+                            <div class="flex items-center justify-between text-xs py-1 border-b border-slate-900 font-mono">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-slate-500 text-[10px]">${l.timestamp.split('T')[1].replace('Z','')}</span>
+                                    <span class="px-1.5 py-0.2 text-[9px] rounded font-bold uppercase border ${badgeColor}">${l.decision}</span>
+                                    <span class="text-cyan-400 font-bold">${l.agent_role}</span>
+                                    <span class="text-slate-300">-> ${l.request_path}</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-purple-300 text-[11px]">${(l.evaluation_latency_ns/1000).toFixed(1)}μs</span>
+                                    <span class="text-slate-500 text-[10px]">${l.sha256_hash ? l.sha256_hash.substring(0,18) : ''}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    terminal.innerHTML = html;
                 }
             } catch (e) {}
         }
+
+        // Auto-poll live telemetry every 1.5 seconds
+        setInterval(fetchAuditLogs, 1500);
 
         function showEvidenceModal(scenId, role, path, polId, ruleDesc, decision, execId, hash, latency) {
             document.getElementById('modal-scenario-title').innerText = `Scenario ${scenId}: Indirect Prompt Injection & Exfiltration`;
