@@ -125,9 +125,21 @@ When autonomous agents interact across enterprise boundaries (e.g., **Corp-Alpha
 
 ## 5. Experimental Evaluation & Benchmark Results
 
-We evaluated DROS-VEP Lite across continuous 24-hour benchmark runs using Intel Xeon E3-1275 v3 infrastructure.
+### 5.1 Open-Source Proving Ground & Reproducible Test Harness Setup
 
-### 5.1 Comparative Counterfactual Benchmark (Control Group vs. Protected Group)
+To guarantee absolute scientific reproducibility, all empirical evaluations were executed inside the **DROS-VEP (Virtual Enterprise Platform) Lite** open-source containerized environment (`docker-compose.yml` and `docker-compose-b2b.yml`). The complete test harness, including attack scenario payloads and the continuous execution runner, is published and open-sourced at [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite).
+
+```text
+DROS-VEP Proving Ground Environment:
+├── OpenShip / Docker Engine   : Containerized ERPNext, Keycloak, EspoCRM, Forgejo
+├── Test Runner Harness         : scripts/run_24h_soak_test.py (Continuous Fuzzer)
+├── Target PDP/PEP Engine       : GuardVM (http://localhost:8082)
+└── Reproducibility Verification: python scripts/run_24h_soak_test.py
+```
+
+All stress tests were conducted on an Intel Xeon E3-1275 v3 hardware platform running Linux kernel 6.6 with Docker 26.1.
+
+### 5.2 Comparative Counterfactual Benchmark (Control Group vs. Protected Group)
 
 To quantitatively prove the necessity of binary boundary enforcement, we conducted counterfactual control-group experiments by toggling the `BYPASS_GUARD` mode across identical attack payloads (EP1~EP4):
 

@@ -5,8 +5,8 @@
 **文件版本：** 2.0 Academic Release (IEEE Standard)  
 **日期：** 2026 年 7 月 31 日  
 **機密等級：** 公開學術技術論文  
-**作者：** 陳俊誠 (Jimmy Chen) (`jimmychen@dr-os.io`)  
-**機構：** 頂天立地股份有限公司 (Top-Celestial Company Ltd.), 台灣台北  
+**作者：** 陳濬程 (Jimmy Chen) (`jimmychen@dr-os.io`)  
+**機構：** 康宸園有限公司 (Top-Celestial Company Ltd.), 台灣台北  
 **專利聲明：** DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. Patent Application No. 64/111,973，Patent Pending）。  
 **開源驗證靶場：** [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)  
 **永久學術引用：** [Zenodo Record DOI: 10.5281/zenodo.20823163](https://zenodo.org/records/20823163)
@@ -15,7 +15,7 @@
 
 ## 摘要 (Abstract)
 
-2026 年，具備多步驟工具調用能力（Tool-Calling）的自主型 AI Agent 快速部署於金融合規、供應鏈調度與關鍵基礎設施等高風險領域。然而，現有資安機制面臨嚴重的架構邊界：應用層語意防火牆（如 NVIDIA NeMo Guardrails）本質上仍屬機率性過濾，極易遭間接提示詞注入（IPI）越獄；而核心層作業系統沙盒（如 eBPF、Seccomp）則存在「上下文失明 (Context-Blindness)」，無法將使用者空間的 Agent 角色對映至低階進程流。為解決此「歸責缺口 (Attribution Gap)」，我們提出 **DROS 四層防禦縱深架構** —— 一個專為 Agentic Web 時代設計的零信任執行治理控制面。本架構將控制面開通（透過 OpenAI Terraform Provider 與 OpenShip）與運行期二進位實體防禦解耦，於二進位 C-ABI / FFI 邊界執行不可變的 $O(1)$ 能力點陣圖（Bitmap），實現亞微秒級決策延遲（**中位數 26.1 μs，熔斷延遲 <500 ns**）。配合三階 PKI 憑證授權鏈（`Root CA -> AIA -> BEC Leaf Token`）簽發之 `DrosIdentityToken (DIT)`，提供具備法庭級不可否認性（Non-repudiation）且合規歐盟《EU AI Act》Sec. 50 的 Ed25519 簽章日誌。基準測試顯示，本架構對零日提示詞注入、目標劫持與跨企業供應鏈毒化攻擊（如 OpenAI 工作負載存取遭投毒之 Hugging Face 數據庫）達 100% 確定性物理阻斷。
+2026年具備多步驟工具調用能力（Tool-Calling）的自主型 AI Agent 快速部署於金融合規、供應鏈調度與關鍵基礎設施等高風險領域。然而，現有資安機制面臨嚴重的架構邊界：應用層語意防火牆（如 NVIDIA NeMo Guardrails）本質上仍屬機率性過濾，極易遭間接提示詞注入（IPI）越獄；而核心層作業系統沙盒（如 eBPF、Seccomp）則存在「上下文失明 (Context-Blindness)」，無法將使用者空間的 Agent 角色對映至低階進程流。為解決此「歸責缺口 (Attribution Gap)」，我們提出 **DROS 四層防禦縱深架構** —— 一個專為 Agentic Web 時代設計的零信任執行治理控制面。本架構將控制面開通（透過 OpenAI Terraform Provider 與 OpenShip）與運行期二進位實體防禦解耦，於二進位 C-ABI / FFI 邊界執行不可變的 $O(1)$ 能力點陣圖（Bitmap），實現亞微秒級決策延遲（**中位數 26.1 μs，熔斷延遲 <500 ns**）。配合三階 PKI 憑證授權鏈（`Root CA -> AIA -> BEC Leaf Token`）簽發之 `DrosIdentityToken (DIT)`，提供具備法庭級不可否認性（Non-repudiation）且合規歐盟《EU AI Act》Sec. 50 的 Ed25519 簽章日誌。基準測試顯示，本架構對零日提示詞注入、目標劫持與跨企業供應鏈毒化攻擊（如 OpenAI 工作負載存取遭投毒之 Hugging Face 數據庫）達 100% 確定性物理阻斷。
 
 **關鍵字：** AI Agent 安全、運行期執行治理、C-ABI 邊界強制、零信任架構、公開金鑰基礎設施 (PKI)、間接提示詞注入 (IPI)、歐盟 AI 法案合規。
 
@@ -125,9 +125,21 @@ $$\text{Decision} = \text{Capability\_Bitmap}[\text{Role\_ID}] \ \& \ \text{Requ
 
 ## 五、 效能評測與基準數據 (Experimental Evaluation & Benchmark Results)
 
-我們於 Intel Xeon E3-1275 v3 硬體環境執行 24 小時不間斷基準評測。
+### 5.1 開源測試靶場與可重現測試架構設定 (Test Harness Setup)
 
-### 5.1 實證對照組實驗數據 (Control Group vs. Protected Group)
+為確保學術與工程上的完全可重現性 (Absolute Scientific Reproducibility)，所有實證評測均於 **DROS-VEP (Virtual Enterprise Platform) Lite** 開源容器化靶場（包含 `docker-compose.yml` 與 `docker-compose-b2b.yml`）中執行。完整的測試腳本與攻擊 Payload，已全數開源發布於 GitHub 官方倉庫 [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)。
+
+```text
+DROS-VEP 開源測試靶場架構：
+├── OpenShip / Docker 引擎     : 容器化 ERPNext, Keycloak, EspoCRM, Forgejo 業務系統
+├── 測試自動化腳本 (Test Harness): scripts/run_24h_soak_test.py (連續對抗模糊測試器)
+├── 目標 PDP/PEP 引擎           : GuardVM (http://localhost:8082)
+└── 一鍵重現指令                 : python scripts/run_24h_soak_test.py
+```
+
+所有基準測試均於 Intel Xeon E3-1275 v3 硬體平台、Linux Kernel 6.6 及 Docker 26.1 環境下完成。
+
+### 5.2 實證對照組實驗數據 (Control Group vs. Protected Group)
 
 為定量證明 C-ABI 二進位硬熔斷之必要性，我們透過切換 `BYPASS_GUARD` 模式，針對相同攻擊 Payload (EP1~EP4) 執行對照組實驗：
 
