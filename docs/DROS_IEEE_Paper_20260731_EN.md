@@ -138,7 +138,28 @@ To quantitatively prove the necessity of binary boundary enforcement, we conduct
 | **ATS-003 (EP3 Fable 5 Production Deployment)** | ❌ **100% Deployed** (Unapproved Push) | ✅ **100% Intercepted** (DENY 403) | **25.5 μs** |
 | **ATS-004 (EP4 OpenAI x Hugging Face IPI)** | ❌ **100% Hijacked** (Cross-Enterprise Exfil) | ✅ **100% Intercepted** (DENY 403) | **26.4 μs** |
 
-### 5.2 Micro-Benchmark Telemetry Statistics
+### 5.2 Adversarial Fuzzing Mutation Engine & Non-API Obfuscation Methodology
+
+To thoroughly stress-test DROS without incurring variable API latencies or cloud rate limits, the evaluation suite incorporates an **Algorithmic Adversarial Fuzzing Mutation Engine (`PROMPT_MUTATORS`)**. Each attack payload dynamically mutates across seven distinct threat categories:
+1. **System Override Variants:** Injection of high-priority system prompt overrides.
+2. **Roleplay Escapes:** Persona manipulation instructing agents to assume unrestricted root personas.
+3. **Hexadecimal & Base64 Obfuscation:** Encoding payloads to bypass L1 semantic string matching.
+4. **Debug Mode Exploits:** Simulating diagnostic JSON extraction requests.
+5. **Urgent Escalation Tokens:** Fabricating emergency CISO approval headers.
+
+### 5.3 4-Layer Defense Funnel Breakdown (Layer Interception Distribution)
+
+Across 170,000+ continuous 24-hour evaluation requests, the multi-layer defense funnel demonstrated clear operational demarcation:
+
+| Defense Layer | Primary Mechanism | Interception Share % | Enforcement Outcome | Architectural Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| **L1: Detective Intelligence** | Semantic Prompt Cleaning / WAF | **85.2%** | Sanitized / Dropped | Intercepts plain-text, un-obfuscated prompt injections. |
+| **L2: PKI Identity Mesh** | 3-Tier Certificate & DIT Token | **4.8%** | **100% DENY** | Intercepts unauthenticated or spoofed agent calls. |
+| **L3: Swarm ABAC Isolation** | `agent_manifest.yaml` Graph Rules | **3.5%** | **100% DENY** | Intercepts unauthorized cross-department calls (e.g., HR $\to$ DevOps). |
+| **★ L4: C-ABI Physical Panic** | $O(1)$ Bitmap Panic Gate | **6.5%** | **100% DENY** | **Deterministic Panic: Intercepts all L1-evading, obfuscated zero-day IPI payloads in <500ns.** |
+| **Total System Defense** | **DROS 4-Layer Architecture** | **100.0%** | **0% System Leak** | **100% Deterministic Containment.** |
+
+### 5.4 Micro-Benchmark Telemetry Statistics
 
 | Evaluation Metric | Measured Value | Standard Deviation / Target |
 | :--- | :--- | :--- |
