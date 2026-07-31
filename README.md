@@ -59,7 +59,21 @@ Most AI benchmarks measure LLM intelligence, coding skills, or prompt toxicity. 
 
 ## 🏗️ Architecture & Ecosystem
 
-DROS-VEP Lite leverages the **[OpenShip Ecosystem](https://openship.org)** to orchestrate a production-grade multi-enterprise container environment (ERPNext, Keycloak IAM, and DROS GuardVM). DROS does **NOT** replace traditional cybersecurity (WAF, EDR, SIEM); instead, it provides the **"Last Mile Runtime Defense"** for AI Agent execution boundaries in a modern **Defense-in-Depth** architecture:
+DROS-VEP Lite leverages the **[OpenShip Ecosystem](https://openship.org)** and integrates seamlessly with **OpenAI Terraform Provider (GitOps Policy-as-Code)** to deliver a complete Enterprise AI Governance Architecture:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Control Plane & GitOps Provisioning                                      │
+│    • OpenAI Terraform Provider -> Provision Projects, Service Accounts & Keys│
+│    • OpenShip Engine           -> Orchestrate Multi-Enterprise Containers   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 2. Runtime Execution Defense (DROS Layer 4 - C-ABI Boundary)                │
+│    • 3-Tier PKI Identity Chain -> DrosIdentityToken (DIT) Cryptographic Binding│
+│    • DROS GuardVM (PEP/PDP)    -> Sub-microsecond <500ns Binary Interception │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+While OpenAI's Terraform Provider manages **Control Plane Provisioning** (Projects, IAM, Rate Limits), **DROS GuardVM** provides the essential **Runtime Execution Defense** — ensuring that when an agent holding legitimate credentials is hijacked via Indirect Prompt Injection (IPI), unauthorized tool calls are deterministically intercepted at the C-ABI boundary.
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐

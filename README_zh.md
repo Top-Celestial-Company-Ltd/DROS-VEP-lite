@@ -63,7 +63,21 @@ docker compose -f docker-compose-b2b.yml up -d
 
 ## 🏗️ 系統架構與生態系 (Architecture & Ecosystem)
 
-DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)** 編排生產級跨企業容器環境 (ERPNext、Keycloak IAM 與 DROS GuardVM)。DROS **並不取代** 傳統資安（WAF、EDR、SIEM），而是為現代**縱深防禦架構（Defense-in-Depth）**中的 AI Agent 執行邊界提供**「最後一哩路運行期防禦」**：
+DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)**，並無縫整合 **OpenAI Terraform Provider (GitOps 宣告式治理)**，構建出完整之企業級 AI 治理雙層架構：
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. 控制面與 GitOps 自動開通 (Control Plane Provisioning)                     │
+│    • OpenAI Terraform Provider -> 自動化宣告 Projects, Service Account 與 Keys│
+│    • OpenShip 容器編排引擎       -> 自動編排跨企業實體容器靶場                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 2. 運行期二進位實體防禦 (DROS Layer 4 - C-ABI 邊界)                          │
+│    • 三階 PKI 密碼學身分鏈     -> DrosIdentityToken (DIT) 鋼印繫定          │
+│    • DROS GuardVM (PEP/PDP)   -> 亞微秒 <500ns 確定性 C-ABI 物理硬熔斷         │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+當 OpenAI Terraform Provider 負責 **「控制面開通 (Control Plane Provisioning)」** 時，**DROS GuardVM** 則提供了關鍵的 **「運行期防禦 (Runtime Execution Defense)」** —— 確保當 Agent 拿著由 Terraform 開通的合法憑證遭間接提示詞注入 (IPI) 挾持時，未授權的工具呼叫依然能在 C-ABI 系統呼叫層被亞微秒級硬熔斷！
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
