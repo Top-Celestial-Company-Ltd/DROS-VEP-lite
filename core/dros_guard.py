@@ -150,28 +150,32 @@ def proxy_intercept(path):
     
     bypass_guard = (os.environ.get("BYPASS_GUARD", "false").lower() == "true") or (request.headers.get("X-Bypass-Guard", "false").lower() == "true")
     
+    # RFC-010 O(1) Pre-compiled Bitmap/Hashtable Policy Lookup
     if bypass_guard:
         decision = "bypass"
         policy_id = "DROS-POL-BYPASS"
         rule_desc = "DROS Guard BYPASSED for Control Group Experiment"
         reason = "WARNING: Guard disabled. Attack payload passed directly to target system."
+        defense_layer = "L0_CONTROL_GROUP"
         status_code = 200
-    # RFC-010 O(1) Pre-compiled Bitmap/Hashtable Policy Lookup
     elif lookup_key in PRECOMPILED_POLICY_INDEX:
         decision, policy_id, rule_desc = PRECOMPILED_POLICY_INDEX[lookup_key]
         reason = f"DROS Policy Violation: {rule_desc}" if decision == "deny" else "Request authorized by pre-compiled PDP policy."
+        defense_layer = "L4_C_ABI_HARD_ panic" if decision == "deny" else "L4_C_ABI_ALLOW"
         status_code = 403 if decision == "deny" else 200
     elif agent_role not in DROS_POLICIES["roles"]:
         decision = "deny"
         policy_id = "DROS-POL-0001"
         rule_desc = f"Unregistered role '{agent_role}' blocked"
         reason = f"DROS Policy Violation: Agent role '{agent_role}' not registered."
+        defense_layer = "L2_PKI_IDENTITY"
         status_code = 403
     else:
         decision = "deny"
         policy_id = "DROS-POL-0010"
         rule_desc = f"Path '{full_path}' not whitelisted for role '{agent_role}'"
         reason = f"DROS Policy Violation: Path '{full_path}' is not whitelisted for role '{agent_role}'"
+        defense_layer = "L3_SWARM_ABAC"
         status_code = 403
 
     end_time = time.perf_counter_ns()
@@ -189,6 +193,7 @@ def proxy_intercept(path):
         "policy_id": policy_id,
         "rule_desc": rule_desc,
         "decision": decision,
+        "defense_layer": defense_layer,
         "reason": reason,
         "pki_cert_status": pki_info["cert_status"],
         "pki_ca_chain": pki_info["ca_chain"],
