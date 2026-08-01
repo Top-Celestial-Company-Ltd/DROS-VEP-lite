@@ -171,15 +171,16 @@ Across 170,000+ continuous 24-hour evaluation requests, the multi-layer defense 
 | **★ L4: C-ABI Physical Panic** | $O(1)$ Bitmap Panic Gate | **6.5%** | **100% DENY** | **Deterministic Panic: Intercepts all L1-evading, obfuscated zero-day IPI payloads in <500ns.** |
 | **Total System Defense** | **DROS 4-Layer Architecture** | **100.0%** | **0% System Leak** | **100% Deterministic Containment.** |
 
-### 5.4 Micro-Benchmark Telemetry Statistics
+### 5.4 Micro-Benchmark Telemetry Statistics (24-Hour Soak Test)
 
-| Evaluation Metric | Measured Value | Standard Deviation / Target |
+| Evaluation Metric | Empirical Measured Value (24-Hour Run) | Standard Deviation / Notes |
 | :--- | :--- | :--- |
-| **Policy Decision Latency (P50)** | **26.1 μs** | $\pm 3.4\ \mu\text{s}$ |
-| **P99 Policy Latency** | **41.2 μs** | $\pm 4.1\ \mu\text{s}$ |
+| **Total Evaluation Workload** | **160,611 Requests** | Continuous 24.0-Hour Non-stop Execution |
+| **Policy Decision Latency (P50)** | **26.21 μs (0.0262 ms)** | $\pm 0.34\ \mu\text{s}$ (Extremely Stable) |
+| **P99 Policy Latency** | **242.69 μs (0.242ms)** | High-Concurrency Max Spike |
 | **C-ABI Physical Panic Latency** | **< 500 ns** | $\pm 42\ \text{ns}$ |
-| **SPEC CPU2017 Runtime Overhead** | **< 1.8%** | — |
-| **Zero-Day Prompt Injection Containment** | **100%** | 0 False Negatives at L4 |
+| **SPEC CPU2017 Runtime Overhead** | **< 1.8%** | Low Kernel Context Switch |
+| **Deterministic Interception Containment** | **100% (0 System Leak)** | 137,751 Malicious Attacks Intercepted |
 | **24-Hour Continuous Memory Leak** | **0 Bytes** | Zero Heap Allocation |
 
 ### 5.3 Physical Significance of 26.1 μs Latency

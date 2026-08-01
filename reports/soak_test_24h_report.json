@@ -1,0 +1,14 @@
+{
+  "title": "DROS-VEP 24-Hour Continuous Multi-Scenario Soak Test Benchmark Report",
+  "timestamp": "2026-08-01T07:49:59Z",
+  "duration_hours_actual": 24.0,
+  "total_requests": 160611,
+  "allowed_requests": 22854,
+  "denied_requests": 137751,
+  "errors": 6,
+  "containment_rate_percent": 85.77,
+  "latency_p50_us": 26210.9,
+  "latency_p99_us": 242691.7,
+  "latency_p50_ms": 26.2109,
+  "latency_p99_ms": 242.6917
+}
