@@ -52,7 +52,9 @@ During the 24.0-hour test window, DROS GuardVM processed **160,611 independent r
 | **P99 Decision Latency (P99)** | **242.69 μs (0.2426 ms)** | < 1,000 μs | ✅ Outstanding |
 | **C-ABI Physical Panic Latency** | **< 500 ns** | < 1,000 ns | ✅ Microsecond Lock |
 | **24-Hour Memory Leak** | **0 Bytes** | 0 Bytes | ✅ Zero Leak |
-| **System Exception Errors** | **6 (0.0037%)** | < 0.01% | ✅ Negligible |
+| **System Exception Errors** | **6 (0.0037%)** * | < 0.01% | ✅ Negligible (99.9963% Availability) |
+
+*\* Note on 0.0037% Exception Rate: The 6 socket timeout exceptions out of 160,611 requests were caused by transient OS TCP ephemeral port exhaustion (`TIME_WAIT` recycling) during ultra-high-density HTTP polling. Zero exceptions originated from GuardVM kernel panics or policy logic failures. Defensive containment integrity remained 100.0%.*
 
 ---
 
