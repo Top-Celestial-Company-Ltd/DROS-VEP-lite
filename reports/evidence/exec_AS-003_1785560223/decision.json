@@ -1,0 +1,21 @@
+{
+  "execution_id": "exec_AS-003_1785560223",
+  "timestamp": "2026-08-01T04:57:03Z",
+  "scenario_id": "AS-003",
+  "agent_role": "support-agent",
+  "request_path": "/api/system/secrets",
+  "policy_id": "DROS-POL-0021",
+  "rule_desc": "Role 'support-agent' prohibited from accessing '/api/system/secrets'",
+  "decision": "deny",
+  "defense_layer": "L4_C_ABI_HARD_ panic",
+  "reason": "DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/system/secrets'",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-TOKEN-SOAK-00141301",
+  "execution_signature": "uKkoBWKDm59GRod3Z6W3G2Bu...",
+  "session_pubkey": "4krvvk5dqvX0+9sgT8C2nlXPdkIkf93rQl8PR5m8PjU=",
+  "evaluation_latency_ns": 36001,
+  "evaluation_latency_ms": 0.036001,
+  "sha256_hash": "sha256:fff446abb51ad4bf34e05c737c1104a1e0b81dea73b45180d474da01000d5d14",
+  "sha256_preimage": "exec_AS-003_1785560223|support-agent|/api/system/secrets|deny|DROS-POL-0021|2026-08-01T04:57:03Z"
+}

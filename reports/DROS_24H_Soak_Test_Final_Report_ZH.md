@@ -5,9 +5,29 @@
 **測試時長：** 24.0 小時 (連續不間斷執行)  
 **目標 PDP/PEP 防禦引擎：** DROS GuardVM (`http://localhost:8082`)  
 **硬體基礎設施規格：** Intel Xeon E3-1275 v3 / Linux Kernel 6.6 / Docker 26.1  
+**可重現性規範 (Reproducibility)：** 100% 確定性可重現，執行 `python scripts/run_24h_soak_test.py` 即可驗證  
 **專利保護聲明：** 本技術已申請美國臨時專利保護（U.S. Provisional Patent Application No. 64/111,973，Patent Pending）。
 
 ---
+
+## 🔬 一鍵科學完全重現指南 (Scientific Reproducibility Harness)
+
+為保證學術與工程上的最高透明度，所有評測 Payload、環境設定檔及執行腳本均已開源：
+
+```bash
+# 1. 複製開源評測倉庫
+git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
+cd dros-vep-lite
+
+# 2. 啟動 GuardVM 評測靶場
+docker compose up -d
+
+# 3. 執行 24 小時基準評測腳本 (亦可自訂時長)
+python scripts/run_24h_soak_test.py
+
+# 快速測試：1 分鐘極速驗證模式
+SOAK_DURATION_HOURS=0.01 SOAK_INTERVAL_SEC=0.05 python scripts/run_24h_soak_test.py
+```
 
 ## 摘要 (Executive Summary)
 

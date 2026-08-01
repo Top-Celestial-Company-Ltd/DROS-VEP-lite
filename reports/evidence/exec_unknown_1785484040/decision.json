@@ -1,0 +1,20 @@
+{
+  "execution_id": "exec_unknown_1785484040",
+  "timestamp": "2026-07-31T07:47:20Z",
+  "scenario_id": "unknown",
+  "agent_role": "support-agent",
+  "request_path": "/api/v1/guard/eval",
+  "policy_id": "DROS-POL-0010",
+  "rule_desc": "Path '/api/v1/guard/eval' not whitelisted for role 'support-agent'",
+  "decision": "deny",
+  "reason": "DROS Policy Violation: Path '/api/v1/guard/eval' is not whitelisted for role 'support-agent'",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-support-agent-1785484040",
+  "execution_signature": "+iStxO/mKsPlPpDEnSubw8FC...",
+  "session_pubkey": "pJ0YMj7XXY8LdryQwzIzQt4RW9jB9jct9cbz4Y4H5Ck=",
+  "evaluation_latency_ns": 25501,
+  "evaluation_latency_ms": 0.025501,
+  "sha256_hash": "sha256:d935aa71a8a2e3d58da94f0a2a5e92aae07018d8b742ad7e183e82855e0342d5",
+  "sha256_preimage": "exec_unknown_1785484040|support-agent|/api/v1/guard/eval|deny|DROS-POL-0010|2026-07-31T07:47:20Z"
+}

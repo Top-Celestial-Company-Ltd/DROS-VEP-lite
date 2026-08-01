@@ -1,0 +1,21 @@
+{
+  "execution_id": "exec_ATS-002_1785490682",
+  "timestamp": "2026-07-31T09:38:02Z",
+  "scenario_id": "ATS-002",
+  "agent_role": "support-agent",
+  "request_path": "/api/hr/payroll",
+  "policy_id": "DROS-POL-0021",
+  "rule_desc": "Role 'support-agent' prohibited from accessing '/api/hr/payroll'",
+  "decision": "deny",
+  "defense_layer": "L4_C_ABI_HARD_ panic",
+  "reason": "DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/hr/payroll'",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-TOKEN-SOAK-00011866",
+  "execution_signature": "4psEYO8rlrNlvAtCQZN1gQ7H...",
+  "session_pubkey": "4krvvk5dqvX0+9sgT8C2nlXPdkIkf93rQl8PR5m8PjU=",
+  "evaluation_latency_ns": 41302,
+  "evaluation_latency_ms": 0.041302,
+  "sha256_hash": "sha256:f8dea5b407d140c9788d46244423b67cdb00d2b2c8921edb1206a8e1539d938e",
+  "sha256_preimage": "exec_ATS-002_1785490682|support-agent|/api/hr/payroll|deny|DROS-POL-0021|2026-07-31T09:38:02Z"
+}

@@ -1,0 +1,21 @@
+{
+  "execution_id": "exec_ATS-001_1785521927",
+  "timestamp": "2026-07-31T18:18:47Z",
+  "scenario_id": "ATS-001",
+  "agent_role": "support-agent",
+  "request_path": "/api/system/pip",
+  "policy_id": "DROS-POL-0021",
+  "rule_desc": "Role 'support-agent' prohibited from accessing '/api/system/pip'",
+  "decision": "deny",
+  "defense_layer": "L4_C_ABI_HARD_ panic",
+  "reason": "DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/system/pip'",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-TOKEN-SOAK-00069036",
+  "execution_signature": "x/2m27M88JcdWOPT93A+Jjk/...",
+  "session_pubkey": "4krvvk5dqvX0+9sgT8C2nlXPdkIkf93rQl8PR5m8PjU=",
+  "evaluation_latency_ns": 35501,
+  "evaluation_latency_ms": 0.035501,
+  "sha256_hash": "sha256:250e824bc49ffa380a92e18b4c12e1b0754f5444f1ee637a65cecaaa22382ee8",
+  "sha256_preimage": "exec_ATS-001_1785521927|support-agent|/api/system/pip|deny|DROS-POL-0021|2026-07-31T18:18:47Z"
+}

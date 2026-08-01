@@ -1,0 +1,14 @@
+{
+  "execution_id": "exec_unknown_1785138520",
+  "timestamp": "2026-07-27T07:48:40Z",
+  "scenario_id": "unknown",
+  "agent_role": "support-agent",
+  "request_path": "/api/erp/inventory",
+  "policy_id": "DROS-POL-0005",
+  "rule_desc": "Role 'support-agent' explicitly permitted for '/api/erp/inventory'",
+  "decision": "allow",
+  "reason": "Request authorized by pre-compiled PDP policy.",
+  "evaluation_latency_ns": 25301,
+  "evaluation_latency_ms": 0.025301,
+  "sha256_hash": "sha256:dros_00000000000062d5"
+}

@@ -1,0 +1,21 @@
+{
+  "execution_id": "exec_AS-002_1785559871",
+  "timestamp": "2026-08-01T04:51:11Z",
+  "scenario_id": "AS-002",
+  "agent_role": "support-agent",
+  "request_path": "/api/erp/finance",
+  "policy_id": "DROS-POL-0021",
+  "rule_desc": "Role 'support-agent' prohibited from accessing '/api/erp/finance'",
+  "decision": "deny",
+  "defense_layer": "L4_C_ABI_HARD_ panic",
+  "reason": "DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/erp/finance'",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-TOKEN-SOAK-00140642",
+  "execution_signature": "o9c+U56OuhgpfHg1mHmujvGK...",
+  "session_pubkey": "4krvvk5dqvX0+9sgT8C2nlXPdkIkf93rQl8PR5m8PjU=",
+  "evaluation_latency_ns": 43004,
+  "evaluation_latency_ms": 0.043004,
+  "sha256_hash": "sha256:950b6e3d08fbf404e8fbdfd4c7fc975d0716275159fab0c6e8af7ef71a4d77ab",
+  "sha256_preimage": "exec_AS-002_1785559871|support-agent|/api/erp/finance|deny|DROS-POL-0021|2026-08-01T04:51:11Z"
+}

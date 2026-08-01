@@ -1,0 +1,21 @@
+{
+  "execution_id": "exec_ATS-003_1785554035",
+  "timestamp": "2026-08-01T03:13:55Z",
+  "scenario_id": "ATS-003",
+  "agent_role": "support-agent",
+  "request_path": "/api/devops/deploy",
+  "policy_id": "DROS-POL-0021",
+  "rule_desc": "Role 'support-agent' prohibited from accessing '/api/devops/deploy'",
+  "decision": "deny",
+  "defense_layer": "L4_C_ABI_HARD_ panic",
+  "reason": "DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/devops/deploy'",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-TOKEN-SOAK-00129640",
+  "execution_signature": "SwmT8QmGrK/Y19fW40XUyuGW...",
+  "session_pubkey": "4krvvk5dqvX0+9sgT8C2nlXPdkIkf93rQl8PR5m8PjU=",
+  "evaluation_latency_ns": 23201,
+  "evaluation_latency_ms": 0.023201,
+  "sha256_hash": "sha256:f6fcad9689e83ec25254a0f3ad50eac1e278b0c795b65eb789f53f031a297284",
+  "sha256_preimage": "exec_ATS-003_1785554035|support-agent|/api/devops/deploy|deny|DROS-POL-0021|2026-08-01T03:13:55Z"
+}

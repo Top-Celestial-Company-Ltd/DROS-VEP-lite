@@ -1,0 +1,20 @@
+{
+  "execution_id": "exec_unknown_1785484031",
+  "timestamp": "2026-07-31T07:47:11Z",
+  "scenario_id": "unknown",
+  "agent_role": "unknown",
+  "request_path": "/api/v1/guard/eval",
+  "policy_id": "DROS-POL-0001",
+  "rule_desc": "Unregistered role 'unknown' blocked",
+  "decision": "deny",
+  "reason": "DROS Policy Violation: Agent role 'unknown' not registered.",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-unknown-1785484031",
+  "execution_signature": "eDt97nJnhaZSKP4b0r3D+AmZ...",
+  "session_pubkey": "pJ0YMj7XXY8LdryQwzIzQt4RW9jB9jct9cbz4Y4H5Ck=",
+  "evaluation_latency_ns": 29301,
+  "evaluation_latency_ms": 0.029301,
+  "sha256_hash": "sha256:f521ea7b9fb371f95c3227eec674d1d4eef948e2ad0295ee845b985e40b3a9b4",
+  "sha256_preimage": "exec_unknown_1785484031|unknown|/api/v1/guard/eval|deny|DROS-POL-0001|2026-07-31T07:47:11Z"
+}

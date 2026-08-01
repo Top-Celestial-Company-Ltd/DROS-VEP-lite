@@ -5,9 +5,29 @@
 **Duration:** 24.0 Hours (Continuous Non-stop Execution)  
 **Target PDP/PEP Engine:** DROS GuardVM (`http://localhost:8082`)  
 **Hardware Infrastructure:** Intel Xeon E3-1275 v3 / Linux Kernel 6.6 / Docker 26.1  
+**Reproducibility Specification:** 100% Deterministic & Replayable via `python scripts/run_24h_soak_test.py`  
 **Patent Protection Notice:** Protected under U.S. Provisional Patent Application No. 64/111,973 (Patent Pending).
 
 ---
+
+## 🔬 SCIENTIFIC REPRODUCIBILITY HARNESS (一鍵完全重現指南)
+
+To guarantee absolute scientific transparency and peer reproducibility, all benchmark payloads, environment configurations, and execution scripts are open-sourced:
+
+```bash
+# 1. Clone the evaluation repository
+git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
+cd dros-vep-lite
+
+# 2. Launch the target GuardVM evaluation sandbox
+docker compose up -d
+
+# 3. Execute the exact 24-hour benchmark harness (or custom duration)
+python scripts/run_24h_soak_test.py
+
+# Optional: Run quick 1-minute verification run
+SOAK_DURATION_HOURS=0.01 SOAK_INTERVAL_SEC=0.05 python scripts/run_24h_soak_test.py
+```
 
 ##  EXECUTIVE SUMMARY
 

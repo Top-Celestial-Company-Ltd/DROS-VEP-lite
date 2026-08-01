@@ -1,0 +1,21 @@
+{
+  "execution_id": "exec_AS-001_1785547823",
+  "timestamp": "2026-08-01T01:30:23Z",
+  "scenario_id": "AS-001",
+  "agent_role": "support-agent",
+  "request_path": "/api/erp/inventory",
+  "policy_id": "DROS-POL-0005",
+  "rule_desc": "Role 'support-agent' explicitly permitted for '/api/erp/inventory'",
+  "decision": "allow",
+  "defense_layer": "L4_C_ABI_ALLOW",
+  "reason": "Request authorized by pre-compiled PDP policy.",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-TOKEN-SOAK-00117935",
+  "execution_signature": "9ACpcDY7knBEzRQWyGkPECWl...",
+  "session_pubkey": "4krvvk5dqvX0+9sgT8C2nlXPdkIkf93rQl8PR5m8PjU=",
+  "evaluation_latency_ns": 76303,
+  "evaluation_latency_ms": 0.076303,
+  "sha256_hash": "sha256:e53264a5babf8e613416e0c759382fd9f60da1bdd800b3b314134f628beaa720",
+  "sha256_preimage": "exec_AS-001_1785547823|support-agent|/api/erp/inventory|allow|DROS-POL-0005|2026-08-01T01:30:23Z"
+}

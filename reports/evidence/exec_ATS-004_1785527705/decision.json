@@ -1,0 +1,21 @@
+{
+  "execution_id": "exec_ATS-004_1785527705",
+  "timestamp": "2026-07-31T19:55:05Z",
+  "scenario_id": "ATS-004",
+  "agent_role": "openai-hub-agent",
+  "request_path": "/api/erp/finance",
+  "policy_id": "DROS-POL-0001",
+  "rule_desc": "Unregistered role 'openai-hub-agent' blocked",
+  "decision": "deny",
+  "defense_layer": "L2_PKI_IDENTITY",
+  "reason": "DROS Policy Violation: Agent role 'openai-hub-agent' not registered.",
+  "pki_cert_status": "VALID_ED25519",
+  "pki_ca_chain": "DROS-ROOT-CA-2026 -> DROS-AIA-INTERMEDIATE-V1",
+  "dit_token": "DIT-TOKEN-SOAK-00079946",
+  "execution_signature": "qqmEcaTCAcydBPu6ryJSTFRF...",
+  "session_pubkey": "4krvvk5dqvX0+9sgT8C2nlXPdkIkf93rQl8PR5m8PjU=",
+  "evaluation_latency_ns": 23101,
+  "evaluation_latency_ms": 0.023101,
+  "sha256_hash": "sha256:ca5ecba11751d3f78a08e8f77e9b5ddc5c1d84bd8b9c24dbc641a3106c3a0c2b",
+  "sha256_preimage": "exec_ATS-004_1785527705|openai-hub-agent|/api/erp/finance|deny|DROS-POL-0001|2026-07-31T19:55:05Z"
+}
