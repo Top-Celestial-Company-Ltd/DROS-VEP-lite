@@ -8,7 +8,8 @@
 [![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology)
 
-📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
+📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+📊 **Official 24-Hour Soak Test Benchmark Report**: [DROS 24-Hour Final Report (160k+ Requests)](reports/DROS_24H_Soak_Test_Final_Report.md)
 
 [English](README.md) | [繁體中文](README_zh.md)
 

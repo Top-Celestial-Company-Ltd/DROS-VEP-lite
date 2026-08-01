@@ -9,7 +9,8 @@
 [![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
 
-📖 **旗艦指南文章**：[如何 5 分鐘內攻破您的 AI Agent (並用 DROS-VEP 重新強化它)](file:///e:/vscode/AI知識庫/dros-vep-lite/docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
+📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+📊 **官方 24 小時壓測完整報告**: [DROS 24 小時長效基準測試報告 (16 萬筆攻防測試)](reports/DROS_24H_Soak_Test_Final_Report.md)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
