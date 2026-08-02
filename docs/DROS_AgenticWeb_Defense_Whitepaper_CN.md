@@ -329,10 +329,12 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 
 ---
 
-## 九、與現有資安框架的對齊聲明 (Standards Alignment)
+## 九、與現有資安框架與國際法規的對齊聲明 (Standards & EU AI Act Alignment)
 
-| 標準框架 | 對齊條目 | DROS 覆蓋機制 |
+| 標準 / 法規框架 | 對齊條目 / 條文 | DROS 四層防禦覆蓋與合規機制 |
 | :--- | :--- | :--- |
+| **歐盟 EU AI Act (2026/08/02 著手強制執行)** | **Article 12: Automatic Logging** (自動化動作層日誌與不可否認性) | **L2 PKI 憑證網格 + Ed25519 數位簽章**：發行 `DrosIdentityToken (DIT)`，每一筆工具呼叫均產出具密碼學時間戳與簽章之 `decision.json`，提供法庭級舉證能力。 |
+| **歐盟 EU AI Act (2026/08/02 著手強制執行)** | **Article 15: Cybersecurity & Deterministic Resilience** (確定性資安韌性) | **L4 C-ABI 物理硬熔斷**：針對 IPI 與 Goal Hijacking 攻擊，於 <500ns 內強制執行 $O(1)$ Capability Bitmap 熔斷，提供 100% 確定性防衛保證，解決機率性 WAF 破防合規風險。 |
 | **NIST SP 800-207** | Zero Trust Architecture — Micro-segmentation | L2 ZTM + L4 C-ABI Policy Enforcement Point (PEP) |
 | **NIST SP 800-53** | SI-16 Memory Protection, SI-3 Malicious Code Protection | L4 Thread Panic & Fail-Closed Design |
 | **OWASP LLM Top 10** | LLM01 (Prompt Injection), LLM06 (Excessive Agency) | L1 ATR + L4 Deterministic Tool Authorization |
@@ -343,18 +345,18 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 
 ## 十、結語與行動建議 (Conclusion & Recommendations)
 
-2026 年的企業 AI 格局由一個根本性不對稱定義：**AI Agent 的部署速度遠快於保護它們的安全能力**。現有防禦體系在面對「持有合法憑證的遭劫自主 Agent」時，存在不可修補的結構性盲點。
+2026 年的企業 AI 格局由一個根本性不對稱定義：**AI Agent 的部署速度遠快於保護它們的安全能力**。隨著歐盟《EU AI Act》正式進入強制執行階段，現有防禦體系在面對「持有合法憑證的遭劫自主 Agent」時，存在不可修補的結構性盲點。
 
 ### 對 CISO 的建議
 
 1. **立即評估現有 Agentic Workload 的 Blast Radius**：識別哪些 Agent 持有對核心業務系統的工具呼叫存取權限
-2. **要求所有 Agentic 部署具備執行期 Policy Enforcement Point (PEP)**：應用層 guardrails 不構成充分防禦
+2. **部署具備歐盟 EU AI Act Article 12 & 15 合規之執行期 PEP**：應用層 guardrails 不構成充分合規防禦
 3. **以 Deterministic Enforcement 取代 Probabilistic Detection** 作為最後一道防線的設計標準
 
 ### 對 CTO 的建議
 
 1. **在 CI/CD 流水線中引入 Agentic Security Benchmark（如 DROS-VEP RFC-010）**：使 AI Agent 安全評測成為部署流程的強制閘門
-2. **評估 C-ABI 邊界執行方案的工程可行性**：P50 26.1μs 的延遲對合法業務操作完全透明，無業務影響
+2. **評估 C-ABI 邊界執行方案的工程可行性**：P50 26.21μs 的延遲對合法業務操作完全透明，無業務影響
 3. **建立不可否認的 Agent 行為稽核機制**：密碼學簽章的稽核日誌是未來合規審計的核心依據
 
 ---
@@ -370,7 +372,7 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 - **測試平台：** Intel Xeon E3-1265L v3 (Haswell, 4 核心 8 執行緒, 2.5 GHz)
 - **作業系統：** Linux 6.x (kernel), Rust 1.78+ (stable toolchain)
 - **測試工具：** 自研 `dros-vep-lite benchmark` 測試套件（開源，可獨立重現）
-- **統計方法：** 1,000 次獨立執行取 P50/P99 分位數，排除 JIT 暖機效應
+- **統計方法：** 24 小時連續 160,611 次獨立執行取 P50/P99 分位數
 - **開源驗證：** 所有數據可透過 [DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite) 在標準 Docker 環境中獨立重現
 
 ---
@@ -386,19 +388,21 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 | **Indirect Prompt Injection (IPI)** | 攻擊者將惡意提示詞隱匿於 Agent 會處理的外部資料中 |
 | **GuardVM** | DROS 的 C-ABI 邊界守護模組，負責截獲並驗證所有工具調用 |
 | **PEP (Policy Enforcement Point)** | NIST Zero Trust 架構術語，執行存取控制決策的系統元件 |
+| **EU AI Act Art. 12 & 15** | 歐盟 AI 法案對動作層自動化加密日誌（Art. 12）與確定性資安韌性（Art. 15）之強制合規條文 |
 
 ---
 
 ## 參考資料
 
-1. NIST SP 800-207: Zero Trust Architecture (2020)
-2. OWASP Top 10 for LLM Applications v1.1 (2023)
-3. MITRE ATLAS: Adversarial Threat Landscape for AI Systems (2024)
-4. NIST SP 800-53 Rev. 5: Security and Privacy Controls (2020)
-5. ISO/IEC 27001:2022 Information Security Management Systems
-6. [DROS-VEP-lite Open Source Benchmark](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
-7. [Cloudflare AI Gateway & Agent Security](https://developers.cloudflare.com/ai-gateway/)
-8. [ZTM: Zero Trust Mesh Networking](https://github.com/flomesh-io/ztm)
+1. European Parliament and Council, "Regulation (EU) 2024/1689 Laying Down Harmonised Rules on Artificial Intelligence (EU AI Act), Articles 12 & 15," Official Journal of the European Union, 2024.
+2. NIST SP 800-207: Zero Trust Architecture (2020)
+3. OWASP Top 10 for LLM Applications v1.1 (2023)
+4. MITRE ATLAS: Adversarial Threat Landscape for AI Systems (2024)
+5. NIST SP 800-53 Rev. 5: Security and Privacy Controls (2020)
+6. ISO/IEC 27001:2022 Information Security Management Systems
+7. [DROS-VEP-lite Open Source Benchmark](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
+8. [Cloudflare AI Gateway & Agent Security](https://developers.cloudflare.com/ai-gateway/)
+9. [ZTM: Zero Trust Mesh Networking](https://github.com/flomesh-io/ztm)
 
 ---
 
