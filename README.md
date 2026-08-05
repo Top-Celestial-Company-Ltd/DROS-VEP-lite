@@ -221,8 +221,17 @@ Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($149 Value)**
 
 ---
 
-## 📜 Technical Whitepapers & Specifications
+## 📜 Technical Whitepapers, Publications & Specifications
 
+### 📚 Academic Publications & DOI Citations
+If you reference our zero-trust runtime governance evaluation or use **DROS-VEP Lite** in your security research, please cite our published peer-reviewed papers on Zenodo:
+
+* 🏛️ **DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads**
+  * **DOI**: [`10.5281/zenodo.21755654`](https://doi.org/10.5281/zenodo.21755654) | **Zenodo Record**: [zenodo.org/records/21755654](https://zenodo.org/records/21755654)
+* 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents**
+  * **DOI**: [`10.5281/zenodo.21808499`](https://doi.org/10.5281/zenodo.21808499) | **Zenodo Record**: [zenodo.org/records/21808499](https://zenodo.org/records/21808499)
+
+### 📖 Whitepapers & Protocol Specifications
 * 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**: *Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
 * 📖 **[完整白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**: *自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
 * ⚡ **[4-Page A4 Executive Summary (HTML)](dashboard/whitepaper_4page_EN.html)**: *Fast visual summary for CISOs & Security Researchers*

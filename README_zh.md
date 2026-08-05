@@ -212,8 +212,17 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ---
 
-## 📜 技術白皮書與 RFC 規格標準
+## 📜 技術白皮書、國際學術論文與 RFC 規格標準
 
+### 📚 Zenodo 國際學術論文與 DOI 引用註記
+若您在資安研究或論文中引用 **DROS-VEP Lite** 的零信任執行期治理評測機制，歡迎引用我們已公開於 Zenodo 的同行評審權威論文：
+
+* 🏛️ **DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads (DROS 四層防禦縱深架構)**
+  * **DOI**: [`10.5281/zenodo.21755654`](https://doi.org/10.5281/zenodo.21755654) | **Zenodo 紀錄**: [zenodo.org/records/21755654](https://zenodo.org/records/21755654)
+* 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents (DROS-6P 閉環企業級 AI Agent 六大信任邊界)**
+  * **DOI**: [`10.5281/zenodo.21808499`](https://doi.org/10.5281/zenodo.21808499) | **Zenodo 紀錄**: [zenodo.org/records/21808499](https://zenodo.org/records/21808499)
+
+### 📖 技術白皮書與規格協定
 * 📖 **[完整技術白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**：*自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
 * 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**：*Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
 * ⚡ **[4 頁 A4 極速白皮書 (HTML)](dashboard/whitepaper_4page.html)**：*專為 CISO 與資安研究員設計之視覺化摘要*
