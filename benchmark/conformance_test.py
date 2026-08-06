@@ -53,13 +53,25 @@ def evaluate_conformance():
     l2_evidence = bool(last_log.get("sha256_hash") and last_log.get("execution_id"))
     l2_pass = l1_pass and l2_explainability and l2_evidence
 
-    # Level 3 Checks: High Assurance Compliance
+    # Level 3 Checks: High Assurance Compliance & Open Passport (libdros-id) Verification
     l3_tamper = ("sha256:dros_" in last_log.get("sha256_hash", ""))
-    l3_pass = l2_pass and l3_tamper
+    
+    # Passport (libdros-id / RFC-010) Verification Check
+    sys.path.insert(0, os.path.join(BASE_DIR, "sdk", "libdros-id"))
+    try:
+        from libdros_id import OpenAgentPassport
+        passport_inst = OpenAgentPassport(agent_id="did:key:z6MkpTHR8VNsBxYpj5F3yQ2nJ9Kz1X8L", principal="Developer-Jimmy")
+        sample_bec = passport_inst.issue_passport_bec(scope="read:public,execute:tools")
+        passport_valid, passport_reason = OpenAgentPassport.verify_passport(sample_bec)
+        l3_passport = passport_valid
+    except Exception:
+        l3_passport = False
+
+    l3_pass = l2_pass and l3_tamper and l3_passport
 
     certified_level = "NON-CONFORMANT"
     if l3_pass:
-        certified_level = "RFC-010 LEVEL 3 HIGH ASSURANCE CERTIFIED (PASS)"
+        certified_level = "RFC-010 LEVEL 3 HIGH ASSURANCE & OPEN PASSPORT CERTIFIED (PASS)"
     elif l2_pass:
         certified_level = "RFC-010 LEVEL 2 ENTERPRISE CERTIFIED (PASS)"
     elif l1_pass:
@@ -90,7 +102,8 @@ def evaluate_conformance():
             "level_3_high_assurance": {
                 "status": "PASS" if l3_pass else "FAIL",
                 "checks": {
-                    "sha256_tamper_detection": "PASS" if l3_tamper else "FAIL"
+                    "sha256_tamper_detection": "PASS" if l3_tamper else "FAIL",
+                    "open_agent_passport_libdros_id": "PASS" if l3_passport else "FAIL"
                 }
             }
         }
@@ -106,6 +119,7 @@ def evaluate_conformance():
     print(f"  Level 1 Core Compliance:           {'✅ PASS' if l1_pass else '❌ FAIL'}")
     print(f"  Level 2 Enterprise Compliance:     {'✅ PASS' if l2_pass else '❌ FAIL'}")
     print(f"  Level 3 High Assurance Compliance: {'✅ PASS' if l3_pass else '❌ FAIL'}")
+    print(f"  - Open Agent Passport (libdros-id): {'✅ PASS' if l3_passport else '❌ FAIL'}")
     print("------------------------------------------------------------------")
     print("🎁 Claim Your 1-Year FREE Hacker License (3 Co-Existing Ways)")
     print("==================================================================")

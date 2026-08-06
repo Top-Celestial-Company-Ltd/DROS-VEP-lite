@@ -9,7 +9,8 @@
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology)
 
 📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
-📊 **Official 24-Hour Soak Test Benchmark Report**: [DROS 24-Hour Final Report (160k+ Requests)](reports/DROS_24H_Soak_Test_Final_Report.md)
+📊 **Official 24-Hour Soak Test Benchmark Report**: [DROS 24-Hour Final Report (160k+ Requests)](reports/DROS_24H_Soak_Test_Final_Report.md)  
+🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
