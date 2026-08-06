@@ -108,7 +108,42 @@ Attack Path Model:
 
 ---
 
-## 3. Layer 1: Detective Intelligence & Threat Intelligence Layer
+## 3. The 6-Pillars Enterprise AI Trust Model (DROS-6P)
+
+When enterprises deploy autonomous AI agents into mission-critical business workflows, CISOs and security architects face a fundamental challenge: legacy IAM, prompt firewalls, and SIEM platforms only answer isolated fragments of the security equation. Achieving complete runtime compliance requires deterministic answers to **six fundamental trust boundaries (6-Pillars)** in real time:
+
+```
+                    ┌───────────────────────────────────────────────┐
+                    │     DROS-6P Unified In-Band Governance        │
+                    └───────────────────────┬───────────────────────┘
+                                            │
+        ┌───────────────────┬───────────────┴───┬───────────────────┐
+        ▼                   ▼                   ▼                   ▼
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│ 1. Principal │    │2. Authorization│  │3. Action Bound│   │4. Policy Gate│
+│ (Identity)   │    │(Deterministic)│   │ (Syscall Gate)│   │(Dynamic High)│
+└───────┬──────┘    └───────┬──────┘    └───────┬──────┘    └───────┬──────┘
+        │                   │                   │                   │
+        └───────────────────┼───────────────────┴───────────────────┘
+                            │
+                    ┌───────┴──────┐    ┌──────────────┐
+                    │ 5. Audit Log │    │6. Revocation │
+                    │(Non-repudiable│   │(Microsecond) │
+                    └──────────────┘    └──────────────┘
+```
+
+| 6 Trust Boundaries (6-Pillars) | Ultimate Enterprise Security Question | Legacy Defense Blind Spot | DROS In-Band Physical Assurance (DROS Solution) |
+| :--- | :--- | :--- | :--- |
+| **1. Principal** | Who does the Agent actually represent during execution? | **IAM Breakdown**: Authenticates human logins but suffers context blindness regarding internal OS process streams (`python.exe`). | **3-Tier PKI Cryptographic Stamp (DIT)**: Issues `DrosIdentityToken` binding agent identity, role, and certificates to every tool execution. |
+| **2. Authorization** | What specific actions is the Agent explicitly permitted to do? | **Prompt Guardrail Breakdown**: Relies on probabilistic LLM inference, highly vulnerable to zero-day bypasses and false positives. | **Deterministic Capability Bitmaps**: $O(1)$ bitmap vector mapping evaluated at compile-time, offering zero semantic ambiguity and Boolean evaluation. |
+| **3. Action Bound** | Which specific APIs or low-level tool calls are safe? | **eBPF/Seccomp Breakdown**: Inspects low-level syscall integers but cannot map user-space agent application roles to process streams. | **FFI / C-ABI In-Band Interceptor**: Enforces <500ns physical panic at the binary boundary, guaranteeing unauthorized syscalls cannot execute. |
+| **4. Policy Gate** | How are high-risk actions or sensitive data dynamic controlled? | **Static API Gate Breakdown**: Cannot enforce dynamic data redaction or human-in-the-loop (HITL) suspensions in real time. | **Dynamic Redaction & HITL Gateways**: Paired with ZKP-Lite zero-knowledge proofs to enforce dynamic gates prior to high-risk execution. |
+| **5. Audit Log** | How are actions immutably traced during incident response? | **SIEM Log Breakdown**: Post-hoc text log ingestion, vulnerable to tampering and lacking real-time cryptographic proof. | **SHA-256 Merkle Hash Chain + Ed25519 Signatures**: Every decision automatically emits a signed evidence package, fully compliant with EU AI Act Art. 12. |
+| **6. Expiry / Revocation** | When does authorization expire, and how is it revoked instantly? | **OAuth/JWT Breakdown**: Token revocation takes minutes to hours, allowing hijacked agents to complete exfiltration cycles. | **$O(1)$ Constant-Time Microsecond Revocation**: Dynamic capability bitmap updates complete in microseconds for immediate HTTP 403 enforcement. |
+
+---
+
+## 4. Layer 1: Detective Intelligence & Threat Intelligence Layer
 
 **Framework Alignment:** NIST SP 800-207 (Zero Trust Architecture) — "Never Trust, Always Verify" perimeter layer  
 **MITRE ATLAS Alignment:** AML.T0051 (Prompt Injection Detection)
