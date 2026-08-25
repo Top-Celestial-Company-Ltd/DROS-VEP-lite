@@ -190,7 +190,7 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ## 💎 四大產品版本規格說明
 
-| 功能 / 能力指標 | Community 開源社區版 ($0) | Hacker 極客個人版 ($149/年 或 $19/月 - 1k 限時免費) | Professional 團隊專業版 ($499/年) | Enterprise Swarm 企業集群版 (商業授權) |
+| 功能 / 能力指標 | Community 開源社區版 | Hacker 極客個人版 | Professional 團隊專業版 | Enterprise Swarm 企業集群版 (商業授權) |
 | :--- | :--- | :--- | :--- | :--- |
 | **主要適用對象** | 資安學生、研究人員 | 自由職業者、小型 AI 初創團隊 | 中型 AI 開發團隊、DevSecOps 團隊 | Fortune 500 企業、銀行、政府單位 |
 | **同時運行 Agent 角色** | **最多 2 個角色** | **最多 5 個角色** | **最多 25 個角色** | **無限制 (500+ Swarm 生產環境)** |
