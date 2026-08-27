@@ -4,15 +4,42 @@
 > **（您的 AI Agent 能否在真實企業環境中安全運行？用測試證明給我看。）**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Powered by: OpenShip](https://img.shields.io/badge/Powered%20by-OpenShip%20Ecosystem-purple.svg)](https://openship.org)
-[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
-[![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
+[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
+[![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
 
-📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
-📊 **官方 24 小時壓測完整報告**: [DROS 24 小時長效基準測試報告 (16 萬筆攻防測試)](reports/DROS_24H_Soak_Test_Final_Report.md)
-
 [English](README.md) | [繁體中文](README_zh.md)
+
+---
+
+## 🏛️ 科學證據與評測導航索引 (Evidence & Benchmark Index)
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 📚 1. 論文參照存證基準 (Paper-Referenced Evidence)                           │
+│    與已發表／投稿論文直接掛鉤之實證基準數據。                               │
+│    • 24 小時長效連續多場景壓測 (160,611 次請求)                             │
+│      └─ 報告：reports/DROS_24H_Soak_Test_Final_Report_ZH.md                 │
+│      └─ 運行器：scripts/run_24h_soak_test.py                                │
+│                                                                             │
+│ 🧪 2. 擴充評測場景庫 (RFC-010 Standard Matrix)                              │
+│    RFC-010 開放標準定義之全量威脅矩陣。                                    │
+│    • ATS-001: 間接提示詞注入 (IPI 跨通道外洩)                              │
+│    • ATS-002: 目標與情境劫持 (Goal Hijacking)                              │
+│    • ATS-003: 跨 API 邊界特權提升 (Privilege Escalation)                   │
+│    • ATS-004: B2B 跨企業多代理人供應鏈投毒 (Supply-Chain Poisoning)         │
+│                                                                             │
+│ 🔬 3. 現役實戰靶場與多架構對照評測 (入侵後遏制與邊界研究)                     │
+│    後續延伸之自主紅隊攻擊者執行遏制實測。                                   │
+│    • ATS-005: 入侵後自主紅隊執行遏制評測 (Cybermes 整合)                     │
+│      └─ 評測報告: reports/CYBERMES_POST_COMPROMISE_REPORT_ZH.md             │
+│    • 多架構橫向對照研究 (Baseline vs. AGT vs. DROS)                          │
+│      └─ 評測報告: reports/COMPARATIVE_GOVERNANCE_REPORT_ZH.md                │
+│      └─ 原始存證包: reports/evidence/comparative_benchmark/                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
 
 ---
 
@@ -148,79 +175,74 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ---
 
-## 🏆 全球懸賞 $40,000 美元！DROS 紅隊首破挑戰賽
+---
 
-**你相信能有人在不到 500 奈秒內，物理熔斷失控 AI 的越權 Tool Call 嗎？**
+## 🏴‍☠️ 入侵後自主紅隊執行遏制評測 (Cybermes 整合)
 
-我們提供為期 **5 年免費** 的旗艦級授權 **`VajraClaw - Enterprise Air-Gapped License`**（當前早期價值：$7,990 USD/年，5 年總價值高達 **$39,950 美元 / 約台幣 131 萬**），頒發給全網**第一位**在此 Docker 沙盒中成功繞過 DROS PEP/PDP 物理防線的資安研究員或黑客！
+**核心哲學：** *控制權與執行權分離 (Control-Execution Separation: Agent Compromise $\neq$ Execution Authority)*。
 
-### ⚖️ 官方「零爭議」破防判定公約 (Proof-of-Bypass Rules)
+當 AI Agent 遭釣魚信件或受污染套件奪舍時，傳統 WAF/IAM 無法防禦（因為攻擊者直接繼承了 Agent 的合法 API 權限）。**DROS 透過 C-ABI 邊界能力點陣圖提供確定性的執行遏制。**
 
-要贏得首獎，您的提交必須同時滿足以下三項剛性要件：
+```bash
+# 執行完整三階段入侵後執行遏制評測 (Post-Compromise Crucible)
+python scripts/run_cybermes_crucible.py
+```
 
-1. **環境不可篡改 (Unmodified Sandbox)**：
-   - 漏洞利用必須在官方原封不動的 `docker compose up -d` 環境下執行。
-   - 禁止修改 `dros-guard` 容器代碼，嚴禁使用 `BYPASS_GUARD=true` 或透過 UI 關閉 Guard。DROS Guard 必須處於啟動攔截狀態。
-2. **達成具體越權成果 (Concrete Exploit Result)**：
-   - **路徑 A（越權工具呼叫）**：成功讓僅具備 `/api/erp/inventory` 權限的 `support-agent`，繞過 DROS 物理阻斷，成功讀取並回傳 `/api/erp/finance` 財務資料或 `/api/system/secrets` 機密變數。
-   - **路徑 B（未授權檔案覆寫）**：成功繞過 DROS PEP/PDP，對受保護的 ERP 容器磁碟檔案執行勒索加密或覆寫寫入。
-3. **不可否認的密碼學重現包 (Cryptographic Proof & PoC Package)**：
-   - 必須提交可 100% 重現的 PoC 攻擊腳本。
-   - 必須提交未修改的 `audit.jsonl` 與 `decision.json` 證據包，證明 DROS 發生了異常的 `ALLOW` 決策，或者證明您透過 SSRF/RCE 完全繞過了 Guard 網路層並成功竊取資料。
+### 📊 三階段科學評測總表 (3-Phase Benchmark Matrix)
 
-### 🚫 無效破防宣告 (Invalid Claims / Out-of-Scope)
-- **DoS / DDoS 攻擊**：把 DROS 伺服器打掛不等於繞過權限（DROS 依然成功拒絕了請求，保障了後端 ERP）。
-- **單純的模型 Prompt 越獄 (Pure LLM Jailbreak)**：若模型語義越獄成功，但發起的惡意 API 依然被 DROS 26.1μs 攔截，屬於 **DROS 成功防禦**，不算破防！
+| 評測階段 | 評測維度與方法學 | 實測結果 | 狀態判定 |
+| :--- | :--- | :---: | :---: |
+| **Phase 1: 行為層遏制** | 4 階段 MITRE 殺傷鏈步進評測 (`ATS-001`~`ATS-004`) | **4/4 預先定義場景成功阻斷** | 🛡️ **執行成功遏制** |
+| **Phase 2: 併發完整性** | 20 執行緒 / 30,000 次高頻請求衝擊＋RCU 動態策略熱插拔 | **0 競態洩漏 ($N=30\text{k}$) / 200 ns P50** | 🌟 **完全零競態 (Zero Leak)** |
+| **Phase 3: 邊界魯棒性** | 1,000 筆 FFI 畸形變異 Payload 注入 (負數/溢位/超界位移) | **0 次崩潰 / 0 記憶體洩漏 ($N=1\text{k}$)** | 🛡️ **宿主進程穩健** |
 
-**提交方式**：將您的 PoC 重現包提交至 [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions) 或 Discord `#conformance-claims` 頻道。以第一位通過官方驗證的時間戳為準！
+* 詳閱完整技術評測報告：**[CYBERMES_POST_COMPROMISE_REPORT_ZH.md](reports/CYBERMES_POST_COMPROMISE_REPORT_ZH.md)**
+* 檢視場景定義與能力點陣圖：**[scenarios/ATS-005](scenarios/ATS-005/README_zh.md)**
 
 ---
 
-## 🏅 RFC-010 Draft 規格合規測試套件
+## 💎 產品版本與規格對照表 (8/26 最新版)
 
-第三方 AI Agent 框架（如 OpenAI Agent SDK、LangGraph、CrewAI、AutoGen、OpenClaw）可跨 3 個階梯評估其運行期安全：
-
-* **Level 1 (Core)**：身分識別 (DIT) ＋ PEP 工具攔截 ＋ 結構化審計日誌。
-* **Level 2 (Enterprise)**：策略可解釋性 (Policy ID) ＋ 審計證據包 (SHA-256 Digest) ＋ 多 Agent 角色隔離。
-* **Level 3 (High Assurance)**：密碼學簽章認證 ＋ 防篡改檢測 ＋ 確定性 Replay 重現。
-
-> **ℹ️ 免責宣告**：*本專案附帶之合規測試套件用於驗證實作是否符合 RFC-010 草案規格。通過測試僅代表符合該草案，不代表獲得獨立標準機構之官方認證。*
-
----
-
-## 💎 四大產品版本規格說明
-
-| 功能 / 能力指標 | Community 開源社區版 ($0) | Hacker 極客個人版 ($149/年 或 $19/月 - 1k 限時免費) | Professional 團隊專業版 ($499/年) | Enterprise Swarm 企業集群版 (商業授權) |
-| :--- | :--- | :--- | :--- | :--- |
-| **主要適用對象** | 資安學生、研究人員 | 自由職業者、小型 AI 初創團隊 | 中型 AI 開發團隊、DevSecOps 團隊 | Fortune 500 企業、銀行、政府單位 |
-| **同時運行 Agent 角色** | **最多 2 個角色** | **最多 5 個角色** | **最多 25 個角色** | **無限制 (500+ Swarm 生產環境)** |
-| **紅隊攻擊劇本庫** | ATS-001 單一劇本 | ATS-001 ~ ATS-005 全量矩陣 | ATS-001 ~ ATS-005 + 自訂劇本 | 無限制自訂紅隊滲透 Crucible 靶場 |
-| **對接業務系統連接器** | REST Mock Enterprise APIs | REST Mock + CI/CD Harness | Keycloak + EspoCRM + Forgejo | Live SAP, Active Directory, K8s |
-| **Replay 與審計鏈** | 即時 Web 視訊日誌串流 | 離線 Replay 重現引擎 (`replay.py`) | Replay + 熱力圖監控 | 無限制 PKI 簽章日誌匯出與 SIEM 整合 |
-| **防衛涵蓋廣度** | AI Agent 工具治理 | AI Agent 工具治理 | AI Agent 工具治理 | **AI Agent 治理 ＋ 企業級反勒索軟體防護** |
+| 功能 / 能力指標 | 🧪 VEP Lite 評測沙盒 | ⚡ Community (個人/非商用免費) | 🚀 Startup 商業版 | 🏛️ Enterprise 企業集群版 | 👑 Corporate 客製化旗艦方案 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **主要適用對象** | 開放規格科學評測 | 個人學習、學生與獨立開發者 | 新創團隊、獨立 ISV、商用 Agent | 大型企業、金控、醫療與跨國 SaaS | 國家主權雲、國防軍工、關鍵基礎設施 |
+| **授權模式與條款** | 開源免費 (Apache 2.0) | **個人免費授權 (非商用)** | 商業年度訂閱 | 企業年度訂閱 | 專人客製化合約與白牌 OEM |
+| **機器節點 / UUID** | 本地評測沙盒 | 單機本地 PC / Docker | 單一伺服器節點 | 多節點集群 (最多 15 節點) | 無限制集群與專屬硬體 |
+| **同時併發 Agent 數量** | 2 角色 Demo | 單機自由運行 | 30,000 次高頻併發無鎖處理 | 450 併發 (15 節點 × 30) | 無上限百萬級 Agent 群蜂 (Swarm) |
+| **6P 閉環執行期治理** | **✅ 輕量化模擬** | **✅ 包含** | **✅ 完整 6P 閉環 (RFC-010)** | **✅ 完整 6P 閉環 (RFC-010)** | **✅ 完整 6P 閉環 (RFC-010)** |
+| **353 ns C-ABI 物理熔斷** | **✅ 包含** | **✅ 包含** | **✅ 包含 (帶內亞微秒)** | **✅ 包含 (帶內亞微秒)** | **✅ 包含 (專屬 C-ABI 內核定制)** |
+| **SHA-256 Merkle 存證鏈** | **✅ 包含** | **✅ 包含** | **✅ 包含 (不可篡改)** | **✅ 法院級存證 & SIEM 整合** | **✅ 專屬硬體 HSM 簽章存證** |
+| **3-Tier PKI 階層身分簽證** | **🟡 單機 did:key** | **🟡 單機 did:key** | **✅ 包含 (Root &rarr; AIA &rarr; BEC)** | **✅ 跨企業聯邦身分認證** | **✅ 國防級專屬 CA 私鑰託管** |
+| **100% 離線實體隔離 (Air-Gapped)** | **✅ 僅限沙盒** | **✅ 本地單機** | ❌ (需線上心跳驗證) | **✅ 100% 完全離線 (無外連心跳)** | **✅ 實體隔離 (Air-Gapped / FPGA)** |
+| **無鎖 RCU 零停機熱更新** | ❌ 手動重載 | ❌ 手動重載 | ❌ 手動重載 | **✅ 亞微秒級無鎖動態熱更** | **✅ 分散式 RCU 集群同步** |
+| **SOC 2 Type II / SLA 支援** | ❌ | ❌ | 🟡 標準工單支援 | **✅ 專屬技術 SLA & 合規報告** | **✅ 7x24 專屬架構師團隊** |
+| **支援運作基礎架構** | Docker Desktop | 本地 PC / Cursor / DSH | 本地 / VM / Docker | K8s / GKE / AWS / Azure | 私有主權雲 / FPGA 硬體加速 |
 
 ---
 
-## 🎁 領取 1 年免費 Hacker 版授權 (🔥 限量前 1,000 名資安創始先鋒！)
+## 👥 社群與開發者版本（個人開發者與研究者 100% 免費）
 
-完成測試並驗證 RFC-010 合規性？分享您的測試證明即可免費領取 **1 年期 Hacker 版授權 (價值 $149 / $19/月)**：
-
-1. **管道 1 (Web Dashboard UI)**：開啟 `http://localhost:8080` 並點擊 **"Claim 1-Year Hacker License"**。
-2. **管道 2 (GitHub Discussions Bot)**：將 `conformance_report.json` 貼至 [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions)。
-3. **管道 3 (Discord Cyber Crucible)**：加入我們的 [Discord 社群](https://discord.gg/F92SgExUA) 並將報告發至 `#conformance-claims` 頻道。
-4. **管道 4 (Gumroad $0 結帳)**：在 [dr-os.io 官方網站](https://dr-os.io) 輸入折扣碼 `DROS-RFC010-FREE` 即可 $0 元結帳。
+DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群提供開放、可重現的評測標準。
+* **個人開發者與學術研究**：完全免費下載、評測與構建自訂威脅場景。
+* **企業與叢集生產環境**：如需分散式 RCU 無鎖熱插拔、C-ABI 硬體加速與企業級 SIEM 法證存證，請參閱 [dr-os.io 官方網站](https://dr-os.io)。
 
 ---
 
 ## 📜 技術白皮書、國際學術論文與 RFC 規格標準
 
-### 📚 Zenodo 國際學術論文與 DOI 引用註記
-若您在資安研究或論文中引用 **DROS-VEP Lite** 的零信任執行期治理評測機制，歡迎引用我們已公開於 Zenodo 的同行評審權威論文：
+### 📚 Zenodo 國際學術論文、三部曲與 DOI 引用註記
+若您在資安研究或論文中引用 **DROS-VEP Lite** 的零信任執行期治理評測機制，歡迎引用我們已公開於 Zenodo 的權威論文：
 
-* 🏛️ **DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads (DROS 四層防禦縱深架構)**
-  * **DOI**: [`10.5281/zenodo.21755654`](https://doi.org/10.5281/zenodo.21755654) | **Zenodo 紀錄**: [zenodo.org/records/21755654](https://zenodo.org/records/21755654)
+* 📖 **[DROS 學術三部曲導讀 (Reading Guide Technical Note)](docs/DROS_Trilogy_Reading_Guide.md)**：*面向自主 AI 工作負載的確定性執行期作業基板*
+  * **DOI**: [`10.5281/zenodo.22114036`](https://doi.org/10.5281/zenodo.22114036) | **Zenodo 紀錄**: [zenodo.org/records/22114036](https://zenodo.org/records/22114036)
 * 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents (DROS-6P 閉環企業級 AI Agent 六大信任邊界)**
-  * **DOI**: [`10.5281/zenodo.21808499`](https://doi.org/10.5281/zenodo.21808499) | **Zenodo 紀錄**: [zenodo.org/records/21808499](https://zenodo.org/records/21808499)
+  * **DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Zenodo 紀錄**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
+* 🏛️ **DROS 4-Layer (v4.0) 四層執行期基板與對抗驗證最新論文**: [英文論文 (EN)](docs/DROS-4Layer-Paper_v4_20260827_EN.md) | [中文論文 (ZH)](docs/DROS-4Layer-Paper_v4_20260827_ZH.md) | [論文 PDF](docs/DROS-4Layer-Paper_v4_20260827_EN.pdf)
+  * **DOI**: [`10.5281/zenodo.22129692`](https://doi.org/10.5281/zenodo.22129692) | **Zenodo 紀錄**: [zenodo.org/records/22129692](https://zenodo.org/records/22129692)
+* 🏛️ **DROS 4-Layer (v3) Defense-in-Depth Architecture for Autonomous AI Workloads (DROS 四層確定性執行期防禦縱深架構 v3)**
+  * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo 紀錄**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
+* 🏛️ **DROS-PGM: A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security (DROS-PGM 內核級確定性執行控制平面)**
+  * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo 紀錄**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
 
 ### 📖 技術白皮書與規格協定
 * 📖 **[完整技術白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**：*自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*

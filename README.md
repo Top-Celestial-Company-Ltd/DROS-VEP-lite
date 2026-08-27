@@ -3,16 +3,40 @@
 > **"Can your AI Agent safely operate inside a real enterprise? Prove it."**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Powered by: OpenShip](https://img.shields.io/badge/Powered%20by-OpenShip%20Ecosystem-purple.svg)](https://openship.org)
-[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
-[![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md)
+[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
+[![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology)
 
-📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
-📊 **Official 24-Hour Soak Test Benchmark Report**: [DROS 24-Hour Final Report (160k+ Requests)](reports/DROS_24H_Soak_Test_Final_Report.md)  
-🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
-
 [English](README.md) | [繁體中文](README_zh.md)
+
+---
+
+## 🏛️ Scientific Evidence & Benchmark Index
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 📚 1. Paper-Referenced Evidence (Submitted/Published Manuscripts)           │
+│    • 24-Hour Continuous Multi-Scenario Soak Test (160,611 Requests)         │
+│      └─ Report: reports/DROS_24H_Soak_Test_Final_Report.md                  │
+│      └─ Harness: scripts/run_24h_soak_test.py                               │
+│                                                                             │
+│ 🧪 2. Extended Evaluation Scenarios (RFC-010 Standard Matrix)               │
+│    • ATS-001: Indirect Prompt Injection (IPI Exfiltration)                  │
+│    • ATS-002: Goal & Context Hijacking                                      │
+│    • ATS-003: Privilege Escalation Across API Boundaries                    │
+│    • ATS-004: Federated B2B Multi-Enterprise Supply Chain Poisoning         │
+│                                                                             │
+│ 🔬 3. Active Crucible & Comparative Benchmarks (Post-Compromise & Boundary)   │
+│    • ATS-005: Post-Compromise Execution Containment (Cybermes Integration)  │
+│      └─ Report: reports/CYBERMES_POST_COMPROMISE_REPORT.md                  │
+│    • Multi-Architecture Comparative Study (Baseline vs. AGT vs. DROS)       │
+│      └─ Report: reports/COMPARATIVE_GOVERNANCE_REPORT.md                    │
+│      └─ Evidence Package: reports/evidence/comparative_benchmark/           │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
 
 ---
 
@@ -158,85 +182,82 @@ Third-party AI Agent Frameworks (OpenAI Agent SDK, LangGraph, CrewAI, AutoGen, O
 
 ---
 
-## 🏆 The $40,000 DROS Red Team Grand Challenge
+---
 
-**Can you breach DROS’s 26.1μs C-ABI zero-trust execution boundary?**
+## 🏴‍☠️ Autonomous Post-Compromise Crucible (Cybermes Integration)
 
-We are offering a **5-Year FREE License** of our flagship product, **"VajraClaw - Enterprise Air-Gapped License"** (Current Early Adopter Price: $7,990/yr, Total Value: **$39,950 USD**), to the FIRST security researcher or hacker who successfully bypasses the DROS PEP/PDP Guard in this docker sandbox!
+**Core Premise:** *Control-Execution Separation: Agent Compromise $\neq$ Execution Authority.*
 
-### ⚖️ Official Zero-Ambiguity Proof-of-Bypass Rules
+When an AI Agent is subverted via spear-phishing or compromised dependencies, traditional perimeter defenses (WAF/IAM) fail because the attacker inherits legitimate API credentials. **DROS enforces deterministic execution containment at the C-ABI binary boundary.**
 
-To claim the Grand Prize, your submission MUST meet all three of the following strict criteria:
+```bash
+# Execute the complete 3-Phase Post-Compromise Crucible Benchmark
+python scripts/run_cybermes_crucible.py
+```
 
-1. **Unmodified Sandbox Environment**:
-   - The exploit must run against the default `docker compose up -d` environment.
-   - You CANNOT modify the `dros-guard` container code or disable it (`BYPASS_GUARD=true` or clicking "Disable DROS Guard" in the UI is strictly forbidden). The Guard must be active.
-2. **Concrete Exploit Result (Agentic Overreach)**:
-   - **Path A (Unauthorized Tool Call)**: Successfully force the `support-agent` (which only has permissions for `/api/erp/inventory`) to bypass the DROS physical block and successfully read/exfiltrate data from `/api/erp/finance` or `/api/system/secrets`.
-   - **Path B (Unauthorized Write)**: Successfully bypass the DROS PEP/PDP to encrypt or overwrite protected disk files on the ERP container.
-3. **Cryptographic Proof & PoC Package**:
-   - You must submit a reproducible PoC exploit script.
-   - You must submit the unmodified `audit.jsonl` log and `decision.json` evidence package demonstrating either an anomalous `ALLOW` decision for a blocked route, or proving complete network/container bypass (SSRF/RCE) resulting in data exfiltration while the Guard was running.
+### 📊 3-Phase Scientific Benchmark Summary
 
-### 🚫 Invalid Claims (Out-of-Scope)
-- **DoS / DDoS**: Crashing the DROS server is not a bypass (DROS successfully prevented unauthorized access).
-- **Pure LLM Jailbreaks**: If you trick the LLM into *wanting* to attack, but the DROS Guard successfully blocks the resulting API call in 26.1μs, this is considered a **Successful DROS Defense**, not a bypass.
+| Evaluation Phase | Evaluated Dimension & Methodology | Empirical Result | Status |
+| :--- | :--- | :---: | :---: |
+| **Phase 1: Behavioral Containment** | 4-Stage MITRE ATLAS/ATT&CK step-through (`ATS-001`~`ATS-004`) | **4/4 Predefined Scenarios Blocked** | 🛡️ **Execution Contained** |
+| **Phase 2: Concurrency Integrity** | 30,000 requests across 20 threads under active RCU policy swaps | **0 Race Leaks Observed ($N=30\text{k}$) / 200 ns P50** | 🌟 **Zero Contention Leak** |
+| **Phase 3: Boundary Robustness** | 1,000 malformed FFI / C-ABI mutated payloads (overflows/masks) | **0 Crashes / 0 Leaks Observed ($N=1\text{k}$)** | 🛡️ **Host Process Stable** |
 
-**How to submit**: Post your PoC package to [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions) or our [Discord `#conformance-claims`](https://discord.gg/F92SgExUA). The first verified submission timestamp wins the Grand Prize!
+* Read the full technical benchmark report: **[CYBERMES_POST_COMPROMISE_REPORT.md](reports/CYBERMES_POST_COMPROMISE_REPORT.md)**
+* Inspect scenario details & capability matrix: **[scenarios/ATS-005](scenarios/ATS-005/README.md)**
 
 ---
 
-## 💎 Defense Capability & Feature Comparison Matrix
+## 💎 Defense Capability & Feature Comparison Matrix (8/26 Latest Edition)
 
-| Feature / Capability | 🧪 VEP Lite Sandpit | ⚪ Free Trial | 🟢 Hacker | 🔵 Startup | 🟣 Enterprise | 👑 Sovereign |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Target Audience** | Open-Spec Evaluation | Individual Evaluation | Individual Developers | 10~50 Person Startups | Mid-to-Large Enterprises | Financial / Defense / Govt |
-| **License Duration** | Unlimited Free | 1 Month Trial | Annual Subscription | Annual Subscription | Annual Subscription | Custom Contract |
-| **Machine UUIDs** | Local Sandbox | 1 UUID | 1 UUID | 3 UUIDs | 15 UUIDs | Unlimited |
-| **Concurrent Agents** | 2 Roles Demo | 2 Agents | 5 Agents | 30 Agents (3×10) | 450 Agents (15×30) | Unlimited |
-| **Level 1: FFI Microkernel Panic** | **✅ Included** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
-| **Level 1: C-ABI Memory Protection** | **✅ Included** | ✅ (Time-limited) | ✅ | ✅ | ✅ | ✅ |
-| **Level 1: Real SHA-256 Audit Digest** | **✅ Included** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Level 1: Ed25519 Session Attestation** | **✅ Included** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Level 2: Information Flow Control (IFC)** | **🟡 Spec Demo** | ❌ | ❌ | ✅ | ✅ | ✅ |
-| **Level 2: Dynamic Data Tainting** | **🟡 Spec Demo** | ❌ | ❌ | ✅ | ✅ | ✅ |
-| **Level 2: Cross-Channel Exfiltration Block (POL-0021)** | **✅ Included (ATS-001)** | ❌ | ❌ | ✅ | ✅ | ✅ |
-| **Level 3: Auto-DSL Flywheel Engine** | **❌ Prod Only** | ❌ | ❌ | ❌ | ⭐ | ⭐ |
-| **Level 3: Dynamic Baseline Fusing** | **❌ Prod Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Level 3: HIL Multi-Signature Approval** | **❌ Prod Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Level 3: CoW 1-Sec Snapshot Rollback** | **❌ Prod Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **100% Air-Gapped Offline Deployment** | **✅ Sandbox Only** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Zero-Downtime Hot Reload** | **❌ Manual** | ❌ | ❌ | Manual Reload | ✅ Millisecond-level | ✅ Distributed RCU |
-| **Target Infrastructure** | Docker Desktop | Local PC | Local / Docker | VM / NAS | K8s / GKE | Air-Gapped / FPGA |
+| Feature / Capability | 🧪 VEP Lite Sandpit | ⚡ Community (Free for Personal) | 🚀 Startup Commercial | 🏛️ Enterprise Cluster | 👑 Corporate Custom Flagship |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Target Audience** | Open-Spec Evaluation | Individual Devs & Students | Startups, ISVs, Commercial Agents | Large Enterprise, FinTech, Healthcare | Sovereign Clouds, Defense, Critical Infra |
+| **License Model** | Open-Source (Apache 2.0) | **Free for Personal/Non-Commercial** | Commercial Annual Subscription | Enterprise Cluster Subscription | Custom Contract & OEM Licensing |
+| **Machine Nodes / UUIDs** | Local Sandbox | Single Local PC / Docker | Single Server Node | Multi-Node Cluster (Up to 15 Nodes) | Unlimited Clusters & Custom Hardware |
+| **Concurrent Agents** | 2 Roles Demo | Unlimited Local Run | 30,000 High-Frequency Concurrency | 450 Agents (15 Nodes × 30) | Millions of Swarm Agents |
+| **6P Closed-Loop Governance** | **✅ Lightweight Demo** | **✅ Included** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** |
+| **353 ns C-ABI Physical Fuse** | **✅ Included** | **✅ Included** | **✅ Included (In-Band Sub-μs)** | **✅ Included (In-Band Sub-μs)** | **✅ Custom C-ABI Microkernel** |
+| **SHA-256 Merkle Audit Chain**| **✅ Included** | **✅ Included** | **✅ Included (Non-Repudiation)** | **✅ Court-Admissible & SIEM** | **✅ Hardware HSM Attestation** |
+| **3-Tier PKI Identity Chain** | **🟡 Single did:key** | **🟡 Single did:key** | **✅ Root &rarr; AIA &rarr; BEC** | **✅ Cross-Enterprise Federation** | **✅ Dedicated Sovereign CA Custody** |
+| **100% Air-Gapped Offline** | **✅ Sandbox Only** | **✅ Single Local** | ❌ (Online Heartbeat Required) | **✅ 100% Air-Gapped (Zero Telemetry)**| **✅ Air-Gapped / FPGA Hardware** |
+| **Lock-Free RCU Hot-Reload** | ❌ Manual Reload | ❌ Manual Reload | ❌ Manual Reload | **✅ Sub-Microsecond Lock-Free** | **✅ Distributed Swarm RCU** |
+| **SOC 2 Type II / SLA** | ❌ | ❌ | 🟡 Standard Ticket SLA | **✅ Dedicated SLA & Audit Reports** | **✅ 24/7 Dedicated Architecture Team** |
+| **Target Infrastructure** | Docker Desktop | Local PC / Cursor / DSH | Local / VM / Docker | K8s / GKE / AWS / Azure | Sovereign Cloud / FPGA Hardware |
 
 ---
 
-## 🎁 Claim Your Free 1-Year Hacker License (🔥 First 1,000 Security Pioneers!)
+## 👥 Community & Developer Edition (100% Free for Individual Developers)
 
-Verified RFC-010 compliance? Claim a **1-Year FREE Hacker License ($149 Value)**:
-
-1. **Option 1 (Web Dashboard UI)**: Open `http://localhost:8080` and click **"Claim 1-Year Hacker License"**.
-2. **Option 2 (GitHub Discussions Bot)**: Post `conformance_report.json` to [GitHub Discussions](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/discussions).
-3. **Option 3 (Discord Cyber Crucible)**: Join our [Discord Server](https://discord.gg/F92SgExUA) and post report in `#conformance-claims`.
-4. **Option 4 (Gumroad $0 Checkout)**: Use 100% OFF Coupon `DROS-RFC010-FREE` at [dr-os.io](https://dr-os.io).
+DROS-VEP Lite is an open-source, community-driven benchmark environment (Apache 2.0). 
+* **Individual Developers & Researchers**: Free to evaluate, test, and build custom security scenarios with zero cost.
+* **Enterprise & Swarm Production**: For high-throughput distributed RCU, C-ABI hardware integration, and enterprise SIEM compliance, visit [dr-os.io](https://dr-os.io).
 
 ---
 
 ## 📜 Technical Whitepapers, Publications & Specifications
 
-### 📚 Academic Publications & DOI Citations
+### 📚 Academic Publications, Trilogy & DOI Citations
 If you reference our zero-trust runtime governance evaluation or use **DROS-VEP Lite** in your security research, please cite our published peer-reviewed papers on Zenodo:
 
-* 🏛️ **DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads**
-  * **DOI**: [`10.5281/zenodo.21755654`](https://doi.org/10.5281/zenodo.21755654) | **Zenodo Record**: [zenodo.org/records/21755654](https://zenodo.org/records/21755654)
+* 📖 **[DROS Trilogy Reading Guide (導讀 Technical Note)](docs/DROS_Trilogy_Reading_Guide.md)**: *An Agent Runtime Operation Substrate*
+  * **DOI**: [`10.5281/zenodo.22114036`](https://doi.org/10.5281/zenodo.22114036) | **Zenodo Record**: [zenodo.org/records/22114036](https://zenodo.org/records/22114036)
 * 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents**
-  * **DOI**: [`10.5281/zenodo.21808499`](https://doi.org/10.5281/zenodo.21808499) | **Zenodo Record**: [zenodo.org/records/21808499](https://zenodo.org/records/21808499)
+  * **DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Zenodo Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
+* 🏛️ **DROS 4-Layer (v4.0) Deterministic Runtime Substrate & Adversarial Validation**: [Paper (EN)](docs/DROS-4Layer-Paper_v4_20260827_EN.md) | [Paper (ZH)](docs/DROS-4Layer-Paper_v4_20260827_ZH.md) | [PDF](docs/DROS-4Layer-Paper_v4_20260827_EN.pdf)
+  * **DOI**: [`10.5281/zenodo.22129692`](https://doi.org/10.5281/zenodo.22129692) | **Zenodo Record**: [zenodo.org/records/22129692](https://zenodo.org/records/22129692)
+* 🏛️ **DROS 4-Layer (v3) Defense-in-Depth Architecture for Autonomous AI Workloads**
+  * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
+* 🏛️ **DROS-PGM: A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security**
+  * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
 
 ### 📖 Whitepapers & Protocol Specifications
 * 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**: *Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
 * 📖 **[完整白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**: *自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
 * ⚡ **[4-Page A4 Executive Summary (HTML)](dashboard/whitepaper_4page_EN.html)**: *Fast visual summary for CISOs & Security Researchers*
 * 📋 **[RFC-010: DROS-VEP Specification Protocol](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/RFC-010-dros-vep-spec.md)**: *Open Agent Security & Threat Scenario Protocol*
+
+---
 
 ## ❓ Frequently Asked Questions (FAQ)
 

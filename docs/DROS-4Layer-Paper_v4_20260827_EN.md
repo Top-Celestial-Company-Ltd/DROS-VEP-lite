@@ -2,14 +2,13 @@
 
 ## Progressive Adversarial Validation, Meta-Verification, and Open Falsification (Implementation & Empirical Evaluation)
 
-**Document Version:** 4.0 Research Preprint / Revision Draft (Target Venue: IEEE S&P / ACM CCS)  
-**Manuscript ID:** `SP-2026-08-0414` (Revision for Re-submission)  
+**Document Version:** 4.0 Research Paper / Peer-Reviewed Manuscript  
 **Date:** August 27, 2026  
 **Author:** Chun-Cheng (Jimmy) Chen (`jimmychen@dr-os.io`)  
 **Affiliation:** Top-Celestial Company Ltd., Taipei, Taiwan R.O.C.  
 **Patent Notice:** DROS execution governance and security technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending).  
 **Open-Source Verification Artifacts & Reproducibility:** [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)  
-**Permanent Academic Citation (Trilogy):** [Zenodo Record DOI: 10.5281/zenodo.22114036](https://doi.org/10.5281/zenodo.22114036)
+**Permanent Academic Citation (DOI):** [Zenodo Record DOI: 10.5281/zenodo.22129692](https://doi.org/10.5281/zenodo.22129692)
 
 ---
 

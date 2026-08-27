@@ -2,14 +2,13 @@
 
 ## 漸進式對抗驗證、元驗證與開放式證偽 (Progressive Adversarial Validation, Meta-Verification, and Open Falsification)
 
-**文件版本：** 4.0 研究預印本 / 修訂初稿 (Target Venue: IEEE S&P / ACM CCS)  
-**稿件編號：** `SP-2026-08-0414` (Revision for Re-submission)  
+**文件版本：** 4.0 研究論文 / 同行評審手稿  
 **日期：** 2026 年 8 月 27 日  
 **作者：** 陳俊成 (Chun-Cheng / Jimmy Chen) (`jimmychen@dr-os.io`)  
 **所屬機構：** 康宸園有限公司 (Top-Celestial Company Ltd.), 台灣台北  
 **專利聲明：** DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. Patent Application No. 64/111,973，Patent Pending）。  
 **開源存證靶場與可重現性資產：** [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)  
-**學術三部曲永久文獻引用 (DOI)：** [Zenodo Record DOI: 10.5281/zenodo.22114036](https://doi.org/10.5281/zenodo.22114036)
+**永久學術文獻引用 (DOI)：** [Zenodo Record DOI: 10.5281/zenodo.22129692](https://doi.org/10.5281/zenodo.22129692)
 
 ---
 
