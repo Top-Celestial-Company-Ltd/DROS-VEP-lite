@@ -1,0 +1,194 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+% --- 字體與編碼設定（支援中英文混排） ---
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Sans CJK TC}
+\setCJKsansfont{Noto Sans CJK TC}
+\setCJKmonofont{Noto Sans CJK TC}
+
+% --- 核心宏包 ---
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+\usepackage{multirow}
+\usepackage{makecell}
+
+% --- 自適應換行表格欄位 ---
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\begin{document}
+
+\title{DROS 學術三部曲導讀：面向自主 AI 工作負載的確定性執行期作業基板\\
+{\footnotesize \textsuperscript{*}Technical Note / Reading Guide to the DROS Trilogy: An Agent Runtime Operation Substrate}}
+
+\author{
+\IEEEauthorblockN{陳濬程 (Chun-Cheng Jimmy Chen)}
+\IEEEauthorblockA{\textit{Top-Celestial Company Ltd. (康宸園有限公司)} \\
+Taipei, Taiwan R.O.C. \\
+jimmychen@dr-os.io}
+}
+
+\maketitle
+\thispagestyle{plain}
+\pagestyle{plain}
+
+\begin{abstract}
+隨著自主型代理人（Autonomous AI Agents）深度接入企業與關鍵基礎設施工作流程，傳統僅依賴提示詞語意防護（Semantic Guardrails）或作業系統通用沙箱（OS-level Sandboxes）之安全架構，面臨了根本性的「代理人至執行歸因鴻溝（Attribution Gap）」。DROS（Dharma/Deterministic Runtime Operation Substrate）系列研究旨在填補此鴻溝。本導讀作為 DROS 學術三部曲之技術索引導航文件（Technical Note / Reading Guide），系統性梳理三篇核心論文之架構分工與內在邏輯：(1) DROS-6P 建立六大信任邊界之閉環服務語義規格；(2) DROS 四層（v3）形式化歸因鴻溝並構建跨層級漏斗式執行期控制平面；(3) DROS-PGM 確立妥協後（Post-Compromise）內核級確定性執行控制與不可繞過之約束。本導讀明確劃定系統之保證範圍與威脅模型邊界，並建立統一的引用與導航圖譜，為學術評審員、安全研究人員與架構決策者提供全局閱讀指引。
+\end{abstract}
+
+\begin{IEEEkeywords}
+AI Agent Governance, Runtime Operation Substrate, Execution Boundary Enforcement, Post-Compromise Security, Defense-in-Depth, Capability Bitmap.
+\end{IEEEkeywords}
+
+\section{導讀目的與宏觀定位}
+DROS 系列研究並非三篇互不相干的獨立片段，而是同一作業系統級抽象架構在不同防禦切面的系統性收斂：
+\begin{itemize}
+    \item \textbf{要治理什麼（完備性）}：定義企業級 AI 代理人落地必須滿足之最小完備信任服務規格。
+    \item \textbf{在哪一層、用什麼機制強制（可執行性）}：將治理需求轉化為無鎖、亞微秒級之執行期控制平面（Runtime Control Plane）。
+    \item \textbf{進門／妥協之後是否仍守得住（Post-Compromise）}：在應用層與進程完全受陷威脅下，確立內核與二進位邊界的物理隔離。
+\end{itemize}
+
+\begin{quote}
+\textbf{核心定義：} DROS 是面向自主 AI 工作負載的確定性執行期治理基板（Runtime Governance Substrate），在 Agent 所產生的意圖與具有效果的實際系統執行（Effectful Execution）之間建立不可繞過、可驗證、可撤銷之強制邊界。
+\end{quote}
+
+類比於 POSIX 標準：POSIX 並未消除上層應用的商業複雜度，而是避免每個應用重造底層系統呼叫介面。DROS 對 AI 代理人治理採取相同的抽象原則——上層業務框架不必重造身分驗證、動態授權、工具攔截、合規閘門、審計存證與即時撤銷之完整管線。
+
+\section{三部曲架構分工與對應核心論文}
+DROS 三部曲之具體論文元數據與分工架構如表~\ref{tab:trilogy_overview} 所示。
+
+\begin{table*}[t]
+\caption{DROS 學術三部曲架構分工、核心問題與 Zenodo 權威存證對照表}
+\label{tab:trilogy_overview}
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{l Y Y Y}
+\toprule
+\textbf{論文代號} & \textbf{核心研究問題 (Research Question)} & \textbf{系統架構定位 (System Role)} & \textbf{權威 DOI 存證 / Zenodo 記錄} \\
+\midrule
+\textbf{Paper 1: DROS-6P} & 企業級 Agent 落地必須回答的六大信任問題，能否在同一執行期閉環中被強制？ & \textbf{需求與服務語義規格}：Principal、Authorization、Tool Bound、Policy Gate、Audit Log、Expiry/Revocation & DOI: \href{https://doi.org/10.5281/zenodo.21833970}{10.5281/zenodo.21833970} \\
+\textbf{Paper 2: DROS 四層 (v3)} & 為何單純語義防火牆或傳統 OS 沙箱不足？如何彌合「代理人至執行歸因鴻溝」？ & \textbf{核心機制與防禦縱深}：L1$\rightarrow$L4 漏斗；L4 於 C-ABI/FFI 邊界實施常數時間能力點陣圖強制；消融實驗與 AGT 橫向評測 & DOI: \href{https://doi.org/10.5281/zenodo.22092008}{10.5281/zenodo.22092008} \\
+\textbf{Paper 3: DROS-PGM} & 當應用層身分已過期或 User-Space 進程遭完全劫持後，執行層能否提供確定性管控？ & \textbf{妥協後 (Post-Compromise) 執行信任}：三平面解耦、帶內零延遲物理熔斷與 Unbypassable Mediation 形式化證明 & DOI: \href{https://doi.org/10.5281/zenodo.21903687}{10.5281/zenodo.21903687} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\textbf{建議閱讀路徑：}
+\begin{center}
+\textbf{Paper 1 (DROS-6P)} $\longrightarrow$ \textbf{Paper 2 (DROS 4-Layer v3)} $\longrightarrow$ \textbf{Paper 3 (DROS-PGM)}
+\end{center}
+讀者應先建立「要管什麼」之治理基準，進而理解「如何在執行邊界管」，最後深入「妥協後如何堅守最後防線」。
+
+\section{全域拓撲架構：They Decide, DROS Enforces}
+DROS 系列處理了執行期治理與應用層中介（如 Microsoft AGT、LangChain、MCP 治理）之邊界關係。如圖~\ref{fig:topology} 所示，應用層負責意圖決策與工作流編排，DROS 則在底層執行邊界提供不可繞過的物理約束。
+
+\begin{figure}[!t]
+\centering
+\begin{verbatim}
+       +------------------------------------+
+       |  AI Agent Applications / Workflows |
+       +------------------------------------+
+              |                      |
+           Ingress                Egress
+       (資料/提示詞入口)      (系統動作/Tool出口)
+              |                      |
+              v                      v
+       +------------------------------------+
+       |   DROS Runtime Operation Substrate |
+       |   - 6P Closed-Loop Service Specs   |
+       |   - L1-L4 Probabilistic-to-        |
+       |     Deterministic Defense Funnel   |
+       |   - Post-Compromise PGM Engine     |
+       +------------------------------------+
+                         |
+                 Deterministic ALLOW
+                         |
+                         v
+       +------------------------------------+
+       |  OS Kernel / Storage / Network APIs|
+       +------------------------------------+
+\end{verbatim}
+\caption{DROS 執行期治理基板與應用/系統邊界關係圖}
+\label{fig:topology}
+\end{figure}
+
+四層論文 v3 形式化總結此互補關係：
+\begin{quote}
+\textit{``They decide. DROS enforces.''} \\
+（應用層治理框架負責宣告意圖與策略決策；未託管的原生執行路徑由 DROS 在二進位/FFI 邊界提供確定性強制。）
+\end{quote}
+
+\section{6P 核心服務矩陣}
+DROS-6P 所定義之六大支柱，代表受監管環境中自主代理人成為可歸責執行主體之最低操作基準（表~\ref{tab:6p_matrix}）。
+
+\begin{table}[h]
+\caption{6P 執行期核心服務矩陣}
+\label{tab:6p_matrix}
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\columnwidth}{l Y Y}
+\toprule
+\textbf{維度} & \textbf{關鍵問題} & \textbf{底層強制機制} \\
+\midrule
+\textbf{Principal} & 代表誰執行？ & 密碼學執行令牌 (DIT) 與 W3C DID \\
+\textbf{Authorization} & 被允許做什麼？ & 緊湊型能力點陣圖 (Capability Bitmap) \\
+\textbf{Tool Bound} & 哪些呼叫能出界？ & C-ABI / FFI 帶內亞微秒級攔截 \\
+\textbf{Policy Gate} & 高風險如何處置？ & 敏感資訊動態遮蔽、HITL 多簽核准 \\
+\textbf{Audit Log} & 如何不可否認？ & SHA-256 Merkle 雜湊鏈存證 \\
+\textbf{Revocation} & 如何瞬間失效？ & RCU 原子指標切換至安全拒絕態 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{實證數據與可重現性指引}
+各篇論文之實驗數據均綁定具體威脅模型與測試基準（如開源測試床 \href{https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}{DROS-VEP-lite}）：
+\begin{enumerate}
+    \item \textbf{決策延遲層次區分}：策略引擎判定延遲（如 $26.21\,\mu\mathrm{s}$ P50）與底層 C-ABI 物理熔斷路徑延遲（$<500\,\mathrm{ns}$）屬於不同量測段落，不應混淆。
+    \item \textbf{24小時連續浸泡壓測}：在 160,611 次對抗請求下，DROS 實現 0 Bytes 記憶體洩漏與 $<1.8\%$ CPU 開銷，確認無堆積分配（Zero-Heap）架構之穩定性。
+    \item \textbf{阻擋率之認識論邊界}：「100\% 攔截」表述嚴格受限於已宣告之威脅模型與測試集，非指對任意未受控原生內核漏洞之絕對承諾。
+\end{enumerate}
+
+\section{系統保證範圍與邊界宣告 (Crucial Boundaries)}
+為維護嚴謹之學術誠信，本系列明確宣告保證邊界：
+\begin{itemize}
+    \item \textbf{非模型道德對齊保證}：DROS 保證的是「授權邊界約束（Authorization Confinement）」，而非「語意輸出絕對正確（Semantic Correctness）」。AI 模型可以產生邏輯錯誤，但該錯誤絕無法轉化為未授權之系統副作用。
+    \item \textbf{TCB 信任根邊界}：系統仰賴底層 OS 內核、硬體 TPM/HSM 與 PGM 驅動之完整性；若主機硬體或 OS 內核已被完全擊潰，則超出本系統防禦範疇。
+    \item \textbf{不取代法律組織程序}：密碼學存證可提供法院級數位證據，但整體合規仍需搭配企業內部組織程序治理。
+\end{itemize}
+
+\section{結語 (Conclusion)}
+本系列將 Agent 執行期治理收斂為可描述、可驗證、可討論部署的一層基板：\textbf{6P 定義服務完備性，四層定義執行邊界上的確定性強制，PGM 將同一執行信任延伸至妥協後情境。}
+
+\begin{quote}
+\textit{「Agent 要安全落地，需要的不只是更乖的模型，而是對『有效果動作』不可繞過的確定性治理基板。」}
+\end{quote}
+那一層，即為 DROS 三部曲共同界定與驗證的核心對象。
+
+\section*{Acknowledgment \& AI Collaboration Disclosure}
+In accordance with IEEE 2024+ authorship guidelines and enterprise AI governance transparency principles, the author declares that the novel security concepts, physical-layer architecture, 6-pillar framework, mathematical formalisms, and patent claims presented in this work were independently conceptualized, architected, and validated by Chun-Cheng (Jimmy) Chen. Large language models were utilized strictly for textual translation, grammar refinement, and LaTeX typesetting assistance.
+
+\section*{Patent Protection Notice}
+DROS execution governance and security technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending).
+
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{00}
+\bibitem{dros6p} C.-C. Chen, ``DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents,'' \textit{Zenodo Technical Report}, 2026. DOI: \href{https://doi.org/10.5281/zenodo.21833970}{10.5281/zenodo.21833970}.
+\bibitem{dros4l} C.-C. Chen, ``Bridging the Agent-to-Execution Attribution Gap in Autonomous AI Workloads: A 4-Layer Deterministic Runtime Operating System,'' \textit{ACM Transactions on Privacy and Security (Submitted / Zenodo Preprint v3)}, 2026. DOI: \href{https://doi.org/10.5281/zenodo.22092008}{10.5281/zenodo.22092008}.
+\bibitem{drospgm} C.-C. Chen, ``DROS-PGM: A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security in Autonomous AI Systems,'' \textit{Zenodo Technical Report}, 2026. DOI: \href{https://doi.org/10.5281/zenodo.21903687}{10.5281/zenodo.21903687}.
+\bibitem{veplite} Top-Celestial Company Ltd., ``DROS Virtual Enterprise Platform Lite (DROS-VEP-lite),'' GitHub Repository, 2026. \url{https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}.
+\end{thebibliography}
+
+\end{document}
