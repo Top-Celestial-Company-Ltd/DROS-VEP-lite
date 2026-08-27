@@ -8,7 +8,7 @@
 **Affiliation:** Top-Celestial Company Ltd., Taipei, Taiwan R.O.C.  
 **Patent Notice:** DROS execution governance and security technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending).  
 **Open-Source Verification Artifacts & Reproducibility:** [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)  
-**Permanent Academic Citation (DOI):** [Zenodo Record DOI: 10.5281/zenodo.22129692](https://doi.org/10.5281/zenodo.22129692)
+**Permanent Academic Citation (DOI):** [Zenodo Record DOI: 10.5281/zenodo.21755653](https://doi.org/10.5281/zenodo.21755653)
 
 ---
 

@@ -245,7 +245,7 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
 * 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents**
   * **DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Zenodo Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
 * 🏛️ **DROS 4-Layer (v4.0) Deterministic Runtime Substrate & Adversarial Validation**: [Paper (EN)](docs/DROS-4Layer-Paper_v4_20260827_EN.md) | [Paper (ZH)](docs/DROS-4Layer-Paper_v4_20260827_ZH.md) | [PDF](docs/DROS-4Layer-Paper_v4_20260827_EN.pdf)
-  * **DOI**: [`10.5281/zenodo.22129692`](https://doi.org/10.5281/zenodo.22129692) | **Zenodo Record**: [zenodo.org/records/22129692](https://zenodo.org/records/22129692)
+  * **DOI**: [`10.5281/zenodo.21755653`](https://doi.org/10.5281/zenodo.21755653) | **Zenodo Record**: [zenodo.org/records/21755653](https://zenodo.org/records/21755653)
 * 🏛️ **DROS 4-Layer (v3) Defense-in-Depth Architecture for Autonomous AI Workloads**
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
 * 🏛️ **DROS-PGM: A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security**

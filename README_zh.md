@@ -238,7 +238,7 @@ DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群�
 * 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents (DROS-6P 閉環企業級 AI Agent 六大信任邊界)**
   * **DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Zenodo 紀錄**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
 * 🏛️ **DROS 4-Layer (v4.0) 四層執行期基板與對抗驗證最新論文**: [英文論文 (EN)](docs/DROS-4Layer-Paper_v4_20260827_EN.md) | [中文論文 (ZH)](docs/DROS-4Layer-Paper_v4_20260827_ZH.md) | [論文 PDF](docs/DROS-4Layer-Paper_v4_20260827_EN.pdf)
-  * **DOI**: [`10.5281/zenodo.22129692`](https://doi.org/10.5281/zenodo.22129692) | **Zenodo 紀錄**: [zenodo.org/records/22129692](https://zenodo.org/records/22129692)
+  * **DOI**: [`10.5281/zenodo.21755653`](https://doi.org/10.5281/zenodo.21755653) | **Zenodo 紀錄**: [zenodo.org/records/21755653](https://zenodo.org/records/21755653)
 * 🏛️ **DROS 4-Layer (v3) Defense-in-Depth Architecture for Autonomous AI Workloads (DROS 四層確定性執行期防禦縱深架構 v3)**
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo 紀錄**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
 * 🏛️ **DROS-PGM: A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security (DROS-PGM 內核級確定性執行控制平面)**

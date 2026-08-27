@@ -8,7 +8,7 @@
 **所屬機構：** 康宸園有限公司 (Top-Celestial Company Ltd.), 台灣台北  
 **專利聲明：** DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. Patent Application No. 64/111,973，Patent Pending）。  
 **開源存證靶場與可重現性資產：** [github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)  
-**永久學術文獻引用 (DOI)：** [Zenodo Record DOI: 10.5281/zenodo.22129692](https://doi.org/10.5281/zenodo.22129692)
+**永久學術文獻引用 (DOI)：** [Zenodo Record DOI: 10.5281/zenodo.21755653](https://doi.org/10.5281/zenodo.21755653)
 
 ---
 
