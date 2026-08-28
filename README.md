@@ -1,13 +1,17 @@
-# 🛡️ DROS-VEP Lite: Open-Source AI Agent Security Benchmark Environment
+# 🛡️ DROS-VEP Lite: AI Agent Security Benchmark & Verification Sandbox
 
 > **"Can your AI Agent safely operate inside a real enterprise? Prove it."**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
-[![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](docs/RFC-010-dros-vep-spec.md)
-[![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology)
+[![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-submit-a-counterexample-open-falsification-protocol)
+[![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology--transparency)
 
 [English](README.md) | [繁體中文](README_zh.md)
+
+> [!TIP]
+> 🧨 **Open Adversarial Falsification Channel is LIVE**  
+> We actively invite the security community to falsify our core execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. Valid Counterexamples to Date: `0`.
 
 ---
 
@@ -66,6 +70,29 @@ Want to evaluate cross-enterprise Agent interactions and supply chain attacks?
 ```text
 Attack ───► Policy Evaluation ───► Evidence Artifact ───► Deterministic Replay
 ```
+
+---
+
+## 🧨 Submit a Counterexample (Open Falsification Protocol)
+
+DROS-VEP adheres strictly to the principle of **Open Adversarial Falsification**. We invite the academic community, security researchers, and engineers to submit reproducible counterexamples that violate our empirical core invariants:
+
+> Within the explicitly instrumented operation classes $X_{\text{covered}}$, whenever `Auth_E(x) = DENY`:  
+> **Unauthorized execution count is zero ($Exec_{\text{unauthorized}} = 0$) and observable state drift is zero ($\Delta S_{\mathcal{S}_{\text{obs}}} = 0$).**
+
+### Criteria for a Valid Counterexample
+- **Deterministic Reproducibility**: 100% reliably reproducible under the official DROS / PGM containerized environment.
+- **Scope Alignment**: Falls within the instrumented operation classes $X_{\text{covered}}$ ($X_{\text{fs}} \cup X_{\text{proc}} \cup X_{\text{net}} \cup X_{\text{ipc}}$) or demonstrates an uninstrumented execution escape path.
+- **Actionable Evidence**: Includes concrete reproduction steps, environment specs, expected vs. actual behavior, raw syscall traces, WAL diffs, or replay scripts.
+
+### How to Submit
+1. Use our **[Counterexample Issue Template](../../issues/new?template=counterexample.md)** (or open a GitHub Issue labeled `counterexample`).
+2. Provide all environment metadata and reproduction steps.
+3. Submissions will be triaged publicly, evaluated against the formal invariants, and recorded in the permanent evaluation matrix.
+
+**Current Status (as of 2026-08-28 Benchmark Record): Valid Counterexamples = 0**
+
+> *Note: Even if a submission is ultimately triaged as "Out of $X_{\text{covered}}$ Design Scope" or an environmental artifact, we deeply value boundary clarification reports and will acknowledge contributions publicly.*
 
 ---
 
@@ -229,7 +256,7 @@ python scripts/run_cybermes_crucible.py
 
 ## 👥 Community & Developer Edition (100% Free for Individual Developers)
 
-DROS-VEP Lite is an open-source, community-driven benchmark environment (Apache 2.0). 
+DROS-VEP Lite provides an open benchmark evaluation environment for community verification. 
 * **Individual Developers & Researchers**: Free to evaluate, test, and build custom security scenarios with zero cost.
 * **Enterprise & Swarm Production**: For high-throughput distributed RCU, C-ABI hardware integration, and enterprise SIEM compliance, visit [dr-os.io](https://dr-os.io).
 
@@ -267,5 +294,10 @@ In **DROS Enterprise Production**, policies are compiled by `VajraCompiler` into
 
 ---
 
-## 📄 License
-Licensed under Apache 2.0. See [LICENSE](LICENSE) for details.
+---
+
+## 🔒 Patent & Intellectual Property Notice
+The deterministic runtime governance architecture, in-band C-ABI interception mechanism, and zero-heap execution boundaries are protected under **U.S. Provisional Patent Application No. 64/111,973 (Patent Pending)**. All commercial deployment rights are reserved by Top Celestial Company Ltd.
+
+## 📄 Benchmark Harness License
+The evaluation benchmark harness scripts and RFC-010 scenario definitions are released under Apache 2.0 for academic reproducibility and independent verification.
