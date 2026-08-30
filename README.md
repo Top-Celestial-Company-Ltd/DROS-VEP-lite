@@ -262,9 +262,9 @@ DROS-VEP Lite provides an open benchmark evaluation environment for community ve
 
 ---
 
-## 📜 Technical Whitepapers, Publications & Specifications
+## 📜 Technical Foundations & Benchmark Publications
 
-### 📚 Academic Publications, Trilogy & DOI Citations
+### 📚 Core Publications, Trilogy & DOI Citations
 If you reference our zero-trust runtime governance evaluation or use **DROS-VEP Lite** in your security research, please cite our published peer-reviewed papers on Zenodo:
 
 * 📖 **[DROS Trilogy Reading Guide (導讀 Technical Note)](docs/DROS_Trilogy_Reading_Guide.md)**: *An Agent Runtime Operation Substrate*
