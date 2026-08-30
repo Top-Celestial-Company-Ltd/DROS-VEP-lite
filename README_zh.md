@@ -5,10 +5,14 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
-[![RFC-010 Draft: Conformant](https://img.shields.io/badge/RFC--010%20Draft-Conformant-emerald.svg)](docs/RFC-010-dros-vep-spec.md)
+[![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-反例提交與開放式對抗證偽-submit-a-counterexample)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
 
 [English](README.md) | [繁體中文](README_zh.md)
+
+> [!TIP]
+> 🧨 **開放式對抗證偽通道已開啟 (Open Falsification Channel)**  
+> 我們誠摯邀請全球紅隊專家與學術同儕進行實機滲透：**[👉 提交打破 DROS 不變量之反例 (Submit Counterexample)](../../issues/new?template=counterexample.md)**。目前有效反例數：`0`。
 
 ---
 
@@ -72,6 +76,29 @@ docker compose -f docker-compose-b2b.yml up -d
 ```text
 紅隊攻擊 ───► 策略微秒決策 ───► 密碼學證據包 ───► 離線確定性 Replay
 ```
+
+---
+
+## 🧨 反例提交與開放式對抗證偽 (Submit a Counterexample)
+
+DROS-VEP 採 **開放式對抗證偽 (Open Adversarial Falsification)** 原則。我們歡迎學術社群、紅隊研究員與工程師提交能打破以下經驗不變量的可重現反例：
+
+> 在已插樁之受管操作類別空間 $X_{\text{covered}}$ 內，當 `Auth_E(x) = DENY` 時：  
+> **未授權執行次數恆為 0 ($Exec_{\text{unauthorized}} = 0$)，且顯式觀測集合內狀態漂移恆為 0 ($\Delta S_{\mathcal{S}_{\text{obs}}} = 0$)。**
+
+### 有效反例判定標準
+- **可重現性**：在啟用 DROS / PGM 執行約束的官方環境下可 100% 穩定重現。
+- **邊界歸屬**：屬於 $X_{\text{covered}}$ ($X_{\text{fs}} \cup X_{\text{proc}} \cup X_{\text{net}} \cup X_{\text{ipc}}$) 明確列出的操作類別（或具備論證價值之未覆蓋逃逸路徑）。
+- **完整事證**：提供明確重現步驟、環境資訊、預期 vs 實際結果，並附上日誌、Syscall Trace、WAL 差分或重現腳本。
+
+### 如何提交反例
+1. 使用本倉庫之 **[Counterexample Issue 模板](../../issues/new?template=counterexample.md)**（或直接建立 Issue 並標註 `counterexample` 標籤）。
+2. 依模板詳細填寫環境資訊與重現步驟。
+3. 核心團隊將公開處理進度、判定結論（有效 / 無效 / 超出範圍）並登錄至評測矩陣。
+
+**目前狀態（截至 2026-08-28 基準存證）：有效反例數 = 0 (Total Counterexamples: 0)**
+
+> *備註：即使案例最終被判定為「超出 $X_{\text{covered}}$ 設計範疇」或「宿主環境配置異常」，只要有助於釐清執行邊界，我們均誠摯感謝提交並公開致謝。*
 
 ---
 
@@ -228,9 +255,9 @@ DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群�
 
 ---
 
-## 📜 技術白皮書、國際學術論文與 RFC 規格標準
+## 📜 相關技術核心論文與實測驗證 (Technical Foundations & Benchmarks)
 
-### 📚 Zenodo 國際學術論文、三部曲與 DOI 引用註記
+### 📚 核心論文、三部曲與 DOI 引用註記
 若您在資安研究或論文中引用 **DROS-VEP Lite** 的零信任執行期治理評測機制，歡迎引用我們已公開於 Zenodo 的權威論文：
 
 * 📖 **[DROS 學術三部曲導讀 (Reading Guide Technical Note)](docs/DROS_Trilogy_Reading_Guide.md)**：*面向自主 AI 工作負載的確定性執行期作業基板*
