@@ -33,6 +33,18 @@ ENV/
 *.swo
 .DS_Store
 
-# Logs
+# Logs & Large Datasets
 *.log
+*.jsonl
+reports/audit.jsonl
 .pytest_cache/
+
+# LaTeX Intermediate Files & Local TeX Sources (Zenodo-first distribution)
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.tex

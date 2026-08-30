@@ -1,6 +1,6 @@
 # 🛡️ 自主型 AI 工作負載的 DROS 四層防禦縱深架構
 
-## Agentic Web 時代的完整資安與執行治理範式 (IEEE 國際學術論文)
+## Agentic Web 時代的完整資安與執行治理範式 (IEEE 相關技術核心論文與實測驗證 (Technical Foundations & Benchmarks))
 
 **文件版本：** 2.0 Academic Release (IEEE Standard)  
 **日期：** 2026 年 7 月 31 日  

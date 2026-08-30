@@ -240,6 +240,11 @@ $$\Delta I_{\text{physical}} = I_{\text{physical}}(B0) - I_{\text{physical}}(B1)
 
 $$\boxed{\text{Final Epistemic Verdict: } \forall x \in X_{\text{evaluated}}, \quad C_A(x) \land \neg C_E(x) \implies I_{\text{physical}}(x) = 0 \quad (\text{PASS})}$$
 
+### 致謝與 AI 協作聲明 (Acknowledgment & AI Collaboration Disclosure)
+依據 IEEE / ACM 2023+ 關於生成式人工智慧與學術誠信之指引規範，作者在此明確揭露：
+1. **研究原創性與智慧財產權**：本文所述之 DROS 四層架構體系（L1--L4）、動態意圖權杖（DIT）、C-ABI 二進位能力邊界、形式化不變量定義、六階對抗證偽方法學及相關專利權利主張（U.S. PPA No. 64/111,973），均由作者陳濬程獨立構想、設計、推導並驗證。
+2. **AI 工具輔助範圍**：大型語言模型（LLM Agent / Gemini）僅作為輔助工具，用於學術英文文法校對、文字組織結構潤飾、LaTeX 語法除錯及開源測試腳本之格式化輔助。AI 模型未參與任何核心專利發明概念之生成或安全性質之實質理論構建。作者對全文之技術正確性、數據真實性與認識論結論承擔完全之學術與法律責任。
+
 ---
 
 ## 參考文獻 (References)

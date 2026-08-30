@@ -231,6 +231,11 @@ Through progressive adversarial validation incorporating autonomous red teaming,
 
 $$\boxed{\text{Final Epistemic Verdict: } \forall x \in X_{\text{evaluated}}, \quad C_A(x) \land \neg C_E(x) \implies I_{\text{physical}}(x) = 0 \quad (\text{PASS})}$$
 
+### Acknowledgment & AI Collaboration Disclosure
+In accordance with IEEE / ACM 2023+ guidelines on Generative AI and academic integrity, the author explicitly discloses:
+1. **Research Originality & Intellectual Property**: The DROS 4-layer architecture (L1--L4), Dynamic Intent Tokens (DIT), C-ABI binary capability boundaries, formal invariant definitions, 6-tier adversarial falsification methodology, and all patent claims (U.S. PPA No. 64/111,973) were independently conceived, designed, formalized, and empirically evaluated by the author Chun-Cheng (Jimmy) Chen.
+2. **Role of AI Tools**: Large Language Models (LLM Agents / Gemini) were utilized strictly as assistive productivity tools for grammatical proofreading, English structural refinement, LaTeX syntax troubleshooting, and script formatting. AI tools did not generate any foundational patent concepts, core invariants, or novel theoretical constructs. The author retains full intellectual, empirical, and legal responsibility for the integrity and claims of this work.
+
 ---
 
 ## References

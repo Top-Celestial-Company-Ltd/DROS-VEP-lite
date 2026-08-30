@@ -36,10 +36,15 @@
 │    • Multi-Architecture Comparative Study (Baseline vs. AGT vs. DROS)       │
 │      └─ Report: reports/COMPARATIVE_GOVERNANCE_REPORT.md                    │
 │      └─ Evidence Package: reports/evidence/comparative_benchmark/           │
+│                                                                             │
+│ ⚔️ 4. Public Redteam Benchmark Suites (Suites A--F Standard Matrix)           │
+│    • Coverage: Prompt Injection, Privilege Escalation, RCU Race, FFI Fuzz    │
+│      └─ Specification: docs/specifications/DROS_PUBLIC_REDTEAM_TEST_PLAN_v0.1.md │
+│      └─ Master Runner: tests/redteam/run_redteam_benchmark.py               │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
 🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
 
 ---
@@ -267,15 +272,15 @@ DROS-VEP Lite provides an open benchmark evaluation environment for community ve
 ### 📚 Core Publications, Trilogy & DOI Citations
 If you reference our zero-trust runtime governance evaluation or use **DROS-VEP Lite** in your security research, please cite our published peer-reviewed papers on Zenodo:
 
-* 📖 **[DROS Trilogy Reading Guide (導讀 Technical Note)](docs/DROS_Trilogy_Reading_Guide.md)**: *An Agent Runtime Operation Substrate*
+* 📖 **[DROS Trilogy Reading Guide (導讀 Technical Note)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md)**: *An Agent Runtime Operation Substrate*
   * **DOI**: [`10.5281/zenodo.22114036`](https://doi.org/10.5281/zenodo.22114036) | **Zenodo Record**: [zenodo.org/records/22114036](https://zenodo.org/records/22114036)
-* 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents**
+* 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents**: [Specification Overview (README)](docs/paper_6p/README.md)
   * **DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Zenodo Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
-* 🏛️ **DROS 4-Layer (v4.0) Deterministic Runtime Substrate & Adversarial Validation**: [Paper (EN)](docs/DROS-4Layer-Paper_v4_20260827_EN.md) | [Paper (ZH)](docs/DROS-4Layer-Paper_v4_20260827_ZH.md) | [PDF](docs/DROS-4Layer-Paper_v4_20260827_EN.pdf)
+* 🏛️ **DROS 4-Layer (v4.0) Deterministic Runtime Substrate & Adversarial Validation**: [Paper (EN)](docs/paper_4layer/DROS-4Layer-Paper_v4_20260827_EN.md) | [Paper (ZH)](docs/paper_4layer/DROS-4Layer-Paper_v4_20260827_ZH.md) | [Download PDF via Zenodo](https://doi.org/10.5281/zenodo.21755653)
   * **DOI**: [`10.5281/zenodo.21755653`](https://doi.org/10.5281/zenodo.21755653) | **Zenodo Record**: [zenodo.org/records/21755653](https://zenodo.org/records/21755653)
 * 🏛️ **DROS 4-Layer (v3) Defense-in-Depth Architecture for Autonomous AI Workloads**
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
-* 🏛️ **DROS-PGM: A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security**
+* 🏛️ **DROS-PGM: A Deterministic Post-Compromise Execution Containment Substrate (v2.0)**: [Paper (EN)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_EN.md) | [Paper (ZH)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_ZH.md) | [Download PDF via Zenodo](https://doi.org/10.5281/zenodo.21903687)
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
 
 ### 📖 Whitepapers & Protocol Specifications

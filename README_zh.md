@@ -40,10 +40,15 @@
 │    • 多架構橫向對照研究 (Baseline vs. AGT vs. DROS)                          │
 │      └─ 評測報告: reports/COMPARATIVE_GOVERNANCE_REPORT_ZH.md                │
 │      └─ 原始存證包: reports/evidence/comparative_benchmark/                  │
+│                                                                             │
+│ ⚔️ 4. 全球公開紅隊對抗基準套件 (Public Redteam Benchmark Suites A--F)         │
+│    • 覆蓋 Prompt 注入、持證越權、RCU 撤銷競態、FFI 溢位、多 Agent 投毒       │
+│      └─ 規格標準: docs/specifications/DROS_PUBLIC_REDTEAM_TEST_PLAN_v0.1.md  │
+│      └─ 一鍵運行器: tests/redteam/run_redteam_benchmark.py                  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
+📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
 
 ---
 
@@ -260,22 +265,22 @@ DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群�
 ### 📚 核心論文、三部曲與 DOI 引用註記
 若您在資安研究或論文中引用 **DROS-VEP Lite** 的零信任執行期治理評測機制，歡迎引用我們已公開於 Zenodo 的權威論文：
 
-* 📖 **[DROS 學術三部曲導讀 (Reading Guide Technical Note)](docs/DROS_Trilogy_Reading_Guide.md)**：*面向自主 AI 工作負載的確定性執行期作業基板*
+* 📖 **[DROS 學術三部曲導讀 (Reading Guide Technical Note)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md)**：*面向自主 AI 工作負載的確定性執行期作業基板*
   * **DOI**: [`10.5281/zenodo.22114036`](https://doi.org/10.5281/zenodo.22114036) | **Zenodo 紀錄**: [zenodo.org/records/22114036](https://zenodo.org/records/22114036)
-* 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents (DROS-6P 閉環企業級 AI Agent 六大信任邊界)**
+* 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents (DROS-6P 閉環企業級 AI Agent 六大信任邊界)**: [規格說明 (README)](docs/paper_6p/README.md)
   * **DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Zenodo 紀錄**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
-* 🏛️ **DROS 4-Layer (v4.0) 四層執行期基板與對抗驗證最新論文**: [英文論文 (EN)](docs/DROS-4Layer-Paper_v4_20260827_EN.md) | [中文論文 (ZH)](docs/DROS-4Layer-Paper_v4_20260827_ZH.md) | [論文 PDF](docs/DROS-4Layer-Paper_v4_20260827_EN.pdf)
+* 🏛️ **DROS 4-Layer (v4.0) 四層執行期基板與對抗驗證最新論文**: [英文論文 (EN)](docs/paper_4layer/DROS-4Layer-Paper_v4_20260827_EN.md) | [中文論文 (ZH)](docs/paper_4layer/DROS-4Layer-Paper_v4_20260827_ZH.md) | [Zenodo 下載 PDF](https://doi.org/10.5281/zenodo.21755653)
   * **DOI**: [`10.5281/zenodo.21755653`](https://doi.org/10.5281/zenodo.21755653) | **Zenodo 紀錄**: [zenodo.org/records/21755653](https://zenodo.org/records/21755653)
 * 🏛️ **DROS 4-Layer (v3) Defense-in-Depth Architecture for Autonomous AI Workloads (DROS 四層確定性執行期防禦縱深架構 v3)**
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo 紀錄**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
-* 🏛️ **DROS-PGM: A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security (DROS-PGM 內核級確定性執行控制平面)**
+* 🏛️ **DROS-PGM: A Deterministic Post-Compromise Execution Containment Substrate (DROS-PGM 後受陷確定性執行約束基板 v2.0)**: [英文論文 (EN)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_EN.md) | [中文論文 (ZH)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_ZH.md) | [Zenodo 下載 PDF](https://doi.org/10.5281/zenodo.21903687)
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo 紀錄**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
 
 ### 📖 技術白皮書與規格協定
-* 📖 **[完整技術白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**：*自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
-* 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**：*Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
+* 📖 **[完整技術白皮書 (繁體中文 v2.0)](docs/whitepapers/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**：*自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
+* 📖 **[Full Whitepaper (English v2.0)](docs/whitepapers/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**：*Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
 * ⚡ **[4 頁 A4 極速白皮書 (HTML)](dashboard/whitepaper_4page.html)**：*專為 CISO 與資安研究員設計之視覺化摘要*
-* 📋 **[RFC-010: DROS-VEP 規格協定](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/RFC-010-dros-vep-spec.md)**：*AI Agent 安全與威脅劇本開放標準*
+* 📋 **[RFC-010: DROS-VEP 規格協定](docs/specifications/RFC-010-dros-vep-spec.md)**：*AI Agent 安全與威脅劇本開放標準*
 
 ## 📄 授權條款
 本專案採用 Apache 2.0 條款開源，詳情請參閱 [LICENSE](LICENSE) 文件。
