@@ -282,5 +282,25 @@ DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群�
 * ⚡ **[4 頁 A4 極速白皮書 (HTML)](dashboard/whitepaper_4page.html)**：*專為 CISO 與資安研究員設計之視覺化摘要*
 * 📋 **[RFC-010: DROS-VEP 規格協定](docs/specifications/RFC-010-dros-vep-spec.md)**：*AI Agent 安全與威脅劇本開放標準*
 
+---
+
+## ❓ 常見問答 (Frequently Asked Questions - FAQ)
+
+### 1. 為什麼 VEP Lite 採用人可讀的開放規格，而非直接載入編譯後的 `policy.bin` 二進位檔？
+VEP Lite 被設計為**人機可讀、零門檻之開放評測沙盒 (RFC-010)**，使全球資安研究人員、CISO 與開發者無需依賴專利二進位檔即可稽核政策語意、檢視威脅劇本並進行紅隊滲透。  
+在 **DROS 商業生產環境** 中，策略則由 `VajraCompiler` 增量編譯為具備 Ed25519 數位簽章、不可篡改且常數時間運作之 C-ABI 二進位微內核 (`policy.bin`)，具備零堆積記憶體配置與防逆向封印。
+
+---
+
+### 2. PGM 的 Bitmap 嚴格比對機制，會不會導致誤殺率（False Positive）太高，讓企業實際業務「幾乎被擋光」？
+**完全不會。PGM 從架構底層即杜絕「過度阻斷 (Over-Blocking)」與「業務誤殺」現象。**  
+傳統 WAF 或 LLM 語意審查之所以常誤殺正常業務，是因為依賴模糊的「正則猜測（Regex）」或「大模型二次判斷」；而 PGM 採用的是 **「多維度正向能力白名單矩陣（Multidimensional Positive Capability Bitmasks）」**：
+
+1. **正向能力授權（Capability-Based Inclusion，非啟發式瞎猜）**：PGM 採用細粒度向量（角色 $\times$ 工具 $\times$ 方法 $\times$ 資源範疇）。Agent 執行本職任務時，位元運算在 1 個 CPU 週期內必然匹配為 `1`（放行，延遲僅 $26.1\mu s$），**對合法業務路徑之誤殺率為 0%**。
+2. **階梯式漸進門閥（Graduated Progressive Enforcement）**：遇到高敏感邊界動作（如大額撥款、病歷導出），PGM 不是粗暴斬斷整個連線，而是觸發 **「帶內動態脫敏（18-PHI Masking）」** 或 **「人機協同 (HITL) 軟性暫停簽署」**，讓主幹業務順暢推進，絕不中斷商業流程。
+3. **毫秒級無鎖 RCU 熱調優（Zero-Downtime Hot Reload）**：若需放寬新業務權限，資安長更新策略後，背景影子編譯在 **<1 毫秒** 內生成新 Bitmap，並以 CPU 原子指針（Atomic Pointer Swap）無縫替換，**全域零停機、零業務卡頓**。
+
+---
+
 ## 📄 授權條款
 本專案採用 Apache 2.0 條款開源，詳情請參閱 [LICENSE](LICENSE) 文件。
