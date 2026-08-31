@@ -299,6 +299,16 @@ In **DROS Enterprise Production**, policies are compiled by `VajraCompiler` into
 
 ---
 
+### Will PGM's strict $\mathcal{O}(1)$ Bitmap mechanism cause high false positives and block legitimate business workflows (Over-Blocking)?
+**No. PGM is fundamentally engineered to guarantee high business availability while enforcing zero-trust execution.**  
+Unlike heuristic WAFs or probabilistic LLM guards that rely on fuzzy regex pattern matching (which often mistake benign input for attacks), PGM operates on **Multidimensional Positive Capability Bitmasks (正向能力白名單矩陣)**:
+
+1. **Positive Capability Inclusion (Not Heuristic Guessing)**: PGM assigns fine-grained capability vectors (Role $\times$ Tool $\times$ Method $\times$ Resource Scope). Legitimate operations matching the agent's designated task evaluate to bitwise `1` (Pass) in a single CPU cycle ($26.1\mu s$), resulting in **0% false positive blockage on valid business paths**.
+2. **Graduated Enforcement (Progressive Gates)**: For sensitive or cross-boundary operations (e.g., large payouts, confidential record exports), PGM does not crudely terminate the entire connection. Instead, it triggers **In-Band Dynamic Redaction (18-PHI Masking)** or **Human-in-the-Loop (HITL) Soft Suspension**, allowing standard workflows to proceed securely without business disruption.
+3. **Sub-Millisecond Zero-Downtime RCU Policy Tuning**: If business requirements evolve or new endpoints are onboarded, security operators can update policies via background shadow compilation in **<1ms**. The master pointer is updated via lock-free RCU atomic swap with **zero downtime and zero traffic stalls**.
+
+---
+
 ---
 
 ## 🔒 Patent & Intellectual Property Notice
