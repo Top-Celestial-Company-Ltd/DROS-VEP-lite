@@ -1,17 +1,20 @@
 # 🛡️ DROS-VEP Lite: AI Agent Security Benchmark & Verification Sandbox
 
-> **"Can your AI Agent safely operate inside a real enterprise? Prove it."**
+> **"VEP is an implementation-independent evaluation protocol for determining whether Agent security controls remain effective after compromise, particularly at the boundary between Agent authorization and actual system execution. DROS provides one executable reference substrate for VEP-based evaluation, alongside other Agent runtime and execution-control implementations."**
+>
+> *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."*
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
+[![Specification: RFC-001](https://img.shields.io/badge/Specification-RFC--001%20Open%20VEP-purple.svg)](spec/RFC-001-VEP-Execution-Governance-Spec.md)
+[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-submit-a-counterexample-open-falsification-protocol)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology--transparency)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
 > [!TIP]
-> 🧨 **Open Adversarial Falsification Channel is LIVE**  
-> We actively invite the security community to falsify our core execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. Valid Counterexamples to Date: `0`.
+> 📚 **Academic & Research Citation**: If you use this protocol or testbed in your research, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-001 Specification](spec/RFC-001-VEP-Execution-Governance-Spec.md).  
+> 🧨 **Open Adversarial Falsification Channel is LIVE**: We actively invite researchers to falsify our execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. Valid Counterexamples to Date: `0`.
 
 ---
 
@@ -19,10 +22,18 @@
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 📚 1. Paper-Referenced Evidence (Submitted/Published Manuscripts)           │
-│    • 24-Hour Continuous Multi-Scenario Soak Test (160,611 Requests)         │
+│ 📚 1. Core Technical Architecture Trajectory (The 5-Paper Program)          │
+│    • Trajectory Guide: docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md  │
+│    • Paper 1 (6P Model): docs/paper_6p/ (Six Trust Boundaries)              │
+│    • Paper 2 (4-Layer Runtime): docs/paper_4layer/ (Attribution & Merkle)   │
+│    • Paper 3 (PGM Control): docs/paper_pgm/ (Kernel-Level C-ABI Intercept)  │
+│    • Paper 4 (Mobile Security): paper-mobile/ (Digital Action Containment)  │
+│    • Paper 5 (Physical AI UAV): paper-uav/ (Cyber-Physical Containment)     │
+│    • 72-Hour Continuous Multi-Scenario Soak Test (160,611 Requests)         │
 │      └─ Report: reports/DROS_24H_Soak_Test_Final_Report.md                  │
 │      └─ Harness: scripts/run_24h_soak_test.py                               │
+│    • ⚡ System Overhead & Performance Microbenchmark (Latency, CPU, Mobile)  │
+│      └─ Report: reports/DROS_SYSTEM_OVERHEAD_BENCHMARK_REPORT_EN.md          │
 │                                                                             │
 │ 🧪 2. Extended Evaluation Scenarios (RFC-010 Standard Matrix)               │
 │    • ATS-001: Indirect Prompt Injection (IPI Exfiltration)                  │
@@ -41,11 +52,43 @@
 │    • Coverage: Prompt Injection, Privilege Escalation, RCU Race, FFI Fuzz    │
 │      └─ Specification: docs/specifications/DROS_PUBLIC_REDTEAM_TEST_PLAN_v0.1.md │
 │      └─ Master Runner: tests/redteam/run_redteam_benchmark.py               │
+│                                                                             │
+│ 🛸 5. Physical AI & Drone Swarm SITL Benchmark (Edge & Homelab Safety)       │
+│    • Coverage: Mid-Air Disarm Injection, 100-Drone Swarm Mesh Delegation     │
+│      └─ Location: benchmarks/physical_drone/                                │
+│      └─ Master Runner: python benchmarks/physical_drone/run_drone_bench.py   │
+│                                                                             │
+│ 📱 6. Mobile SDK & On-Device App Governance Benchmark (iOS/Android Safety)   │
+│    • Coverage: SMS/Web Prompt Injection, Biometric In-App Purchase Defense   │
+│      └─ Location: benchmarks/mobile_sdk/                                     │
+│      └─ Master Runner: python benchmarks/mobile_sdk/run_mobile_bench.py      │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+🟢 **Developer Manual**: [DROS Hacker Edition (Free for Individuals) Long-Task Cookbook](docs/guides/DROS_HACKER_EDITION_MANUAL.md)  
 🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
+
+---
+
+## 🔬 Research Discovery & Academic Scope
+
+> *VEP evaluates whether Agent execution authority remains constrained after Agent compromise, with particular emphasis on runtime enforcement, execution-boundary containment, revocation, provenance, and reproducible security evaluation.*
+
+This repository and protocol may be relevant to researchers, evaluators, and system architects studying:
+
+* **Agent Execution Authority & Governance**: Formalizing the transition from non-deterministic agent cognition to bounded physical execution.
+* **Agent-to-Execution Attribution**: Cryptographically linking agent intents, authorization tokens, and physical system calls.
+* **Runtime Enforcement for Autonomous AI Agents**: Deterministic in-process C-ABI / kernel interception versus probabilistic semantic guardrails.
+* **Post-Compromise Agent Security**: Containing unauthorized system effects when the agent reasoning layer is assumed fully compromised.
+* **Execution-Boundary Security**: Preserving containment invariants under multi-hop confused deputy and prompt-injected delegation chains.
+* **Agent Capability & Dynamic Authorization**: Fine-grained capability bitmask evaluations ($O(1)$ constant time) and zero-window RCU policy revocation.
+* **Deterministic Runtime Enforcement**: Enforcing fail-closed containment under adversarial resource starvation and syscall flood conditions.
+* **Agent Security Benchmarks & Testbeds**: Providing reproducible, multi-track testbeds across Cloud B2B, Physical Robotics/Drones, and Mobile on-device SDKs.
+* **Execution Provenance & Cryptographic Audit**: Maintaining append-only, tamper-evident Merkle hash chains for EU AI Act / NIST SP 800-207 compliance.
+
+> **💡 Conformance & Substrate Decoupling:**  
+> **DROS is not required for VEP conformance.** VEP defines an open, vendor-neutral evaluation protocol; DROS is provided as **one concrete executable reference substrate** for demonstrating, benchmarking, and validating VEP experiments.
 
 ---
 
@@ -282,6 +325,12 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
 * 🏛️ **DROS-PGM: A Deterministic Post-Compromise Execution Containment Substrate (v2.0)**: [Paper (EN)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_EN.md) | [Paper (ZH)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_ZH.md) | [Download PDF via Zenodo](https://doi.org/10.5281/zenodo.21903687)
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+* 📱 **Post-Compromise Security for Autonomous Mobile Agents**: [Paper (EN)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE.md) | [Paper (ZH)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
+  * **DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Zenodo Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+* 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs**: [Paper (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [Paper (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
+  * **DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Zenodo Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
+* 🧭 **Reading Guide to the DROS Research Trajectory (v2.0)**: [Guide (EN)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md) | [Guide (ZH)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md)
+  * **Permanent Record**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)
 
 ### 📖 Whitepapers & Protocol Specifications
 * 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**: *Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*

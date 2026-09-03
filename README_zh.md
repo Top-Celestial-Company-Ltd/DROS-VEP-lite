@@ -1,18 +1,20 @@
 # 🛡️ DROS-VEP Lite：開源 AI Agent 安全評測與運行期治理沙盒環境
 
-> **"Can your AI Agent safely operate inside a real enterprise? Prove it."**
-> **（您的 AI Agent 能否在真實企業環境中安全運行？用測試證明給我看。）**
+> **「VEP 是一套與特定產品實作解耦的開放評測規約（Implementation-Independent Evaluation Protocol），專注於衡量 Agent 在遭受攻陷後（Post-Compromise），其安全控制機制能否在授權與實體執行邊界之間持續發揮確定性約束。DROS 提供了一個可用於 VEP 評測的可執行參考基底（Executable Reference Substrate），與其他 Agent 執行期與執行控制實作共同受測。」**
+>
+> *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."* （當您的 AI Agent 遭受攻陷後，其執行權限是否依然能維持確定性封鎖？用測試證明給我看。）
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Evaluation--Engine-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
+[![Specification: RFC-001](https://img.shields.io/badge/Specification-RFC--001%20Open%20VEP-purple.svg)](spec/RFC-001-VEP-Execution-Governance-Spec.md)
+[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-反例提交與開放式對抗證偽-submit-a-counterexample)
 [![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
 > [!TIP]
-> 🧨 **開放式對抗證偽通道已開啟 (Open Falsification Channel)**  
-> 我們誠摯邀請全球紅隊專家與學術同儕進行實機滲透：**[👉 提交打破 DROS 不變量之反例 (Submit Counterexample)](../../issues/new?template=counterexample.md)**。目前有效反例數：`0`。
+> 📚 **學術與研究引用**: 若您在研究中使用了本評測規約或基準套件，請透過 [`CITATION.cff`](CITATION.cff) 引用或查閱 [RFC-001 開放評測規約](spec/RFC-001-VEP-Execution-Governance-Spec.md)。  
+> 🧨 **開放式對抗證偽通道已開啟 (Open Falsification Channel)**: 我們誠摯邀請全球研究者證偽我們的核心執行不變量：**[👉 提交反例 (Submit Counterexample)](../../issues/new?template=counterexample.md)**。目前有效反例數：`0`。
 
 ---
 
@@ -20,11 +22,19 @@
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 📚 1. 論文參照存證基準 (Paper-Referenced Evidence)                           │
-│    與已發表／投稿論文直接掛鉤之實證基準數據。                               │
-│    • 24 小時長效連續多場景壓測 (160,611 次請求)                             │
+│ 📚 1. 核心技術架構研究軌跡 (The 5-Paper Trajectory)                         │
+│    與 DROS 底層形式化架構與控制平面掛鉤之五部曲論文資產。                   │
+│    • 全景研究軌跡導讀：docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md     │
+│    • 第一部曲 (6P 模型): docs/paper_6p/ (六大信任邊界閉環架構)               │
+│    • 第二部曲 (4-Layer 執行架構): docs/paper_4layer/ (司法級存證與歸因)     │
+│    • 第三部曲 (PGM 內核控制): docs/paper_pgm/ (二進位 C-ABI 硬熔斷)          │
+│    • 第四部曲 (Mobile 端側安全): paper-mobile/ (行動作業系統執行權限約束)    │
+│    • 第五部曲 (Physical AI 無人機): paper-uav/ (網絡-實體動能包絡線保持)    │
+│    • 72 小時長效連續多場景壓測 (160,611 次請求)                             │
 │      └─ 報告：reports/DROS_24H_Soak_Test_Final_Report_ZH.md                 │
 │      └─ 運行器：scripts/run_24h_soak_test.py                                │
+│    • ⚡ 系統開銷與效能微基準全量評測 (納秒級延遲、CPU/記憶體/手機功耗)        │
+│      └─ 報告：reports/DROS_SYSTEM_OVERHEAD_BENCHMARK_REPORT_ZH.md           │
 │                                                                             │
 │ 🧪 2. 擴充評測場景庫 (RFC-010 Standard Matrix)                              │
 │    RFC-010 開放標準定義之全量威脅矩陣。                                    │
@@ -45,10 +55,43 @@
 │    • 覆蓋 Prompt 注入、持證越權、RCU 撤銷競態、FFI 溢位、多 Agent 投毒       │
 │      └─ 規格標準: docs/specifications/DROS_PUBLIC_REDTEAM_TEST_PLAN_v0.1.md  │
 │      └─ 一鍵運行器: tests/redteam/run_redteam_benchmark.py                  │
+│                                                                             │
+│ 🛸 5. Physical AI 與無人機蜂群在環評測 (邊緣與 Homelab 實體安全防護)           │
+│    • 覆蓋空中惡意 Disarm 注入、100 機蜂群 Mesh 委託鏈越權防禦               │
+│      └─ 模組路徑: benchmarks/physical_drone/                                │
+│      └─ 一鍵運行器: python benchmarks/physical_drone/run_drone_bench.py      │
+│                                                                             │
+│ 📱 6. Mobile SDK 與智慧手機端側治理評測 (iOS/Android 隱私與內購防禦)          │
+│    • 覆蓋 SMS/網頁 Prompt 注入竊取相簿、未授權 Apple Pay 內購劫持防禦         │
+│      └─ 模組路徑: benchmarks/mobile_sdk/                                     │
+│      └─ 一鍵運行器: python benchmarks/mobile_sdk/run_mobile_bench.py          │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
+📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+🟢 **開發者手冊**: [DROS Hacker Edition (個人社群免費版) 長任務設定手冊與警報 SOP](docs/guides/DROS_HACKER_EDITION_MANUAL.md)  
+🛂 **開源 Agent 護照 SDK**: [libdros-id (符合 RFC-010 W3C DID 與 Ed25519 之身份驗證庫)](sdk/libdros-id/libdros_id.py)
+
+---
+
+## 🔬 學術研究探索與適用領域 (Research Discovery & Scope)
+
+> *VEP 專注於衡量 Agent 在遭受攻陷後（Post-Compromise），其安全控制機制能否在授權與實體執行邊界之間持續發揮確定性約束，特別聚焦於運行期強制阻斷、執行邊界封鎖、策略即時撤銷、執行溯源與可重現安全評測。*
+
+本倉庫與評測規約專為研究以下核心議題的學者、安全評鑑員與系統架構師設計：
+
+* **Agent 執行授權與運行期治理 (Agent Execution Authority & Governance)**：形式化定義非確定性 Agent 認知層到有界實體執行層之轉換。
+* **Agent 執行可歸因性 (Agent-to-Execution Attribution)**：以密碼學手段將 Agent 意圖、授權憑證與作業系統底層系統調用進行強綁定。
+* **自主 AI Agent 運行期強制阻斷 (Runtime Enforcement for Autonomous AI Agents)**：確定性行程內 C-ABI / 內核攔截 vs. 機率型語意護欄。
+* **攻陷後 Agent 執行期安全 (Post-Compromise Agent Security)**：在 Agent 推理層假定已被 100% 攻陷的前提下，硬封鎖未授權之實體系統影響。
+* **執行邊界安全性 (Execution-Boundary Security)**：在多跳混淆代理人（Confused Deputy）與提示注入委託鏈下保持不變量約束。
+* **動態授權與能力系統 (Agent Capability & Dynamic Authorization)**：細粒度能力點陣圖評估（$O(1)$ 常數時間）與亞微秒級 RCU 策略撤銷。
+* **確定性運行期強制性 (Deterministic Runtime Enforcement)**：在對抗性資源耗盡與 Syscall 洪水下實施 Fail-Closed 硬熔斷。
+* **Agent 安全基準與評測基座 (Agent Security Benchmarks & Testbeds)**：提供跨雲端 B2B、無人載具/具身智能與智慧手機端側 SDK 之可重現測試基座。
+* **執行溯源與密碼學審計 (Execution Provenance & Cryptographic Audit)**：維護不可篡改、僅可追加（Append-Only）之 Merkle 哈希鏈，對齊歐盟 AI 法案與 NIST SP 800-207。
+
+> **💡 符合性與實作解耦聲明：**  
+> **VEP 符合性認證絕對不以 DROS 為前提條件。** VEP 定義的是一套廠商中立的開放評測規約；DROS 僅作為**其中一個具體的可執行參考基底（Executable Reference Substrate）**，用於展示、評測與驗證 VEP 實驗。
 
 ---
 
@@ -275,6 +318,12 @@ DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群�
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo 紀錄**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
 * 🏛️ **DROS-PGM: A Deterministic Post-Compromise Execution Containment Substrate (DROS-PGM 後受陷確定性執行約束基板 v2.0)**: [英文論文 (EN)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_EN.md) | [中文論文 (ZH)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_ZH.md) | [Zenodo 下載 PDF](https://doi.org/10.5281/zenodo.21903687)
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo 紀錄**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+* 📱 **Post-Compromise Security for Autonomous Mobile Agents (自主行動端 Agent 攻陷後安全與執行權限強制執行)**: [英文論文 (EN)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE.md) | [中文論文 (ZH)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
+  * **DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Zenodo 紀錄**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+* 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs (具身智能與自主無人載具攻陷後物理動作權限確定性約束)**: [英文論文 (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [中文論文 (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
+  * **DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Zenodo 紀錄**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
+* 🧭 **《DROS 統一學術研究導讀：全景科研軌跡》Zenodo v2.0 永久存證紀錄**: [中文導讀](docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md) | [英文導讀 (EN)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md)
+  * **Zenodo 紀錄**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)
 
 ### 📖 技術白皮書與規格協定
 * 📖 **[完整技術白皮書 (繁體中文 v2.0)](docs/whitepapers/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**：*自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
