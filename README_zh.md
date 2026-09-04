@@ -22,14 +22,15 @@
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 📚 1. 核心技術架構研究軌跡 (The 5-Paper Trajectory)                         │
-│    與 DROS 底層形式化架構與控制平面掛鉤之五部曲論文資產。                   │
+│ 📚 1. 核心技術架構研究軌跡 (The 6-Paper Trajectory)                         │
+│    與 DROS 底層形式化架構與控制平面掛鉤之六部曲論文資產。                   │
 │    • 全景研究軌跡導讀：docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md     │
 │    • 第一部曲 (6P 模型): docs/paper_6p/ (六大信任邊界閉環架構)               │
 │    • 第二部曲 (4-Layer 執行架構): docs/paper_4layer/ (司法級存證與歸因)     │
 │    • 第三部曲 (PGM 內核控制): docs/paper_pgm/ (二進位 C-ABI 硬熔斷)          │
-│    • 第四部曲 (Mobile 端側安全): paper-mobile/ (行動作業系統執行權限約束)    │
-│    • 第五部曲 (Physical AI 無人機): paper-uav/ (網絡-實體動能包絡線保持)    │
+│    • 第四部曲 (WebMCP 網絡治理): dros-webmcp/ (Agentic Web 歸因閉包)         │
+│    • 第五部曲 (Mobile 端側安全): paper-mobile/ (行動作業系統執行權限約束)    │
+│    • 第六部曲 (Physical AI 無人機): paper-uav/ (網絡-實體動能包絡線保持)    │
 │    • 72 小時長效連續多場景壓測 (160,611 次請求)                             │
 │      └─ 報告：reports/DROS_24H_Soak_Test_Final_Report_ZH.md                 │
 │      └─ 運行器：scripts/run_24h_soak_test.py                                │
@@ -318,6 +319,8 @@ DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群�
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo 紀錄**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
 * 🏛️ **DROS-PGM: A Deterministic Post-Compromise Execution Containment Substrate (DROS-PGM 後受陷確定性執行約束基板 v2.0)**: [英文論文 (EN)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_EN.md) | [中文論文 (ZH)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_ZH.md) | [Zenodo 下載 PDF](https://doi.org/10.5281/zenodo.21903687)
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo 紀錄**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+* 🌐 **DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web (面向 Agentic Web 之密碼學可歸因執行治理層)**: [開放治理草案 (DWGR-8)](dros-webmcp/README.md)
+  * **DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Zenodo 紀錄**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
 * 📱 **Post-Compromise Security for Autonomous Mobile Agents (自主行動端 Agent 攻陷後安全與執行權限強制執行)**: [英文論文 (EN)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE.md) | [中文論文 (ZH)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
   * **DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Zenodo 紀錄**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
 * 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs (具身智能與自主無人載具攻陷後物理動作權限確定性約束)**: [英文論文 (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [中文論文 (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)

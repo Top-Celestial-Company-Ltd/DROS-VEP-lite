@@ -1,160 +1,126 @@
-# Reading Guide to the DROS Trilogy: An Agent Runtime Operation Substrate
+# 🏛️ DROS Research Trajectory Reading Guide (Unified Overview)
+## An Agent Runtime Operation Substrate across Digital and Physical Domains
 
-**Author:** Chun-Cheng (Jimmy) Chen  
+**Author:** Jimmy Chen  
 **Affiliation:** Top-Celestial Company Ltd.  
-**Type:** Technical Note / Reading Guide (Does not replace individual full papers)  
-**Corresponding Core Papers:**
-
-1. **DROS-6P** — A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents  
-   DOI: [10.5281/zenodo.21833970](https://doi.org/10.5281/zenodo.21833970)
-
-2. **DROS 4-Layer (v3)** — Bridging the Agent-to-Execution Attribution Gap in Autonomous AI Workloads: A 4-Layer Deterministic Runtime Operating System  
-   DOI: [10.5281/zenodo.22092008](https://doi.org/10.5281/zenodo.22092008)
-
-3. **DROS-PGM** — A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security in Autonomous AI Systems  
-   DOI: [10.5281/zenodo.21903687](https://doi.org/10.5281/zenodo.21903687)
-
-**Reproducible Implementation:**  
-[DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite) (Open Benchmark & Evaluation Platform)
+**Type:** Technical Note / Research Trajectory Guide  
+**Deposit Nature Disclosure:** All Zenodo identifiers referenced herein represent **archived technical reports / preprints** to establish public timestamps and prior-art defense, rather than peer-reviewed journal/conference camera-ready accepted papers.  
+**Permanent Zenodo v2 Record:** [https://zenodo.org/records/22255275](https://zenodo.org/records/22255275) (DOI: `10.5281/zenodo.22255275`)
 
 ---
 
-### 1. Purpose of this Reading Guide
-
-The DROS research series does not consist of three disconnected notes, but three complementary perspectives along a single architectural trajectory:
-
-- **What to Govern** (Completeness)
-- **At which layer and via what mechanism to enforce** (Executability)
-- **Whether containment holds post-compromise** (Post-Compromise Resilience)
-
-This guide outlines how the three papers divide responsibilities, recommended reading order, collective system positioning, and **crucial defensive boundary scopes**. Formal technical claims, mathematical proofs, and empirical protocols reside in the respective full manuscripts.
+> [!IMPORTANT]
+> **Epistemic Status & Research-Program Hypothesis**:  
+> The research trajectory formalized in this work is formulated as a **research-program hypothesis**, evolving continually through empirical falsification and independent counterexamples.  
+> **Claim Boundary**: This series **does not claim** internal model non-compromise (statistical robustness). Rather, it investigates whether, within declared enforcement boundaries and under explicit system assumptions, unauthorized downstream physical and system effects can be deterministically constrained to zero.
 
 ---
 
-### 2. One-Sentence Architectural Positioning
+### 1. Purpose and The "6 Papers + 1 Research Vessel" Trajectory
 
-> **DROS is a deterministic runtime governance substrate for autonomous AI workloads, providing an enforceable control boundary between agent-originated intent and effectful execution.**  
-> Upper layers express intent and declarative policy; effectful actions are deterministically permitted or denied at the shared boundary, emitting tamper-evident cryptographic audit proofs.
+The DROS research trajectory expands a singular, foundational scientific question across six progressive scales of execution governance, supported by an open, reproducible evaluation vessel (**DROS-VEP Lite**):
 
-By analogy to POSIX in general-purpose computing: POSIX does not eliminate application complexity, but standardizes low-level interfaces so applications need not reinvent system calls. DROS applies the exact same abstraction principle to AI agent governance—upper layers need not reinvent identity, authorization vectors, tool mediation, policy gates, audit trails, and revocation lifecycles.
-
-*This analogy characterizes the architectural abstraction role, and does not claim to replace general-purpose operating systems like Linux or Windows.*
-
----
-
-### 3. Trilogy Responsibility Matrix
-
-| Paper | Core Research Question | Architectural Role in System |
-| :--- | :--- | :--- |
-| **DROS-6P** | Can enterprise AI agent compliance be deterministically enforced across a closed-loop runtime service specification? | **Requirements & Semantic Specification**: Principal, Authorization, Tool Bound, Policy Gate, Audit Log, Expiry/Revocation (6P). |
-| **DROS 4-Layer (v3)** | Why are semantic firewalls or OS sandboxes insufficient alone? How to bridge the Agent-to-Execution Attribution Gap? | **Defense-in-Depth Funnel**: L1$\rightarrow$L4 layers; L4 constant-time capability bitmap enforcement at C-ABI/FFI boundaries; ablation \& AGT comparative study. |
-| **DROS-PGM** | When credentials expire or user-space processes are fully compromised, can the substrate maintain deterministic containment? | **Post-Compromise Execution Trust**: Three-plane decoupling, sub-microsecond in-band physical fusing, and formal proof of Unbypassable Mediation. |
-
-**Recommended Reading Order:**  
-$$\textbf{6P} \longrightarrow \textbf{4-Layer (v3)} \longrightarrow \textbf{PGM}$$  
-First establish *what must be governed*, proceed to *how enforcement operates at runtime boundaries*, and conclude with *how containment holds post-compromise*.
-
----
-
-### 4. Macro Architectural Topology
+$$\boxed{ \text{Governance} \longrightarrow \text{Authority} \longrightarrow \text{Runtime} \longrightarrow \text{Agentic Web} \longrightarrow \text{Digital Effect} \longrightarrow \text{Physical Effect} }$$
 
 ```text
-               AI Agent Applications / Multi-Agent Mesh
-                                │
-                ┌───────────────┴───────────────┐
-                │                               │
-             Ingress                         Egress
-       (Data/Prompt Entry)             (Effectful Action/Tool)
-                │                               │
-                └───────────────┬───────────────┘
-                                ▼
-        ┌───────────────────────────────────────────────┐
-        │       DROS Runtime Governance Substrate       │
-        │  · 6P Closed-Loop Service Specs (Paper 1)     │
-        │  · L1–L4 Defense-in-Depth Funnel (Paper 2)   │
-        │  · Post-Compromise PGM Engine (Paper 3)       │
-        │  · Open Identity + Local Execution Boundary   │
-        └───────────────────────┬───────────────────────┘
-                                │ Deterministic ALLOW
-                                ▼
-                OS Kernel / Network / Storage / APIs
+                                 [ 🚢 DROS-VEP Lite Research Vessel ]
+                (RFC-001 Open Protocol • Reproducible Benchmarks • Multi-Domain Sandbox)
+                                                 │
+          ┌──────────────────────────────────────┼──────────────────────────────────────┐
+          ↓                                      ↓                                      ↓
+   [ 🏹 1. Governance Spec ]             [ 🏹 2. Runtime Execution ]            [ 🏹 3. Kernel Control ]
+        DROS-6P                              DROS 4-Layer                            DROS-PGM
+   (6P Enterprise Trust)                (Forensic Merkle Audit)                (C-ABI Binary Gate)
+          │                                      │                                      │
+          └──────────────────────────────────────┴──────────────────────────────────────┘
+                                                 │
+                         ┌──────────────────────┼──────────────────────┐
+                         ↓                      ↓                      ↓
+              [ 🏹 4. Agentic Web & MCP ]  [ 🏹 5. Digital Substrate ]    [ 🏹 6. Physical Substrate ]
+                     DROS-WebMCP          Post-Compromise Mobile         Post-Compromise UAV
+             (Web Capability Closure)    (Mobile OS/API Action Guard)   (Kinetic Envelope Preserved)
 ```
 
-For application layers, workloads simply pass through governed ingress and egress boundaries; cryptographic DIT tokens, capability bitmaps, Merkle audit chains, and RCU pointer flips are handled by the substrate. For cross-domain Agentic Web interactions, DROS enforces **"Open Identity, Local Governance"**: credentials circulate freely, while execution privileges are strictly enforced locally by resource owners.
+---
 
-Regarding application-layer governance middleware (e.g., Microsoft AGT, LangChain, MCP policy SDKs), Paper 2 (v3) summarizes this relationship as complementary:
+### 2. The Core Technical Papers & Evaluation Vessel Matrix
 
-> **"They decide. DROS enforces."**  
-> *(Application middleware excels at declarative policy reasoning and workflow orchestration; unmanaged native execution paths require deterministic C-ABI/FFI physical boundary enforcement.)*
+| Component | Title / Topic | Role in Research Trajectory | Core Question / Functional Scope | Reference / DOI (Preprints / Code) |
+| :---: | :--- | :--- | :--- | :--- |
+| 🚢 **Vessel** | **DROS-VEP Lite** | **Evaluation Protocol & Testbed** | **How to provide an objective, falsifiable evaluation testbed?** | [GitHub Official Repo](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite) |
+| 🏹 **1** | **DROS-6P** | Governance Model | **Who has authority? Why? When does it expire?** (Enterprise Trust) | DOI: `10.5281/zenodo.21833970` |
+| 🏹 **2** | **DROS 4-Layer** | Runtime Architecture | **How does policy deterministically reach execution?** (Attribution & Merkle) | DOI: `10.5281/zenodo.22092008` |
+| 🏹 **3** | **DROS-PGM** | Kernel-Level Control | **Once compromised, can the execution control plane still block action?** | DOI: `10.5281/zenodo.21903687` |
+| 🏹 **4** | **DROS-WebMCP** | **Agentic Web & Capability** | **How to enforce authorization and non-repudiation over WebMCP capability exposure?** | **DOI: `10.5281/zenodo.22290238`** |
+| 🏹 **5** | **Post-Compromise Mobile** | Digital Substrate | **Does execution authority hold across Mobile OS/APIs?** | DOI: `10.5281/zenodo.22253147` |
+| 🏹 **6** | **Post-Compromise UAV** | Cyber-Physical Substrate | **When actions cause physical motion, can the kinetic envelope hold?** | DOI: `10.5281/zenodo.22254372` |
 
 ---
 
-### 5. 6P: The Minimal Closed-Loop Service Baseline
+### 3. The Overarching Research Thesis
 
-| Dimension | Core Question | Underlying Mechanism Direction (See 6P Full Text) |
-| :--- | :--- | :--- |
-| **Principal** | On whose behalf is it acting? | Cryptographic Execution Token (DIT) \& W3C DID Passports |
-| **Authorization** | What actions are permitted? | Compact Capability Bitmap Vector ($O(1)$) |
-| **Tool Bound** | Which invocations can exit? | In-band C-ABI / FFI Sub-microsecond Interception |
-| **Policy Gate** | How are high risks mitigated? | Dynamic Redaction, HITL Multi-signature Approvals |
-| **Audit Log** | How to ensure non-repudiation? | SHA-256 Merkle Hash Chain Attestation |
-| **Revocation** | How to invalidate immediately? | Lock-Free RCU Atomic Pointer Hot-Swap to Deny State |
+$$\boxed{ \mathrm{Compromise}(\mathrm{Cognitive\ Controller}) \not\Rightarrow \mathrm{Compromise}(\mathrm{Downstream\ Execution\ Authority}) }$$
 
-The series asserts: for autonomous agents to act as legally accountable entities in regulated environments, these six pillars represent the **minimal operational baseline**, rather than optional add-on features.
+> **"A compromise of the autonomous cognitive controller does not inherently entail a compromise of downstream execution authority."**  
+> Rather than relying exclusively on internal statistical alignment of generative models, the DROS research trajectory investigates the formal decoupling of cognitive intent from actual execution, establishing verifiable deterministic execution gates within declared enforcement boundaries that cannot be arbitrarily subverted by untrusted cognitive planes.
 
 ---
 
-### 6. Empirical Benchmarks & Reproducibility (How to Read Metrics)
+### 4. Substrate vs. Protocol Positioning (The VEP Vessel)
 
-All latencies, interception rates, ablation ratios, and comparative benchmarks are bound to defined threat models, evaluation corpora, and specific measurement code paths:
+This series formalizes the research problem as an **executable, attackable, and measurable experimental substrate problem**:
 
-- **Policy Evaluation Latency** ($\approx 26\,\mu\mathrm{s}$) and **C-ABI Physical Panic Latency** ($<500\,\mathrm{ns}$) measure distinct code segments and must not be conflated into a single end-to-end figure.
-- **"100% Interception"** denotes empirical results under the evaluated threat scenarios and corpus, and does not claim unconstrained protection against arbitrary native kernel exploits.
-- All evaluation harnesses and reproducible benchmarks are open-sourced in [DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite).
-
-The ablation experiments in Paper 2 demonstrate that without L4, adversarial jailbreaks and obfuscated payloads bypass semantic firewalls into unauthorized execution. L4 provides the deterministic binary backstop, proving that semantic guardrails and physical execution boundaries cannot substitute for one another.
-
----
-
-### 7. Explicit Defensive Boundaries & Scope (Mandatory Context)
-
-This series provides architectures and empirical evidence for **runtime execution governance and boundary enforcement**, and does NOT provide:
-
-- Model alignment or guarantees that generative models will never output harmful semantic tokens;
-- Protection against arbitrary unregistered native code execution or compromised operating system kernels;
-- Automatic moral judgment for "in-policy abuse" (actions within permitted bounds but contextually inappropriate);
-- Complete legal compliance certification (technical Merkle chains support forensic audits, but organizational compliance requires operational controls).
-
-The Threat Model, Limitations, and TCB sections of each paper remain authoritative; this guide does not expand the defined scopes.
+1. **VEP Research Vessel (Evaluation Protocol)**:
+   * Formalizes vendor-neutral **RFC-001 Execution Governance Evaluation Standards**.
+   * Provides reproducible multi-architecture comparative baselines, 72-hour soak tests, and an open falsification channel.
+2. **DROS Runtime (Reference Substrate)**:
+   * Operates as a concrete, deterministic binary reference implementation under the VEP specification.
+3. **Dual-Domain Instantiations (Digital & Physical)**:
+   * **Mobile**: Evaluates Unauthorized Protected System-Effect Invariance ($\mathrm{Auth}=0 \implies \mathrm{PSE} \equiv 0$) and microsecond revocation races ($T_{\mathrm{rev}} < 2.5\mu\text{s}$).
+   * **UAV**: Evaluates Unauthorized Command Invariance ($\mathrm{Auth}=0 \implies \Delta u_{\mathrm{cmd}} \equiv 0$) and physical safety-envelope preservation ($\mathcal{S}_{\mathrm{safe}}$).
 
 ---
 
-### 8. Recommended Reading Paths by Audience
+### 5. Cross-Domain Substrate Mapping
 
-| Target Audience | Suggested Reading Path |
-| :--- | :--- |
-| **Enterprise Architects & CTOs** | This Guide $\rightarrow$ 6P Summary $\rightarrow$ 4-Layer Architecture \& Theses |
-| **Security & Risk Teams** | 4-Layer Threat Models \& Ablation $\rightarrow$ PGM (Post-Compromise) |
-| **Systems Engineers** | VEP-lite Benchmark Harness $\rightarrow$ 4-Layer Implementation |
-| **Academic Researchers** | Full Trilogy Texts + Related Work (Note demarcation from app-layer middleware) |
+DROS demonstrates that deterministic runtime governance applies uniformly across heterogeneous operational substrates:
+* **Digital Domains (Mobile OS):** Protects privileged APIs, clipboard, storage, and sensors against unauthorized state leakage.
+* **Physical Domains (Robotics & UAVs):** Enforces physical kinetic invariance, dynamic deceleration horizons, and geofence boundary containment.
 
 ---
 
-### 9. Citation & Versioning
+### 6. Recommended Reading Paths
 
-When citing specific technical claims or formal proofs, please cite the **respective core paper DOIs**, rather than this reading guide alone.
-
-If individual papers are updated on Zenodo, the latest version and PDF texts take precedence; this Reading Guide will be maintained alongside major architectural revisions.
+* **Architects & Decision Makers**: Start with this Guide $\to$ explore the [DROS-VEP Lite Root README](file:///E:/vscode/AI%E7%9F%A5%E8%AD%98%E5%BA%AB/dros-vep-lite/README.md).
+* **Web & MCP Developers**: **DROS-WebMCP** (DWGR-8 & Nonce Architecture) $\to$ **DROS 4-Layer**.
+* **Governance & Policy Researchers**: **DROS-6P** $\to$ **DROS 4-Layer**.
+* **Security Engineers & Binary Specialists**: **DROS-PGM** $\to$ **Post-Compromise Mobile**.
+* **Robotics & Control Theorists**: **Post-Compromise UAV** (Kinematics, braking horizon, latency decoupling).
 
 ---
 
-### 10. Conclusion
+### 7. References & Identifiers
 
-The DROS research series converges agent runtime governance into an intelligible, verifiable, and deployable substrate:  
-**6P defines service completeness, the 4-Layer funnel defines deterministic execution enforcement, and PGM extends identical execution trust into post-compromise environments.**
+When referencing technical claims, cite via the official DOI or technical report identifier of these archived preprints:
+1. **DROS-VEP Lite:** *Verifiable Execution Protocol & Evaluation Sandbox*, 2026.
+2. **DROS-6P:** DOI: `10.5281/zenodo.21833970`
+3. **DROS 4-Layer:** DOI: `10.5281/zenodo.22092008`
+4. **DROS-PGM:** DOI: `10.5281/zenodo.21903687`
+5. **DROS-WebMCP:** DOI: `10.5281/zenodo.22290238`
+6. **DROS-Mobile:** DOI: `10.5281/zenodo.22253147`
+7. **DROS-Kinetic (UAV):** DOI: `10.5281/zenodo.22254372`
 
-If readers retain only a single conclusion:
+---
 
-> **Enabling autonomous AI agents to operate safely requires not just more compliant models, but an unbypassable deterministic governance substrate across effectful execution boundaries.**
+---
 
-That substrate is what the DROS Trilogy defines and validates.
+### 8. Research Vision & The Falsification Manifesto
+
+> **"Build the substrate first. Let the field prove—or falsify—the claims."**  
+> 
+> * **We built the execution substrate.**
+> * **We defined the measurable boundary.**
+> * **We provide the implementation and evaluation protocol.**
+> * **Now the field can reproduce, extend, challenge, and falsify it.**
+
+The fundamental objective of the DROS research trajectory and the VEP evaluation vessel is to establish an open, measurable, and falsifiable experimental foundation. Rather than claiming unverifiable global security guarantees, we invite the global systems, robotics, mobile, and AI governance communities to independently reproduce our empirical benchmarks, explore adversarial edge cases, and challenge our formal invariants through open scientific falsification.

@@ -1,10 +1,10 @@
-# DROS 學術三部曲導讀
-## Reading Guide to the DROS Trilogy: An Agent Runtime Operation Substrate
+# DROS 學術研究軌跡全景導讀 (The 6-Paper Program)
+## Reading Guide to the DROS Research Trajectory: An Agent Runtime Operation Substrate
 
 **作者 / Author：** 陳濬程 (Chun-Cheng Chen)  
 **機構 / Affiliation：** 康宸園有限公司 (Top-Celestial Company Ltd.)  
 **類型 / Type：** Technical Note / Reading Guide（非取代各篇正式全文）  
-**對應核心論文 / Core papers：**
+**對應六大核心論文與研究艙 / The 6-Paper Program & Evaluation Vessel：**
 
 1. **DROS-6P** — 閉環企業級 AI Agent 六大信任邊界之確定性執行期治理架構  
    DOI: [10.5281/zenodo.21833970](https://doi.org/10.5281/zenodo.21833970)
@@ -15,8 +15,17 @@
 3. **DROS-PGM** — 基於內核級運行期安全之確定性執行控制平面（Post-Compromise）  
    DOI: [10.5281/zenodo.21903687](https://doi.org/10.5281/zenodo.21903687)
 
-**補充實作 / Implementation：**  
-[DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)（可重現驗證與評測平台）
+4. **DROS-WebMCP** — 針對 Agentic Web 能力暴露之密碼學可歸因執行治理層（時序閉包與 Nonce 架構）  
+   DOI: [10.5281/zenodo.22290238](https://doi.org/10.5281/zenodo.22290238)
+
+5. **Post-Compromise Mobile** — 針對自主行動代理人之執行期衰減與攜帶證明授權架構（投遞 IEEE TMC）  
+   DOI: [10.5281/zenodo.22253147](https://doi.org/10.5281/zenodo.22253147)
+
+6. **Post-Compromise UAV** — 具身智能實體 AI 物理動作權限之確定性執行期強制（投遞 IEEE TAES）  
+   DOI: [10.5281/zenodo.22254372](https://doi.org/10.5281/zenodo.22254372)
+
+**統一評測研究艙 / Evaluation Vessel：**  
+[DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)（RFC-001 可重現驗證與評測平台，Apache 2.0）
 
 ---
 
@@ -43,17 +52,21 @@ DROS 系列不是三篇互不相關的短文，而是同一條架構線上的三
 
 ---
 
-### 3. 三篇分工一覽
+### 3. 六篇分工一覽
 
 | 論文 | 核心問題 | 在系統中的角色 |
 |------|----------|----------------|
 | **DROS-6P** | 企業級 Agent 落地必須回答的六大信任問題是否在同一執行期閉環中被強制？ | **需求與服務規格**：Principal、Authorization、Tool/Action Bound、Policy Gate、Audit Log、Expiry/Revocation（6P） |
 | **DROS 四層 v3** | 為何僅有語義防火牆或僅有 OS 級沙箱仍不足？如何填補「代理人至執行歸因鴻溝」？ | **核心機制**：L1→L4 漏斗；L4 於 C-ABI／FFI 邊界做 O(1) 能力點陣圖強制；消融與（v3）對應用層治理中介之對照 |
 | **DROS-PGM** | 身份已過或進程已遭劫持後，執行層能否仍提供確定性關管？ | **Post-Compromise 執行信任**：強調執行與偵測之間的時間差、高併發帶內存活與內核視角的控制平面 |
+| **DROS-WebMCP** | 當 Web 邁向 Agentic Web，如何防範 WebMCP 工具能力被越權調用並確立不可否認歸因？ | **網絡能力暴露治理**：DWGR-8 規約、W3C 委託鏈、微觀動作綁定與 Commit-Phase Nonce 時序閉包 |
+| **Mobile (TMC)** | 換成智慧手機，execution authority 在 OS/API 上還成立嗎？ | **數位系統實證**：行動作業系統特權 API（相機/通訊錄/位置）之運行期衰減與帶證明授權 |
+| **UAV (TAES)** | 如果最後效果是「真的動起來」，物理動能邊界還能約束嗎？ | **具身物理實證**：無人載具在攻陷後之動能包絡線保持與前瞻煞車視界硬約束 |
 
 **建議閱讀順序：**  
-**6P → 四層 v3 → PGM**  
-先建立「要管什麼」，再理解「如何在執行邊界管」，最後理解「妥協後是否仍管得住」。
+* **治理與合規**：**6P → 四層 v3 → WebMCP**  
+* **系統底層與二進位**：**四層 v3 → PGM → Mobile**  
+* **具身智能與控制工程**：**PGM → UAV**
 
 ---
 
@@ -135,9 +148,11 @@ DROS 系列不是三篇互不相關的短文，而是同一條架構線上的三
 | 讀者 | 建議 |
 |------|------|
 | **架構師／技術決策** | 本導讀 → 6P 摘要 → 四層架構圖與論題 |
-| **資安／風險** | 四層威脅模型與消融 → PGM（Post-Compromise） |
+| **Web 與 MCP 開發者** | DROS-WebMCP（DWGR-8 規約與時序閉包） → 四層架構 |
+| **資安／風險** | 四層威脅模型與消融 → PGM（Post-Compromise） → Mobile |
+| **具身智能／控制工程** | PGM（二進位熔斷） → UAV（物理動能包絡線約束） |
 | **工程實作** | VEP-lite 與四層實作／評測章節 |
-| **研究者** | 三篇全文 + Related Work；注意與應用層治理方案的層級區分 |
+| **研究者** | 六篇全文 + Related Work；注意與應用層語義防護方案的層級區分 |
 
 ---
 
@@ -152,10 +167,10 @@ DROS 系列不是三篇互不相關的短文，而是同一條架構線上的三
 ### 10. 結語
 
 本系列將 Agent 執行期治理收斂為可描述、可驗證、可討論部署的一層基板：  
-**6P 定義服務完備性，四層定義執行邊界上的確定性強制，PGM 將同一執行信任延伸至妥協後情境。**
+**6P 定義服務完備性，四層定義執行邊界上的確定性強制，PGM 將同一執行信任延伸至妥協後情境，WebMCP 解決 Agentic Web 網絡歸因閉包，Mobile 與 UAV 則分別在數位作業系統與實體具身智能確立了物理防線。**
 
 讀者若只能記住一句：
 
 > **Agent 要安全落地，需要的不只是更乖的模型，而是對「有效果動作」不可繞過的確定性治理基板。**  
 
-那一層，即為 DROS 三部曲共同界定與驗證的對象。
+那一層，即為 DROS 系列論文共同界定與驗證的對象。

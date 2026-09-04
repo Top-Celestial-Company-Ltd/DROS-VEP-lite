@@ -22,13 +22,14 @@
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 📚 1. Core Technical Architecture Trajectory (The 5-Paper Program)          │
+│ 📚 1. Core Technical Architecture Trajectory (The 6-Paper Program)          │
 │    • Trajectory Guide: docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md  │
 │    • Paper 1 (6P Model): docs/paper_6p/ (Six Trust Boundaries)              │
 │    • Paper 2 (4-Layer Runtime): docs/paper_4layer/ (Attribution & Merkle)   │
 │    • Paper 3 (PGM Control): docs/paper_pgm/ (Kernel-Level C-ABI Intercept)  │
-│    • Paper 4 (Mobile Security): paper-mobile/ (Digital Action Containment)  │
-│    • Paper 5 (Physical AI UAV): paper-uav/ (Cyber-Physical Containment)     │
+│    • Paper 4 (WebMCP Governance): dros-webmcp/ (Agentic Web Attribution)    │
+│    • Paper 5 (Mobile Security): paper-mobile/ (Digital Action Containment)  │
+│    • Paper 6 (Physical AI UAV): paper-uav/ (Cyber-Physical Containment)     │
 │    • 72-Hour Continuous Multi-Scenario Soak Test (160,611 Requests)         │
 │      └─ Report: reports/DROS_24H_Soak_Test_Final_Report.md                  │
 │      └─ Harness: scripts/run_24h_soak_test.py                               │
@@ -62,6 +63,11 @@
 │    • Coverage: SMS/Web Prompt Injection, Biometric In-App Purchase Defense   │
 │      └─ Location: benchmarks/mobile_sdk/                                     │
 │      └─ Master Runner: python benchmarks/mobile_sdk/run_mobile_bench.py      │
+│                                                                             │
+│ 🧪 7. The Bare-Metal Isolation Crucible (Post-Compromise Authority Survives) │
+│    • Invariant: Integrity(Agent)=0, Integrity(Upper Governance)=0            │
+│      └─ Location: benchmarks/bare_metal_crucible/                            │
+│      └─ Master Runner: python benchmarks/bare_metal_crucible/run_crucible.py │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -325,6 +331,8 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
   * **DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Zenodo Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
 * 🏛️ **DROS-PGM: A Deterministic Post-Compromise Execution Containment Substrate (v2.0)**: [Paper (EN)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_EN.md) | [Paper (ZH)](docs/paper_pgm/DROS-PGM-Paper_v2_20260828_ZH.md) | [Download PDF via Zenodo](https://doi.org/10.5281/zenodo.21903687)
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+* 🌐 **DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web**: [Open Governance Draft (DWGR-8)](dros-webmcp/README.md)
+  * **DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Zenodo Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
 * 📱 **Post-Compromise Security for Autonomous Mobile Agents**: [Paper (EN)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE.md) | [Paper (ZH)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
   * **DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Zenodo Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
 * 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs**: [Paper (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [Paper (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
