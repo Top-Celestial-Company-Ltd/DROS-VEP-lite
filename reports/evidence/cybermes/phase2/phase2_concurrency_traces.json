@@ -1,0 +1,17 @@
+{
+  "workload": {
+    "total_requests": 30000,
+    "worker_threads": 20,
+    "duration_sec": 0.04102349281311035
+  },
+  "results": {
+    "blocked_count": 20156,
+    "allowed_count": 9844,
+    "race_leaks": 0
+  },
+  "latency_profile_ns": {
+    "mean": 217.79666666666665,
+    "p50": 200,
+    "p99": 500
+  }
+}

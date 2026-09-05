@@ -87,6 +87,9 @@ def main():
         rule_desc = ""
         exec_id = ""
         sha256_hash = ""
+        decision = "unknown"
+        latency_ms = 0.0
+        reason = "No audit log recorded for this scenario"
         
         if os.path.exists(AUDIT_LOG):
             with open(AUDIT_LOG, "r", encoding="utf-8") as f:

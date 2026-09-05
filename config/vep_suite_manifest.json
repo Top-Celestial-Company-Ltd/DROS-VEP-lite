@@ -1,0 +1,39 @@
+{
+  "suite_name": "DROS-VEP Lite Full Test Suite",
+  "suite_version": "v0.1.0",
+  "release_epoch": "2026-09-02",
+  "git_target_profile": "dros-core-commercial-ga-rc1",
+  "covered_invariants": [
+    "P0_UNAUTHORIZED_CONTAINMENT",
+    "P0_AUDIT_COMPLETENESS",
+    "P0_OVERLOAD_FAIL_CLOSED",
+    "P0_RCU_ATOMIC_REVOCATION"
+  ],
+  "tracks": {
+    "track_1_to_3": {
+      "name": "Cloud B2B Gateway & Invariants",
+      "spec_version": "v0.1",
+      "coverage": "ATS-001 to ATS-005"
+    },
+    "track_4": {
+      "name": "Redteam Attack Matrix",
+      "spec_version": "v0.1",
+      "coverage": "Suites A to F (17 Test Cases)"
+    },
+    "track_5": {
+      "name": "Physical AI & Drone Swarm Mesh",
+      "spec_version": "v0.1",
+      "coverage": "Single Disarm SITL + 100-Drone 5-Hop Mesh Delegation"
+    },
+    "track_6": {
+      "name": "Mobile SDK On-Device Native C-ABI",
+      "spec_version": "v0.1",
+      "coverage": "6 Threat Vectors (Photo, SMS OTP, GPS, Mic, ApplePay, 10k P50/P99)"
+    }
+  },
+  "reproducible_environment": {
+    "os_target": "Linux x86_64 / Windows AMD64 (Native C-ABI)",
+    "toolchain": "Rust 1.96.0 cdylib + Python 3.12 FFI Bridge",
+    "state_reset_mode": "Deterministic Ephemeral Purge (Delta S = 0)"
+  }
+}

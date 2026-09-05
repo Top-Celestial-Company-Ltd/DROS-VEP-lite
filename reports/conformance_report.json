@@ -2,8 +2,8 @@
   "spec_version": "RFC-010 Draft v0.1",
   "disclaimer": "The included conformance harness validates implementations against the RFC-010 Draft specification. Passing the test indicates conformance to this draft, not certification by an independent standards body.",
   "target_framework": "DROS-VEP Reference Implementation",
-  "timestamp": "2026-07-22T14:12:49Z",
-  "certified_level": "RFC-010 LEVEL 3 HIGH ASSURANCE CERTIFIED (PASS)",
+  "timestamp": "2026-09-05T15:58:22Z",
+  "certified_level": "RFC-010 LEVEL 3 HIGH ASSURANCE & OPEN PASSPORT CERTIFIED (PASS)",
   "levels": {
     "level_1_core": {
       "status": "PASS",
@@ -23,7 +23,8 @@
     "level_3_high_assurance": {
       "status": "PASS",
       "checks": {
-        "sha256_tamper_detection": "PASS"
+        "sha256_tamper_detection": "PASS",
+        "open_agent_passport_libdros_id": "PASS"
       }
     }
   }

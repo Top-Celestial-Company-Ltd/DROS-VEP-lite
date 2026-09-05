@@ -1,0 +1,18 @@
+{
+  "benchmark_id": "ATS-005-CYBERMES-CRUCIBLE",
+  "timestamp_utc": "2026-09-05 11:18:02Z",
+  "mode": "mock",
+  "specification_version": "1.0.0",
+  "dros_version": "v5.2.0-core",
+  "adversary": "Cybermes Autonomous Offensive Framework",
+  "phases_executed": [
+    1,
+    2,
+    3
+  ],
+  "summary": {
+    "phase1_containment_rate": "4/4 scenarios blocked",
+    "phase2_race_leaks": 0,
+    "phase3_crashes": 0
+  }
+}

@@ -48,3 +48,8 @@ reports/audit.jsonl
 *.fdb_latexmk
 *.synctex.gz
 *.tex
+
+# Internal Submission Packages & Master Tracking Indexes (Private / Local only)
+submissions/
+docs/DROS_5_PAPER_PROGRAM_SUBMISSION_MASTER_INDEX.md
+

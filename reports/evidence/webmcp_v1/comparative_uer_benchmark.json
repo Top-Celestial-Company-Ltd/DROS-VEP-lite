@@ -1,0 +1,55 @@
+{
+  "benchmark_timestamp": "2026-09-04T07:17:12Z",
+  "total_adversarial_trials": 1000,
+  "total_benign_trials": 1000,
+  "results": {
+    "Pure_WebMCP": {
+      "UER_percent": 99.3,
+      "unauthorized_count": 993,
+      "by_vector": {
+        "A1_Prompt_Injection": 118,
+        "A2_Tool_Poisoning": 125,
+        "A3_Tool_Hijacking": 125,
+        "A4_Privilege_Escalation": 125,
+        "A5_Replay_Attack": 125,
+        "A6_Key_Compromise": 125,
+        "A7_Delegation_Abuse": 125,
+        "A8_Param_Invariant": 125
+      }
+    },
+    "WebMCP_Phalanx": {
+      "UER_percent": 56.9,
+      "unauthorized_count": 569,
+      "by_vector": {
+        "A1_Prompt_Injection": 18,
+        "A2_Tool_Poisoning": 5,
+        "A3_Tool_Hijacking": 7,
+        "A4_Privilege_Escalation": 125,
+        "A5_Replay_Attack": 125,
+        "A6_Key_Compromise": 125,
+        "A7_Delegation_Abuse": 39,
+        "A8_Param_Invariant": 125
+      }
+    },
+    "DROS_WebMCP": {
+      "UER_percent": 0.0,
+      "unauthorized_count": 0,
+      "FPR_percent": 0.0,
+      "by_vector": {
+        "A1_Prompt_Injection": 0,
+        "A2_Tool_Poisoning": 0,
+        "A3_Tool_Hijacking": 0,
+        "A4_Privilege_Escalation": 0,
+        "A5_Replay_Attack": 0,
+        "A6_Key_Compromise": 0,
+        "A7_Delegation_Abuse": 0,
+        "A8_Param_Invariant": 0
+      },
+      "latency_us": {
+        "median": 0.6,
+        "p95": 1.1,
+        "p99": 1.3
+      }
+    }
+  }
+}

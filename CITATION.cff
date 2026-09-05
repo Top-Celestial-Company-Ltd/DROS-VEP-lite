@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, protocol, or executable reference substrate in your research, please cite it as below."
+title: "Validation and Evaluation Protocol (VEP) for Agent Execution Governance and Post-Compromise Containment"
+authors:
+  - family-names: "Chen"
+    given-names: "Chun-Cheng"
+    alias: "Jimmy Chen"
+    affiliation: "Top-Celestial Company Ltd."
+version: 0.2.1
+date-released: 2026-09-02
+url: "https://github.com/top-celestial-company-ltd/dros-vep-lite"
+keywords:
+  - "agent execution governance"
+  - "agent execution authority"
+  - "post-compromise agent security"
+  - "post-compromise execution containment"
+  - "deterministic runtime enforcement"
+  - "agent authorization"
+  - "runtime security"
+  - "agent security benchmark"
+  - "execution control plane"
+  - "reproducible security evaluation"
+  - "fail-closed execution"
+  - "executable research substrate"
+abstract: >-
+  VEP is an open, implementation-independent evaluation protocol designed to measure
+  whether AI agent execution security controls remain deterministically effective
+  after compromise. DROS provides one executable reference substrate for VEP-based evaluation.
+license: Apache-2.0

@@ -220,8 +220,9 @@ python -m dros.guard --policy vajra.md --lease 10m --max-horizon 8h -- python ba
 * 需要自動化限制 Agent 的 API 調用上限（避免被扣爆幾千美元）。
 
 屆時可無縫升級至：
-* **🔵 Startup Edition ($2,990/年)**：解鎖 3 組 UUIDs 商業授權、3 節點微型租約面板、動態 PII 遮蔽與合法商用支持。
-* **🟣 Enterprise Edition ($29,990/年)**：解鎖 15 組 UUIDs 授權、全域 DataGrid 清單、多維能力預算 (Budget)、GitOps 雙人審批與司法級 Merkle 存證。
+* **🔵 Startup Edition (新創團隊版，方案以官網公告為準)**：解鎖 3 組 UUIDs 商業授權、3 節點微型租約面板、動態 PII 遮蔽與合法商用支持。
+* **🟣 Enterprise Edition (企業旗艦版，方案以官網公告為準)**：解鎖 15 組 UUIDs 授權、全域 DataGrid 清單、多維能力預算 (Budget)、GitOps 雙人審批與司法級 Merkle 存證。
+
 
 ---
 *DROS VajraAgent Hacker Edition ── 乾淨、透明、純手動，個人開發者的最強防線。* 🟢🛡️

@@ -91,7 +91,7 @@ This repository and protocol may be relevant to researchers, evaluators, and sys
 * **Agent Capability & Dynamic Authorization**: Fine-grained capability bitmask evaluations ($O(1)$ constant time) and zero-window RCU policy revocation.
 * **Deterministic Runtime Enforcement**: Enforcing fail-closed containment under adversarial resource starvation and syscall flood conditions.
 * **Agent Security Benchmarks & Testbeds**: Providing reproducible, multi-track testbeds across Cloud B2B, Physical Robotics/Drones, and Mobile on-device SDKs.
-* **Execution Provenance & Cryptographic Audit**: Maintaining append-only, tamper-evident Merkle hash chains for EU AI Act / NIST SP 800-207 compliance.
+* **Execution Provenance & Cryptographic Audit**: Maintaining append-only, tamper-evident Merkle hash chains supporting technical traceability relevant to EU AI Act / NIST SP 800-207 requirements.
 
 > **💡 Conformance & Substrate Decoupling:**  
 > **DROS is not required for VEP conformance.** VEP defines an open, vendor-neutral evaluation protocol; DROS is provided as **one concrete executable reference substrate** for demonstrating, benchmarking, and validating VEP experiments.
@@ -214,7 +214,7 @@ DROS-VEP Lite directly reproduces and neutralizes 2026's most notorious real-wor
 | **ATS-002** | Ransomware System Encryption | **Nidec Chaun-Choung Blackfield $2M ERP Ransomware** | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
 | **ATS-003** | LLM Jailbreak & Tool Exploitation | **Anthropic Fable 5 24-Hour Jailbreak & Prompt Leak** | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs Guard)** |
 | **ATS-004** | Autonomous LLM Weight Ransomware | **JadePuffer Autonomous PyTorch Model Ransomware** | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
-| **ATS-005** | Browser Social Engineering Leak | **BioShocking Trick AI to Surrender SSH Key** | `read_ssh_keyfile` | **AML.T0055** | **DENY (Physical Lock)** |
+| **ATS-005** | Browser Social Engineering Leak | **BioShocking Trick AI to Surrender SSH Key** | `read_ssh_keyfile` | **AML.T0055** | **DENY (Execution Lock)** |
 
 ---
 
@@ -298,8 +298,8 @@ python scripts/run_cybermes_crucible.py
 | **Machine Nodes / UUIDs** | Local Sandbox | Single Local PC / Docker | Single Server Node | Multi-Node Cluster (Up to 15 Nodes) | Unlimited Clusters & Custom Hardware |
 | **Concurrent Agents** | 2 Roles Demo | Unlimited Local Run | 30,000 High-Frequency Concurrency | 450 Agents (15 Nodes × 30) | Millions of Swarm Agents |
 | **6P Closed-Loop Governance** | **✅ Lightweight Demo** | **✅ Included** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** |
-| **353 ns C-ABI Physical Fuse** | **✅ Included** | **✅ Included** | **✅ Included (In-Band Sub-μs)** | **✅ Included (In-Band Sub-μs)** | **✅ Custom C-ABI Microkernel** |
-| **SHA-256 Merkle Audit Chain**| **✅ Included** | **✅ Included** | **✅ Included (Non-Repudiation)** | **✅ Court-Admissible & SIEM** | **✅ Hardware HSM Attestation** |
+| **353 ns C-ABI Binary Interception** | **✅ Included** | **✅ Included** | **✅ Included (In-Band Sub-μs)** | **✅ Included (In-Band Sub-μs)** | **✅ Custom C-ABI Microkernel** |
+| **SHA-256 Merkle Audit Chain**| **✅ Included** | **✅ Included** | **✅ Included (Non-Repudiation)** | **✅ Tamper-Evident & SIEM Integration** | **✅ Hardware HSM Attestation** |
 | **3-Tier PKI Identity Chain** | **🟡 Single did:key** | **🟡 Single did:key** | **✅ Root &rarr; AIA &rarr; BEC** | **✅ Cross-Enterprise Federation** | **✅ Dedicated Sovereign CA Custody** |
 | **100% Air-Gapped Offline** | **✅ Sandbox Only** | **✅ Single Local** | ❌ (Online Heartbeat Required) | **✅ 100% Air-Gapped (Zero Telemetry)**| **✅ Air-Gapped / FPGA Hardware** |
 | **Lock-Free RCU Hot-Reload** | ❌ Manual Reload | ❌ Manual Reload | ❌ Manual Reload | **✅ Sub-Microsecond Lock-Free** | **✅ Distributed Swarm RCU** |

@@ -1,0 +1,27 @@
+{
+  "policy_name": "DROS_DRONE_PHYSICAL_GOVERNANCE_v1",
+  "version": "1.0.0",
+  "capability_bitmasks": {
+    "TELEMETRY_READ": "0x0000000000000001",
+    "WAYPOINT_NAVIGATE": "0x0000000000000002",
+    "RETURN_TO_HOME": "0x0000000000000004",
+    "CAMERA_GIMBAL": "0x0000000000000008",
+    "CRITICAL_ARM_DISARM": "0x8000000000000000",
+    "MOTOR_OVERRIDE": "0x4000000000000000"
+  },
+  "roles": {
+    "AI_MISSION_PLANNER": {
+      "allowed_capabilities": ["TELEMETRY_READ", "WAYPOINT_NAVIGATE", "CAMERA_GIMBAL"],
+      "bitmask": "0x000000000000000B"
+    },
+    "FLIGHT_CONTROLLER_MASTER": {
+      "allowed_capabilities": ["TELEMETRY_READ", "WAYPOINT_NAVIGATE", "RETURN_TO_HOME", "CRITICAL_ARM_DISARM"],
+      "bitmask": "0x8000000000000007"
+    }
+  },
+  "geofence": {
+    "min_altitude_m": 2.0,
+    "max_altitude_m": 120.0,
+    "max_radius_km": 5.0
+  }
+}

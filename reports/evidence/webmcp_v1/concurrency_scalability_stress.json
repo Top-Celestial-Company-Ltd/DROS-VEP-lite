@@ -1,0 +1,30 @@
+{
+  "1_workers": {
+    "workers": 1,
+    "total_evaluations": 10000,
+    "elapsed_seconds": 0.2596,
+    "throughput_ops_per_sec": 38518.9,
+    "avg_latency_us": 25.96
+  },
+  "4_workers": {
+    "workers": 4,
+    "total_evaluations": 10000,
+    "elapsed_seconds": 0.2398,
+    "throughput_ops_per_sec": 41710.0,
+    "avg_latency_us": 23.98
+  },
+  "8_workers": {
+    "workers": 8,
+    "total_evaluations": 10000,
+    "elapsed_seconds": 0.2116,
+    "throughput_ops_per_sec": 47248.5,
+    "avg_latency_us": 21.16
+  },
+  "16_workers": {
+    "workers": 16,
+    "total_evaluations": 10000,
+    "elapsed_seconds": 0.2937,
+    "throughput_ops_per_sec": 34047.7,
+    "avg_latency_us": 29.37
+  }
+}

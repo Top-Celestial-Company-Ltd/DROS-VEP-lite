@@ -1,0 +1,53 @@
+{
+  "policy_name": "DROS_MOBILE_ON_DEVICE_GOVERNANCE_v2",
+  "version": "2.0.0",
+  "target_platforms": [
+    "iOS_Swift",
+    "Android_Kotlin",
+    "Flutter",
+    "React_Native"
+  ],
+  "capability_bitmasks": {
+    "READ_FAQ": "0x0000000000000001",
+    "UI_THEME_CHANGE": "0x0000000000000002",
+    "LOCAL_STORAGE_CACHE": "0x0000000000000004",
+    "RESTRICTED_READ_CONTACTS": "0x0000000100000000",
+    "RESTRICTED_ACCESS_PHOTOS": "0x0000000200000000",
+    "RESTRICTED_SEND_SMS": "0x0000000400000000",
+    "RESTRICTED_READ_CLIPBOARD": "0x0000000800000000",
+    "RESTRICTED_GPS_LOCATION": "0x0000001000000000",
+    "RESTRICTED_MICROPHONE_RECORD": "0x0000002000000000",
+    "CRITICAL_FINANCIAL_PAYMENT": "0x8000000000000000"
+  },
+  "roles": {
+    "MOBILE_CHAT_ASSISTANT": {
+      "allowed_capabilities": [
+        "READ_FAQ",
+        "UI_THEME_CHANGE",
+        "LOCAL_STORAGE_CACHE"
+      ],
+      "bitmask": "0x0000000000000007"
+    },
+    "AUTHENTICATED_USER_SESSION": {
+      "allowed_capabilities": [
+        "READ_FAQ",
+        "UI_THEME_CHANGE",
+        "LOCAL_STORAGE_CACHE",
+        "RESTRICTED_READ_CONTACTS",
+        "RESTRICTED_ACCESS_PHOTOS",
+        "RESTRICTED_GPS_LOCATION"
+      ],
+      "bitmask": "0x0000001300000007"
+    },
+    "SECURE_ENCLAVE_PAYMENT_DELEGATE": {
+      "allowed_capabilities": [
+        "CRITICAL_FINANCIAL_PAYMENT"
+      ],
+      "bitmask": "0x8000000000000000"
+    }
+  },
+  "runtime_constraints": {
+    "block_background_surveillance": true,
+    "block_unauthorized_clipboard_exfiltration": true
+  }
+}

@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   enterprise-erp:
     image: python:3.10-slim

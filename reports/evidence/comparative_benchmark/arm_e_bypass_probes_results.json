@@ -1,0 +1,60 @@
+[
+  {
+    "probe": "PROBE-01: Native File I/O Bypass",
+    "agt": {
+      "intercepted_by_agt": false,
+      "agt_interception_point": "None (Bypassed via native open())",
+      "execution_result": "SUCCESS_DATA_READ",
+      "bytes_read": 32
+    },
+    "dros": {
+      "intercepted_by_dros": true,
+      "dros_decision": "DENY_HTTP_403_C_ABI",
+      "latency_ns": 4900,
+      "execution_result": "BLOCKED_AT_C_ABI"
+    }
+  },
+  {
+    "probe": "PROBE-02: Raw TCP Socket Bypass",
+    "agt": {
+      "intercepted_by_agt": false,
+      "agt_interception_point": "None (Bypassed via socket.socket())",
+      "execution_result": "SOCKET_CALL_EXECUTED"
+    },
+    "dros": {
+      "intercepted_by_dros": true,
+      "dros_decision": "DENY_HTTP_403_C_ABI",
+      "latency_ns": 3000,
+      "execution_result": "BLOCKED_AT_C_ABI"
+    }
+  },
+  {
+    "probe": "PROBE-03: Subprocess Exec Bypass",
+    "agt": {
+      "intercepted_by_agt": false,
+      "agt_interception_point": "None (Bypassed via subprocess/os.system)",
+      "execution_result": "SUBPROCESS_SPAWNED"
+    },
+    "dros": {
+      "intercepted_by_dros": true,
+      "dros_decision": "DENY_HTTP_403_C_ABI",
+      "latency_ns": 1200,
+      "execution_result": "BLOCKED_AT_C_ABI"
+    }
+  },
+  {
+    "probe": "PROBE-04: In-Memory Decorator Stripping",
+    "agt": {
+      "blocked_before_patch": false,
+      "bypassed_after_in_memory_patch": true,
+      "mechanism": "In-process memory variable overwrite"
+    },
+    "dros": {
+      "intercepted_by_dros": true,
+      "dros_decision": "DENY_HTTP_403_C_ABI",
+      "latency_ns": 600,
+      "is_susceptible_to_python_monkey_patch": false,
+      "reason": "C-ABI state resides outside Python interpreter heap"
+    }
+  }
+]
