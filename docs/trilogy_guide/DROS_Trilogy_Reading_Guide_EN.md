@@ -54,8 +54,17 @@ $$\boxed{ \text{Governance} \longrightarrow \text{Authority} \longrightarrow \te
 | 🏹 **4** | **DROS-WebMCP** | **Agentic Web & Capability** | **How to enforce authorization and non-repudiation over WebMCP capability exposure?** | **DOI: `10.5281/zenodo.22290238`** |
 | 🏹 **5** | **Post-Compromise Mobile** | Digital Substrate | **Does execution authority hold across Mobile OS/APIs?** | DOI: `10.5281/zenodo.22253147` |
 | 🏹 **6** | **Post-Compromise UAV** | Cyber-Physical Substrate | **When actions cause physical motion, can the kinetic envelope hold?** | DOI: `10.5281/zenodo.22254372` |
+| 🌟 **Semantic 1** | **Constraint-as-Code** | **Foundational Paradigm & Circuit Breaker** | **How to translate doctrinal classification into verifiable hard contracts with CPU thread panic?** | DOI: [`10.5281/zenodo.20823227`](https://doi.org/10.5281/zenodo.20823227) |
+| 🌟 **Semantic 2** | **DROS v7.3 (DOR Framework)** | **Semantic Layer & Hallucination Control** | **How to deterministically constrain semantic drift and hallucinations in high-precision domains?** | DOI: [`10.5281/zenodo.20776075`](https://doi.org/10.5281/zenodo.20776075)<br>Repo: [Dharma-Reasoning-OS](https://github.com/Top-Celestial-Company-Ltd/Dharma-Reasoning-Operating-System) |
+| 🛡️ **Foundational 1** | **Runtime Attribution Framework** | **Attribution & Execution Identity Archetype** | **How to resolve context-blindness in MAS and establish cryptographic non-repudiation?** | DOI: [`10.5281/zenodo.20823163`](https://doi.org/10.5281/zenodo.20823163) |
+| 🛡️ **Foundational 2** | **VajraAgent & VajraClaw** | **Dual-Isolation Empirical Archetype** | **Can binary FFI circuit breaking neutralize sophisticated prompt injections bypassing semantic layers?** | DOI: [`10.5281/zenodo.20823189`](https://doi.org/10.5281/zenodo.20823189) |
 
 ---
+
+> [!NOTE]
+> **Dual-Track Governance Architecture (Semantic vs. Execution)**:  
+> * **Semantic & Epistemic Track (Constraint-as-Code & DOR)**: Governs internal *cognitive content*—translating doctrinal classification into Vajra Contracts, flat-file document decoupling, manifestation isolation, and hallucination containment for domain-restricted knowledge systems.  
+> * **Execution & Enforcement Track (6P to UAV)**: Governs downstream *external effects*—binary gates, capability bitmaps, and post-compromise physical envelope invariants.
 
 ### 3. The Overarching Research Thesis
 
@@ -92,9 +101,10 @@ DROS demonstrates that deterministic runtime governance applies uniformly across
 ### 6. Recommended Reading Paths
 
 * **Architects & Decision Makers**: Start with this Guide $\to$ explore the [DROS-VEP Lite Root README](file:///E:/vscode/AI%E7%9F%A5%E8%AD%98%E5%BA%AB/dros-vep-lite/README.md).
+* **Foundational Archetypes & Inception**: **Runtime Attribution Framework** $\to$ **Vajra Sandboxing** $\to$ **DROS-6P** $\to$ **DROS 4-Layer**.
 * **Web & MCP Developers**: **DROS-WebMCP** (DWGR-8 & Nonce Architecture) $\to$ **DROS 4-Layer**.
 * **Governance & Policy Researchers**: **DROS-6P** $\to$ **DROS 4-Layer**.
-* **Security Engineers & Binary Specialists**: **DROS-PGM** $\to$ **Post-Compromise Mobile**.
+* **Security Engineers & Binary Specialists**: **VajraClaw Archetype** $\to$ **DROS-PGM** $\to$ **Post-Compromise Mobile**.
 * **Robotics & Control Theorists**: **Post-Compromise UAV** (Kinematics, braking horizon, latency decoupling).
 
 ---
@@ -109,6 +119,10 @@ When referencing technical claims, cite via the official DOI or technical report
 5. **DROS-WebMCP:** DOI: `10.5281/zenodo.22290238`
 6. **DROS-Mobile:** DOI: `10.5281/zenodo.22253147`
 7. **DROS-Kinetic (UAV):** DOI: `10.5281/zenodo.22254372`
+8. **Constraint-as-Code (Foundational):** DOI: `10.5281/zenodo.20823227`
+9. **DROS v7.3 (DOR Framework):** DOI: `10.5281/zenodo.20776075`
+10. **Runtime Attribution Framework (Identity Prehistory):** DOI: `10.5281/zenodo.20823163`
+11. **Neutralizing Prompt Injection (Vajra Archetype):** DOI: `10.5281/zenodo.20823189`
 
 ---
 

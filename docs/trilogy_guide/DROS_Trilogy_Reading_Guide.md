@@ -29,22 +29,44 @@
 
 ---
 
+### 🌟 語意與認知層前傳（Semantic & Epistemic Governance Track）：
+* **DROS 創始奠基篇** — 約束即代碼：基於佛教判教與物理熔斷的確定性 LLM 治理 (*Constraint-as-Code: Deterministic LLM Governance via Buddhist Doctrinal Classification and Physical Circuit Breaking*)  
+  DOI: [10.5281/zenodo.20823227](https://doi.org/10.5281/zenodo.20823227)  
+  *提出 Constraint-as-Code 與金剛合約 (Vajra Contract)，首創透過 C-FFI 物理熔斷 (Thread Panic) 根絕 LLM 幻覺。*
+
+* **DROS v7.3 (DOR 框架)** — 確定性本體路由框架用於領域受限的 LLM 系統：DROS v7.3 的設計與實現 (*Deterministic Ontological Routing Framework for Domain-Restricted LLM Systems*)  
+  DOI: [10.5281/zenodo.20776075](https://doi.org/10.5281/zenodo.20776075)  
+  *專職解決特定高精密度領域內部之「確定性本體路由、宗派顯現隔離與百萬字文本解耦」。*  
+  開源代碼庫 / Repository: [Dharma-Reasoning-Operating-System](https://github.com/Top-Celestial-Company-Ltd/Dharma-Reasoning-Operating-System)
+
+---
+
+### 🛡️ 執行治理奠基與原型驗證（Execution Foundations & Empirical Archetypes）：
+* **歸責與身分奠基篇** — 智能體運行期歸責框架：多智能體系統中基於外部 C-ABI 與 PKI 零信任的不可否認性執行治理基礎設施 (*Runtime Attribution Framework: An External C-ABI and PKI-Based Zero-Trust Infrastructure for Non-Repudiable Execution Governance in Multi-Agent Systems*)  
+  DOI: [10.5281/zenodo.20823163](https://doi.org/10.5281/zenodo.20823163)  
+  *提出執行身分證書（BEC）與 Ed25519 簽章，首創以二進位 C-ABI 消除傳統 eBPF 的「情境盲視」，奠定 DROS-6P 之 Principal 與 Audit Log 法庭級證據鏈始祖。*
+
+* **雙重隔離原型篇** — 防護指令污染與幻覺危害的 DROS：VajraAgent 與 VajraClaw 的執行治理基礎設施 (*Neutralizing Prompt Injection and LLM Hallucinations: The Deterministic Sandboxing of VajraAgent and VajraClaw*)  
+  DOI: [10.5281/zenodo.20823189](https://doi.org/10.5281/zenodo.20823189)  
+  *首次提出 Vajra 體系（金剛智能體 + 金剛爪），實測 1,000 筆對抗樣本：FSM 阻斷 98.5%，繞過語意的 1.5% 精緻攻擊在 C-FFI 邊界 100% 物理熔斷，為 DROS 4-Layer 漏斗與 PGM 微核心的實證原型。*
+
+---
+
 ### 1. 本導讀的目的
 
-DROS 系列不是三篇互不相關的短文，而是同一條架構線上的三個切面：
+DROS 系列不是互相孤立的短文，而是涵蓋**「語意層認知約束」**與**「執行層物理強制」**的完整治理全景：
 
-- **要治理什麼**（完備性）  
-- **在哪一層、用什麼機制強制**（可執行性）  
-- **進門／妥協之後是否仍守得住**（Post-Compromise）  
+- **語意層治理（DROS v7.3 / DOR）**：解決模型*生成內容（Content）*的幻覺控制、本體拓撲映射與語意對齊；
+- **執行層治理（6-Paper 主軸）**：解決 Agent *對外動作（Action）*的二進位邊界、權限熔斷、網路暴露與動能硬約束。
 
-本導讀說明三篇如何分工、建議閱讀順序、合起來的系統定位，以及**保證範圍的邊界**。正式技術主張、實驗協議與證明以各篇全文為準。
+本導讀說明兩大軌道與六大維度如何分工、建議閱讀順序、合起來的系統定位，以及**保證範圍的邊界**。正式技術主張、實驗協議與證明以各篇全文為準。
 
 ---
 
 ### 2. 一句話定位
 
 > **DROS 是面向自主 AI 工作負載的確定性執行期治理基板（runtime governance substrate），在 Agent 所產生的意圖與具有效果的實際執行（effectful execution）之間建立可強制的控制邊界。**  
-> 業務表達意圖與政策；有效果的執行在共用邊界上被確定性允許或拒絕，並留下可驗證存證。
+> 語意層引導知識路由與認知對齊（DOR）；執行層在共用邊界上確定性允許或拒絕有效果之動作，並留下可驗證存證。
 
 類比 POSIX：POSIX 並未消除應用複雜度，而是避免每個應用重造底層介面。DROS 對 Agent 治理採同一抽象原則——上層不必重造身份、授權、工具邊界、門閥、審計與撤銷的整套機制。
 
@@ -52,10 +74,14 @@ DROS 系列不是三篇互不相關的短文，而是同一條架構線上的三
 
 ---
 
-### 3. 六篇分工一覽
+### 3. 研究分工與架構全景一覽
 
-| 論文 | 核心問題 | 在系統中的角色 |
-|------|----------|----------------|
+| 軌道 / 論文 | 核心問題 | 在系統中的角色 |
+|-------------|----------|----------------|
+| **語意奠基：判教與物理熔斷** | 如何將深奧教義轉化為硬性代碼？如何透過 CPU 級物理熔斷根絕模型幻覺？ | **思想奠基與執行期熔斷**：佛教判教（Doctrinal Classification）轉化、Constraint-as-Code、金剛合約 (Vajra Contract)、C-FFI 二進位 Thread Panic 熔斷 |
+| **語意架構：DROS v7.3 (DOR)** | 如何在高複雜度專業知識領域中，徹底控制 LLM 生成幻覺並防範跨宗派語意漂移？ | **語意與認知層治理**：扁平文本解耦、確定性本體路由 (DOR)、宗派顯現 (Manifestation) 隔離與嚴格引用驗證 |
+| **歸責奠基：Runtime Attribution** | 如何解決多 Agent 協同中 eBPF 等傳統工具的情境盲視？如何實現不可否認之司法級歸責？ | **身分與不可否認歸責始祖**：提出執行身分證書 (BEC) 與 Ed25519 簽章，奠定 6P 之 Principal 執行護照與法庭級證據鏈 |
+| **隔離原型：VajraAgent & VajraClaw** | 語意過濾與二進位邊界如何協同？繞過語意的攻擊能否在 C-FFI 邊界 100% 熔斷？ | **雙重隔離實證原型**：Vajra 體系（FSM 狀態機 + 金剛爪），1,000 筆對抗測試證偽，為 4-Layer 漏斗與 PGM 核心原型 |
 | **DROS-6P** | 企業級 Agent 落地必須回答的六大信任問題是否在同一執行期閉環中被強制？ | **需求與服務規格**：Principal、Authorization、Tool/Action Bound、Policy Gate、Audit Log、Expiry/Revocation（6P） |
 | **DROS 四層 v3** | 為何僅有語義防火牆或僅有 OS 級沙箱仍不足？如何填補「代理人至執行歸因鴻溝」？ | **核心機制**：L1→L4 漏斗；L4 於 C-ABI／FFI 邊界做 O(1) 能力點陣圖強制；消融與（v3）對應用層治理中介之對照 |
 | **DROS-PGM** | 身份已過或進程已遭劫持後，執行層能否仍提供確定性關管？ | **Post-Compromise 執行信任**：強調執行與偵測之間的時間差、高併發帶內存活與內核視角的控制平面 |
@@ -64,8 +90,10 @@ DROS 系列不是三篇互不相關的短文，而是同一條架構線上的三
 | **UAV (TAES)** | 如果最後效果是「真的動起來」，物理動能邊界還能約束嗎？ | **具身物理實證**：無人載具在攻陷後之動能包絡線保持與前瞻煞車視界硬約束 |
 
 **建議閱讀順序：**  
-* **治理與合規**：**6P → 四層 v3 → WebMCP**  
-* **系統底層與二進位**：**四層 v3 → PGM → Mobile**  
+* **治理思想起源與認知對齊**：**判教與物理熔斷 (創始篇) → DROS v7.3 (DOR 框架) → 四層 v3 (L1/L2 語意過濾)**  
+* **執行治理奠基與原型演化**：**Runtime Attribution (歸責篇) → VajraAgent & VajraClaw (雙重隔離原型) → 6P → 四層 v3**  
+* **企業治理與組織合規**：**6P → 四層 v3 → WebMCP**  
+* **系統底層與二進位安全**：**VajraClaw 原型 → 四層 v3 → PGM → Mobile**  
 * **具身智能與控制工程**：**PGM → UAV**
 
 ---
