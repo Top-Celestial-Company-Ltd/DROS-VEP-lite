@@ -295,8 +295,8 @@ python scripts/run_cybermes_crucible.py
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Target Audience** | Open-Spec Evaluation | Individual Devs & Students | Startups, ISVs, Commercial Agents | Large Enterprise, FinTech, Healthcare | Sovereign Clouds, Defense, Critical Infra |
 | **License Model** | Open-Source (Apache 2.0) | **Free for Personal/Non-Commercial** | Commercial Annual Subscription | Enterprise Cluster Subscription | Custom Contract & OEM Licensing |
-| **Machine Nodes / UUIDs** | Local Sandbox | Single Local PC / Docker | Single Server Node | Multi-Node Cluster (Up to 15 Nodes) | Unlimited Clusters & Custom Hardware |
-| **Concurrent Agents** | 2 Roles Demo | Unlimited Local Run | 30,000 High-Frequency Concurrency | 450 Agents (15 Nodes × 30) | Millions of Swarm Agents |
+| **Machine Nodes / UUIDs** | Local Sandbox | Single Local PC / Docker | Up to 3 Machine UUIDs (Dev/Stage/Prod) | Multi-Node Cluster (Up to 15 Nodes) | Unlimited Clusters & Custom Hardware |
+| **Concurrent Agents** | 2 Roles Demo | Unlimited Local Run | 30 Agents (3 Nodes × 10) / 30k High-Frequency | 450 Agents (15 Nodes × 30) | Millions of Swarm Agents |
 | **6P Closed-Loop Governance** | **✅ Lightweight Demo** | **✅ Included** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** |
 | **353 ns C-ABI Binary Interception** | **✅ Included** | **✅ Included** | **✅ Included (In-Band Sub-μs)** | **✅ Included (In-Band Sub-μs)** | **✅ Custom C-ABI Microkernel** |
 | **SHA-256 Merkle Audit Chain**| **✅ Included** | **✅ Included** | **✅ Included (Non-Repudiation)** | **✅ Tamper-Evident & SIEM Integration** | **✅ Hardware HSM Attestation** |
