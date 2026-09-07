@@ -313,7 +313,7 @@ python scripts/run_cybermes_crucible.py
 DROS-VEP Lite provides an open benchmark evaluation environment for community verification. 
 
 * **🧪 Evaluation Vessel (DROS-VEP Lite)**: Free to evaluate, test, and build custom security scenarios. See [Quick Start (60 Seconds)](#-quick-start-60-seconds) to run RFC-001 benchmarks and adversarial tests immediately.
-* **⚡ Local Guard Substrate (VajraClaw Hacker)**: Permanently free license for individuals and researchers. Get started via the [Official GitHub Repo (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) or obtain your individual license on [dr-os.io Pricing](https://dr-os.io/#/pricing).
+* **⚡ Local Guard Substrate (VajraClaw Hacker)**: Permanently free license for individuals and researchers. Zero registration, no credit card, and zero telemetry. Install directly via the [Official GitHub Repo (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) for immediate local enforcement.
 * **🏛️ Enterprise & Swarm Production**: For high-throughput distributed RCU, C-ABI hardware integration, and enterprise SIEM compliance, visit [dr-os.io](https://dr-os.io) or schedule an architecture briefing.
 
 ---

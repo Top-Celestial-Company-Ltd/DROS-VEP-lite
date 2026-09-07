@@ -301,7 +301,7 @@ python scripts/run_cybermes_crucible.py
 DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群提供開放、可重現的評測標準。
 
 * **🧪 評測研究艙 (DROS-VEP Lite)**：完全免費下載與驗證。請參閱 [60 秒極速啟動 (Quick Start)](#-60-秒極速啟動-quick-start) 直接執行 RFC-001 基準測試與對抗驗證。
-* **⚡ 本機防護引擎 (VajraClaw Hacker)**：個人與研究者永久免費授權。請至 [官方 GitHub 倉庫 (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) 獲取安裝包，或前往 [官網方案頁面](https://dr-os.io/#/pricing) 領取個人免費金鑰。
+* **⚡ 本機防護引擎 (VajraClaw Hacker)**：個人與研究者永久免費授權，免註冊、免綁卡、零外連心跳。請直接至 [官方 GitHub 倉庫 (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) 一鍵安裝與本地啟用。
 * **🏛️ 企業與叢集生產環境**：如需分散式 RCU 無鎖熱插拔、C-ABI 硬體加速與企業級 SIEM 法證存證，請參閱 [dr-os.io 官方網站](https://dr-os.io) 或直接預約架構諮詢。
 
 ---
