@@ -243,7 +243,7 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 | Parameter | Measurement Setup & Value |
 | :--- | :--- |
-| **Benchmark Hardware** | Intel Xeon E3-1275 v3 (4C/8T) / 16GB RAM |
+| **Benchmark Hardware** | Intel Xeon E3-1275L v3 (4C/8T) / 16GB RAM |
 | **Execution Sandbox** | Docker Compose isolated container network |
 | **Sample Iterations** | N = 10,000 iterations per scenario |
 | **Policy Decision Latency** | **Median (P50): 26.1 μs** \| **P99: 41.2 μs** \| **Stddev: ±3.4 μs** |
@@ -311,8 +311,10 @@ python scripts/run_cybermes_crucible.py
 ## 👥 Community & Developer Edition (100% Free for Individual Developers)
 
 DROS-VEP Lite provides an open benchmark evaluation environment for community verification. 
-* **Individual Developers & Researchers**: Free to evaluate, test, and build custom security scenarios with zero cost.
-* **Enterprise & Swarm Production**: For high-throughput distributed RCU, C-ABI hardware integration, and enterprise SIEM compliance, visit [dr-os.io](https://dr-os.io).
+
+* **🧪 Evaluation Vessel (DROS-VEP Lite)**: Free to evaluate, test, and build custom security scenarios. See [Quick Start (60 Seconds)](#-quick-start-60-seconds) to run RFC-001 benchmarks and adversarial tests immediately.
+* **⚡ Local Guard Substrate (VajraClaw Hacker)**: Permanently free license for individuals and researchers. Get started via the [Official GitHub Repo (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) or obtain your individual license on [dr-os.io Pricing](https://dr-os.io/#/pricing).
+* **🏛️ Enterprise & Swarm Production**: For high-throughput distributed RCU, C-ABI hardware integration, and enterprise SIEM compliance, visit [dr-os.io](https://dr-os.io) or schedule an architecture briefing.
 
 ---
 

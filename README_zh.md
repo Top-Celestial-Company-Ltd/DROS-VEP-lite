@@ -243,7 +243,7 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 | 測試參數 | 實驗環境與數據測量設定 |
 | :--- | :--- |
-| **測試硬體規格** | Intel Xeon E3-1275 v3 (4C/8T) / 16GB RAM |
+| **測試硬體規格** | Intel Xeon E3-1275L v3 (4C/8T) / 16GB RAM |
 | **執行沙盒** | Docker Compose 隔離容器網絡 |
 | **採樣迭代次數** | 每項劇本 N = 10,000 次獨立迭代 |
 | **策略決策延遲** | 🔑 **密碼學 PKI 身分繫定 (DIT Token)**：解決 AI 運作時的「上下文失明 (Context Blindness)」問題，每筆操作均通過三階憑證鏈 (`Root CA -> AIA -> BEC Leaf Cert`) 之密碼學驗簽。 <br><br> ⚡ **亞微秒極速阻斷**：採用常數時間 $\mathcal{O}(1)$ 策略比對，中位數決策耗時僅 **26.1μs**，實體熔斷速度低於 **500ns**。P99: 41.2 μs \| **標準差: ±3.4 μs** |
@@ -299,8 +299,10 @@ python scripts/run_cybermes_crucible.py
 ## 👥 社群與開發者版本（個人開發者與研究者 100% 免費）
 
 DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群提供開放、可重現的評測標準。
-* **個人開發者與學術研究**：完全免費下載、評測與構建自訂威脅場景。
-* **企業與叢集生產環境**：如需分散式 RCU 無鎖熱插拔、C-ABI 硬體加速與企業級 SIEM 法證存證，請參閱 [dr-os.io 官方網站](https://dr-os.io)。
+
+* **🧪 評測研究艙 (DROS-VEP Lite)**：完全免費下載與驗證。請參閱 [60 秒極速啟動 (Quick Start)](#-60-秒極速啟動-quick-start) 直接執行 RFC-001 基準測試與對抗驗證。
+* **⚡ 本機防護引擎 (VajraClaw Hacker)**：個人與研究者永久免費授權。請至 [官方 GitHub 倉庫 (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) 獲取安裝包，或前往 [官網方案頁面](https://dr-os.io/#/pricing) 領取個人免費金鑰。
+* **🏛️ 企業與叢集生產環境**：如需分散式 RCU 無鎖熱插拔、C-ABI 硬體加速與企業級 SIEM 法證存證，請參閱 [dr-os.io 官方網站](https://dr-os.io) 或直接預約架構諮詢。
 
 ---
 
