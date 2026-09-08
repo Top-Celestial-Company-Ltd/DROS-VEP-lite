@@ -18,6 +18,22 @@
 
 ---
 
+## 🧩 Agent Engineering & Governance Patterns (AP Series)
+
+> *Tired of your AI agents generating monolithic slop, fake mocks (`return True`), or executing destructive shell operations behind your back?*  
+> DROS provides deterministic runtime invariants and concrete engineering patterns to govern autonomous coding and execution agents:
+
+| Pattern ID | Problem & Title | Governance Invariant | Reference Tool |
+| :--- | :--- | :--- | :--- |
+| **[AP-001](docs/application-patterns/AP-001-task-modularization.md)** | **Task Modularization via Governance Boundaries**<br>Why code size is the wrong metric, and how GBAI prevents over-engineering and privilege mixing. | `GBAI` | `tools/dros_verify.py` |
+| **[AP-002](docs/application-patterns/AP-002-anti-stub-artifacts.md)** | **Anti-Stub & Sham Implementation Detection**<br>Catching AI minimal-effort evasions (`pass`, empty stubs, `assert True`) before execution. | `5-Stage Capability Lifecycle` | `tools/dros_verify.py` |
+| **[AP-003](docs/application-patterns/README.md)** | **Unknown Programming Language Governance**<br>Enforcing runtime boundaries when AST parsers are unavailable. | `Heuristic Screening Decoupling` | `tools/dros_verify.py` |
+| **[AP-005](docs/application-patterns/README.md)** | **MCP Tool Execution Governance**<br>In-band hardware boundary control for Model Context Protocol. | `In-Band Tool Interception` | `DROS-VajraClaw` |
+
+👉 **[Explore Full Pattern Catalog (AP-001 ~ AP-008) & Architectural RFCs →](docs/application-patterns/README.md)**
+
+---
+
 ## 🏛️ Scientific Evidence & Benchmark Index
 
 ```text
