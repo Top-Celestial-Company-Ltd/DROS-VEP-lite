@@ -3,6 +3,11 @@
 
 > **"VEP (Vulnerability & Exploitability Protocol) is an open, implementation-independent research evaluation environment for determining whether Agent security controls remain effective after compromise, particularly at the boundary between Agent authorization and actual system execution. DROS-VEP Lite is the open reference implementation of the VEP research protocol (RFC-010), providing an out-of-the-box, deterministic execution substrate alongside other Agent runtime and execution-control implementations."**
 >
+> > [!IMPORTANT]
+> > **Scientific Research Charter:**  
+> > **VEP does not produce a single security score. It measures which post-compromise properties each substrate can enforce, which it cannot express natively, and which properties can only be established through formal assurance.**  
+> > *(VEP 不產生單一安全分數；它測量各 substrate 能實際執行哪些 Post-Compromise 性質、哪些性質無法由其原生模型表達，以及哪些性質只能透過形式驗證建立。)*
+>
 > *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."*
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)

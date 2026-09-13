@@ -53,3 +53,11 @@ reports/audit.jsonl
 submissions/
 docs/DROS_5_PAPER_PROGRAM_SUBMISSION_MASTER_INDEX.md
 
+# Patent-Sensitive Claim Candidates & Internal IDF (Patent Firewall)
+docs/PATENT_CLAIM_DECOMPOSITION_MATRIX.md
+docs/*_IDF.md
+docs/patent_candidates/
+
+# Embedded submodule/upstream
+benchmarks/claude-red-vep/adapters/claude_red/upstream/
+

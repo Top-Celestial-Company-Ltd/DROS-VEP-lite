@@ -1,0 +1,23 @@
+{
+  "experiment_id": "EXP-1789317347-baee84",
+  "scenarios": [
+    "PC-001",
+    "PC-002",
+    "PC-003",
+    "PC-004",
+    "PC-005",
+    "PC-006",
+    "PC-007",
+    "PC-008",
+    "PC-009",
+    "PC-010"
+  ],
+  "substrates": [
+    "dros",
+    "wasi",
+    "sel4",
+    "cheri",
+    "tla"
+  ],
+  "timestamp": "2026-09-13T16:35:48Z"
+}
