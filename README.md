@@ -9,15 +9,16 @@
 [![Specification: RFC-010](https://img.shields.io/badge/Specification-RFC--010%20Open%20VEP-purple.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-composable-architecture)
 [![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
-[![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-submit-a-counterexample-open-falsification-protocol)
-[![Policy Decision Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#-benchmark-methodology--measurement)
+[![Open Falsification: Accepting Counterexamples](https://img.shields.io/badge/Open%20Falsification-Accepting%20Counterexamples-brightgreen.svg)](#-submit-a-counterexample-open-falsification-protocol)
+[![Policy Evaluation P50: 26.1μs](https://img.shields.io/badge/Policy%20Evaluation%20P50-26.1%CE%BCs-emerald.svg)](#-benchmark-methodology--measurement)
+[![Emergency Panic Path: <500ns](https://img.shields.io/badge/Emergency%20Panic%20Path-%3C500ns-red.svg)](#-benchmark-methodology--measurement)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
 > [!TIP]
 > 📚 **Academic & Research Citation**: If you use this research testbed or benchmark suite in your work, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-010 Specification](docs/RFC-010-dros-vep-spec.md).  
 > 🔬 **Open Research Infrastructure**: Built on the **OpenShip** containerized substrate, VEP allows researchers to independently swap reasoning models (LLMs), agent frameworks, and defense kernels without vendor lock-in.  
-> 🧨 **Open Adversarial Falsification Channel is LIVE**: We actively invite researchers to falsify our execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. Valid Counterexamples to Date: `0`.
+> 🧨 **Open Adversarial Falsification Channel is LIVE**: We actively invite researchers to challenge and falsify our execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. All submissions are triaged against formal criteria.
 
 ---
 
@@ -132,9 +133,9 @@ VEP provides multi-domain evaluation fixtures reproducing 2026 real-world securi
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-📖 **Featured Guide**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
-🟢 **Developer Manual**: [DROS Hacker Edition (Free for Individuals) Long-Task Cookbook](docs/guides/DROS_HACKER_EDITION_MANUAL.md)  
-🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
+📖 **Research Note**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)  
+🧭 **Reading Guide to Trajectory**: [DROS Trilogy Reading Guide](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md)
 
 ---
 
@@ -265,17 +266,17 @@ Traditional WAFs see a **100% legitimate user making a clean REST API call**. Th
 
 ---
 
-## 🎯 Agent Threat Scenarios (ATS Matrix & 2026 Real-World Incidents)
+## 🎯 Threat Scenarios & Research Fixtures (RFC-010 Standard Matrix)
 
-DROS-VEP Lite directly reproduces and neutralizes 2026's most notorious real-world AI incidents, mapped to **MITRE ATLAS**:
+VEP provides standardized, synthetic evaluation fixtures reproducing critical post-compromise threat models, mapped directly to **MITRE ATLAS**:
 
-| Scenario ID | Threat Scenario Name | 2026 Incident Mapping | Target Tool | MITRE ATLAS | DROS Expected Action |
+| Scenario ID | Research Fixture / Threat Model | Evaluated Failure Mode | Target Execution Surface | MITRE ATLAS | In-Band Governance Action |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ATS-001** | AI Agent 0-Day Sandbox Escape | **OpenAI GPT-5.6 Sol -> Hugging Face Breach** | `create_socket_connection` | **AML.T0051** | **DENY (<500ns Panic)** |
-| **ATS-002** | Ransomware System Encryption | **Nidec Chaun-Choung Blackfield $2M ERP Ransomware** | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
-| **ATS-003** | LLM Jailbreak & Tool Exploitation | **Anthropic Fable 5 24-Hour Jailbreak & Prompt Leak** | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs Guard)** |
-| **ATS-004** | Autonomous LLM Weight Ransomware | **JadePuffer Autonomous PyTorch Model Ransomware** | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
-| **ATS-005** | Browser Social Engineering Leak | **BioShocking Trick AI to Surrender SSH Key** | `read_ssh_keyfile` | **AML.T0055** | **DENY (Execution Lock)** |
+| **ATS-001** | Zero-Day Sandbox Escape & Exfiltration | Cross-process socket leak via hijacked tool invocation | `create_socket_connection` | **AML.T0051** | **DENY (<500ns Panic)** |
+| **ATS-002** | Confused Deputy Storage Tampering | Unauthorized database encryption via legitimate API key | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
+| **ATS-003** | Privilege Escalation Across API Boundaries | High-privilege environment secret harvesting | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs Guard)** |
+| **ATS-004** | Autonomous Model Weight Poisoning | Persistent local model file corruption & weight tampering | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
+| **ATS-005** | Credential Harvesting via Social Tooling | In-band extraction of host SSH keyfile credentials | `read_ssh_keyfile` | **AML.T0055** | **DENY (Execution Lock)** |
 
 ---
 
@@ -297,18 +298,43 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ---
 
-## 📊 Benchmark Methodology & Measurement
+## 📊 Benchmark Methodology & Operational Distinction
 
-* 🔑 **Cryptographic PKI Identity Binding (DIT)**: Resolves the *Context Loss Problem* by validating 3-tier certificate chains (`Root CA -> AIA -> BEC Leaf Token`) for every agent execution.
-* ⚡ **Sub-Microsecond Latency**: Constant $\mathcal{O}(1)$ policy evaluation achieving median decision speeds of **26.1μs** and panic latency under **500ns**.
+To ensure scientific transparency, VEP explicitly distinguishes between **two fundamentally different execution paths**:
 
-| Parameter | Measurement Setup & Value |
-| :--- | :--- |
-| **Benchmark Hardware** | Intel Xeon E3-1275L v3 (4C/8T) / 16GB RAM |
-| **Execution Sandbox** | Docker Compose isolated container network |
-| **Sample Iterations** | N = 10,000 iterations per scenario |
-| **Policy Decision Latency** | **Median (P50): 26.1 μs** \| **P99: 41.2 μs** \| **Stddev: ±3.4 μs** |
-| **Measurement Code** | `time.perf_counter_ns()` in `core/dros_guard.py` |
+1. **Full Cryptographic Policy Evaluation Path (P50: 26.1 μs)**:
+   * Evaluates 3-tier certificate validation (`Root CA -> AIA -> Leaf DIT Token`), capability bitmask matching ($O(1)$), and structured audit attestation.
+   * Median decision speed: **26.1 μs** (P99: 41.2 μs, Stddev: ±3.4 μs, $N=10,000$).
+2. **Emergency Fail-Closed Panic Path (<500 ns)**:
+   * Short-circuit hardware/C-ABI boundary abort triggered when an unmapped tool call, memory fault, or revoked token attempts immediate execution.
+   * Execution abort latency: **<500 ns**.
+
+| Evaluation Dimension | Measurement Setup & Empirical Metric | Measurement Code Anchor |
+| :--- | :--- | :--- |
+| **Benchmark Hardware** | Intel Xeon E3-1275L v3 (4C/8T) / 16GB RAM / Ubuntu Linux 24.04 | `tests/system_overhead/` |
+| **Execution Sandbox** | OpenShip Docker Compose isolated container network | `docker-compose.yml` |
+| **Sample Iterations** | $N = 10,000$ iterations per scenario | `scripts/run_benchmarks.py` |
+| **Full Policy Evaluation Latency**| **P50: 26.1 μs** \| **P99: 41.2 μs** \| **Stddev: ±3.4 μs** | `core/dros_guard.py` (`time.perf_counter_ns`) |
+| **Emergency Panic Deny Latency** | **< 500 ns** (Binary short-circuit abort) | `core/guard_vm.c` |
+
+---
+
+## 🔬 Reproducibility & Research Artifact Harness
+
+To support independent scientific reproduction without corporate telemetry or external dependency:
+
+* **Hardware & OS Baseline**: x86_64 or ARM64, Linux Kernel $\ge 5.15$, Docker Engine $\ge 24.0$, Python 3.10+.
+* **Deterministic Benchmark Command**:
+  ```bash
+  python scripts/run_cybermes_crucible.py --reproduce --iterations 1000
+  ```
+* **Raw Empirical Artifacts**: Raw latency measurements, audit logs, and replay traces are systematically persisted in:
+  * `reports/evidence/`
+  * `reports/CYBERMES_POST_COMPROMISE_REPORT.md`
+* **Cryptographic Trace Replay**:
+  ```bash
+  python benchmark/replay.py --trace-dir reports/evidence/
+  ```
 
 ---
 

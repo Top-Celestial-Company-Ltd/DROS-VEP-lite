@@ -9,15 +9,16 @@
 [![Specification: RFC-010](https://img.shields.io/badge/Specification-RFC--010%20Open%20VEP-purple.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-開放組合式架構與執行期閉環)
 [![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
-[![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-反例提交與開放式對抗證偽-submit-a-counterexample)
-[![Policy Decision Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
+[![Open Falsification: Accepting Counterexamples](https://img.shields.io/badge/Open%20Falsification-Accepting%20Counterexamples-brightgreen.svg)](#-反例提交與開放式對抗證偽-submit-a-counterexample)
+[![Policy Evaluation P50: 26.1μs](https://img.shields.io/badge/Policy%20Evaluation%20P50-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
+[![Emergency Panic Path: <500ns](https://img.shields.io/badge/Emergency%20Panic%20Path-%3C500ns-red.svg)](#測試方法學與數據透明度)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
 > [!TIP]
 > 📚 **學術與研究引用**: 若您在研究中使用了本評測實驗台或基準套件，請透過 [`CITATION.cff`](CITATION.cff) 引用或查閱 [RFC-010 開放評測規約](docs/RFC-010-dros-vep-spec.md)。  
 > 🔬 **開放科研基礎設施 (Research Infrastructure)**: 基於 **OpenShip** 容器化基底，VEP 允許研究人員在無廠商鎖定的環境下，自由熱插拔推理模型 (LLM)、Agent 框架與安全防禦核心。  
-> 🧨 **開放式對抗證偽通道已開啟 (Open Falsification Channel)**: 我們誠摯邀請全球研究者證偽我們的核心執行不變量：**[👉 提交反例 (Submit Counterexample)](../../issues/new?template=counterexample.md)**。目前有效反例數：`0`。
+> 🧨 **開放式對抗證偽通道已開啟 (Open Falsification Channel)**: 我們誠摯邀請全球研究者證偽我們的核心執行不變量：**[👉 提交反例 (Submit Counterexample)](../../issues/new?template=counterexample.md)**。所有提交將依形式化標準公開受審。
 
 ---
 
@@ -128,9 +129,9 @@ VEP 提供真實還原 2026 年安全事件之跨領域評測固件，涵蓋雲�
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-📖 **實戰指南**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
-🟢 **開發者手冊**: [DROS Hacker Edition (個人社群免費版) 長任務設定手冊與警報 SOP](docs/guides/DROS_HACKER_EDITION_MANUAL.md)  
-🛂 **開源 Agent 護照 SDK**: [libdros-id (符合 RFC-010 W3C DID 與 Ed25519 之身份驗證庫)](sdk/libdros-id/libdros_id.py)
+📖 **研究技術隨筆**: [如何會在 5 分鐘內破防你的 AI Agent（以及如何打造最強硬熔斷系統）](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
+🛂 **開源 Agent 護照 SDK**: [libdros-id (符合 RFC-010 W3C DID 與 Ed25519 之身份驗證庫)](sdk/libdros-id/libdros_id.py)  
+🧭 **全景研究導讀**: [DROS 三部曲全景研究軌跡導讀](docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md)
 
 ---
 
@@ -264,17 +265,17 @@ DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)**，並�
 
 ---
 
-## 🎯 紅隊攻擊劇本庫與 2026 實戰資安事件重現 (ATS Matrix)
+## 🎯 威脅模型與科研評測固件 (RFC-010 Standard Matrix)
 
-DROS-VEP Lite 直接實機重現並物理阻斷 2026 年指標性資安事件，全數對照 **MITRE ATLAS** 威脅分類標準：
+VEP 提供標準化、合成化（Synthetic）之科研評測固件，嚴謹還原關鍵的入侵後威脅模型，全數對齊 **MITRE ATLAS** 威脅分類標準：
 
-| 劇本 ID | 威脅名稱 (Threat Name) | 2026 實戰資安事件映射 | 目標工具 | MITRE ATLAS | DROS 預期決策 |
+| 劇本 ID | 科研評測固件 / 威脅模型 | 評測之失效模式 (Failure Mode) | 目標執行表面 (Surface) | MITRE ATLAS | 帶內確定性治理動作 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ATS-001** | AI Agent 0-Day 沙箱逃逸 | **OpenAI GPT-5.6 Sol 逃逸入侵 Hugging Face** | `create_socket_connection` | **AML.T0051** | **DENY (<500ns 物理熔斷)** |
-| **ATS-002** | 勒索軟體全盤加密 | **尼得科超眾 Blackfield $2M ERP 勒索案** | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns 物理熔斷)** |
-| **ATS-003** | LLM 越獄與工具越權 | **Anthropic Fable 5 24小時遭越獄與 Prompt 外洩** | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs 剛性護盾)** |
-| **ATS-004** | AI 自主加密模型權重 | **JadePuffer 完全自主 PyTorch 模型勒索案** | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms 硬性切斷)** |
-| **ATS-005** | 瀏覽器誘騙 SSH 金鑰 | **BioShocking 遊戲模式騙走生產環境金鑰** | `read_ssh_keyfile` | **AML.T0055** | **DENY (物理層硬拒)** |
+| **ATS-001** | 零日沙箱逃逸與跨邊界外洩 | 挾持工具呼叫之跨行程 Socket 連線洩漏 | `create_socket_connection` | **AML.T0051** | **DENY (<500ns 物理熔斷)** |
+| **ATS-002** | 混淆代理人存儲竄改與加密 | 濫用合法授權金鑰之未授權資料庫竄改 | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns 物理熔斷)** |
+| **ATS-003** | 跨 API 邊界特權提升 | 高權限環境變數與生產密鑰收割 | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs 剛性護盾)** |
+| **ATS-004** | 自主模型權重投毒與破壞 | 本地模型權重持久性惡意覆寫與竄改 | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms 硬性切斷)** |
+| **ATS-005** | 社交引導之憑證與密鑰竊取 | 帶內竊取主機端 SSH 關鍵私鑰檔案 | `read_ssh_keyfile` | **AML.T0055** | **DENY (物理層硬拒)** |
 
 ---
 
@@ -296,17 +297,43 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 ---
 
-## 📊 測試方法學與數據透明度 (How Measured?)
+## 📊 測試方法學與執行路徑嚴謹區分 (Benchmark Methodology)
 
-我們的 **26.1 μs** 策略決策延遲是如何測量出來的？
+為確保學術與工程嚴謹性，VEP 明確區隔**兩條本質不同的執行路徑**：
 
-| 測試參數 | 實驗環境與數據測量設定 |
-| :--- | :--- |
-| **測試硬體規格** | Intel Xeon E3-1275L v3 (4C/8T) / 16GB RAM |
-| **執行沙盒** | Docker Compose 隔離容器網絡 |
-| **採樣迭代次數** | 每項劇本 N = 10,000 次獨立迭代 |
-| **策略決策延遲** | 🔑 **密碼學 PKI 身分繫定 (DIT Token)**：解決 AI 運作時的「上下文失明 (Context Blindness)」問題，每筆操作均通過三階憑證鏈 (`Root CA -> AIA -> BEC Leaf Cert`) 之密碼學驗簽。 <br><br> ⚡ **亞微秒極速阻斷**：採用常數時間 $\mathcal{O}(1)$ 策略比對，中位數決策耗時僅 **26.1μs**，實體熔斷速度低於 **500ns**。P99: 41.2 μs \| **標準差: ±3.4 μs** |
-| **測量程式碼** | `core/dros_guard.py` 中之 `time.perf_counter_ns()` |
+1. **完整密碼學策略評估路徑 (Full Policy Evaluation Path, P50: 26.1 μs)**：
+   * 包含三階 PKI 證書鏈驗證 (`Root CA -> AIA -> Leaf DIT Token`)、正向能力點陣圖比對 ($O(1)$) 與結構化審計簽章。
+   * 中位數決策延遲：**26.1 μs** (P99: 41.2 μs, 標準差: ±3.4 μs, $N=10,000$)。
+2. **緊急硬熔斷短路徑 (Emergency Panic Deny Path, <500 ns)**：
+   * 當遭遇未映射工具調用、記憶體邊界違規或憑證已被撤銷時觸發的 C-ABI 硬體/二進位短路徑中斷。
+   * 執行阻斷延遲：**<500 ns**。
+
+| 評測維度 | 實測環境與量化指標 | 代碼定位錨點 |
+| :--- | :--- | :--- |
+| **基準硬體 (Benchmark Hardware)** | Intel Xeon E3-1275L v3 (4C/8T) / 16GB RAM / Ubuntu Linux 24.04 | `tests/system_overhead/` |
+| **隔離沙箱 (Execution Sandbox)** | OpenShip Docker Compose 容器隔離網路 | `docker-compose.yml` |
+| **取樣次數 (Sample Iterations)** | 每一評測情境 $N = 10,000$ 次獨立迭代 | `scripts/run_benchmarks.py` |
+| **完整策略評估延遲 (Full Latency)** | **P50: 26.1 μs** \| **P99: 41.2 μs** \| **標準差: ±3.4 μs** | `core/dros_guard.py` (`time.perf_counter_ns`) |
+| **緊急硬熔斷延遲 (Emergency Panic)** | **< 500 ns** (二進位邊界短路徑切斷) | `core/guard_vm.c` |
+
+---
+
+## 🔬 可重現性與科研跡證存證套件 (Reproducibility Harness)
+
+為支援全球獨立科研團隊在無任何專有遙測或第三方相依下進行 100% 獨立重現：
+
+* **軟硬體基準要求**：x86_64 或 ARM64 架構、Linux 內核 $\ge 5.15$、Docker Engine $\ge 24.0$、Python 3.10+。
+* **確定性基準復現指令**：
+  ```bash
+  python scripts/run_cybermes_crucible.py --reproduce --iterations 1000
+  ```
+* **原始科研跡證存證路徑**：原始納秒級延遲數據、審計日誌與對抗封包留存於：
+  * `reports/evidence/`
+  * `reports/CYBERMES_POST_COMPROMISE_REPORT_ZH.md`
+* **密碼學軌跡重放器 (Deterministic Replay)**：
+  ```bash
+  python benchmark/replay.py --trace-dir reports/evidence/
+  ```
 
 ---
 
