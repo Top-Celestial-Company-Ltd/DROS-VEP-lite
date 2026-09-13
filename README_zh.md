@@ -1,20 +1,79 @@
-# 🛡️ DROS-VEP Lite：開源 AI Agent 安全評測與運行期治理沙盒環境
+# 🛡️ VEP: 開源 AI Agent 安全研究實驗台 (Open Agent Security Research Testbed)
+### 專為「入侵後遏制 (Post-Compromise)」與「實體具身智能 (Physical AI)」打造之可自由組合系統層評測基礎設施
 
-> **「VEP 是一套與特定產品實作解耦的開放評測規約（Implementation-Independent Evaluation Protocol），專注於衡量 Agent 在遭受攻陷後（Post-Compromise），其安全控制機制能否在授權與實體執行邊界之間持續發揮確定性約束。DROS 提供了一個可用於 VEP 評測的可執行參考基底（Executable Reference Substrate），與其他 Agent 執行期與執行控制實作共同受測。」**
+> **「VEP (Vulnerability & Exploitability Protocol) 是一套與特定產品實作解耦的開放研究評測規約，專注於衡量 Agent 在遭受攻陷後（Post-Compromise），其安全控制機制能否在授權與實體執行邊界之間持續發揮確定性約束。DROS-VEP Lite 是 VEP 研究規約 (RFC-010) 的開源參考實作（Reference Implementation），提供一個開箱即用、確定性的執行治理基底，與其他 Agent 運行期與執行控制實作共同受測。」**
 >
 > *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."* （當您的 AI Agent 遭受攻陷後，其執行權限是否依然能維持確定性封鎖？用測試證明給我看。）
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Specification: RFC-001](https://img.shields.io/badge/Specification-RFC--001%20Open%20VEP-purple.svg)](spec/RFC-001-VEP-Execution-Governance-Spec.md)
-[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
+[![Specification: RFC-010](https://img.shields.io/badge/Specification-RFC--010%20Open%20VEP-purple.svg)](docs/RFC-010-dros-vep-spec.md)
+[![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-開放組合式架構與執行期閉環)
+[![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-反例提交與開放式對抗證偽-submit-a-counterexample)
-[![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
+[![Policy Decision Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
 > [!TIP]
-> 📚 **學術與研究引用**: 若您在研究中使用了本評測規約或基準套件，請透過 [`CITATION.cff`](CITATION.cff) 引用或查閱 [RFC-001 開放評測規約](spec/RFC-001-VEP-Execution-Governance-Spec.md)。  
+> 📚 **學術與研究引用**: 若您在研究中使用了本評測實驗台或基準套件，請透過 [`CITATION.cff`](CITATION.cff) 引用或查閱 [RFC-010 開放評測規約](docs/RFC-010-dros-vep-spec.md)。  
+> 🔬 **開放科研基礎設施 (Research Infrastructure)**: 基於 **OpenShip** 容器化基底，VEP 允許研究人員在無廠商鎖定的環境下，自由熱插拔推理模型 (LLM)、Agent 框架與安全防禦核心。  
 > 🧨 **開放式對抗證偽通道已開啟 (Open Falsification Channel)**: 我們誠摯邀請全球研究者證偽我們的核心執行不變量：**[👉 提交反例 (Submit Counterexample)](../../issues/new?template=counterexample.md)**。目前有效反例數：`0`。
+
+---
+
+## 🏛️ OpenShip 開放組合式架構與執行期閉環 (Composable Architecture & Runtime Closed Loop)
+
+傳統 AI 安全評測多集中於測試 Prompt 惡意程度或仰賴外部 Proxy 旁路監聽，無法阻止入侵後的底層越權逃逸。VEP 結合了 **OpenShip 容器化自由組合性** 與 **系統層帶內 (In-Band) 執行治理閉環**：
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. OpenShip 組合式評測環境 (Open, Composable, Transparent)                  │
+│    • 熱插拔 Agent 框架   : LangGraph, AutoGen, CrewAI, OpenClaw, 自研 Agent │
+│    • 熱插拔推理模型     : GPT-4o, Claude 3.5, Llama 3, DeepSeek, 本地模型   │
+│    • 熱插拔對抗向量     : RFC-010 威脅情境, MITRE ATLAS 攻擊腳本            │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │ 系統調用 (Syscall) / 工具調用 (Tool Call) 邊界
+┌──────────────────────────────────────▼──────────────────────────────────────┐
+│ 2. 系統層確定性執行治理閉環 (System-Level Deterministic Runtime Closed Loop)│
+│    • 事前校準 (Pre-Exec) : 正向能力白名單驗證 (O(1), 26.1μs 常數時間)        │
+│    • 執行攔截 (In-Exec)  : 帶內 C-ABI 二進位攔截、動態脫敏 (18-PHI)、軟性掛起│
+│    • 事後存證 (Post-Exec): 零洩漏硬熔斷 (Fail-Closed)、不可篡改 Merkle 跡證 │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## ⚡ 5 分鐘科研實驗極速重現 (5-Minute Research Experiment)
+
+無需任何商業授權與私有雲相依，60 秒即可在本地重現 Post-Compromise 遏制測試：
+
+```bash
+# 1. 克隆開源研究實驗台
+git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
+cd dros-vep-lite
+
+# 2. 啟動容器化評測環境
+docker compose up -d
+
+# 3. 執行入侵後紅隊對抗基準測試 (Post-Compromise Crucible)
+python scripts/run_cybermes_crucible.py
+```
+
+在瀏覽器開啟 `http://localhost:8080` 即可即時檢視互動式鑑識日誌與密碼學生產跡證。
+
+---
+
+## 🎯 跨領域科研評測矩陣 (Cross-Domain Research Testbed Matrix)
+
+VEP 提供真實還原 2026 年安全事件之跨領域評測固件，涵蓋雲端 B2B、端側行動裝置與具身機器人/無人機：
+
+| 評測領域 Track | 攻擊情境與威脅向量 | 目標執行表面 (Surface) | MITRE ATLAS | 系統層帶內治理動作 |
+| :--- | :--- | :--- | :--- | :--- |
+| **雲端 API 服務** | **ATS-001**: 0-Day 沙箱逃逸與外洩 | `create_socket_connection` | **AML.T0051** | **DENY (<500ns Panic)** |
+| **企業級 ERP** | **ATS-002**: 混淆代理人勒索加密 | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
+| **自主模型管線** | **ATS-004**: PyTorch 模型權重投毒勒索 | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
+| **Physical AI 無人機** | **論文 6**: 空中惡意 Disarm 與蜂群越權 | 飛控動態遙測數據鏈 | **AML.T0040** | **Kinematic Envelope Hold** |
+| **Mobile 端側裝置** | **論文 5**: SMS Prompt 注入與內購劫持 | 行動 OS Intent / 密鑰庫 | **AML.T0055** | **Dynamic Redaction (脫敏)** |
 
 ---
 

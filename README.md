@@ -1,36 +1,81 @@
-# 🛡️ DROS-VEP Lite: AI Agent Security Benchmark & Verification Sandbox
+# 🛡️ VEP: Open Agent Security Research Testbed
+### A Composable, System-Level Evaluation Infrastructure for Post-Compromise & Physical AI Research
 
-> **"VEP is an implementation-independent evaluation protocol for determining whether Agent security controls remain effective after compromise, particularly at the boundary between Agent authorization and actual system execution. DROS provides one executable reference substrate for VEP-based evaluation, alongside other Agent runtime and execution-control implementations."**
+> **"VEP (Vulnerability & Exploitability Protocol) is an open, implementation-independent research evaluation environment for determining whether Agent security controls remain effective after compromise, particularly at the boundary between Agent authorization and actual system execution. DROS-VEP Lite is the open reference implementation of the VEP research protocol (RFC-010), providing an out-of-the-box, deterministic execution substrate alongside other Agent runtime and execution-control implementations."**
 >
 > *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."*
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Specification: RFC-001](https://img.shields.io/badge/Specification-RFC--001%20Open%20VEP-purple.svg)](spec/RFC-001-VEP-Execution-Governance-Spec.md)
-[![Evaluation Engine: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
+[![Specification: RFC-010](https://img.shields.io/badge/Specification-RFC--010%20Open%20VEP-purple.svg)](docs/RFC-010-dros-vep-spec.md)
+[![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-composable-architecture)
+[![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Open Falsification: 0 Counterexamples](https://img.shields.io/badge/Open%20Falsification-0%20Counterexamples-brightgreen.svg)](#-submit-a-counterexample-open-falsification-protocol)
-[![Benchmark Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#benchmark-methodology--transparency)
+[![Policy Decision Latency: 26.1μs](https://img.shields.io/badge/Policy%20Decision%20Latency-26.1%CE%BCs-emerald.svg)](#-benchmark-methodology--measurement)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
 > [!TIP]
-> 📚 **Academic & Research Citation**: If you use this protocol or testbed in your research, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-001 Specification](spec/RFC-001-VEP-Execution-Governance-Spec.md).  
+> 📚 **Academic & Research Citation**: If you use this research testbed or benchmark suite in your work, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-010 Specification](docs/RFC-010-dros-vep-spec.md).  
+> 🔬 **Open Research Infrastructure**: Built on the **OpenShip** containerized substrate, VEP allows researchers to independently swap reasoning models (LLMs), agent frameworks, and defense kernels without vendor lock-in.  
 > 🧨 **Open Adversarial Falsification Channel is LIVE**: We actively invite researchers to falsify our execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. Valid Counterexamples to Date: `0`.
 
 ---
 
-## 🧩 Agent Engineering & Governance Patterns (AP Series)
+## 🏛️ OpenShip Composable Architecture & Runtime Closed Loop
 
-> *Tired of your AI agents generating monolithic slop, fake mocks (`return True`), or executing destructive shell operations behind your back?*  
-> DROS provides deterministic runtime invariants and concrete engineering patterns to govern autonomous coding and execution agents:
+Traditional AI security benchmarks measure prompt toxicity or rely on out-of-band proxy monitors that cannot prevent post-compromise execution escapes. VEP combines **OpenShip containerized composability** with a **system-level in-band execution governance loop**:
 
-| Pattern ID | Problem & Title | Governance Invariant | Reference Tool |
-| :--- | :--- | :--- | :--- |
-| **[AP-001](docs/application-patterns/AP-001-task-modularization.md)** | **Task Modularization via Governance Boundaries**<br>Why code size is the wrong metric, and how GBAI prevents over-engineering and privilege mixing. | `GBAI` | `tools/dros_verify.py` |
-| **[AP-002](docs/application-patterns/AP-002-anti-stub-artifacts.md)** | **Anti-Stub & Sham Implementation Detection**<br>Catching AI minimal-effort evasions (`pass`, empty stubs, `assert True`) before execution. | `5-Stage Capability Lifecycle` | `tools/dros_verify.py` |
-| **[AP-003](docs/application-patterns/README.md)** | **Unknown Programming Language Governance**<br>Enforcing runtime boundaries when AST parsers are unavailable. | `Heuristic Screening Decoupling` | `tools/dros_verify.py` |
-| **[AP-005](docs/application-patterns/README.md)** | **MCP Tool Execution Governance**<br>In-band hardware boundary control for Model Context Protocol. | `In-Band Tool Interception` | `Reference Substrate (DROS-Guard)` |
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. OpenShip Composable Evaluation Layer (Open, Composable, Transparent)      │
+│    • Hot-Pluggable Agents  : LangGraph, AutoGen, CrewAI, OpenClaw, Custom   │
+│    • Hot-Pluggable Models  : GPT-4o, Claude 3.5, Llama 3, DeepSeek, Local   │
+│    • Hot-Pluggable Vectors : RFC-010 Threat Scenarios, MITRE ATLAS Injections│
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │ System-Call / Tool-Call Boundary
+┌──────────────────────────────────────▼──────────────────────────────────────┐
+│ 2. System-Level Deterministic Runtime Closed Loop (In-Band Enforcement)     │
+│    • Pre-Execution   : Positive capability bitmask check (O(1), 26.1μs)      │
+│    • In-Execution    : In-band C-ABI interception, 18-PHI redaction, HITL    │
+│    • Post-Execution  : Zero-leak fail-closed abort, append-only Merkle proof│
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
-👉 **[Explore Full Pattern Catalog (AP-001 ~ AP-008) & Architectural RFCs →](docs/application-patterns/README.md)**
+---
+
+## ⚡ 5-Minute Research Experiment (Reproduce in 60 Seconds)
+
+Evaluate post-compromise containment on your local machine with zero proprietary dependencies:
+
+```bash
+# 1. Clone the open research testbed
+git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
+cd dros-vep-lite
+
+# 2. Launch the containerized evaluation environment
+docker compose up -d
+
+# 3. Execute the Post-Compromise Crucible Benchmark
+python scripts/run_cybermes_crucible.py
+```
+
+Inspect interactive audit logs and evidence artifacts in real time at `http://localhost:8080`.
+
+---
+
+## 🎯 Cross-Domain Research Testbed Matrix
+
+VEP provides multi-domain evaluation fixtures reproducing 2026 real-world security incidents across enterprise cloud, on-device mobile, and physical robotics:
+
+| Domain Track | Incident & Threat Vector | Target Execution Surface | MITRE ATLAS | In-Band Governance Action |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cloud & API** | **ATS-001**: 0-Day Sandbox Escape & Exfiltration | `create_socket_connection` | **AML.T0051** | **DENY (<500ns Panic)** |
+| **Enterprise ERP** | **ATS-002**: Confused Deputy ERP Ransomware | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
+| **Autonomous Model** | **ATS-004**: PyTorch Model Weight Hijacking | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
+| **Physical AI / UAV** | **Paper 6**: Mid-Air Disarm & 100-Drone Mesh Swarm | Flight Controller Telemetry | **AML.T0040** | **Kinematic Envelope Hold** |
+| **Mobile On-Device** | **Paper 5**: SMS Prompt Injection & In-App Purchase | Mobile OS Intent / Keystore | **AML.T0055** | **Dynamic Redaction (Mask)** |
+
+---
 
 ---
 
