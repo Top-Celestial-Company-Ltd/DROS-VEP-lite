@@ -28,7 +28,7 @@
 | **[AP-001](docs/application-patterns/AP-001-task-modularization.md)** | **Task Modularization via Governance Boundaries**<br>Why code size is the wrong metric, and how GBAI prevents over-engineering and privilege mixing. | `GBAI` | `tools/dros_verify.py` |
 | **[AP-002](docs/application-patterns/AP-002-anti-stub-artifacts.md)** | **Anti-Stub & Sham Implementation Detection**<br>Catching AI minimal-effort evasions (`pass`, empty stubs, `assert True`) before execution. | `5-Stage Capability Lifecycle` | `tools/dros_verify.py` |
 | **[AP-003](docs/application-patterns/README.md)** | **Unknown Programming Language Governance**<br>Enforcing runtime boundaries when AST parsers are unavailable. | `Heuristic Screening Decoupling` | `tools/dros_verify.py` |
-| **[AP-005](docs/application-patterns/README.md)** | **MCP Tool Execution Governance**<br>In-band hardware boundary control for Model Context Protocol. | `In-Band Tool Interception` | `DROS-VajraClaw` |
+| **[AP-005](docs/application-patterns/README.md)** | **MCP Tool Execution Governance**<br>In-band hardware boundary control for Model Context Protocol. | `In-Band Tool Interception` | `Reference Substrate (DROS-Guard)` |
 
 👉 **[Explore Full Pattern Catalog (AP-001 ~ AP-008) & Architectural RFCs →](docs/application-patterns/README.md)**
 
@@ -121,7 +121,7 @@ This repository and protocol may be relevant to researchers, evaluators, and sys
 git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
 cd dros-vep-lite
 
-# Standard Single Enterprise Sandbox (Default Challenge Mode)
+# Standard Single Enterprise Sandbox (Default Single-Node Mode)
 docker compose up -d
 
 # 🏢 Advanced: B2B Multi-Enterprise Supply Chain Mode (Federated Defense)
@@ -305,32 +305,13 @@ python scripts/run_cybermes_crucible.py
 
 ---
 
-## 💎 Defense Capability & Feature Comparison Matrix (8/26 Latest Edition)
+## 👥 Open Source & Community Resources
 
-| Feature / Capability | 🧪 VEP Lite Sandpit | ⚡ Community (Free for Personal) | 🚀 Startup Commercial | 🏛️ Enterprise Cluster | 👑 Corporate Custom Flagship |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Target Audience** | Open-Spec Evaluation | Individual Devs & Students | Startups, ISVs, Commercial Agents | Large Enterprise, FinTech, Healthcare | Sovereign Clouds, Defense, Critical Infra |
-| **License Model** | Open-Source (Apache 2.0) | **Free for Personal/Non-Commercial** | Commercial Annual Subscription | Enterprise Cluster Subscription | Custom Contract & OEM Licensing |
-| **Machine Nodes / UUIDs** | Local Sandbox | 1 Machine UUID (Single Local) | Up to 3 Machine UUIDs (Max 3 Nodes) | Multi-Node Cluster (Up to 15 Nodes) | Unlimited Clusters & Custom Hardware |
-| **Concurrent Agents** | 2 Roles Demo | 5 Agents (1 Node × 5) | 30 Agents (3 Nodes × 10) | 450 Agents (15 Nodes × 30) | Millions of Swarm Agents |
-| **6P Closed-Loop Governance** | **✅ Lightweight Demo** | **✅ Included** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** | **✅ Full 6P Loop (RFC-010)** |
-| **353 ns C-ABI Binary Interception** | **✅ Included** | **✅ Included** | **✅ Included (In-Band Sub-μs)** | **✅ Included (In-Band Sub-μs)** | **✅ Custom C-ABI Microkernel** |
-| **SHA-256 Merkle Audit Chain**| **✅ Included** | **✅ Included** | **✅ Included (Non-Repudiation)** | **✅ Tamper-Evident & SIEM Integration** | **✅ Hardware HSM Attestation** |
-| **3-Tier PKI Identity Chain** | **🟡 Single did:key** | **🟡 Single did:key** | **✅ Root &rarr; AIA &rarr; BEC** | **✅ Cross-Enterprise Federation** | **✅ Dedicated Sovereign CA Custody** |
-| **100% Air-Gapped Offline** | **✅ Sandbox Only** | **✅ Single Local** | ❌ (Online Heartbeat Required) | **✅ 100% Air-Gapped (Zero Telemetry)**| **✅ Air-Gapped / FPGA Hardware** |
-| **Lock-Free RCU Hot-Reload** | ❌ Manual Reload | ❌ Manual Reload | ❌ Manual Reload | **✅ Sub-Microsecond Lock-Free** | **✅ Distributed Swarm RCU** |
-| **SOC 2 Type II / SLA** | ❌ | ❌ | 🟡 Standard Ticket SLA | **✅ Dedicated SLA & Audit Reports** | **✅ 24/7 Dedicated Architecture Team** |
-| **Target Infrastructure** | Docker Desktop | Local PC / Cursor / DSH | Local / VM / Docker | K8s / GKE / AWS / Azure | Sovereign Cloud / FPGA Hardware |
+DROS-VEP Lite is released under Apache 2.0 to provide an open, transparent, and fully reproducible benchmark evaluation environment for the global AI safety community:
 
----
-
-## 👥 Community & Developer Edition (100% Free for Individual Developers)
-
-DROS-VEP Lite provides an open benchmark evaluation environment for community verification. 
-
-* **🧪 Evaluation Vessel (DROS-VEP Lite)**: Free to evaluate, test, and build custom security scenarios. See [Quick Start (60 Seconds)](#-quick-start-60-seconds) to run RFC-001 benchmarks and adversarial tests immediately.
-* **⚡ Local Guard Substrate (VajraClaw Hacker)**: Permanently free license for individuals and researchers. Zero registration, no credit card, and zero telemetry. Install directly via the [Official GitHub Repo (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) for immediate local enforcement.
-* **🏛️ Enterprise & Swarm Production**: For high-throughput distributed RCU, C-ABI hardware integration, and enterprise SIEM compliance, visit [dr-os.io](https://dr-os.io) or schedule an architecture briefing.
+* **🧪 Evaluation Sandbox (DROS-VEP Lite)**: Freely available to clone, test, and design custom security benchmark scenarios. Refer to [Quick Start (60 Seconds)](#-quick-start-60-seconds) to run the RFC-001 suites immediately.
+* **🛡️ Local Execution Guard (Reference Substrate)**: For independent developers and researchers seeking local execution-boundary protection against untrusted tool calls and prompt injection, access the [Open Source Reference Tools](https://github.com/Top-Celestial-Company-Ltd).
+* **🌐 Scientific Governance & Research**: For detailed formal theorems, architectural whitepapers, and extended benchmarking artifacts, explore the [Technical Foundations & Benchmark Publications](#-technical-foundations--benchmark-publications) below or visit [dr-os.io](https://dr-os.io).
 
 ---
 

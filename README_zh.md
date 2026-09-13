@@ -104,7 +104,7 @@ git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
 cd dros-vep-lite
 
 # 2. 啟動容器化企業靶場
-# 標準單企業沙箱（預設首破挑戰賽模式）
+# 標準單企業沙箱（預設單節點模式）
 docker compose up -d
 
 # 🏢 進階：B2B 跨企業供應鏈防禦模式 (Federated Defense Mode)
@@ -277,32 +277,13 @@ python scripts/run_cybermes_crucible.py
 
 ---
 
-## 💎 產品版本與規格對照表 (8/26 最新版)
+## 👥 開源生態與社群資源 (Open Source & Community Resources)
 
-| 功能 / 能力指標 | 🧪 VEP Lite 評測沙盒 | ⚡ Community (個人/非商用免費) | 🚀 Startup 商業版 | 🏛️ Enterprise 企業集群版 | 👑 Corporate 客製化旗艦方案 |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **主要適用對象** | 開放規格科學評測 | 個人學習、學生與獨立開發者 | 新創團隊、獨立 ISV、商用 Agent | 大型企業、金控、醫療與跨國 SaaS | 國家主權雲、國防軍工、關鍵基礎設施 |
-| **授權模式與條款** | 開源免費 (Apache 2.0) | **個人免費授權 (非商用)** | 商業年度訂閱 | 企業年度訂閱 | 專人客製化合約與白牌 OEM |
-| **機器節點 / UUID** | 本地評測沙盒 | 1 組 Machine UUID (單機本地) | 最高 3 組 Machine UUIDs (最多 3 節點) | 多節點集群 (最多 15 節點) | 無限制集群與專屬硬體 |
-| **同時併發 Agent 數量** | 2 角色 Demo | 5 併發 (1 節點 × 5) | 30 併發 (3 節點 × 10) | 450 併發 (15 節點 × 30) | 無上限百萬級 Agent 群蜂 (Swarm) |
-| **6P 閉環執行期治理** | **✅ 輕量化模擬** | **✅ 包含** | **✅ 完整 6P 閉環 (RFC-010)** | **✅ 完整 6P 閉環 (RFC-010)** | **✅ 完整 6P 閉環 (RFC-010)** |
-| **353 ns C-ABI 物理熔斷** | **✅ 包含** | **✅ 包含** | **✅ 包含 (帶內亞微秒)** | **✅ 包含 (帶內亞微秒)** | **✅ 包含 (專屬 C-ABI 內核定制)** |
-| **SHA-256 Merkle 存證鏈** | **✅ 包含** | **✅ 包含** | **✅ 包含 (不可篡改)** | **✅ 法院級存證 & SIEM 整合** | **✅ 專屬硬體 HSM 簽章存證** |
-| **3-Tier PKI 階層身分簽證** | **🟡 單機 did:key** | **🟡 單機 did:key** | **✅ 包含 (Root &rarr; AIA &rarr; BEC)** | **✅ 跨企業聯邦身分認證** | **✅ 國防級專屬 CA 私鑰託管** |
-| **100% 離線實體隔離 (Air-Gapped)** | **✅ 僅限沙盒** | **✅ 本地單機** | ❌ (需線上心跳驗證) | **✅ 100% 完全離線 (無外連心跳)** | **✅ 實體隔離 (Air-Gapped / FPGA)** |
-| **無鎖 RCU 零停機熱更新** | ❌ 手動重載 | ❌ 手動重載 | ❌ 手動重載 | **✅ 亞微秒級無鎖動態熱更** | **✅ 分散式 RCU 集群同步** |
-| **SOC 2 Type II / SLA 支援** | ❌ | ❌ | 🟡 標準工單支援 | **✅ 專屬技術 SLA & 合規報告** | **✅ 7x24 專屬架構師團隊** |
-| **支援運作基礎架構** | Docker Desktop | 本地 PC / Cursor / DSH | 本地 / VM / Docker | K8s / GKE / AWS / Azure | 私有主權雲 / FPGA 硬體加速 |
+DROS-VEP Lite 遵循 Apache 2.0 協議完全開源，旨在為全球 AI 安全研究社群提供公開、透明且 100% 可重現的評測環境：
 
----
-
-## 👥 社群與開發者版本（個人開發者與研究者 100% 免費）
-
-DROS-VEP Lite 遵循 Apache 2.0 協議開源，旨在為全球 AI 安全社群提供開放、可重現的評測標準。
-
-* **🧪 評測研究艙 (DROS-VEP Lite)**：完全免費下載與驗證。請參閱 [60 秒極速啟動 (Quick Start)](#-60-秒極速啟動-quick-start) 直接執行 RFC-001 基準測試與對抗驗證。
-* **⚡ 本機防護引擎 (VajraClaw Hacker)**：個人與研究者永久免費授權，免註冊、免綁卡、零外連心跳。請直接至 [官方 GitHub 倉庫 (DROS-VajraClaw-Hacker)](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker) 一鍵安裝與本地啟用。
-* **🏛️ 企業與叢集生產環境**：如需分散式 RCU 無鎖熱插拔、C-ABI 硬體加速與企業級 SIEM 法證存證，請參閱 [dr-os.io 官方網站](https://dr-os.io) 或直接預約架構諮詢。
+* **🧪 評測研究沙盒 (DROS-VEP Lite)**：完全免費開源下載與驗證。請參閱 [60 秒極速啟動 (Quick Start)](#-60-秒極速啟動-quick-start) 直接運行 RFC-001 基準測試與對抗驗證。
+* **🛡️ 本地執行守護基底 (Reference Substrate)**：針對尋求本地執行邊界防禦（防禦提示注入與未授權工具調用）的獨立開發者與安全研究員，歡迎探索組織下的 [開源參考工具庫](https://github.com/Top-Celestial-Company-Ltd)。
+* **🌐 科學治理與形式化研究**：如需深入查閱底層形式化定理、架構白皮書與長效壓測數據，歡迎閱讀下方 [相關技術核心論文與實測驗證](#-相關技術核心論文與實測驗證-technical-foundations--benchmarks) 或造訪 [dr-os.io](https://dr-os.io)。
 
 ---
 
