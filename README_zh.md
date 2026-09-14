@@ -11,6 +11,8 @@
 > *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."* （當您的 AI Agent 遭受攻陷後，其執行權限是否依然能維持確定性封鎖？用測試證明給我看。）
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![官方網站](https://img.shields.io/badge/%E5%AE%98%E6%96%B9%E7%B6%B2%E7%AB%99-dr--os.io-00f2fe.svg)](https://dr-os.io)
+[![DROS 極客版](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-DROS%20Hacker-ffaa00.svg)](https://github.com/Top-Celestial-Company-Ltd/VajraClaw-Hacker)
 [![Specification: RFC-010](https://img.shields.io/badge/Specification-RFC--010%20Open%20VEP-purple.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-開放組合式架構與執行期閉環)
 [![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)

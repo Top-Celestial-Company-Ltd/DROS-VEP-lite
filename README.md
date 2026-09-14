@@ -11,6 +11,8 @@
 > *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."*
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Official Website](https://img.shields.io/badge/Official%20Website-dr--os.io-00f2fe.svg)](https://dr-os.io)
+[![DROS Hacker Edition](https://img.shields.io/badge/Edition-DROS%20Hacker-ffaa00.svg)](https://github.com/Top-Celestial-Company-Ltd/VajraClaw-Hacker)
 [![Specification: RFC-010](https://img.shields.io/badge/Specification-RFC--010%20Open%20VEP-purple.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-composable-architecture)
 [![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
