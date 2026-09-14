@@ -29,7 +29,67 @@
 
 ---
 
-## 🏛️ OpenShip 開放組合式架構與執行期閉環 (Composable Architecture & Runtime Closed Loop)
+## 📊 Post-Compromise 安全性質 × 執行層級 × 語義覆蓋矩陣 (M3 Matrix)
+
+> **核心科學前提 (Core Premise)：** 能力隔離 (Capability Isolation)、資源沙箱 (Resource Sandboxing)、形式化保證 (Formal Assurance) 與 Agent 執行治理 (Execution Governance) 是截然不同的安全性質；**不可將其壓縮為單一「安全分數」，亦無法互相替代**。
+
+| 安全性質 (Security Property) | 評測威脅向量 (Threat Vector) | DROS (`E2_SANDBOX_RUNTIME`) | WASI (`E2_SANDBOX_RUNTIME`) | seL4 (`E3_OS_KERNEL`) | CHERI (`E4_HARDWARE`) | TLA+ (`E5_FORMAL_ASSURANCE`) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **主體歸屬 (Principal Attribution)** | PC-010 (跨主體未授權操作) | **ENFORCED** (原生綁定) | **UNSUPPORTED** (無 Agent 主體語義) | **UNSUPPORTED** (記憶體位址空間 $\neq$ 主體) | **UNSUPPORTED** (記憶體標籤 $\neq$ 主體) | **ASSURANCE** (模型不變量) |
+| **任務級授權 (Task Authorization)** | PC-003 (跨任務權限提升) | **ENFORCED** (任務位元遮罩) | **ALLOW** (無任務層權限模型) | **ENFORCED\*** (執行域內無該 capability 權限) | **ENFORCED** (Sealing 封裝違規) | **ASSURANCE** (模型不變量) |
+| **工具/動作綁定 (Tool Attribution)** | PC-004 (未授權工具替換) | **ENFORCED** (動作正向白名單) | **UNSUPPORTED** (無工具語義) | **ENFORCED\*\*** (若將工具建構為獨立端點) | **UNSUPPORTED** (記憶體指標 $\neq$ 工具 ID) | **ASSURANCE** (模型不變量) |
+| **參數語義邊界 (Argument Bounds)** | PC-005 (業務參數惡意篡改) | **ENFORCED** (路徑前綴與政策約束) | **UNSUPPORTED** (僅檔案描述符粒度) | **UNSUPPORTED** (核心不解析 JSON 參數) | **UNSUPPORTED** (硬體不解析字串語意) | **ASSURANCE** (模型不變量) |
+| **執行邊界約束 (Execution Boundary)** | PC-001 (未授權寫入敏感路徑) | **ENFORCED** (範疇嚴格限制) | **ENFORCED** (Preopen 目錄邊界) | **ENFORCED** (缺乏目標資源能力) | **ENFORCED\*\*\*** (越界指標觸發硬體 Fault) | **ASSURANCE** (模型不變量) |
+| **網路外聯限制 (Egress Restriction)** | PC-002 (未授權資料外傳) | **ENFORCED** (網關位元遮罩過濾) | **ENFORCED** (Socket 權限位元禁用) | **ENFORCED** (無網路驅動 IPC capability) | **ENFORCED\*\*\*** (MMIO 位址越界觸發 Fault) | **ASSURANCE** (模型不變量) |
+| **範疇擴張限制 (Scope Expansion)** | PC-006 (越權提升至根範疇) | **ENFORCED** (範疇嚴格限制) | **ENFORCED\*\*\*\* (Preopen 邊界) | **ENFORCED** (衍生權限不得超過來源) | **ENFORCED** (Bounds 單調性約束) | **ASSURANCE** (模型不變量) |
+| **時效限制 (Temporal Expiry)** | PC-007 (時效過期授權重用) | **ENFORCED** (動態時間戳校驗) | **UNSUPPORTED** (無時效檢查機制) | **UNSUPPORTED** (Capability 無 TTL 機制) | **UNSUPPORTED** (純硬體無時間戳概念) | **ASSURANCE** (模型不變量) |
+| **即時撤銷 (Hot Revocation)** | PC-008 (已撤銷授權即時阻斷) | **ENFORCED** (帶內狀態即刻撤銷) | **UNSUPPORTED** (無動態撤銷模型) | **ENFORCED\*\*\*\*\* (`seL4_CNode_Revoke`) | **UNSUPPORTED\*\*\*\*\*\* (純硬體無撤銷) | **ASSURANCE** (模型不變量) |
+| **防重放/唯一性 (Replay Defense)** | PC-009 (重複 Nonce 惡意重放) | **ENFORCED** (唯一 Nonce 快取比對) | **UNSUPPORTED** (無 Nonce 追蹤) | **UNSUPPORTED** (無 Nonce 追蹤) | **UNSUPPORTED** (無 Nonce 追蹤) | **ASSURANCE** (模型不變量) |
+
+*\* 係指在 seL4 建模之執行域內缺乏該 capability 授權；seL4 執行的是 capability 權威，而非抽象的 Agent 任務授權。*  
+*\*\* 係指在使用者空間架構中明確將 Tool 實作為獨立 capability endpoint 時成立；seL4 核心無原生 Agent 工具概念。*  
+*\*\*\* 係指目標資源或週邊裝置被表徵為具邊界之記憶體/MMIO capability 物件時成立。*  
+*\*\*\*\* 嚴格在預先配置的 preopen 目錄描述符邊界內執行；WASI 不具備通用的 Agent 授權範疇概念。*  
+*\*\*\*\*\* 模擬透過 `seL4_CNode_Revoke()` 撤銷 CSpace 中派生的 capability 複本，而非撤銷抽象的 Agent 授權 Token。*  
+*\*\*\*\*\*\* 純 CHERI ISA 硬體模型 (`CHERI_PURE_ISA_CAPABILITY_MODEL`) 回報為 `UNSUPPORTED`；若搭配 `CHERI_CHERIBSD_RUNTIME`，CheriBSD 作業系統提供 temporal heap sweep。*
+
+*完整學術分析請參閱 [Property Enforcement Coverage Matrix (完整報告)](docs/research/PROPERTY_ENFORCEMENT_COVERAGE_MATRIX.md)。*
+
+---
+
+## 🤝 想要評測您的執行基底？(Substrate 接入協議)
+
+> **黃金法則：** *"Add substrates, not benchmark exceptions."（增加基底適配，絕不修改評測標準例外）*
+
+VEP 被設計為開放且實作無關的科研實驗台。若您開發了任何執行基底（能力型作業系統、沙箱運行環境、硬體架構、微核心或形式化規範），只需遵循 **7 步標準化協議** 即可接入評測：
+
+```text
+       ┌────────────────────────────────────────────────────────┐
+       │ 1. 繼承 Adapter 基類    : 繼承 BaseSubstrateAdapter    │
+       │ 2. 宣告架構 Profile     : 指定執行邊界 (E1 ~ E5)       │
+       │ 3. 映射語意範疇         : NATIVE / PROFILE / FORMAL    │
+       │ 4. 運行標準場景         : 執行 PC-001 ~ PC-010 場景    │
+       │ 5. 產出標準跡證         : 輸出 CanonicalExecutionResult│
+       │ 6. 確定性重現校準       : 執行 100% 決策重現驗證       │
+       │ 7. 提交 PR 與研究社群   : 將結果併入全域覆蓋矩陣       │
+       └────────────────────────────────────────────────────────┘
+```
+
+1. **實作 Adapter**：在 `substrates/<您的基底>/adapter.py` 繼承 [`BaseSubstrateAdapter`](src/vep/adapters/base.py)。
+2. **宣告 Execution Profile**：明示其架構層級（`E1_APPLICATION_GATEWAY`、`E2_SANDBOX_RUNTIME`、`E3_OS_KERNEL`、`E4_HARDWARE_ISA` 或 `E5_FORMAL_ASSURANCE`）。
+3. **映射語意範疇**：依客觀能力真實宣告為 `NATIVE`、`PROFILE`、`APPLICATION` 或 `UNSUPPORTED`，嚴禁浮誇膨脹。
+4. **執行標準測試場景**：在不修改任何既定測試場景的前提下運行：
+   ```bash
+   python vep.py benchmark post-compromise --substrate <您的基底>
+   ```
+5. **產出結構化證據**：自動生成包含雜湊與時間戳的 Canonical Records 於 `reports/benchmarks/post_compromise/`。
+6. **執行確定性回放校驗**：確保 100% 決策與參數完全吻合：
+   ```bash
+   python vep.py replay
+   ```
+7. **提交成果**：向社群提交 Pull Request，共同豐富全域跨基底覆蓋地圖。
+
+---
 
 傳統 AI 安全評測多集中於測試 Prompt 惡意程度或仰賴外部 Proxy 旁路監聽，無法阻止入侵後的底層越權逃逸。VEP 結合了 **OpenShip 容器化自由組合性** 與 **系統層帶內 (In-Band) 執行治理閉環**：
 

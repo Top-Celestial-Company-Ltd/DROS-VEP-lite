@@ -29,7 +29,67 @@
 
 ---
 
-## 🏛️ OpenShip Composable Architecture & Runtime Closed Loop
+## 📊 Post-Compromise Property × Enforcement Layer × Semantic Coverage Matrix
+
+> **Core Research Finding:** Capability isolation, resource sandboxing, formal assurance, and Agent-level execution governance represent distinct security properties. They cannot be collapsed into a single security score, nor can one substitute for another.
+
+| Security Property | Threat Vector Evaluated | DROS (`E2_SANDBOX_RUNTIME`) | WASI (`E2_SANDBOX_RUNTIME`) | seL4 (`E3_OS_KERNEL`) | CHERI (`E4_HARDWARE`) | TLA+ (`E5_FORMAL_ASSURANCE`) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Principal Attribution** | PC-010 (Cross-Principal Action) | **ENFORCED** (Native binding) | **UNSUPPORTED** (No Agent identity) | **UNSUPPORTED** (Address space $\neq$ Agent ID) | **UNSUPPORTED** (Memory tag $\neq$ Agent ID) | **ASSURANCE** (Model Invariant) |
+| **Task-Level Authorization** | PC-003 (Privilege Escalation) | **ENFORCED** (Task-scoped bitmap) | **ALLOW** (No privilege model) | **ENFORCED\*** (Capability authority absent in domain) | **ENFORCED** (Sealing violation) | **ASSURANCE** (Model Invariant) |
+| **Tool / Action Binding** | PC-004 (Tool Substitution) | **ENFORCED** (Action whitelist) | **UNSUPPORTED** (No Tool concept) | **ENFORCED\*\*** (When endpoints model distinct tools) | **UNSUPPORTED** (Memory ptr $\neq$ Tool ID) | **ASSURANCE** (Model Invariant) |
+| **Argument Semantic Bounds** | PC-005 (Argument Substitution) | **ENFORCED** (Prefix & policy rules) | **UNSUPPORTED** (Descriptor granularity) | **UNSUPPORTED** (Kernel ignores JSON args) | **UNSUPPORTED** (HW ignores string semantics) | **ASSURANCE** (Model Invariant) |
+| **Execution Boundary** | PC-001 (Unauthorized File Write) | **ENFORCED** (Scope confinement) | **ENFORCED** (Preopen boundary) | **ENFORCED** (Resource capability absent) | **ENFORCED\*\*\*** (Bounded capability fault) | **ASSURANCE** (Model Invariant) |
+| **Egress Restriction** | PC-002 (Unauthorized Network Egress) | **ENFORCED** (Gateway filter) | **ENFORCED** (Socket rights flag) | **ENFORCED** (IPC driver cap missing) | **ENFORCED\*\*\*** (MMIO bounds fault) | **ASSURANCE** (Model Invariant) |
+| **Scope Expansion** | PC-006 (Root Scope Containment) | **ENFORCED** (Scope confinement) | **ENFORCED\*\*\*\* (Preopen boundary) | **ENFORCED** (Rights cannot escalate) | **ENFORCED** (Bounds monotonicity) | **ASSURANCE** (Model Invariant) |
+| **Temporal Expiry (TTL)** | PC-007 (Expired Authorization) | **ENFORCED** (Dynamic timer check) | **UNSUPPORTED** (No temporal timer) | **UNSUPPORTED** (No token TTL) | **UNSUPPORTED** (No temporal timer) | **ASSURANCE** (Model Invariant) |
+| **Hot Revocation** | PC-008 (Revoked Authorization) | **ENFORCED** (In-band state revoke) | **UNSUPPORTED** (No revocation model) | **ENFORCED\*\*\*\*\* (`seL4_CNode_Revoke`) | **UNSUPPORTED\*\*\*\*\*\* (No pure HW revoke) | **ASSURANCE** (Model Invariant) |
+| **Replay / Nonce Defense** | PC-009 (Duplicate Nonce Execution) | **ENFORCED** (Nonce cache check) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **ASSURANCE** (Model Invariant) |
+
+*\* Modeled conditional on capability authority in the modeled execution domain; seL4 enforces capability authority, not abstract Agent task authorization.*  
+*\*\* Modeled conditional on tools being explicitly represented as distinct capability endpoints in userspace architecture.*  
+*\*\*\* Modeled conditional on target resource/device being represented as a bounded memory/MMIO capability object.*  
+*\*\*\*\* Enforced strictly within the configured preopen directory descriptor boundary.*  
+*\*\*\*\*\* Models revocation of derived capability copies via `seL4_CNode_Revoke()`, not abstract Agent token revocation.*  
+*\*\*\*\*\*\* Under pure CHERI ISA (`CHERI_PURE_ISA_CAPABILITY_MODEL`), reported as `UNSUPPORTED`. Under `CHERI_CHERIBSD_RUNTIME`, CheriBSD OS provides temporal heap sweep.*
+
+*For complete formal definitions, see [Property Enforcement Coverage Matrix (Full Document)](docs/research/PROPERTY_ENFORCEMENT_COVERAGE_MATRIX.md).*
+
+---
+
+## 🤝 Want to Evaluate Your Substrate? (Substrate Contribution Protocol)
+
+> **Golden Rule:** *"Add substrates, not benchmark exceptions."*
+
+VEP is designed as an open, implementation-independent testbed. If you develop an execution substrate (capability operating system, sandbox runtime, hardware architecture, microkernel, or formal model), you can integrate and evaluate it in **7 standardized steps**:
+
+```text
+       ┌────────────────────────────────────────────────────────┐
+       │ 1. Implement Adapter    : Inherit BaseSubstrateAdapter │
+       │ 2. Declare Profile      : Specify architectural layer  │
+       │ 3. Map Semantic Scope   : NATIVE / PROFILE / FORMAL    │
+       │ 4. Run Scenarios        : Evaluate canonical PC-001..10│
+       │ 5. Produce Evidence     : CanonicalExecutionResult     │
+       │ 6. Verify Replay        : Run deterministic replay     │
+       │ 7. Submit Pull Request  : Append results to Matrix     │
+       └────────────────────────────────────────────────────────┘
+```
+
+1. **Implement Adapter**: Create a new adapter under `substrates/<your_substrate>/adapter.py` inheriting from [`BaseSubstrateAdapter`](src/vep/adapters/base.py).
+2. **Declare Execution Profile**: State your substrate's architectural boundary (`E1_APPLICATION_GATEWAY`, `E2_SANDBOX_RUNTIME`, `E3_OS_KERNEL`, `E4_HARDWARE_ISA`, or `E5_FORMAL_ASSURANCE`).
+3. **Map Semantic Scope**: Explicitly declare whether each property enforcement is `NATIVE`, `PROFILE`, `APPLICATION`, or `UNSUPPORTED`. Never inflate substrate semantics.
+4. **Run Canonical Scenarios**: Execute standard test scenarios without modifying scenarios:
+   ```bash
+   python vep.py benchmark post-compromise --substrate <your_substrate>
+   ```
+5. **Produce Canonical Evidence**: Output execution records to `reports/benchmarks/post_compromise/`.
+6. **Verify Deterministic Replay**: Ensure 100% decision and parameter match across identical runs:
+   ```bash
+   python vep.py replay
+   ```
+7. **Submit Results**: Open a PR with your adapter, unit tests, and generated evidence logs.
+
+---
 
 Traditional AI security benchmarks measure prompt toxicity or rely on out-of-band proxy monitors that cannot prevent post-compromise execution escapes. VEP combines **OpenShip containerized composability** with a **system-level in-band execution governance loop**:
 
