@@ -4,9 +4,12 @@
 > **"VEP (Vulnerability & Exploitability Protocol) is an open, implementation-independent research evaluation environment for determining whether Agent security controls remain effective after compromise, particularly at the boundary between Agent authorization and actual system execution. DROS-VEP Lite is the open reference implementation of the VEP research protocol (RFC-010), providing an out-of-the-box, deterministic execution substrate alongside other Agent runtime and execution-control implementations."**
 >
 > > [!IMPORTANT]
-> > **Scientific Research Charter:**  
+> > **Scientific Research Charter & Current Status (v0.2.0 Frozen):**  
 > > **VEP does not produce a single security score. It measures which post-compromise properties each substrate can enforce, which it cannot express natively, and which properties can only be established through formal assurance.**  
-> > *(VEP 不產生單一安全分數；它測量各 substrate 能實際執行哪些 Post-Compromise 性質、哪些性質無法由其原生模型表達，以及哪些性質只能透過形式驗證建立。)*
+> > *(VEP 不產生單一安全分數；它測量各 substrate 能實際執行哪些 Post-Compromise 性質、哪些性質無法由其原生模型表達，以及哪些性質只能透過形式驗證建立。)*  
+> > 
+> > 🧊 **Current Status: M1–M3 Frozen (Open Observation Period)**  
+> > The current release establishes the canonical execution contract (M1), cross-substrate empirical evaluation across 5 substrates (M2), and negative semantic coverage boundaries (M3). Future work focuses on compositional evaluation (M4) and validation against concrete runtime/hardware implementations.
 >
 > *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."*
 
@@ -88,6 +91,28 @@ VEP is designed as an open, implementation-independent testbed. If you develop a
    python vep.py replay
    ```
 7. **Submit Results**: Open a PR with your adapter, unit tests, and generated evidence logs.
+
+---
+
+## 📑 Canonical Scenario & Evaluation Registry
+
+VEP unifies evaluation across four foundational dimensions: **Scenario** $\to$ **Security Property** $\to$ **Substrate Capability** $\to$ **Composition Gain**.
+
+| Scenario ID | Canonical Scenario | Target Security Property | Research Milestone | Primary Substrates Evaluated | Primary Composition Target |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| **PC-001** | Unauthorized File Write | Resource Authority | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS + WASI` |
+| **PC-002** | Unauthorized Network Egress | Resource Authority | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS + WASI` |
+| **PC-003** | Privilege Escalation Across Tasks | Privilege Escalation | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS + seL4` |
+| **PC-004** | Tool Substitution / Tampering | Tool Attribution | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS + seL4` |
+| **PC-005** | Argument Semantic Bounds Violation | Argument Integrity | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS + WASI` |
+| **PC-006** | Root Scope Expansion Attack | Scope Non-Expansion | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS + CHERI` |
+| **PC-007** | Expired Authorization Reuse | Temporal Authority | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS-only` |
+| **PC-008** | Dynamic Revocation Invalidation | Temporal Authority | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS + seL4` |
+| **PC-009** | Duplicate Nonce Replay Attack | Execution Uniqueness | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS-only` |
+| **PC-010** | Cross-Principal Spoofing | Principal Attribution | M1 / M2 | DROS, WASI, seL4, CHERI, TLA+ | `DROS-only` |
+| **COMPOSE-UAV-001** | UAV Flight Command Governance | Physical Command Semantics | M4 | Baseline vs. seL4 vs. DROS+seL4 | `DROS + seL4` |
+
+> 📖 **Full Formal Registry**: See **[`docs/research/SCENARIO_REGISTRY.md`](docs/research/SCENARIO_REGISTRY.md)** for canonical scenario definitions, threat models, expected outcomes per substrate, evidence requirements, and deterministic replay contracts.
 
 ---
 
