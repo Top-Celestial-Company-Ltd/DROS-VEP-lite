@@ -107,17 +107,17 @@ Aligned with **MITRE ATLAS**:
 * **ATS-001 (EP1 Sol Escape)**: Support Agent deceived by malicious files to exfiltrate customer databases; validates PDP/PEP interception.
 * **ATS-002 (EP2 ERP Ransomware)**: AI agent manipulated to exfiltrate environment variables (`.env`) and sensitive secrets.
 * **ATS-003 (EP3 Fable 5 Jailbreak)**: Developer Agent hijacked to push untrusted code into Production.
-* **ATS-004 (EP4 OpenAI × Hugging Face Supply Chain Poisoning)**: OpenAI Agent retrieving poisoned datasets from Hugging Face, hijacked via IPI to exfiltrate buyer financial secrets.
+* **ATS-004 (EP4 Cross-Domain Supply Chain Poisoning Simulation)**: Simulated data-fetcher agent accessing a third-party knowledge repo, hijacked via IPI to attempt unauthorized buyer ERP exfiltration.
 * **ATS-005 (Cross-Domain Data Access)**: HR Agent attempting unauthorized access to Finance records.
 
 ---
 
 ## 6. Federated B2B Multi-Enterprise PKI & Supply Chain Immunity
 
-DROS-VEP supports `docker-compose-b2b.yml` multi-enterprise simulations between **Corp-Alpha (OpenAI Buyer Core Workload)** and **Corp-Beta (Hugging Face Seller Repo)**:
+DROS-VEP supports `docker-compose-b2b.yml` multi-enterprise simulations between **Corp-Alpha (Buyer Core Enterprise / LLM Orchestrator)** and **Corp-Beta (Third-Party External Repo Supplier)**: *(Note: Synthetic simulation scenario for architectural validation; does not reference any specific real-world incident)*
 
 1. **Cross-Domain Cryptographic Passport (DIT Fingerprinting)**: Requests carry a 3-tier signed `DrosIdentityToken (DIT)`. GuardVM inspects SHA-256 root authority fingerprints to prevent identity spoofing.
-2. **Supply Chain Network Immunity**: Every agent operates as an isolated cellular unit. Hijacked supplier agents are contained within their local DROS boundary; buyer GuardVMs deploy <1μs network antibodies without application code modification.
+2. **Supply Chain Network Immunity**: Every agent operates as an isolated cellular unit. Hijacked supplier agents are contained within their local DROS boundary; buyer GuardVMs deploy <1μs lock-free CRL revocation to achieve deterministic collective immunity without modifying immutable capability bitmaps or application code.
 
 ---
 

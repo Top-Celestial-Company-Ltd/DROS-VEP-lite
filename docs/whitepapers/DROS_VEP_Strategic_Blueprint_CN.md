@@ -112,17 +112,17 @@ agent_groups:
 * **ATS-001 (EP1 Sol Escape)**：客服 Agent 收到惡意文件誘使匯出客戶資料庫，驗證 PDP/PEP 阻斷率。
 * **ATS-002 (EP2 ERP Ransomware)**：AI 代理被誘導輸出環境變數（`.env`）與敏感 Secrets。
 * **ATS-003 (EP3 Fable 5 Jailbreak)**：開發 Agent 被污染後嘗試直接將代碼推送到 Production 環境。
-* **ATS-004 (EP4 OpenAI × Hugging Face Supply Chain Poisoning)**：OpenAI Agent 存取 Hugging Face 數據庫時遭間接提示詞注入 (IPI) 挾持，企圖跨企業讀取買方財務密件。
+* **ATS-004 (EP4 Cross-Domain Supply Chain Poisoning Simulation)**：模擬外部資料抓取 Agent 存取第三方知識庫時遭間接提示詞注入 (IPI) 挾持，企圖跨企業讀取買方 ERP 財務密件。
 * **ATS-005 (Cross-Domain Data Access)**：HR Agent 嘗試跨部門存取 Finance 財務資料，驗證存取邊界。
 
 ---
 
 ## 六、 B2B 跨企業 PKI 聯邦與供應鏈集體免疫 (Federated B2B & Supply Chain Immunity)
 
-DROS-VEP 支援 `docker-compose-b2b.yml` 跨企業實體演練，模擬 **Corp-Alpha (OpenAI 買方核心企業)** 與 **Corp-Beta (Hugging Face 賣方數據庫)** 之跨國供應鏈連動：
+DROS-VEP 支援 `docker-compose-b2b.yml` 跨企業實體演練，模擬 **Corp-Alpha (買方核心企業 / LLM 決策引擎)** 與 **Corp-Beta (第三方外部資料庫供應商)** 之跨國供應鏈連動：*(註：此為架構防衛有效性之合成模擬情境，不指涉任何真實歷史事件)*
 
 1. **跨域密碼學通關護照 (DIT 指紋繫定)**：每筆跨企業請求均攜帶三階簽章之 `DrosIdentityToken (DIT)`，GuardVM 檢驗 SHA-256 根憑證指紋即刻防止身分冒用。
-2. **供應鏈網路集體免疫 (Network Immune Effect)**：每一隻 Agent 均為細胞級隔離單位。當三階供應商 Agent 遭劫持時，破口最遠僅被封鎖於該供應商的 DROS 邊界內；全球買方 GuardVM 可在 <1μs 內自動更新黑名單指紋，產生「確定性集體免疫」。
+2. **供應鏈網路集體免疫 (Network Immune Effect)**：每一隻 Agent 均為細胞級隔離單位。當供應商 Agent 遭劫持時，破口最遠僅被封鎖於該供應商的 DROS 邊界內；全球買方 GuardVM 可在 <1μs 內透過無鎖 CRL 自動撤銷黑名單指紋，產生「確定性集體免疫」，無需更動能力點陣圖或重編碼。
 
 ---
 

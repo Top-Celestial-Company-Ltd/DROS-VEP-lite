@@ -139,7 +139,7 @@ When enterprises deploy autonomous AI agents into mission-critical business work
 | **3. Action Bound** | Which specific APIs or low-level tool calls are safe? | **eBPF/Seccomp Breakdown**: Inspects low-level syscall integers but cannot map user-space agent application roles to process streams. | **FFI / C-ABI In-Band Interceptor**: Enforces <500ns physical panic at the binary boundary, guaranteeing unauthorized syscalls cannot execute. |
 | **4. Policy Gate** | How are high-risk actions or sensitive data dynamic controlled? | **Static API Gate Breakdown**: Cannot enforce dynamic data redaction or human-in-the-loop (HITL) suspensions in real time. | **Dynamic Redaction & HITL Gateways**: Paired with ZKP-Lite zero-knowledge proofs to enforce dynamic gates prior to high-risk execution. |
 | **5. Audit Log** | How are actions immutably traced during incident response? | **SIEM Log Breakdown**: Post-hoc text log ingestion, vulnerable to tampering and lacking real-time cryptographic proof. | **SHA-256 Merkle Hash Chain + Ed25519 Signatures**: Every decision automatically emits a signed evidence package, fully compliant with EU AI Act Art. 12. |
-| **6. Expiry / Revocation** | When does authorization expire, and how is it revoked instantly? | **OAuth/JWT Breakdown**: Token revocation takes minutes to hours, allowing hijacked agents to complete exfiltration cycles. | **$O(1)$ Constant-Time Microsecond Revocation**: Dynamic capability bitmap updates complete in microseconds for immediate HTTP 403 enforcement. |
+| **6. Expiry / Revocation** | When does authorization expire, and how is it revoked instantly? | **OAuth/JWT Breakdown**: Token revocation takes minutes to hours, allowing hijacked agents to complete exfiltration cycles. | **$O(1)$ Constant-Time Microsecond Principal Revocation (Lock-Free CRL)**: In-memory lock-free thumbprint CRL revokes agent identity instantly without modifying immutable capability bitmaps, enforcing immediate HTTP 403 blocks. |
 
 ---
 
@@ -195,30 +195,31 @@ When a `support-agent` holding a valid certificate is fully hijacked via Indirec
 
 ### 4.3 Federated B2B Multi-VEP Architecture & Supply Chain Defense
 
-When operating across distinct enterprise boundaries (e.g., **Corp-Alpha / OpenAI Workload** interacting with **Corp-Beta / Hugging Face Repository**), DROS elevates Layer 2 into a **Cross-Domain PKI Identity Fingerprinting Gate**:
+When operating across distinct enterprise boundaries (e.g., **Corp-Alpha (Buyer Core Enterprise / LLM Orchestration Engine)** interacting with **Corp-Beta (Third-Party External Knowledge Repo)**), DROS elevates Layer 2 into a **Cross-Domain PKI Identity Fingerprinting Gate**:
 
 ```
-[ Corp-Beta: Hugging Face Repo ]                   [ Corp-Alpha: Enterprise Buyer ]
+[ Corp-Beta: Third-Party Repo ]                   [ Corp-Alpha: Enterprise Buyer ]
 ┌───────────────────────────────┐                  ┌──────────────────────────────┐
 │ Agent-Beta (Data Fetcher)     │                  │ DROS GuardVM Alpha (PEP/PDP) │
 │ - Holds DIT-Beta Cert Signature│ ─B2B Tool Call─► │ 1. Verify DIT-Beta Fingerprint│
 └───────────────────────────────┘                  │ 2. Check Bitmap[Beta][API]   │
                 │                                  │ 3. Execute <500ns Panic      │
-   Hijacked via Poisoned Dataset                   └──────────────────────────────┘
-   (ATS-004 Supply Chain Injection)                                │
+   Hijacked via External Poisoned Dataset          └──────────────────────────────┘
+   (ATS-004 Supply Chain Injection Simulation)                     │
                 │                                                  ▼
    Attempts Exfiltration to Alpha ERP              [ FULLY BLOCKED AT C-ABI LAYER ]
 ```
+*(Note: ATS-004 is a synthetic threat simulation scenario designed for architectural resilience validation and does not reference any specific real-world incident)*
 
 1. **Cross-Domain Cryptographic Passport (DIT Fingerprinting):** Every cross-enterprise request carries a 3-tier signed `DrosIdentityToken (DIT)`. Corp-Alpha's GuardVM inspects the SHA-256 root authority fingerprint to instantly detect identity spoofing.
 2. **B2B Non-Repudiation Audit Stamps:** Execution logs append cryptographic signatures from both enterprise GuardVMs, establishing tamper-proof, legally defensible evidence for enterprise SLAs and insurance.
-3. **Instant Supply Chain Revocation (CRL):** If Corp-Beta's agent is compromised, Corp-Alpha can revoke the supplier's CA fingerprint in <1μs without code redeployment, isolating the enterprise from cascading supply chain attacks.
+3. **Instant Supply Chain Revocation (CRL):** If Corp-Beta's agent is compromised, Corp-Alpha can revoke the supplier's CA fingerprint in <1μs via lock-free CRL without code redeployment or policy re-compilation, isolating the enterprise from cascading supply chain attacks.
 
 ### 4.4 Supply Chain Network Immune Effect
 
 Traditional security patches holes in enterprise walls; DROS injects cryptographic antibodies directly into every autonomous agent. When buyer enterprises and multi-tier suppliers adopt DROS governance, a **Supply Chain Network Immune Effect** is triggered:
 
-- **Cellular Blast Radius Containment:** Every AI agent operates as an isolated cellular unit. If a Tier-3 supplier agent is hijacked externally (e.g. via Hugging Face dataset poisoning), the exploit is contained entirely within that supplier's DROS boundary, preventing cascading cross-enterprise infection.
+- **Cellular Blast Radius Containment:** Every AI agent operates as an isolated cellular unit. If a Tier-3 supplier agent is hijacked externally, the exploit is contained entirely within that supplier's DROS boundary, preventing cascading cross-enterprise infection.
 - **Cascading Zero-Trust Adoption:** Mandating DIT cryptographic tokens for cross-enterprise API access drives the entire supply chain ecosystem to naturally conform to deterministic zero-trust governance standards.
 - **Seamless Antibody Defense:** Upon vulnerability disclosure, enterprise GuardVMs update CA revocation fingerprints instantly, deploying a deterministic <1μs network antibody without altering a single line of business application code.
 
@@ -280,18 +281,33 @@ $$\text{Decision}(tool\_id) = \begin{cases} \text{ALLOW} & \text{if } \text{Bitm
 | **Zero-Day Bypass Risk** | High (semantically equivalent substitution) | None (binary boundary, semantics unreachable) |
 | **Performance Overhead (P99)** | Unpredictable, degrades sharply under load | 41.2 μs, constant |
 
-#### Principle 3: C-ABI Boundary Interception (Sub-Application Layer Enforcement)
+##### Principle 3: C-ABI Boundary Interception & Dual-Layer Sandbox Synergy (Sub-Application Layer Semantic PEP & Kernel Sandbox Synergy)
 
-The DROS GuardVM is deployed at the C-ABI boundary — the binary interface layer beneath the application framework and above the operating system kernel.
+The DROS GuardVM is deployed at the C-ABI boundary — the binary interface layer beneath the application framework and above the standard C dynamic libraries and operating system kernel (e.g., as a Rust/C FFI extension module).
 
 ```
 Traditional Software Stack:
 [AI Agent Application Layer] ──calls──► [C Standard Library / C-ABI Boundary] ──► [Kernel Syscall] ──► Execute
 
-DROS Interception Point:
-[AI Agent Application Layer] ──calls──► [C-ABI Boundary] ──DROS intercept──► Bitmap Compare ──DENY──► Thread Panic
-                                                                                             ──ALLOW──► [Kernel Syscall] ──► Execute
+DROS Dual-Layer Interception Architecture:
+[AI Agent Application Layer] ──Tool Call──► [C-ABI Boundary (GuardVM PEP)] ──Verify DIT Stamp & CRL ──Invalid──► Block (μs-Revocation)
+                                                            │
+                                                            ▼ (Valid Identity)
+                                             Bitmap Compare (Immutable Binary Matrix) ──Unauthorized──► Thread Panic (<500ns)
+                                                            │
+                                                            ▼ Authorized
+                                   [Underlying OS Boundary (Seccomp-BPF / Landlock)] ──Raw Syscall / Escape──► SIGKILL (Kernel Barrier)
+                                                            │
+                                                            ▼
+                                                    [Kernel Execution]
 ```
+
+**Architectural Precision & Defense Boundary:**
+1. **In-Process Semantic Policy Enforcement Point (PEP):** Kernel mechanisms such as eBPF and Seccomp operate at the kernel-user boundary, inspecting raw syscall numbers and memory pointers. They are structurally blind to high-level user-space context (e.g., Agent role IDs, DIT token credentials, and semantic tool method names). GuardVM fills this exact semantic gap — enforcing deterministic role-to-tool capability checks directly at the user-space binary interface.
+2. **Defending Against Raw Syscalls & Memory Corruption (Kernel Fallback):** If an adversary achieves native arbitrary code execution (RCE) within the agent process and attempts to bypass C-ABI wrappers via inline assembly `syscall` instructions, DROS integrates with the host container's **Seccomp-BPF / Landlock sandbox** as the final physical barrier. The kernel emits `SIGSYS` or `SIGKILL`, terminating the process instantly. Both layers form a complementary defense: *GuardVM governs business semantics, while the kernel sandbox terminates low-level binary exploitation.*
+3. **Identity-Authorization Decoupling:**
+   - **Capability Bitmaps** are compiled into **pure binary read-only memory constants (Immutable Matrix)**, eliminating any writable dynamic modification attack surface.
+   - **Dynamic Revocation** operates strictly at the **Principal Identity Layer (CRL)**. GuardVM uses atomic pointers and lock-free ring buffers to revoke identity credentials at the ingress boundary within microseconds, ensuring compromised agents never reach capability evaluation.
 
 When `support-agent` attempts to execute:
 ```python
@@ -440,9 +456,70 @@ The performance data cited in this whitepaper is based on the following testing 
 8. [Cloudflare AI Gateway & Agent Security](https://developers.cloudflare.com/ai-gateway/)
 9. [ZTM: Zero Trust Mesh Networking](https://github.com/flomesh-io/ztm)
 
+## 11. Foundational Academic Research & Specifications
+
+To ensure the in-band execution governance mechanism withstands rigorous evaluation by international cryptography, systems security, and formal verification communities, the DROS 4-Layer Defense Model and the VEP verification benchmark are grounded upon the following formal specifications and theoretical foundations:
+
+### 11.1 Formal Security Theorem
+
+In the DROS execution governance model, the system compiles the complete set of authorized tool invocations into an immutable binary matrix $\mathbf{B} \in \{0, 1\}^{M \times N}$ at compile-time, where $M$ denotes the principal role space and $N$ denotes the tool space.
+
+$$\forall t \in \mathcal{T}_{\text{unauthorized}}, \quad \Pr\left(\text{Execute}(t) \mid \text{GuardVM}_{\mathbf{B}}\right) = 0$$
+
+> **Theorem 1 (Deterministic In-Band Non-Execution Theorem):**  
+> Let $A$ be a compromised autonomous agent under arbitrary adversary control. Within the C-ABI boundary of the In-Process Semantic Policy Enforcement Point (PEP), for any tool invocation $t$ not authorized in the compiled capability bitmap ($\mathbf{B}[r][t] = 0$) or any principal whose cryptographic credential resides in the revocation list ($\text{DIT} \in \text{CRL}$), the time complexity for GuardVM to invoke $\text{Panic}$ and terminate the thread is strictly $\mathcal{O}(1)$, and the probability of $t$ reaching the underlying OS execution pathway is strictly zero.
+
+### 11.2 Core Scientific Papers & Zenodo DOI Standard Matrix (The 6-Paper Program)
+
+The DROS deterministic runtime governance architecture is grounded upon rigorous academic and cryptographic foundations. The entire body of research is permanently deposited with immutable Zenodo DOIs:
+
+#### 🧭 Master Research Trajectory & Falsification Manifesto
+* **A Synoptic Guide to the DROS Program: Problem Formulation, Theoretical Architecture, and Falsification Criteria**  
+  *《DROS 全景科研導讀：六篇論文之問題意識、理論體系與可證偽性聲明》*  
+  **Zenodo DOI**: [`10.5281/zenodo.22255275`](https://doi.org/10.5281/zenodo.22255275) | **Record**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)
+
+#### 🏹 The 6-Paper Technical Architecture Program
+1. 🏛️ **Paper 1: DROS-6P (Governance Specification Layer — Six Trust Boundaries)**  
+   *DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents*  
+   **Zenodo DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
+2. 🛡️ **Paper 2: DROS 4-Layer (Enforcement Delivery Layer — 4-Layer Defense-in-Depth)**  
+   *DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads*  
+   **Zenodo DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
+3. ⚙️ **Paper 3: DROS-PGM (Kernel Control Layer — Physical Guard & Non-Repudiable Attribution)**  
+   *Runtime Attribution Framework: An External C-ABI and PKI-Based Zero-Trust Infrastructure for Non-Repudiable Execution Governance in Multi-Agent Systems*  
+   **Zenodo DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+4. 🌐 **Paper 4: DROS-WebMCP (Network Capability Layer — Agentic Web & Capability Exposure)**  
+   *DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web*  
+   **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
+5. 📱 **Paper 5: Post-Compromise Mobile (Digital Systems Verification — Mobile Edge Attenuation)**  
+   *Post-Compromise Security for Autonomous Mobile Agents: A Deterministic Runtime Attenuation and Proof-Carrying Authorization Architecture*  
+   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+6. 🛸 **Paper 6: Post-Compromise Physical AI / UAV (Cyber-Physical Verification — Autonomous UAVs)**  
+   *Post-Compromise Security for Physical AI: Deterministic Runtime Enforcement of Physical Action Authority in Autonomous UAVs*  
+   **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
+
+### 11.3 Academic Citation & Standard BibTeX Package
+
+Enterprise security architects, academic researchers, and compliance auditors may cite the DROS-VEP formal specifications and reproducible benchmark suite using the following standard format:
+
+```bibtex
+@inproceedings{dros2026inband,
+  author    = {Top Celestial Research Team and DROS Contributors},
+  title     = {Deterministic In-Band Runtime Governance for Post-Compromise Autonomous Agents: The DROS-VEP Verification Standard},
+  booktitle = {IEEE Symposium on Security and Privacy (S&P) Submission / Open Archive},
+  year      = {2026},
+  note      = {U.S. Provisional Patent Application No. 64/111,973. Open Verification Suite: RFC-010},
+  url       = {https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}
+}
+```
+
+* **Formal Security Specification**: DROS RFC-010 (*Deterministic Execution Verification Protocol for Agentic Workloads*)
+* **Open Verification & Artifact Suite**: [DROS-VEP-lite GitHub Repository](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite) (Includes 10 Post-Compromise threat scenarios, Docker reproducibility testbed, and 160,611 raw microbenchmark runs)
+* **Patent Notice & Prior Art Disclosure**: DROS execution governance and constant-time capability masking technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending).
+
 ---
 
-## 8. Conclusion & Vision
+## 12. Conclusion & Vision
 
 In an era where AI agents possess boundless autonomous capabilities like Sun Wukong (the Monkey King), enterprises do not need a bigger golden staff (probabilistic semantic firewalls); they need an unbypassable, physical tightening crown to ensure the agent never strays from its authorized path.
 

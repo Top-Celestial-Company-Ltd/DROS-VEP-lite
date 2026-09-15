@@ -138,7 +138,7 @@ Agentic Web 的根本性風險在於：被挾持的 AI Agent **本身即為持�
 | **3. Action Bound (系統呼叫邊界)** | 哪些 API 或 low-level 工具呼叫才安全？ | **eBPF/Seccomp 失靈**：僅能看見 syscall 數值，無法辨識使用者空間的 Agent 業務角色。 | **FFI / C-ABI 帶內攔截器**：於應用與 OS 二進位邊界進行 <500ns 物理熔斷，確保非授權系統呼叫絕無法被執行。 |
 | **4. Policy Gate (高風險動態控管)** | 涉及高敏感資料或巨額交易時如何控制？ | **固定 API 閘門失靈**：無法針對動態情境實施靜態遮蔽或懸停。 | **動態遮蔽 (Redaction) 與人機懸停 (HITL)**：配合零知識證明（ZKP-Lite）技術，在高風險動作發生前實施強制控管。 |
 | **5. Audit Log (不可否認稽核)** | 發生事故時，動作如何不可篡改地追溯？ | **SIEM 日誌失靈**：事後收集文本 Log，易遭篡改且缺乏即時密碼學憑證。 | **SHA-256 Merkle 雜湊鏈 + Ed25519 數位簽章**：每一筆決策自動產出密碼學證據包，完全合規歐盟 EU AI Act Article 12。 |
-| **6. Expiry/Revocation (即時動態撤銷)** | 授權何時失效？Agent 遭劫時如何瞬間停止？ | **OAuth/JWT 失靈**：Token 撤銷延遲長達數分鐘至數小時，攻擊者早已完成資產外洩。 | **$O(1)$ 常數時間微秒級動態撤銷**：可在微秒級時間內更新能力點陣圖，提供即時 HTTP 403 阻斷，防範級聯感染。 |
+| **6. Expiry/Revocation (即時動態撤銷)** | 授權何時失效？Agent 遭劫時如何瞬間停止？ | **OAuth/JWT 失靈**：Token 撤銷延遲長達數分鐘至數小時，攻擊者早已完成資產外洩。 | **$O(1)$ 常數時間微秒級主體撤銷 (Lock-free Principal CRL)**：透過記憶體邊界無鎖指紋黑名單撤銷身分，無需重編能力點陣圖，即刻觸發帶內 HTTP 403 阻斷，根絕級聯感染。 |
 
 ---
 
@@ -194,30 +194,31 @@ ZTM 與 DROS PKI 基於 **三階憑證授權鏈（Root CA -> AIA 中繼憑證 ->
 
 ### 4.3 B2B 跨企業 PKI 聯邦與供應鏈連動演練架構 (Federated B2B Multi-VEP Architecture)
 
-當運作於跨企業邊界（例如 **Corp-Alpha / OpenAI 核心工作負載** 與 **Corp-Beta / Hugging Face 數據庫** 互動）時，DROS 將第二層防線升維為 **跨域 PKI 密碼學身分指紋網關 (Cross-Domain Identity Fingerprinting Gate)**：
+當運作於跨企業邊界（例如 **企業 A (Corp-Alpha，買方核心企業 / LLM 決策引擎)** 與 **企業 B (Corp-Beta，外部數據供應商 / 第三方知識庫)** 互動）時，DROS 將第二層防線升維為 **跨域 PKI 密碼學身分指紋網關 (Cross-Domain Identity Fingerprinting Gate)**：
 
 ```
-[ Corp-Beta: Hugging Face 數據庫 ]                  [ Corp-Alpha: 買方核心企業 ]
+[ Corp-Beta: 第三方外部知識庫 ]                  [ Corp-Alpha: 買方核心企業 ]
 ┌───────────────────────────────┐                  ┌──────────────────────────────┐
 │ Agent-Beta (資料抓取員)       │                  │ DROS GuardVM Alpha (PEP/PDP) │
 │ - 持有 DIT-Beta 密碼學指紋印章 │ ─跨企業調用───►  │ 1. 驗證 DIT-Beta 憑證指紋    │
 └───────────────────────────────┘                  │ 2. 比對 Bitmap[Beta][API]    │
                 │                                  │ 3. <500ns 執行確定性物理熔斷 │
-   經由投毒數據集遭挾持                            └──────────────────────────────┘
-   (ATS-004 跨企業供應鏈劫持案)                                    │
+   經由外部投毒數據集遭挾持                        └──────────────────────────────┘
+   (ATS-004 跨企業資料鏈投毒威脅模擬)                              │
                 │                                                  ▼
    企圖越權讀取 Alpha ERP 財務密件                 [ 於 C-ABI 層實施 100% 硬阻斷 ]
 ```
+*(註：ATS-004 為架構防衛有效性之合成威脅模擬情境，不指涉任何特定歷史公開事件)*
 
 1. **跨域密碼學通關護照 (DIT 指紋繫定)：** 每筆跨企業請求均攜帶三階簽章之 `DrosIdentityToken (DIT)`。買方 Corp-Alpha 的 GuardVM 透過檢驗 SHA-256 根憑證指紋，一秒辨識並防止任何身分冒用。
 2. **B2B 不可否認性雙重簽章：** 執行日誌同時附上雙方 GuardVM 的密碼學簽章，為企業 SLA 賠償與資安保險提供不可篡改的法律鐵證。
-3. **供應鏈即時動態撤銷 (CRL)：** 一旦發現供應商 Corp-Beta 的 Agent 遭資安通報劫持，買方企業無需重設商業程式碼，可在 <1μs 內於 GuardVM 撤銷該供應商指紋，即刻阻斷級聯式供應鏈感染。
+3. **供應鏈即時動態撤銷 (CRL)：** 一旦發現供應商 Corp-Beta 的 Agent 遭資安通報劫持，買方企業無需重新編譯政策或部署程式碼，可在 <1μs 內於 GuardVM 藉由無鎖 CRL 撤銷該供應商憑證指紋，即刻阻斷級聯式供應鏈感染。
 
 ### 4.4 供應鏈網路集體免疫效應 (Network Immune Effect)
 
 傳統資安是在供應鏈圍牆上補破洞；而 DROS 是為供應鏈上的每一個 Agent 注入密碼學抗體。當產業鏈上下游企業（買方核心企業、一階/二階供應商）普遍導入 DROS 治理機制時，將觸發**「網路集體免疫效應」**：
 
-- **細胞級爆炸半徑控制 (Cellular Blast Radius Containment)：** 每一隻 Agent 均為獨立隔離細胞。當三階供應商 Agent 在外部（如 Hugging Face）遭毒化劫持時，破口最遠僅被封鎖於該供應商的 DROS 邊界內，絕無法跨企業級聯感染上游買方。
+- **細胞級爆炸半徑控制 (Cellular Blast Radius Containment)：** 每一隻 Agent 均為獨立隔離細胞。當三階供應商 Agent 在外部遭毒化劫持時，破口最遠僅被封鎖於該供應商的 DROS 邊界內，絕無法跨企業級聯感染上游買方。
 - **零信任連鎖升級機制：** 買方企業要求外聯 Agent 強制攜帶 DIT 密碼學指紋，驅使整體供應鏈生態系自發性升級至確定性零信任治理標準。
 - **無縫抗體阻斷：** 一旦特定資安事件爆發，全球買方 GuardVM 瞬間更新黑名單指紋，在 <1μs 內對該破口產生「確定性集體免疫」，無需更換任何一列商業業務程式碼。
 
@@ -279,18 +280,33 @@ $$\text{Decision}(tool\_id) = \begin{cases} \text{ALLOW} & \text{if } \text{Bitm
 | **零日繞過風險** | 高（語意等效替換） | 無（二進位邊界，語意不可達） |
 | **效能負擔（P99）** | 不確定，高負載下急劇退化 | 41.2 μs，恆定 |
 
-#### 原則三：C-ABI 邊界截獲（Sub-Application Layer Enforcement）
+#### 原則三：C-ABI 邊界截獲與雙層縱深沙箱（Sub-Application Layer Semantic PEP & Kernel Sandbox Synergy）
 
-DROS GuardVM 部署於 C-ABI 邊界——位於應用程式框架之下、作業系統核心之上的二進位介面層。
+DROS GuardVM 部署於 C-ABI 邊界——位於應用程式框架之下、標準 C 動態鏈結庫與作業系統核心之上的二進位介面層（如 Rust/C FFI 擴展模組）。
 
 ```
 傳統軟體堆疊:
 [AI Agent 應用層] ──呼叫──► [C 標準函式庫 / C-ABI 邊界] ──► [Kernel Syscall] ──► 執行
 
-DROS 攔截點:
-[AI Agent 應用層] ──呼叫──► [C-ABI 邊界] ──DROS截獲──► Bitmap 比對 ──拒絕──► 執行緒 Panic
-                                                                        ──允許──► [Kernel Syscall] ──► 執行
+DROS 雙層縱深攔截架構:
+[AI Agent 應用層] ──Tool Call──► [C-ABI 邊界 (GuardVM PEP)] ──驗證 DIT 憑證與 CRL ──無效──► 拒絕 (微秒級撤銷)
+                                                │
+                                                ▼ (有效身分)
+                                     Bitmap 比對 (不可變二進位矩陣) ──未授權──► 執行緒 Panic (<500ns)
+                                                │
+                                                ▼ 允許
+                               [底層 OS 限制層 (Seccomp-BPF / Landlock)] ──未授權 Syscall──► SIGKILL (內核硬阻斷)
+                                                │
+                                                ▼
+                                        [Kernel Execution]
 ```
+
+**架構精確定位與防禦分工（Disambiguation & Threat Boundary）：**
+1. **語義感知帶內強制點（In-Process Semantic PEP）：** eBPF/Seccomp 運行於內核層，僅能檢視 raw syscall 數字與記憶體指標，對「使用者空間的 Agent 角色、DIT 憑證、高階 Tool 名稱」存在天然語義失明。GuardVM 正是為填補此語義真空而設——在用戶空間二進位介面處，直接比對 Agent 角色與 Tool Call 的合規性。
+2. **對抗 Raw Syscall / 內存破壞的內核兜底（Kernel-level Fallback）：** 若攻擊者攻陷 Agent 取得原生任意代碼執行（RCE）並試圖繞過 C-ABI 直接發射內聯組合語言 `syscall`，DROS 透過標準容器邊界整合底層 **Seccomp-BPF / Landlock 沙箱**作為最終物理兜底，內核將直接發射 `SIGSYS`/`SIGKILL` 強制終止進程。兩者相輔相成：「GuardVM 專精治理業務語義，Kernel Sandbox 專精封殺底層破壞」。
+3. **身分與授權解耦（Identity-Authorization Decoupling）：** 
+   - **能力點陣圖（Capability Bitmap）** 在編譯期生成後即為**純二進位唯讀常數（Immutable Memory）**，杜絕任何可被篡改的動態寫入通道。
+   - **動態撤銷（Dynamic Revocation）** 嚴格作用於**身分層（Principal CRL）**，GuardVM 藉由原子指針與無鎖環形緩衝區在記憶體入口瞬間標記憑證失效，使被撤銷之 Agent 根本無法觸發後續的點陣圖比對。
 
 當 `support-agent` 試圖執行：
 ```python
@@ -439,9 +455,68 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 8. [Cloudflare AI Gateway & Agent Security](https://developers.cloudflare.com/ai-gateway/)
 9. [ZTM: Zero Trust Mesh Networking](https://github.com/flomesh-io/ztm)
 
+## 十一、 核心學術論文與形式化理論基礎 (Foundational Academic Research & Specifications)
+
+為確保執行期治理機制具備經得起國際密碼學與系統安全領域檢驗之學術嚴謹性，DROS 四層防禦模型與 VEP 評測標準建立於以下形式化理論與先前技術基礎之上：
+
+### 11.1 形式化安全定理 (Formal Security Theorem)
+
+在 DROS 執行期治理模型中，系統於編譯期將所有合規工具呼叫集合映射為二進位授權矩陣 $\mathbf{B} \in \{0, 1\}^{M \times N}$，其中 $M$ 為角色空間，$N$ 為工具空間。
+
+$$\forall t \in \mathcal{T}_{\text{unauthorized}}, \quad \Pr\left(\text{Execute}(t) \mid \text{GuardVM}_{\mathbf{B}}\right) = 0$$
+
+> **定理 1 (確定性無害保證 / Deterministic In-Band Non-Execution Theorem)：**  
+> 設 $A$ 為具備任意狀態之遭劫自主 Agent。在語義感知帶內強制點（In-Process Semantic PEP）之 C-ABI 邊界下，對於任意未經位元烙印之工具呼叫 $t$（即 $\mathbf{B}[r][t] = 0$）或身分憑證已落入撤銷列表之主體（$\text{DIT} \in \text{CRL}$），GuardVM 觸發 $\text{Panic}$ 並終止執行緒之時間複雜度恆為 $\mathcal{O}(1)$，且呼叫抵達底層 OS 執行鏈之機率嚴格為零。
+
+### 11.2 技術白皮書與核心技術論文標準矩陣 (Technical Papers & Zenodo DOI Program)
+
+DROS 執行期確定性治理架構具備嚴謹的學術認識論基礎，全系列科研文獻已獲國際學術不可篡改 DOI 永久存證：
+
+#### 🧭 科研全景導讀 (Master Overview & Falsification Manifesto)
+* **《DROS 全景科研導讀：六篇論文之問題意識、理論體系與可證偽性聲明》**  
+  *A Synoptic Guide to the DROS Program: Problem Formulation, Theoretical Architecture, and Falsification Criteria*  
+  **Zenodo DOI**: [`10.5281/zenodo.22255275`](https://doi.org/10.5281/zenodo.22255275) | **Record**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)
+
+#### 🏹 六大核心技術論文 (The 6-Paper Program)
+1. 🏛️ **Paper 1: DROS-6P (治理規格層 ── 企業信任與六大邊界治理)**  
+   *DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents*  
+   **Zenodo DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
+2. 🛡️ **Paper 2: DROS 4-Layer (執行落地層 ── 四層深度防禦縱深架構)**  
+   *DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads*  
+   **Zenodo DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
+3. ⚙️ **Paper 3: DROS-PGM (內核控制層 ── 實體防護模組與不可否認性運行期歸責)**  
+   *Runtime Attribution Framework: An External C-ABI and PKI-Based Zero-Trust Infrastructure for Non-Repudiable Execution Governance in Multi-Agent Systems*  
+   **Zenodo DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+4. 🌐 **Paper 4: DROS-WebMCP (網絡能力層 ── Agentic Web 與能力暴露執行治理)**  
+   *DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web*  
+   **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
+5. 📱 **Paper 5: Post-Compromise Mobile (數位系統實證 ── 邊緣移動端執行衰減)**  
+   *Post-Compromise Security for Autonomous Mobile Agents: A Deterministic Runtime Attenuation and Proof-Carrying Authorization Architecture*  
+   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+6. 🛸 **Paper 6: Post-Compromise Physical AI / UAV (網絡-實體實證 ── 實體無人機物理動作剛性約束)**  
+   *Post-Compromise Security for Physical AI: Deterministic Runtime Enforcement of Physical Action Authority in Autonomous UAVs*  
+   **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
+
+### 11.3 學術文獻與同儕審查引用格式 (Standard Citation)
+
+```bibtex
+@inproceedings{dros2026inband,
+  author    = {Top Celestial Research Team and DROS Contributors},
+  title     = {Deterministic In-Band Runtime Governance for Post-Compromise Autonomous Agents: The DROS-VEP Verification Standard},
+  booktitle = {IEEE Symposium on Security and Privacy (S&P) Submission / Open Archive},
+  year      = {2026},
+  note      = {U.S. Provisional Patent Application No. 64/111,973. Open Verification Suite: RFC-010},
+  url       = {https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}
+}
+```
+
+* **形式化安全標準規範**：DROS RFC-010 (*Deterministic Execution Verification Protocol for Agentic Workloads*)
+* **開源評測與重現數據包**：[DROS-VEP-lite GitHub Repository](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)（包含 10 大 Post-Compromise 攻擊劇本、Docker 重現環境與 160,611 次連續壓測 Raw Data）
+* **專利防禦與先前技術宣告**：DROS 帶內常數時間位元遮罩與身分鋼印技術受美國臨時專利保護（U.S. PPA No. 64/111,973，Patent Pending）。
+
 ---
 
-## 八、 結語與展望 (Conclusion & Vision)
+## 十二、 結語與展望 (Conclusion & Vision)
 
 在 AI 如同齊天大聖般擁有無邊法力與自主工具調用能力的時代，企業需要的不是更大的金箍棒（傳統語意防火牆），而是一頂能確保它永遠不會偏離合規取經之路的實體緊箍咒。
 
