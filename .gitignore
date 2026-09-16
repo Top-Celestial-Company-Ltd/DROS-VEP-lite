@@ -49,8 +49,13 @@ reports/audit.jsonl
 *.synctex.gz
 *.tex
 
-# Internal Submission Packages & Master Tracking Indexes (Private / Local only)
+# Internal Submission Packages, Paper Drafts & Archives (Private / Local only)
 submissions/
+paper-*/
+docs/paper_*/
+docs/trilogy_guide/
+*.zip
+*.pdf
 docs/DROS_5_PAPER_PROGRAM_SUBMISSION_MASTER_INDEX.md
 
 # Patent-Sensitive Claim Candidates & Internal IDF (Patent Firewall)

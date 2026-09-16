@@ -341,7 +341,61 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 
 ---
 
-## 七、四層協同的形式化威脅矩陣 (Formal Threat Coverage Matrix)
+## 七、 系統部署拓撲、共同責任模型與多端落地邊界 (Deployment Topology & Epistemic Boundaries)
+
+為確保理論保證與生產實施嚴密對齊，杜絕對「零信任防護」的虛妄假設，本章節確立系統級 **共同責任模型（Shared Responsibility Model）** 與具體目標載體邊界：
+
+### 7.1 雙層治理架構：In-Process PEP 與 Out-of-Process Gateway
+
+在軟體實體佈局上，DROS 嚴格解耦兩大執行形態：
+
+1. **In-Process 模式（.so / .dll / .dylib 動態鏈接庫）**：
+   * **角色定位**：語言框架級 **帶內合規檢查點（Policy Enforcement Point, PEP）**。
+   * **保護範疇**：消除提示詞注入導致的越權工具調用與 API 參數違規，決策延遲 $< 3\ \mu\text{s}$。
+   * **邊界宣告**：與受監管 Agent 共享進程記憶體空間。在傳統威脅模型下，同層級無特權落差（若攻擊者取得原生任意記憶體讀寫權限，無法阻止進程內記憶體篡改）。
+2. **Out-of-Process 模式（獨立容器 / Daemon / Sidecar 網關）**：
+   * **角色定位**：具備物理進程與網路隔離之 **硬安全邊界（Process-Isolated Gateway）**。
+   * **保護範疇**：提供獨立記憶體位址空間，防止被攻陷的 Agent 進程對治理邏輯進行 Hooking 或 Patching，決策延遲 $< 1\text{ ms}$。
+
+### 7.2 物理 Fail-Closed 的先決條件：網路拓撲收束與憑證隔離
+
+針對資安圈關注之「遭劫 Agent 是否能直接發起 Raw Socket 連線繞過 Gateway」的終極威脅，DROS 透過兩道環境先決條件達成強制閉環：
+
+1. **網路拓撲收束 (Egress Confinement via Network Namespace / iptables)**：
+   * 在沙盒/容器環境中，Agent 運行的命名空間預設配置為 `egress: default-deny`。
+   * 宿主機與外部網路的直接連線在 OS 核心層被封鎖，**Agent 對外通訊的唯一物理路徑是本地 DROS Gateway 迴路 (`localhost:8080`)**。
+2. **憑證實體剝離 (Zero-Token Agent Environment)**：
+   * 生產環境真實 API Keys、資料庫連線字串與特權憑證**完全不注入 Agent 進程的環境變數或記憶體中**。
+   * 真實金鑰由 DROS Gateway 記憶體庫獨佔託管。Agent 即使被完全攻陷並試圖發送原生 Raw Socket，手頭上亦無任何外部特權憑證，雲端與後端伺服器將直接拒絕連線。
+3. **迴路通道鑑別與防偽冒 (Loopback Channel Authentication & Anti-Spoofing)**：
+   * **問題本質**：在受限沙盒內部，被攻陷的 Agent 或本地進程可能試圖直接向 Gateway 偽造身份呼叫。
+   * **RFC-010 鑑別防禦機制**：
+     * **持有權證明 (Proof-of-Possession via DIT)**：Agent 請求必須攜帶基於私鑰 (`did:key`) 簽署的 Ed25519 數位簽章。攻擊者即使攻陷某個低特權 Agent，因無目標高特權角色（如 CISO）之私鑰，在數學上絕對無法偽造簽章（此場景形式化覆蓋於 **PC-010 Cross-Principal Spoofing** 測試）。
+     * **內核直屬憑證 (Unix Domain Socket `SO_PEERCRED`)**：Linux 本機環境關閉開放 TCP 端口，強制採用 `.sock` 介面，由作業系統內核直接回傳發起端之真實 PID/UID/GID。
+     * **微服務/容器間 mTLS**：跨容器通訊強制啟用雙向 TLS 憑證握手。
+
+> **共同責任邊界 (Shared Responsibility Assertion)：**  
+> **「Agent 完全淪陷下依然成立的物理 Fail-Closed」保證，僅在 Agent 部署於受控網路拓撲（Gateway 作為唯一代理出口且金鑰實體隔離、並啟用 RFC-010 迴路簽章鑑別）時成立。若用戶將 Agent 部署於開放宿主機，將 Agent 置於受限網路拓撲屬於部署方之基礎設施配置責任。**
+
+### 7.3 多端目標畫像精準邊界 (Target Profiles & Hardware Constraints)
+
+DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平台嚴格界定物理掛載點：
+
+| 目標部署畫像 | 部署載體與執行環境 | 保證等級與防護機制 | 認識論邊界與排除場景 |
+| :--- | :--- | :--- | :--- |
+| **Linux / Windows 伺服器與開發機** | 獨立進程網關 / Docker Sidecar | **強制型 Fail-Closed（防惡意逃逸）** | 原生支援 `.so` 與 `.dll`。需搭配受限網路命名空間確保唯一出口。 |
+| **邊緣無人機 (Physical AI / UAV)** | 機載伴隨計算機 (NVIDIA Jetson / Linux ROS 2) | **帶內 MAVLink 動態指令攔截** | 掛載於伴隨電腦，在指令發往飛控前於 UART/Ethernet 邊界攔截；**明確排除跑在微控制器（Cortex-M STM32 / RTOS）上的底層飛控主板**。 |
+| **行動端 SDK (iOS / Android)** | 宿主 App 內嵌靜態鏈接庫 (`.dylib` / `.so`) | **In-Process PEP（應用層邊界）** | 靜態編譯於 App 二進位內，攔截 Agent 呼叫原生系統 API（相簿、SMS、In-App Purchase）的語言邊界；**明確排除非越獄 iOS 全局系統攔截（iOS Sandbox 嚴禁跨進程注入）**。高安全場景規範結合 Apple DeviceCheck / Android Play Integrity 進行硬體簽署與遠端二次背書。 |
+
+### 7.4 效能開銷之權威對照組引註 (Empirical Baseline Citations)
+
+為確保數據具備科學可證偽性，DROS 的微秒級延遲與記憶體節省指標，正式對照以下業界標準實作：
+* **記憶體節省 95%~99% 之對照組**：指名對照 **Meta Llama Guard 3**（8B FP16 顯存需求 $\ge 16\text{ GB}$，單張 A10G 推理延遲約 120-250ms；1B 量化版記憶體 $\ge 2\text{ GB}$）與 **NVIDIA NeMo Guardrails** 多軌檢測流程。DROS C-ABI 常駐二進位記憶體 $< 16\text{ MB}$。
+* **決策延遲快 1,000x~10,000x 之對照組**：指名對照 **Lakera Guard**（官方標稱 API 延遲約 30-50ms RTT）與 **Palo Alto Networks AI Runtime Security (AIRS)**（40-80ms RTT）及本地大模型端到端推理延遲（150-500ms）。DROS 帶內微核心常規路徑為 $26.1\ \mu\text{s}$，硬熔斷路徑為 $< 500\text{ ns}$。
+
+---
+
+## 八、四層協同的形式化威脅矩陣 (Formal Threat Coverage Matrix)
 
 | 攻擊向量 | L1 WAF/ATR | L2 ZTM 網格 | L3 任務編排 | L4 DROS C-ABI |
 | :--- | :---: | :---: | :---: | :---: |
@@ -356,7 +410,7 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 
 ---
 
-## 八、企業部署場景（以製造業與物流業 AI 自動化為例）
+## 九、企業部署場景（以製造業與物流業 AI 自動化為例）
 
 **場景：** 大型製造業企業部署 AI Agent 管理供應鏈、倉儲調度與供應商 API 對接。
 
@@ -369,18 +423,14 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 
 | 防禦層 | 回應 | 結果 |
 | :--- | :--- | :--- |
-| L1 ATR | PDF 文字通過語意檢測（偽裝為正常 Invoice 文字） | ❌ 穿透 |
-| L2 ZTM | Agent 持有有效憑證，網格正常接受 | ❌ 穿透 |
-| L3 編排層 | Agent 在其授權工具範疇內嘗試呼叫 `update_payment_account` | ⚠️ 取決於實作 |
-| L4 DROS | `update_payment_account` 在 `invoice-agent` 的 Bitmap 中位元為 `0` → **< 500ns 物理熔斷** | ✅ **完全阻斷** |
-
-**無 L4 的企業：** 面對持證遭劫 Agent 的越權呼叫，**完全無防禦能力**。
-
-**有 L4 的企業：** Agent 可被完全劫持，**核心資產依然安全無虞**。
+| **L1 WAF/ATR** | Invoice PDF 內文無直接惡意特徵（語意隱匿） | ❌ **穿透** |
+| **L2 ZTM 網格** | Agent 持有合法 X.509 憑證，網格內部通訊合法 | ❌ **穿透** |
+| **L3 任務編排** | Agent 處於正常「處理發票」工作流中 | ❌ **穿透** |
+| **L4 DROS** | Agent 嘗試調用 `modify_payment_account()` 與 `exfiltrate_data()`，兩者在 `invoice-processor` 角色 Bitmap 中均為 `0` | ✅ **確定性阻斷（< 500 ns）**，觸發 Thread Panic，呼叫未抵達資料庫，寫入加密簽章日誌 |
 
 ---
 
-## 九、與現有資安框架與國際法規的對齊聲明 (Standards & EU AI Act Alignment)
+## 十、與現有資安框架與國際法規的對齊聲明 (Standards & EU AI Act Alignment)
 
 | 標準 / 法規框架 | 對齊條目 / 條文 | DROS 四層防禦覆蓋與合規機制 |
 | :--- | :--- | :--- |
@@ -394,7 +444,7 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 
 ---
 
-## 十、結語與行動建議 (Conclusion & Recommendations)
+## 十一、結語與行動建議 (Conclusion & Recommendations)
 
 2026 年的企業 AI 格局由一個根本性不對稱定義：**AI Agent 的部署速度遠快於保護它們的安全能力**。隨著歐盟《EU AI Act》正式進入強制執行階段，現有防禦體系在面對「持有合法憑證的遭劫自主 Agent」時，存在不可修補的結構性盲點。
 
@@ -455,11 +505,11 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 8. [Cloudflare AI Gateway & Agent Security](https://developers.cloudflare.com/ai-gateway/)
 9. [ZTM: Zero Trust Mesh Networking](https://github.com/flomesh-io/ztm)
 
-## 十一、 核心學術論文與形式化理論基礎 (Foundational Academic Research & Specifications)
+## 十二、 核心學術論文與形式化理論基礎 (Foundational Academic Research & Specifications)
 
 為確保執行期治理機制具備經得起國際密碼學與系統安全領域檢驗之學術嚴謹性，DROS 四層防禦模型與 VEP 評測標準建立於以下形式化理論與先前技術基礎之上：
 
-### 11.1 形式化安全定理 (Formal Security Theorem)
+### 12.1 形式化安全定理 (Formal Security Theorem)
 
 在 DROS 執行期治理模型中，系統於編譯期將所有合規工具呼叫集合映射為二進位授權矩陣 $\mathbf{B} \in \{0, 1\}^{M \times N}$，其中 $M$ 為角色空間，$N$ 為工具空間。
 
