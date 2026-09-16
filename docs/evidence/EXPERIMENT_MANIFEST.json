@@ -1,0 +1,30 @@
+﻿{
+  "manifest_schema": "VEP-EXPERIMENT-MANIFEST-v1.0",
+  "generated_at": "2026-09-16T15:18:00+08:00",
+  "git_commit": "e02c4fcbd8e862afba72878122111f137ae20b18",
+  "canonical_experiment": {
+    "experiment_id": "EXP-1789532251-38a4fd",
+    "report_binding": "VEP-REPORT-2026-M5.1",
+    "status": "FROZEN_ACTIVE",
+    "path": "reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/result.json",
+    "sha256": "851779ed905f80c284b4c775259d43f85e2bd53e660e16b2c1819cbf264e6c01",
+    "total_scenarios": 10,
+    "total_executions": 44,
+    "substrates_evaluated": ["dros", "opa", "scopegate", "wasi"],
+    "deterministic_match_rate_pct": 100.0
+  },
+  "archived_predecessors": [
+    {
+      "experiment_id": "EXP-1789530057-779a1d",
+      "status": "SUPERSEDED_HISTORICAL",
+      "path": "reports/benchmarks/post_compromise/EXP-1789530057-779a1d/result.json",
+      "sha256": "0cb3b05fc09d7590bc53d4d17742e390dbdb62f6533f5c9a35a538c8a28c255e",
+      "total_scenarios": 10,
+      "total_executions": 33,
+      "substrates_evaluated": ["dros", "scopegate", "wasi"],
+      "superseded_by": "EXP-1789532251-38a4fd",
+      "supersede_reason": "OPA substrate arm added to complete 4-way cross-substrate comparison"
+    }
+  ],
+  "reconciliation_notes": "All formal claims in VEP-REPORT-2026-M5.1 derive strictly from EXP-1789532251-38a4fd. Predecessor EXP-1789530057-779a1d is quarantined to historical provenance."
+}

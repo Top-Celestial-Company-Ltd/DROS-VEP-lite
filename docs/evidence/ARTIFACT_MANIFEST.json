@@ -1,0 +1,127 @@
+{
+  "manifest_schema": "VEP-ARTIFACT-MANIFEST-v1.0",
+  "generated_at": "2026-09-16T15:19:00+08:00",
+  "git_commit": "e02c4fcbd8e862afba72878122111f137ae20b18",
+  "artifacts": [
+    {
+      "path": "reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md",
+      "type": "BENCHMARK_REPORT",
+      "report_id": "VEP-REPORT-2026-M5.1",
+      "sha256": "ffab12b6eca64a243ab0564994cee0eb399342bed686c1bfd7ef28f71c001660",
+      "description": "Hardened Multi-Track Post-Compromise Benchmark Report"
+    },
+    {
+      "path": "reports/evidence_manifest.json",
+      "type": "EVIDENCE_INDEX",
+      "sha256": "c9f7157494cbf5f1a8249266fec3483929b810f3468d2b1156d8cfb5c4111a2e",
+      "description": "Core Evidence Manifest"
+    },
+    {
+      "path": "reports/audit.jsonl",
+      "type": "EXECUTION_AUDIT_LOG",
+      "sha256": "e60f48568667a727c33b2c2d5d5730d4b40126f35fe7c73af3bbe6a617b119fe",
+      "description": "Ed25519-Signed Execution Audit Trail"
+    },
+    {
+      "path": "reports/benchmark_summary.json",
+      "type": "BENCHMARK_SUMMARY",
+      "sha256": "934ffc94cf7e2b4ccdeca2d6ceafc5a84e9a91d7f37d1da9415cfd442fdc775a",
+      "description": "Baseline Soak Test Summary"
+    },
+    {
+      "path": "reports/conformance_report.json",
+      "type": "CONFORMANCE_REPORT",
+      "sha256": "634dc344c2bdd5d43f551211064d3f941c52c3ece6f7c5c7686cd3a9debcbf88",
+      "description": "RFC-010 Level 3 Conformance Evaluation"
+    },
+    {
+      "path": "reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/result.json",
+      "type": "EXPERIMENT_RESULT",
+      "experiment_id": "EXP-1789532251-38a4fd",
+      "sha256": "851779ed905f80c284b4c775259d43f85e2bd53e660e16b2c1819cbf264e6c01",
+      "description": "Canonical 4-Substrate Post-Compromise Benchmark Result"
+    },
+    {
+      "path": "benchmarks/bare_metal_crucible/run_crucible.py",
+      "type": "ATTACK_CORPUS_RUNNER",
+      "sha256": "11eff25be768756d2c7739da6cee20381e5654b247b48337173f5ece92b0241b",
+      "description": "Crucible Attack Corpus and Testbed Engine"
+    },
+    {
+      "path": "vep.py",
+      "type": "EVALUATOR_CLI",
+      "sha256": "96d5bdbcf953a98ad3070184df068405d2ada09715a7a698e50fbaa93bd2cce0",
+      "description": "VEP Multi-Substrate CLI and Replay Tool"
+    },
+    {
+      "path": "docs/evidence/REPORT_P2_CONSOLIDATED_AUDIT.md",
+      "type": "AUDIT_REPORT",
+      "sha256": "2543bcdc5ffa93d120b50f4e4a81058f7c0aaddc37179b69aa8aa79aab8f04c9",
+      "description": "Phase P2 Formal Consolidated Audit Report"
+    },
+    {
+      "path": "reports/benchmarks/post_compromise/ipc_p2_evidence.jsonl",
+      "type": "EVIDENCE_LOG",
+      "sha256": "d27281381cd239235e973fd88e9c990ddecaa9df4b6bde45fd34b8664fc7eb3a",
+      "description": "Phase P2 15-Attack Adversarial Evidence Log"
+    },
+    {
+      "path": "docs/evidence/REPORT_P3_CONSOLIDATED_AUDIT.md",
+      "type": "AUDIT_REPORT",
+      "sha256": "d8d3cf8bd7991c95e30f91c0169d58dbd6a9c2da442b4589386c6bcc0f2c5316",
+      "description": "Phase P3 Formal Consolidated Audit Report"
+    },
+    {
+      "path": "reports/benchmarks/post_compromise/ipc_p3_real_os_evidence.jsonl",
+      "type": "EVIDENCE_LOG",
+      "sha256": "d3365d7efb6549414b016875c4cabcef7dd763a8f14ddb301bd208e805adffd1",
+      "description": "Phase P3 Real OS Process Identity Evidence Log"
+    },
+    {
+      "path": "docs/evidence/REPORT_P4_CONSOLIDATED_AUDIT.md",
+      "type": "AUDIT_REPORT",
+      "sha256": "dfdc9bdfc2f505da6940a8c81253397a674cf654a0d622147c285feff5dc11b5",
+      "description": "Phase P4 Formal Consolidated Audit Report"
+    },
+    {
+      "path": "docs/research/landscape/candidate_matrix.csv",
+      "type": "LANDSCAPE_MATRIX",
+      "sha256": "2747133c0d21efa24db31a78fc6c166eb8415f2762126d9c0ec480e989ed8423",
+      "description": "15-Dimensional Candidate Governance Feature Matrix"
+    },
+    {
+      "path": "docs/research/landscape/candidate_evidence_ledger.csv",
+      "type": "EVIDENCE_LEDGER",
+      "sha256": "4bd7b06212ac9673eca23b100328f4b0835557db84ebc6c16c28763b3acdbde4",
+      "description": "Candidate Primary Source Evidence Ledger"
+    },
+    {
+      "path": "docs/evidence/REPORT_P5_CONSOLIDATED_AUDIT.md",
+      "type": "AUDIT_REPORT",
+      "sha256": "509ca2c5ae34b371c8fa3c8a75d0e7866765f20b96d518dd30d7fdd2aad3f37e",
+      "description": "Phase P5 Formal Consolidated Audit Report"
+    },
+    {
+      "path": "docs/evidence/REPORT_P6_CONSOLIDATED_AUDIT.md",
+      "type": "AUDIT_REPORT",
+      "sha256": "ca5aa1f6c167d59042b53a04fb3c2533ab99d83aa5f2778c9abdb7e60f075fde",
+      "description": "Phase P6 Formal Consolidated Audit Report"
+    },
+    {
+      "path": "docs/evidence/REPORT_P7_CONSOLIDATED_AUDIT.md",
+      "type": "AUDIT_REPORT",
+      "sha256": "b82036063cc93b9bf9734783aad87bac897d839d1ecba49fa53955e276a459d0",
+      "description": "Phase P7 Final Cross-Disciplinary Coherence Consolidated Audit Report"
+    },
+    {
+      "path": "docs/evidence/M5_BASELINE.md",
+      "sha256": "f995c68acbd52739abe34a9c617de83caad548547579345abd9c2bc18c528cec",
+      "description": "Phase P0: M5 Baseline Evidence & Experiment Freeze Document"
+    },
+    {
+      "path": "docs/evidence/CHANGELOG.md",
+      "sha256": "a824ed839eed8bd14fd7e47ffd252866a93855d4681a3c66d18bdcd4d2095fae",
+      "description": "Formal Provenance Changelog tracking revision history and SHA-256 transitions of frozen audit reports"
+    }
+  ]
+}
