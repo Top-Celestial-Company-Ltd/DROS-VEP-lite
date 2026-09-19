@@ -45,17 +45,22 @@ from wasi.adapter import WasiAdapter
 from tla.adapter import TlaAssuranceAdapter
 from sel4.adapter import Sel4Adapter
 from cheri.adapter import CheriAdapter
+from opa.adapter import OpaAdapter
+from scopegate.adapter import ScopeGateAdapter
 
 
 def get_available_adapters():
     return {
         "dros": DrosAdapter(deployment_mode="runtime"),
         "dros-kernel": DrosAdapter(deployment_mode="kernel"),
+        "opa": OpaAdapter(),
+        "scopegate": ScopeGateAdapter(),
         "wasi": WasiAdapter(),
         "tla": TlaAssuranceAdapter(),
         "sel4": Sel4Adapter(),
         "cheri": CheriAdapter(),
     }
+
 
 
 def cmd_substrate_list(args):

@@ -73,3 +73,27 @@ def test_golden_acceptance_pc008_three_distinct_outcomes():
     assert res_tla.execution == ExecutionStatus.NOT_APPLICABLE
     assert res_tla.assurance_status == AssuranceStatus.PASS
     assert res_tla.reason_class == "FORMAL_INVARIANT_PRESERVED"
+
+
+def test_opa_and_scopegate_pc008_revocation_enforcement():
+    from opa.adapter import OpaAdapter
+    from scopegate.adapter import ScopeGateAdapter
+
+    scenario = load_scenario("scenarios/post_compromise/PC-008.yaml")
+    req = scenario.get_requests()[0]
+
+    opa = OpaAdapter()
+    scopegate = ScopeGateAdapter()
+
+    res_opa = opa.evaluate(req)
+    res_sg = scopegate.evaluate(req)
+
+    # Both OPA and ScopeGate correctly enforce dynamic revocation under SEC
+    assert res_opa.decision == DecisionType.DENY
+    assert res_opa.execution == ExecutionStatus.NOT_EXECUTED
+    assert res_opa.reason_class == "AUTHORIZATION_REVOKED"
+
+    assert res_sg.decision == DecisionType.DENY
+    assert res_sg.execution == ExecutionStatus.NOT_EXECUTED
+    assert res_sg.reason_class == "SG_STAGE4_REVOCATION_BLOCKED"
+
