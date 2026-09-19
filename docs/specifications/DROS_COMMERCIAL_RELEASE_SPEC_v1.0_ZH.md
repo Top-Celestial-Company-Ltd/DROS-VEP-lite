@@ -29,17 +29,27 @@ DROS 在系統底層閉環治理 Agent 的六大信任邊界：
 6. **Expiry / Revocation** — 確保權限具有生命週期並可即時撤銷 ($P_6$)。
 
 ### 🛡️ 不取代原則 (Non-Replacement Principle)：落實最後一公尺的執行期防線
-DROS **不取代**企業既有的 Agent Governance、IAM、Risk Management、Compliance、Workflow 或 Business Policy 系統。
 
-相反地，DROS 將這些上層治理系統所產生的身份、授權與政策要求，落實至實際的 Runtime Execution Path，並將 **Agent Governance 的最終信任邊界（Final Trust Boundary）落實為可強制執行的 Runtime Enforcement Boundary**。
+> **DROS 刻意做得更少 (DROS deliberately does less)。**
 
-因此，DROS 的核心產品定位不是「告訴企業 Agent 應該怎麼做」，而是：
+DROS 是一個**執行治理基底（Execution-Governance Substrate）**，而非包山包海的通用型 AI 資安平台（General-Purpose AI Security Suite）。
 
-> **確保 Agent 最終只能執行被明確授權、符合政策且仍處於有效信任狀態的操作。**
+它的責任範圍刻意被收斂得非常精確：**在執行邊界實施確定性授權與攔截。**
 
-即使 Agent 的推理、Prompt、Workflow 或上層治理元件遭到操縱，DROS 仍以系統底層的確定性 Enforcement Boundary 作為最後一道防線，使未被授權的 Agent Intent 無法直接轉化為實際系統執行。
+身分驗證、業務編排、日誌觀測性與企業策略制定，始終保留給本就為此設計的既有成熟系統：
+* **身分驗證與認證 (IAM / PKI)** $\longrightarrow$ 現有企業 IAM / PKI 系統（Keycloak, Okta, Azure AD）
+* **業務與工作流編排 (Orchestration)** $\longrightarrow$ 現有 Agent 應用框架（LangGraph, CrewAI, OpenAI Agent SDK）
+* **日誌觀測性與 SIEM (Observability)** $\longrightarrow$ 現有企業資安日誌體系（Splunk, Datadog, Elastic）
+* **政策規範制定 (Policy Authoring)** $\longrightarrow$ 企業自定義之業務與合規政策
+* **執行授權邊界 (Execution Authorization)** $\longrightarrow$ **DROS PEP 確定性攔截閘門**
+
+因此，DROS 的核心產品定位不是「告訴企業 Agent 應該怎麼做」或取代周邊技術棧，而是：
 
 $$\boxed{\textbf{Governance defines what should be allowed. \quad DROS enforces what can actually execute.}}$$
+
+> *「基礎設施不需要聰明，需要的是穩定與可驗證。(Infrastructure doesn’t need to be intelligent. It needs to be dependable.)」*
+
+DROS 不取代您的既有技術棧。它建立執行邊界，**且完全無需您替換現有的治理基礎設施 (without requiring you to replace your existing governance stack)。**
 
 ---
 

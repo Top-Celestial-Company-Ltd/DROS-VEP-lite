@@ -359,6 +359,56 @@ Traditional WAFs see a **100% legitimate user making a clean REST API call**. Th
 
 ---
 
+## 🏛️ Why DROS Is Intentionally Minimal
+
+> **DROS deliberately does less.**
+
+DROS is an **execution-governance substrate**, not a general-purpose AI security suite or platform.
+
+Its responsibility is deliberately narrow: **deterministic authorization and interception at the execution boundary.**
+
+Identity, business orchestration, observability, and enterprise governance remain with the systems already designed for those functions:
+
+```text
+Your Existing Enterprise Stack
+        │
+        ├── Identity / PKI        (Keycloak, Okta, Azure AD)
+        ├── Observability / SIEM  (Splunk, Datadog, Elastic)
+        ├── Agent Framework       (LangGraph, CrewAI, OpenAI Agent SDK)
+        └── Business Policy       (Enterprise Governance & IAM Rules)
+                 │
+                 ▼
+        ┌─────────────────┐
+        │      DROS       │
+        │ Execution       │ ◄── Deterministic, in-band authorization gate
+        │ Governance      │     (Zero-heap, constant-time C-ABI bitmap)
+        │ Boundary        │
+        └─────────────────┘
+                 │
+                 ▼
+             Tool / API / Syscall Action
+```
+
+By keeping the enforcement responsibility explicit and bounded, DROS achieves an essential architectural property:
+
+```text
+Narrower responsibility
+        ↓
+Smaller enforcement surface
+        ↓
+More explicit behavior
+        ↓
+More exhaustive, reproducible testing
+        ↓
+Easier inspection and long-term maintenance
+```
+
+> *"Infrastructure doesn’t need to be intelligent. It needs to be dependable."*
+
+DROS does not replace your stack. It establishes the execution boundary **without requiring you to replace your existing governance infrastructure.**
+
+---
+
 ## 🎯 Threat Scenarios & Research Fixtures (RFC-010 Standard Matrix)
 
 > [!NOTE]

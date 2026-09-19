@@ -358,6 +358,55 @@ DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)**，在�
 
 ---
 
+## 🏛️ 為什麼 DROS 刻意保持極簡？ (Why DROS Is Intentionally Minimal)
+
+> **DROS 刻意做得更少 (DROS deliberately does less)。**
+
+DROS 是一個**執行治理基底（Execution-Governance Substrate）**，而非包山包海的通用型 AI 資安平台（General-Purpose AI Security Suite）。
+
+它的責任範圍刻意被收斂得非常精確：**在執行邊界實施確定性授權與攔截。**
+
+身分驗證、業務編排、日誌觀測性與企業策略制定，始終保留給本就為此設計的既有成熟系統：
+
+```text
+企業既有技術棧 (Existing Enterprise Stack)
+        │
+        ├── 身分認證 / PKI        (Keycloak, Okta, Azure AD)
+        ├── 觀測性 / SIEM 稽核    (Splunk, Datadog, Elastic)
+        ├── Agent 業務編排框架   (LangGraph, CrewAI, OpenAI Agent SDK)
+        └── 企業業務策略與法規   (Enterprise IAM & Business Policy)
+                 │
+                 ▼
+        ┌─────────────────┐
+        │      DROS       │
+        │ 執行治理邊界    │ ◄── 帶內確定性授權閘門 (In-Band PEP)
+        │ (Execution Gate)│     (零堆積、常數時間 O(1) 二進位點陣圖)
+        └─────────────────┘
+                 │
+                 ▼
+          實體工具 / API / 系統呼叫 (Tool / API / Syscall Action)
+```
+
+透過維持執法責任的高度明確與邊界約束，DROS 實現了關鍵的架構特性：
+
+```text
+更窄的責任範圍 (Narrower responsibility)
+        ↓
+更小的受信任執法表面 (Smaller enforcement surface)
+        ↓
+更明確、可預測的系統行為 (More explicit behavior)
+        ↓
+更徹底、可重現的窮舉測試 (More exhaustive, reproducible testing)
+        ↓
+更容易的審查與長期維運 (Easier inspection and maintenance)
+```
+
+> *「基礎設施不需要聰明，需要的是穩定與可驗證。(Infrastructure doesn’t need to be intelligent. It needs to be dependable.)」*
+
+DROS 不取代您的既有技術棧。它建立執行邊界，**且完全無需您替換現有的治理基礎設施 (without requiring you to replace your existing governance stack)。**
+
+---
+
 ## 🎯 威脅模型與科研評測固件 (RFC-010 Standard Matrix)
 
 > [!NOTE]

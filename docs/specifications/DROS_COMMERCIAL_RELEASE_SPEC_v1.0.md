@@ -28,14 +28,26 @@ DROS provides end-to-end, closed-loop governance across the **Six Essential Trus
 6. **Expiry / Revocation:** Enforcing epoch-bounded token lifecycles with sub-microsecond atomic state revocation ($P_6$).
 
 ### Non-Replacement Principle: Enforcing Governance in the Last Mile
-DROS **does not replace** an enterprise's existing Agent Governance, IAM, Risk Management, Compliance, Workflow Orchestration, or Business Policy systems.
 
-Instead, DROS translates the identity, authorization, and policy constraints produced by these high-level governance layers into the physical **Runtime Execution Path**, establishing the **Final Trust Boundary** of Agent Governance as a deterministically enforced binary boundary.
+> **DROS deliberately does less.**
 
-Therefore, the core positioning of DROS is not telling enterprises "how agents should behave," but:
+DROS is an **execution-governance substrate**, not a general-purpose AI security suite or governance platform.
+
+Its responsibility is deliberately narrow: **deterministic authorization and interception at the execution boundary.**
+
+Identity, business orchestration, observability, and enterprise governance remain with the systems already designed for those functions:
+* **Identity / Authentication** $\longrightarrow$ Existing IAM / PKI (Keycloak, Okta, Azure AD)
+* **Business Orchestration** $\longrightarrow$ Existing Application / Agent Framework (LangGraph, CrewAI, OpenAI)
+* **Observability / SIEM** $\longrightarrow$ Existing Security Stack (Splunk, Datadog, Elastic)
+* **Policy Authoring** $\longrightarrow$ Enterprise-defined policies and governance rules
+* **Execution Authorization Boundary** $\longrightarrow$ **DROS PEP (Deterministic Interception Gate)**
+
+Therefore, the core positioning of DROS is not telling enterprises "how agents should behave" or replacing the surrounding stack, but:
 $$\boxed{\textbf{Enforcing that governed Agent actions remain deterministically bounded by explicit authorization, active policy, and valid trust state.}}$$
 
-Even if an agent's reasoning, prompt context, workflow, or upstream governance components are compromised via indirect prompt injection or goal hijacking, DROS provides a deterministic enforcement boundary at the binary execution layer—designed to **prevent unauthorized Agent Intent from executing physical state transitions within the governed runtime boundary**.
+> *"Infrastructure doesn’t need to be intelligent. It needs to be dependable."*
+
+DROS does not replace your stack. It establishes the execution boundary **without requiring you to replace your existing governance infrastructure.**
 
 ---
 
