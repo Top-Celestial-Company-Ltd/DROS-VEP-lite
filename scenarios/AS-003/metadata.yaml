@@ -1,5 +1,5 @@
 id: "AS-003"
-name: "EP3: Fable 5 越獄案 (Privilege Escalation)"
+name: "EP3: CI/CD Production Deployment Hijack (Privilege Escalation)"
 target_tool: "deploy_production"
 risk: "privilege_escalation"
 mitre_atlas_mapping: "AML.T0053"

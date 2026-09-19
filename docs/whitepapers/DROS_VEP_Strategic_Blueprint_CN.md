@@ -47,35 +47,63 @@ DROS-VEP 採用「控制面宣告開通 + 運行期二進位硬熔斷」的雙�
 
 ---
 
-## 三、 系統架構設計 (System Architecture - PDP/PEP Model)
+## 三、 系統架構設計 (System Architecture - Distributed Execution-Governance Fabric)
 
-DROS-VEP 採用 Zero Trust 零信任微隔離架構，將 AI Agent 身份、策略決策與工具執行層徹底劃分：
+DROS-VEP 採用「中央治理 + 分散式執行檢查點」的零信任架構，徹底打破單機邊界的局限，貫徹 **"Centralized Governance, Distributed Enforcement"** 原則：
 
 ```text
-                 Red Team / Tester
-                         |
+                    ┌───────────────────────────┐
+                    │   DROS Governance Plane   │
+                    │                           │
+                    │ Policy / Identity / PKI   │
+                    │ Capability / Revocation   │
+                    │ Provenance / Audit Log    │
+                    └─────────────┬─────────────┘
+                                  │
+                         Capability C₀ (Signed, Scoped, ArgHash)
+                                  │
+              ┌───────────────────┼──────────────────┐
+              ▼                   ▼                  ▼
+       ┌────────────┐      ┌────────────┐     ┌────────────┐
+       │ Agent PEP  │      │  API PEP   │     │ Worker PEP │
+       │ (Level 1)  │      │ (Level 2)  │     │ (Level 3)  │
+       └─────┬──────┘      └─────┬──────┘     └─────┬──────┘
+             │                   │                  │
+           Agent                ERP               Worker
+                                 │                  │
+                                 │ Derived C₁       │ Derived C₂
+                                 │ (Scope ≤ C₀)     │ (Scope ≤ C₁)
+                                 └────────┬─────────┘
+                                          ▼
+                                   Resource / DB
+
+                 DROS Governed Domain
+──────────────────────────────────────────────────────────
+       PEP                 PEP                 PEP
+        │                   │                   │
+      Agent                ERP                Worker
+        │                   │                   │
+        └────────── Governed Execution ─────────┘
+
+──────────────────── Trust Boundary ───────────────────────
+
+                     External API
                          ↓
-               Agent Threat Scenario (ATS)
-                         |
-                         ↓
-               AI Agent Layer (LangGraph / OpenClaw / CrewAI)
-                         |
-                         ↓
-              Agent Runtime Identity (DIC / DIT Token)
-                         |
-                         ↓
-================================================
-         DROS Governance Layer (PDP / PEP)
-   - Policy Decision Point (PDP): Rule Evaluation
-   - Policy Enforcement Point (PEP): microsecond Blocking
-================================================
-                         |
-                         ↓
-              Tool Execution Layer
-                         |
-                         ↓
-       Virtual Enterprise Systems (Keycloak / ERPNext / Forgejo)
+                 DROS controls:
+                 • Whether call is permitted
+                 • Outgoing payload specification
+                 DROS does NOT claim:
+                 • Control of third-party internals
 ```
+
+### 核心架構約束與不變量 (Architectural Invariants)
+
+1. **PEP 功能邊界規範 (Reference Monitor Invariant)**：
+   > **"PEP SHALL implement enforcement only; policy authoring, semantic reasoning, and autonomous decision-making SHALL remain outside the PEP."**  
+   > PEP 僅作為極簡、確定性的引用監視器，負責 Ed25519 驗簽、參數 ArgHash 比對、點陣圖 O(1) 查表與 Fail-Closed 熔斷，絕不內嵌大語言模型與語意推理。
+2. **派生憑證單調縮減 (Derived Capability Invariant)**：
+   > **"A derived capability MUST NOT acquire authority beyond its parent capability ($\mathrm{Scope}(C_n) \subseteq \mathrm{Scope}(C_{n-1})$)."**  
+   > 解決微服務與多跳業務呼叫中的 Confused Deputy 混淆代理人問題。
 
 ---
 
@@ -109,9 +137,9 @@ agent_groups:
 
 符合 **MITRE ATLAS** 威脅對齊規範：
 
-* **ATS-001 (EP1 Sol Escape)**：客服 Agent 收到惡意文件誘使匯出客戶資料庫，驗證 PDP/PEP 阻斷率。
-* **ATS-002 (EP2 ERP Ransomware)**：AI 代理被誘導輸出環境變數（`.env`）與敏感 Secrets。
-* **ATS-003 (EP3 Fable 5 Jailbreak)**：開發 Agent 被污染後嘗試直接將代碼推送到 Production 環境。
+* **ATS-001 (EP1 Customer Database Exfiltration)**：客服 Agent 收到惡意文件誘使匯出客戶資料庫，驗證 PDP/PEP 阻斷率。
+* **ATS-002 (EP2 ERP Credential Exfiltration)**：AI 代理被誘導輸出環境變數（`.env`）與敏感 Secrets。
+* **ATS-003 (EP3 CI/CD Deployment Hijack)**：開發 Agent 被污染後嘗試直接將代碼推送到 Production 環境。
 * **ATS-004 (EP4 Cross-Domain Supply Chain Poisoning Simulation)**：模擬外部資料抓取 Agent 存取第三方知識庫時遭間接提示詞注入 (IPI) 挾持，企圖跨企業讀取買方 ERP 財務密件。
 * **ATS-005 (Cross-Domain Data Access)**：HR Agent 嘗試跨部門存取 Finance 財務資料，驗證存取邊界。
 

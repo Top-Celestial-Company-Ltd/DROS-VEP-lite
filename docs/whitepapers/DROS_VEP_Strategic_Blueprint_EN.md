@@ -42,35 +42,63 @@ DROS-VEP adopts a dual-plane governance architecture: "Control Plane Provisionin
 
 ---
 
-## 3. System Architecture Design (PDP/PEP Model)
+## 3. System Architecture Design (Distributed Execution-Governance Fabric)
 
-DROS-VEP enforces zero-trust micro-segmentation, decoupling agent identity, policy evaluation, and tool execution:
+DROS-VEP establishes a Zero-Trust "Centralized Governance, Distributed Enforcement" architecture, bridging runtime security across distributed services:
 
 ```text
-                 Red Team / Tester
-                         |
+                    ┌───────────────────────────┐
+                    │   DROS Governance Plane   │
+                    │                           │
+                    │ Policy / Identity / PKI   │
+                    │ Capability / Revocation   │
+                    │ Provenance / Audit Log    │
+                    └─────────────┬─────────────┘
+                                  │
+                         Capability C₀ (Signed, Scoped, ArgHash)
+                                  │
+              ┌───────────────────┼──────────────────┐
+              ▼                   ▼                  ▼
+       ┌────────────┐      ┌────────────┐     ┌────────────┐
+       │ Agent PEP  │      │  API PEP   │     │ Worker PEP │
+       │ (Level 1)  │      │ (Level 2)  │     │ (Level 3)  │
+       └─────┬──────┘      └─────┬──────┘     └─────┬──────┘
+             │                   │                  │
+           Agent                ERP               Worker
+                                 │                  │
+                                 │ Derived C₁       │ Derived C₂
+                                 │ (Scope ≤ C₀)     │ (Scope ≤ C₁)
+                                 └────────┬─────────┘
+                                          ▼
+                                   Resource / DB
+
+                 DROS Governed Domain
+──────────────────────────────────────────────────────────
+       PEP                 PEP                 PEP
+        │                   │                   │
+      Agent                ERP                Worker
+        │                   │                   │
+        └────────── Governed Execution ─────────┘
+
+──────────────────── Trust Boundary ───────────────────────
+
+                     External API
                          ↓
-               Agent Threat Scenario (ATS)
-                         |
-                         ↓
-               AI Agent Layer (LangGraph / OpenClaw / CrewAI)
-                         |
-                         ↓
-              Agent Runtime Identity (DIT Token)
-                         |
-                         ↓
-================================================
-         DROS Governance Layer (PDP / PEP)
-   - Policy Decision Point (PDP): Rule Evaluation
-   - Policy Enforcement Point (PEP): microsecond Blocking
-================================================
-                         |
-                         ↓
-              Tool Execution Layer
-                         |
-                         ↓
-       Virtual Enterprise Systems (Keycloak / ERPNext / Forgejo)
+                 DROS controls:
+                 • Whether call is permitted
+                 • Outgoing payload specification
+                 DROS does NOT claim:
+                 • Control of third-party internals
 ```
+
+### Core Architectural Invariants
+
+1. **PEP Functional Boundary (Reference Monitor Invariant)**:
+   > **"PEP SHALL implement enforcement only; policy authoring, semantic reasoning, and autonomous decision-making SHALL remain outside the PEP."**  
+   > The PEP is strictly an ultra-compact, deterministic reference monitor executing Ed25519 verification, ArgHash matching, $\mathcal{O}(1)$ bitmap lookups, and fail-closed containment.
+2. **Derived Capability Monotonic Shrinkage (Derived Capability Invariant)**:
+   > **"A derived capability MUST NOT acquire authority beyond its parent capability ($\mathrm{Scope}(C_n) \subseteq \mathrm{Scope}(C_{n-1})$)."**  
+   > Eliminates Confused Deputy vulnerabilities in multi-hop microservice workflows.
 
 ---
 
@@ -104,9 +132,9 @@ agent_groups:
 
 Aligned with **MITRE ATLAS**:
 
-* **ATS-001 (EP1 Sol Escape)**: Support Agent deceived by malicious files to exfiltrate customer databases; validates PDP/PEP interception.
-* **ATS-002 (EP2 ERP Ransomware)**: AI agent manipulated to exfiltrate environment variables (`.env`) and sensitive secrets.
-* **ATS-003 (EP3 Fable 5 Jailbreak)**: Developer Agent hijacked to push untrusted code into Production.
+* **ATS-001 (EP1 Customer Database Exfiltration)**: Support Agent deceived by malicious files to exfiltrate customer databases; validates PDP/PEP interception.
+* **ATS-002 (EP2 ERP Credential Exfiltration)**: AI agent manipulated to exfiltrate environment variables (`.env`) and sensitive secrets.
+* **ATS-003 (EP3 CI/CD Deployment Hijack)**: Developer Agent hijacked to push untrusted code into Production.
 * **ATS-004 (EP4 Cross-Domain Supply Chain Poisoning Simulation)**: Simulated data-fetcher agent accessing a third-party knowledge repo, hijacked via IPI to attempt unauthorized buyer ERP exfiltration.
 * **ATS-005 (Cross-Domain Data Access)**: HR Agent attempting unauthorized access to Finance records.
 

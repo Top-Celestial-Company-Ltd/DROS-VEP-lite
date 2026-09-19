@@ -88,9 +88,9 @@ To prove the necessity of binary boundary enforcement, counterfactual control gr
 | Scenario ID | Attack Vector / Risk | Control Group (Without GuardVM) | Protected Group (With GuardVM L4) | DROS Latency |
 | :--- | :--- | :--- | :--- | :--- |
 | **ATS-001** | EP1 Customer Database Exfiltration | ❌ **100% Data Leaked** | ✅ **100% Intercepted (403)** | **25.8 μs** |
-| **ATS-002** | EP2 ERP Secrets Ransomware (`.env`) | ❌ **100% Secrets Compromised** | ✅ **100% Intercepted (403)** | **26.1 μs** |
-| **ATS-003** | EP3 Fable 5 Production Deployment | ❌ **100% Unapproved Push** | ✅ **100% Intercepted (403)** | **25.5 μs** |
-| **ATS-004** | EP4 OpenAI x Hugging Face Supply Chain | ❌ **100% Cross-Enterprise Leak** | ✅ **100% Intercepted (403)** | **26.4 μs** |
+| **ATS-002** | EP2 ERP Secrets Exfiltration (`.env`) | ❌ **100% Secrets Compromised** | ✅ **100% Intercepted (403)** | **26.1 μs** |
+| **ATS-003** | EP3 CI/CD Production Deployment Hijack | ❌ **100% Unapproved Push** | ✅ **100% Intercepted (403)** | **25.5 μs** |
+| **ATS-004** | EP4 Cross-Enterprise Supply Chain Poisoning | ❌ **100% Cross-Enterprise Leak** | ✅ **100% Intercepted (403)** | **26.4 μs** |
 
 ---
 
