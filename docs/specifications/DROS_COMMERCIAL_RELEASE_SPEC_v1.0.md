@@ -238,7 +238,7 @@ Enterprise VajraAgent / DROS-Guard enforces a **Three-Tier Progressive Eviction 
 | | Atomic RCU Revocation | 🟢 Verified | Linearized state pointer swap ($T_{\text{swap}} \approx 420\text{ ns}$) |
 | | SHA-256 Hash Chain Audit | 🟢 Verified | Sequential parent hash validation ($100\%$ valid of evaluated records) |
 | **Deployment & Ops** | Single-Command Docker Compose | 🟢 Verified | `docker compose up -d` (Sandbox & Dashboard) |
-| | B2B Multi-Enterprise Mode | 🟢 Verified | `docker-compose-b2b.yml` (OpenAI × HuggingFace) |
+| | B2B Multi-Enterprise Mode | 🟢 Verified | `docker-compose-b2b.yml` (Corp-Alpha × Corp-Beta) |
 | | Healthcheck & Auto-Recovery | 🟢 Verified | Container health probing and graceful restart |
 | **Regulatory & Legal** | Patent Filing Notice | 🟢 Filed / Pending | U.S. Provisional Patent App. No. 64/111,973 |
 | | Core Technical Trilogy | 🟢 Documented | Complete 3-Paper Architecture Matrix: DROS-6P (`paper_6p/`), DROS-4Layer (`paper_4layer/`), DROS-PGM (`paper_pgm/`) |

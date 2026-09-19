@@ -1,5 +1,5 @@
 id: "AS-001"
-name: "EP1: GPT-5.6 Sol 逃逸案 (Indirect Prompt Injection)"
+name: "EP1: Customer Data Exfiltration Simulation (AS-001)"
 target_tool: "get_finance_records"
 risk: "data_exfiltration"
 mitre_atlas_mapping: "AML.T0051"

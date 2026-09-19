@@ -244,7 +244,7 @@ $$\boxed{\textbf{Governance defines what should be allowed. \quad DROS enforces 
 | | RCU 原子策略撤銷 | 🟢 已驗證 | 線性化狀態指針切換（$T_{\text{swap}} \approx 420\text{ ns}$） |
 | | SHA-256 哈希鏈審計 | 🟢 已驗證 | 連續父節點哈希校驗（評估樣本 100% 有效） |
 | **部署運維** | 單一指令 Docker Compose | 🟢 已驗證 | `docker compose up -d`（沙箱與可視化儀表板） |
-| | B2B 跨企業聯邦模式 | 🟢 已驗證 | `docker-compose-b2b.yml`（OpenAI × HuggingFace 演練）|
+| | B2B 跨企業聯邦模式 | 🟢 已驗證 | `docker-compose-b2b.yml`（Corp-Alpha × Corp-Beta 演練）|
 | | 健康檢查與自動恢復 | 🟢 已驗證 | 容器健康探針與優雅降級重啟 |
 | **法務專利** | 專利申請與存證宣告 | 🟢 申請中 | 美國臨時專利申請案號 U.S. PPA No. 64/111,973 |
 | | IEEE 國際會議論文 | 🟢 已投稿 | IEEE ICA 2026 雙盲論文（4 頁雙欄） |

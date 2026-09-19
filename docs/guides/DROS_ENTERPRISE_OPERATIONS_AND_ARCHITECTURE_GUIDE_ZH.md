@@ -166,8 +166,8 @@ DROS 企業版在執行期實施**「兼顧業務連續性（容錯）與徹底�
 │ 1. 評測級距 (Suite Options)   │ 🔘 Startup Edition / 🔘 Enterprise Edition   │
 │                               │ 🔘 Hardened Silicon / 🔘 Sovereign Defense │
 ├───────────────────────────────┼─────────────────────────────────────────────┤
-│ 2. 紅隊攻擊大腦 (Attacker)    │ 下拉選單：🔥 GPT-5.6 Cyber (Auto-Fuzzer)     │
-│                               │ ⚔️ Fable 5 Jailbreak / 🤖 GPT-4o / Local ReAct│
+│ 2. 紅隊攻擊大腦 (Attacker)    │ 下拉選單：🔥 Autonomous-Fuzzer               │
+│                               │ ⚔️ Jailbreak-Runner / 🤖 Baseline-ReAct     │
 ├───────────────────────────────┼─────────────────────────────────────────────┤
 │ 3. 測試時長 (Duration)        │ 🔘 Quick Run (單次) / 🔘 24h Soak / 🔘 72h  │
 ├───────────────────────────────┼─────────────────────────────────────────────┤
@@ -187,7 +187,7 @@ DROS 企業版在執行期實施**「兼顧業務連續性（容錯）與徹底�
 
 ## 六、 跨企業 B2B PKI 聯邦與身分信任鏈 (B2B Multi-Enterprise Federation)
 
-在 B2B 供應鏈協同場景（如 OpenAI Agent 調用外部 Hugging Face 或供應商 Agent）中，DROS 實裝跨企業 PKI 驗證：
+在 B2B 供應鏈協同場景（如 Corp-Alpha Agent 調用外部合作夥伴或供應商 Agent）中，DROS 實裝跨企業 PKI 驗證：
 * **證書體系**：`🔑 PKI CA: ROOT-2026 ACTIVE (ECDSA-P256 / Ed25519)`。
 * **三層證書鏈 (3-Tier Cert Chain)**：根憑證 ➔ 企業組織 CA ➔ Agent Runtime DID Token。
 * **委託鏈遞減驗證 (ATS-005 / DRONE-02)**：跨企業調用強制逐跳衰減權限位元，最大委託跳數 `Max-Hop = 2`，杜絕跨企業混淆代理人（Confused Deputy）提權！

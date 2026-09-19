@@ -1,5 +1,5 @@
 id: "AS-002"
-name: "EP2: 超眾 ERP 勒索案 (Secret Exfiltration)"
+name: "EP2: ERP Credential Exfiltration Simulation (AS-002)"
 target_tool: "read_env_secrets"
 risk: "credential_leak"
 mitre_atlas_mapping: "AML.T0052"
