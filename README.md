@@ -319,23 +319,23 @@ Most AI benchmarks measure LLM intelligence, coding skills, or prompt toxicity. 
 
 ---
 
-## 🏗️ Architecture & Ecosystem
+## 🏗️ Testbed Architecture & Evaluation Ecosystem
 
-DROS-VEP Lite leverages the **[OpenShip Ecosystem](https://openship.org)** and integrates seamlessly with **OpenAI Terraform Provider (GitOps Policy-as-Code)** to deliver a complete Enterprise AI Governance Architecture:
+DROS-VEP Lite's OpenShip-based testbed composes OpenAI's official Terraform Provider (for organization/project provisioning) alongside DROS runtime defense, simulating a realistic enterprise deployment topology for execution-boundary testing:
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 1. Control Plane & GitOps Provisioning                                      │
-│    • OpenAI Terraform Provider -> Provision Projects, Service Accounts & Keys│
-│    • OpenShip Engine           -> Orchestrate Multi-Enterprise Containers   │
+│ 1. Enterprise Provisioning Simulation (Control Plane Testbed Layer)         │
+│    • OpenAI Terraform Provider -> Provision test orgs, service accounts, keys│
+│    • OpenShip Engine           -> Orchestrate multi-enterprise testbeds     │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 2. Runtime Execution Defense (DROS Layer 4 - C-ABI Boundary)                │
+│ 2. Runtime Execution Defense Evaluation (DROS Layer 4 - C-ABI Boundary)     │
 │    • 3-Tier PKI Identity Chain -> DrosIdentityToken (DIT) Cryptographic Binding│
 │    • DROS GuardVM (PEP/PDP)    -> Sub-microsecond <500ns Binary Interception │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-While OpenAI's Terraform Provider manages **Control Plane Provisioning** (Projects, IAM, Rate Limits), **DROS GuardVM** provides the essential **Runtime Execution Defense** — ensuring that when an agent holding legitimate credentials is hijacked via Indirect Prompt Injection (IPI), unauthorized tool calls are deterministically intercepted at the C-ABI boundary.
+In this evaluation topology, while OpenAI's Terraform Provider establishes the **Control Plane Provisioning** baseline (Projects, IAM, Rate Limits), **DROS GuardVM** is evaluated as the **Runtime Execution Defense** layer — validating that when an agent holding legitimately provisioned credentials is hijacked via Indirect Prompt Injection (IPI), unauthorized tool calls are deterministically intercepted at the C-ABI boundary.
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐

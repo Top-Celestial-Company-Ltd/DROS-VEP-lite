@@ -318,23 +318,23 @@ DROS-VEP 採 **開放式對抗證偽 (Open Adversarial Falsification)** 原則�
 
 ---
 
-## 🏗️ 系統架構與生態系 (Architecture & Ecosystem)
+## 🏗️ 評測靶場架構與生態系 (Testbed Architecture & Evaluation Ecosystem)
 
-DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)**，並無縫整合 **OpenAI Terraform Provider (GitOps 宣告式治理)**，構建出完整之企業級 AI 治理雙層架構：
+DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)**，在其評測環境中組合調度了 **OpenAI 官方 Terraform Provider（用於模擬開通企業組織與專案資源）** 與 **DROS 運行期防禦**，組裝出貼近真實企業拓撲之執行邊界評測沙盒：
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 1. 控制面與 GitOps 自動開通 (Control Plane Provisioning)                     │
-│    • OpenAI Terraform Provider -> 自動化宣告 Projects, Service Account 與 Keys│
+│ 1. 企業佈建情境模擬 (Control Plane Testbed Layer)                            │
+│    • OpenAI Terraform Provider -> 宣告式模擬開通測試用 Projects、Service Accounts │
 │    • OpenShip 容器編排引擎       -> 自動編排跨企業實體容器靶場                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 2. 運行期二進位實體防禦 (DROS Layer 4 - C-ABI 邊界)                          │
+│ 2. 運行期執行防禦評測 (DROS Layer 4 - C-ABI 邊界)                            │
 │    • 三階 PKI 密碼學身分鏈     -> DrosIdentityToken (DIT) 鋼印繫定          │
 │    • DROS GuardVM (PEP/PDP)   -> 亞微秒 <500ns 確定性 C-ABI 物理硬熔斷         │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-當 OpenAI Terraform Provider 負責 **「控制面開通 (Control Plane Provisioning)」** 時，**DROS GuardVM** 則提供了關鍵的 **「運行期防禦 (Runtime Execution Defense)」** —— 確保當 Agent 拿著由 Terraform 開通的合法憑證遭間接提示詞注入 (IPI) 挾持時，未授權的工具呼叫依然能在 C-ABI 系統呼叫層被亞微秒級硬熔斷！
+在此評測拓撲中，由 OpenAI Terraform Provider 建立 **「控制面開通基準 (Control Plane Provisioning Baseline)」**，並驗證 **DROS GuardVM** 作為 **「運行期防禦層 (Runtime Execution Defense Layer)」** 的真實防護表現 —— 確保當 Agent 拿著真實佈建之合法憑證遭間接提示詞注入 (IPI) 挾持時，未授權的工具呼叫依然能在 C-ABI 系統呼叫層被亞微秒級硬熔斷！
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
