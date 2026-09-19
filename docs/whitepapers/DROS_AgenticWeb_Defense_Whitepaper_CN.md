@@ -341,21 +341,75 @@ DROS 遵循**預設拒絕（Default Deny / Fail-Closed）**設計原則：
 
 ---
 
-## 七、 系統部署拓撲、共同責任模型與多端落地邊界 (Deployment Topology & Epistemic Boundaries)
+## 七、 系統部署拓撲、分散式執行織網與多端落地邊界 (Deployment Topology & Execution-Governance Fabric)
 
-為確保理論保證與生產實施嚴密對齊，杜絕對「零信任防護」的虛妄假設，本章節確立系統級 **共同責任模型（Shared Responsibility Model）** 與具體目標載體邊界：
+為確保理論保證與生產實施嚴密對齊，杜絕對「零信任防護」的虛妄假設，本章節確立系統級 **共同責任模型（Shared Responsibility Model）** 與具體目標載體邊界。
 
-### 7.1 雙層治理架構：In-Process PEP 與 Out-of-Process Gateway
+DROS 確立之核心治理命題為：
+> **"DROS does not require every application to become a DROS application. It requires every governed execution boundary to become a DROS enforcement point."**  
+> （DROS 不要求每個應用程式都變成 DROS；它要求每一個被治理的執行邊界都必須成為可驗證的 Enforcement Point。）
 
-在軟體實體佈局上，DROS 嚴格解耦兩大執行形態：
+### 7.1 中央治理與分散式執行織網 (Centralized Governance & Distributed Enforcement Fabric)
 
-1. **In-Process 模式（.so / .dll / .dylib 動態鏈接庫）**：
-   * **角色定位**：語言框架級 **帶內合規檢查點（Policy Enforcement Point, PEP）**。
-   * **保護範疇**：消除提示詞注入導致的越權工具調用與 API 參數違規，決策延遲 $< 3\ \mu\text{s}$。
-   * **邊界宣告**：與受監管 Agent 共享進程記憶體空間。在傳統威脅模型下，同層級無特權落差（若攻擊者取得原生任意記憶體讀寫權限，無法阻止進程內記憶體篡改）。
-2. **Out-of-Process 模式（獨立容器 / Daemon / Sidecar 網關）**：
-   * **角色定位**：具備物理進程與網路隔離之 **硬安全邊界（Process-Isolated Gateway）**。
-   * **保護範疇**：提供獨立記憶體位址空間，防止被攻陷的 Agent 進程對治理邏輯進行 Hooking 或 Patching，決策延遲 $< 1\text{ ms}$。
+DROS 嚴格解耦 **控制治理平面 (Governance Plane)** 與 **分散式執行檢查點 (Distributed PEP)**，建構起跨主機、跨應用的執行治理網格（Distributed Execution Enforcement Fabric）：
+
+```text
+                     DROS Central Governance Plane
+            ┌───────────────────────────────────────────────┐
+            │ Policy Engine (P1)   │ Identity & PKI (P2)    │
+            │ Capability Mint (P3) │ Revocation & CRL (P6)  │
+            │ Provenance DAG (P5)  │ Cryptographic Evidence │
+            └───────────────────────┬───────────────────────┘
+                                    │ Capability C₀ (Signed, Scoped, ArgHash)
+                                    │
+       ┌────────────────────────────┼────────────────────────────┐
+       ▼                            ▼                            ▼
+┌──────────────┐             ┌──────────────┐             ┌──────────────┐
+│  Agent PEP   │             │   API PEP    │             │  Worker PEP  │
+│  (Level 1)   │             │  (Level 2)   │             │  (Level 3)   │
+└──────┬───────┘             └──────┬───────┘             └──────┬───────┘
+       │                            │                            │
+     Agent                         ERP                         Worker
+                                    │                            │
+                                    │ Derived C₁ (Scope ≤ C₀)    │ Derived C₂ (Scope ≤ C₁)
+                                    └──────────────┬─────────────┘
+                                                   ▼
+                                           Resource / Database
+```
+
+#### ① PEP 最小化與確定性引用監視器規範 (PEP Functional Boundary Invariant)
+在 DROS 架構中，PEP 絕不是另一個大型 AI 軟體或具備自然語言推理的 Security Agent，而是一個極致精簡的確定性引用監視器（Deterministic Reference Monitor）：
+> **核心設計箴言：**  
+> **"The PEP must be smaller than the policy it enforces, simpler than the application it protects, and less capable than the agent it constrains."**  
+> （PEP 必須比它執行的政策更小、比它保護的應用更簡單、比它約束的 Agent 更沒有能力。）
+>
+> **正式技術規範 (PEP Functional Invariant)：**  
+> **"PEP SHALL implement enforcement only; policy authoring, semantic reasoning, and autonomous decision-making SHALL remain outside the PEP."**  
+> （PEP 僅實作執行攔截；策略制定、語意推理與自主決策一律嚴禁置於 PEP 內部。PEP 僅負責 Ed25519 簽名驗證、SHA-256 參數雜湊比對、點陣圖 O(1) 查表與 Fail-Closed 熔斷。）
+
+#### ② 派生憑證單調縮減原則 (Derived Capability Chain Invariant)
+當受治理的業務系統（如 ERP）收到請求後需進一步調用內部 Worker 或 Database 時，絕不允許直接使用泛型 Service Account 造成權限失控，而是採用嚴格向下限縮的派生憑證鏈：
+> **派生憑證不變量 (Derived Capability Invariant)：**  
+> $$\mathrm{Scope}(C_{n}) \subseteq \mathrm{Scope}(C_{n-1}) \quad \forall n \ge 1$$  
+> **"A derived capability MUST NOT acquire authority beyond its parent capability."**  
+> （派生能力憑證之權限範圍絕不可超越其父憑證。下游 Worker 或 Database PEP 驗證派生鏈完整性，從數學上根除 Confused Deputy 混淆代理人與權限自動放大漏洞。）
+
+#### ③ 三級部署邊界模型與配套適配器 (3-Tier Deployment Model & Adapters - 全版本標配)
+DROS 秉持「**One governance core. Multiple enforcement depths.**（一個治理核心，多層執行深度）」原則。全系產品（包含 Startup 與 Enterprise）均完整標配三級部署適配器（Deployment Boundary Adapters），客戶不因規模大小而被閹割安全深度，可依據資產價值與風險胃納自由選配：
+* **Level 1 (Agent Server PEP / 邊界守護)**：
+  - **適用情境**：單機開發環境、10~50 人新創團隊或初期 PoC。幾分鐘內完成導入，零修改既有網路架構。
+  - **配套軟體**：`dros-python-sdk`、`dros-nodejs-sdk`、`vajra-local-daemon` 及跨平台 C-ABI 二進位微核心。
+* **Level 2 (Application Gateway PEP / 網關防護)**：
+  - **適用情境**：企業外部/內部 API 表面收斂。不動現有 ERP / CRM 業務代碼，在 HTTP/RPC 流量入口實施 Capability 驗章攔截。
+  - **配套軟體**：`dros-envoy-filter`、`dros-nginx-module`、獨立容器化 `dros-gateway-proxy`。
+* **Level 3 (Deep Execution PEP / 深度縱深執行)**：
+  - **適用情境**：高價值核心資產、自動轉帳/金融調倉、無人機/實體硬體控制、或多跳微服務架構。強制執行派生憑證單調縮減，徹底防範 Confused Deputy。
+  - **配套軟體**：`dros-worker-adapter`、`dros-db-proxy-pep`、容器 Sidecar 守護模組、以及選配之主機核心態輔助過濾選項（eBPF / Seccomp-BPF Adapters）。
+
+#### ④ 治理域與外部信任邊界 (Governed Domain vs. External Boundary)
+DROS 誠實劃分系統工程之信任邊界：
+* **受治理內部執行 (Governed Execution)**：凡部署 DROS PEP 之端點，均受 Capability Token、微秒級熔斷與不可否認審計日誌保護。
+* **非受治理外部呼叫 (Ungoverned External Execution)**：當 Agent 發起對外部第三方服務（如第三方公開 Webhook、外部 API）之調用，**DROS 剛性保證「是否允許發起呼叫」與「呼叫之傳出 Payload 規格」，但不虛假宣稱能跨網路隔空管轄第三方外部伺服器內部的後續自發行為。**
 
 ### 7.2 物理 Fail-Closed 的先決條件：網路拓撲收束與憑證隔離
 
@@ -426,7 +480,16 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 | **L1 WAF/ATR** | Invoice PDF 內文無直接惡意特徵（語意隱匿） | ❌ **穿透** |
 | **L2 ZTM 網格** | Agent 持有合法 X.509 憑證，網格內部通訊合法 | ❌ **穿透** |
 | **L3 任務編排** | Agent 處於正常「處理發票」工作流中 | ❌ **穿透** |
-| **L4 DROS** | Agent 嘗試調用 `modify_payment_account()` 與 `exfiltrate_data()`，兩者在 `invoice-processor` 角色 Bitmap 中均為 `0` | ✅ **確定性阻斷（< 500 ns）**，觸發 Thread Panic，呼叫未抵達資料庫，寫入加密簽章日誌 |
+| **L4 DROS PEP** | Agent 嘗試調用 `modify_payment_account()` 與 `exfiltrate_data()`，兩者在 `invoice-processor` 角色 Bitmap 中均為 `0` | ✅ **確定性阻斷（< 500 ns）**，觸發 Thread Panic，呼叫未抵達資料庫，寫入加密簽章日誌 |
+
+### 9.1 多跳業務鏈與派生憑證防禦 (Multi-Hop Delegation & Confused Deputy Mitigation)
+
+在深層企業架構中，若 Agent 請求合法進入 ERP 網關，ERP 系統需進一步派生背景任務寫入核心資料庫：
+* **無 DROS 派生機制**：ERP 系統往往以高特權的共用 Service Account 直接連線資料庫，若請求內容在業務邏輯層發生語意混淆，資料庫將無條件執行毀滅性操作（Confused Deputy 混淆代理人漏洞）。
+* **DROS 派生憑證鏈 (Derived Capability Chain)**：
+  1. Agent 持有憑證 $C_0$（僅具備 `ERP.PROCESS_INVOICE` 範圍）。
+  2. ERP API PEP 僅能依據 $C_0$ 派生子憑證 $C_1$（嚴格限定 `DB.INSERT INTO invoices`，且 $\mathrm{Scope}(C_1) \subseteq \mathrm{Scope}(C_0)$）。
+  3. 若後續背景進程或遭劫模組試圖發起 `DB.DROP_TABLE` 或跨表讀取 `payroll`，Resource PEP 驗證發現該操作不在 $C_1$ 範圍內，立即拋出 **DENY**。
 
 ---
 
@@ -490,6 +553,64 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 | **GuardVM** | DROS 的 C-ABI 邊界守護模組，負責截獲並驗證所有工具調用 |
 | **PEP (Policy Enforcement Point)** | NIST Zero Trust 架構術語，執行存取控制決策的系統元件 |
 | **EU AI Act Art. 12 & 15** | 歐盟 AI 法案對動作層自動化加密日誌（Art. 12）與確定性資安韌性（Art. 15）之強制合規條文 |
+
+---
+
+## 附錄 C：完整實測目錄與平台驗證報告 (Comprehensive Test Suite & Verification Directory)
+
+為落實科學「可重複驗證（Reproducibility）」與「反偽證（Falsifiability）」精神，本附錄完整公開 DROS 攻防測試之硬體環境、量測方法論、紅隊滲透向量與平台對應邊界矩陣。
+
+### C.1 測試環境硬體與軟體規格 (Environment Specifications)
+
+所有物理熔斷與微秒級基準測試均在以下標準化環境中執行與驗證：
+
+| 規格項目 | 規格參數與版本 | 備註說明 |
+| :--- | :--- | :--- |
+| **主機作業系統** | Ubuntu Linux 22.04 LTS (Kernel `5.15.0-190-generic` x86_64) | 具備 Native Seccomp-BPF 與 BPF JIT 支持 |
+| **CPU 硬體** | Intel Xeon E3-1265L v3 (Haswell, 4C/8T @ 2.50GHz, 8MB Cache) | 啟用硬體 TSC 計時器與 LFENCE 推測屏障 |
+| **系統記憶體** | 16GB DDR3 ECC 1600MHz | 記憶體鎖定 `mlockall` 避免分頁置換 |
+| **編譯工具鏈** | GCC 11.4.0 (`-O2 -Wall`) / Rust 1.78.0 (`opt-level=3, lto=true`) | 啟用零堆積分配與 C-ABI 導出 |
+| **展示與開發環境** | Windows 11 Enterprise (x86_64) | 支援 `dros_core_rs.dll` 動態鏈結庫 |
+| **容器化重現** | Docker Engine 26.1.0 / Docker Compose v2.27.0 | 標準化開源靶場沙箱映像檔 |
+
+### C.2 測試方法論與量測指標定義 (Measurement Methodology)
+
+1. **決策延遲量測路徑：**
+   - **Protocol Gateway 延遲（VEP-Lite）**：量測自 Ingress 收到 MCP/REST Tool-Call JSON 請求，經 GuardVM 記憶體查表，到回傳決策封包的完整往返時間（Round-Trip Time）。
+   - **In-Process 核心熔斷延遲（Enterprise）**：使用 CPU 內建指令 `rdtsc` / Linux Raw Syscall `CLOCK_MONOTONIC_RAW`，量測自未授權 Syscall 觸發至核心發出 `SIGSYS` 訊號強制終結進程的時間間隔。
+2. **統計指標標準：**
+   - 樣本總量：連續 24 小時 soak test，共計 $N = 160,611$ 次獨立請求。
+   - 分位數：P50 為 $26.21\mu\text{s}$，P95 為 $31.05\mu\text{s}$，P99 為 $34.80\mu\text{s}$，最大抖動 $< 85\mu\text{s}$。
+
+### C.3 版本與平台治理邊界對照矩陣 (Platform & Edition Boundary Matrix)
+
+為消弭跨平台理解落差，DROS 在各產品版本與作業系統上的防禦邊界嚴格定義如下：
+
+| 功能防護維度 | VEP-Lite (開源版) | Enterprise (商用版 - Linux) | Enterprise (商用版 - Windows) |
+| :--- | :--- | :--- | :--- |
+| **治理架構定位** | 零侵入協議閘道 (Gateway) | 宿主進程核心沙箱 (Kernel Host) | 二進位 C-ABI 整合 (Host DLL) |
+| **攔截邊界層級** | MCP / REST Ingress/Egress | Syscall / Process Boundary | C-ABI Dynamic Library Boundary |
+| **In-Process 繞過防禦** | 不支援（標註為協議盲區） | **支援 (Seccomp-BPF + Raw Syscall)** | 支援 (Process Token / Detours API) |
+| **防禦執行機制** | HTTP 403 / MCP Error | **Linux 核心 SIGSYS 物理終結** | STATUS_ACCESS_DENIED 異常中斷 |
+| **支援框架生態** | 5 大框架實測 (相容所有標準 MCP) | 原生 C/Rust 微內核注入 | 原生 DLL 注入導出 |
+
+### C.4 紅隊滲透實測向量與結果記錄 (Red Team Crucible Attack Vectors)
+
+針對「Agent 遭完全劫持後試圖突破執行邊界」之場景，實測之四大極端攻擊向量與核心回傳日誌：
+
+| 測試編號 | 攻擊向量描述 (Attack Vector) | 實測指令 / Payload | 預期防護行為 | 實際實測結果與退出狀態 |
+| :--- | :--- | :--- | :--- | :--- |
+| **TC-001** | **合規白名單調用**<br>(Baseline Legitimate) | Raw asm `SYS_clock_gettime(228)`<br>+ `write(1)` | 白名單放行，正常完成 | **PASS**<br>正常執行並輸出，Exit Code = 0 |
+| **TC-002** | **libc 標準進程替換**<br>(Standard Injection) | libc `execve("/bin/echo", ...)`<br>試圖啟動未授權 shell | 核心即時攔截並擊斃進程 | **PASS**<br>進程被 Linux 核心發出 `SIGSYS` 物理擊斃 (Killed) |
+| **TC-003** | **繞過 libc 之 Raw Syscall**<br>(Direct asm Bypassing libc) | 手寫內聯彙編 `asm!("syscall")`<br>直接呼叫 `SYS_execve(59)` | 穿透 libc 依然被核心過濾器攔截 | **PASS**<br>進程被 Linux 核心發出 `SIGSYS` 物理擊斃 (Killed) |
+| **TC-004** | **記憶體除錯與跨進程注入**<br>(Debugger / Rootkit Probe) | 內聯彙編直接發起 `SYS_ptrace(101)`<br>`PTRACE_TRACEME` | 核心禁止調試器附加 | **PASS**<br>進程被 Linux 核心發出 `SIGSYS` 物理擊斃 (Killed) |
+| **TC-005** | **未授權憑證與機密讀取**<br>(Secret Exfiltration Probe) | 內聯彙編直接發起 `SYS_openat(257)`<br>嘗試讀取 `/etc/shadow` 或 `.env` | 阻止非白名單檔案開啟 | **PASS**<br>進程被 Linux 核心發出 `SIGSYS` 物理擊斃 (Killed) |
+
+### C.5 已知限制與架構盲區揭露 (Known Limitations & Honest Trade-offs)
+
+1. **vDSO 快速路徑與時間源：** Linux 部分 libc 實作（如 `gettimeofday`）會走核心共享唯讀記憶體頁（vDSO），此路徑不產生中斷，Seccomp 無法過濾。DROS 已於核心微內核中強制使用 `asm!` Raw Syscall 繞過 libc 確保時間審計不可被操縱。
+2. **Lite 版本地物件呼叫：** VEP-Lite 作為協議閘道，對於不經過網路協定（MCP/REST）之進程內部直接記憶體操作無法監管，此部分需由 Enterprise 版之 OS 核心沙箱或原生 SDK Hook 補齊。
+3. **靜態二進位注入限制：** 若遭劫持程式具備 root 權限且在載入 Seccomp 裝甲前即已植入惡意核心模組（LKM Rootkit），則任何使用者空間與 BPF 沙箱皆可能被繞過。因此 DROS 假設「Linux 宿主核心本身之健全性為信任根（Root of Trust）」。
 
 ---
 

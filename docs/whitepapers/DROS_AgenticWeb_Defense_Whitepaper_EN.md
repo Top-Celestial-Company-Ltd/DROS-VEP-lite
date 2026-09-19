@@ -342,21 +342,73 @@ DROS follows the **Default Deny / Fail-Closed** design principle:
 
 ---
 
-## 7. System Deployment Topology, Shared Responsibility Model & Target Profiles
+## 7. System Deployment Topology, Distributed Execution-Governance Fabric & Operational Boundaries
 
-To ensure theoretical safety invariants strictly align with production reality, DROS formally defines an explicit **Shared Responsibility Model** and rigorous hardware/OS profile boundaries:
+To ensure theoretical safety invariants strictly align with production reality, DROS formally defines an explicit **Shared Responsibility Model** and rigorous execution boundaries.
 
-### 7.1 Dual-Tier Governance Architecture: In-Process PEP vs. Out-of-Process Gateway
+DROS establishes the foundational architectural principle:
+> **"DROS does not require every application to become a DROS application. It requires every governed execution boundary to become a DROS enforcement point."**
 
-DROS strictly decouples two operational deployment profiles:
+### 7.1 Centralized Governance & Distributed Execution Enforcement Fabric
 
-1. **In-Process Mode (`.so` / `.dll` / `.dylib` Dynamic Libraries)**:
-   * **Role & Scope**: Language-level **In-Band Compliance Checkpoint (Policy Enforcement Point, PEP)**.
-   * **Threat Mitigation**: Prevents prompt injection leading to unauthorized tool invocations and API argument violations with $< 3\ \mu\text{s}$ decision latency.
-   * **Epistemic Boundary**: Shares memory address space with the governed Agent process. Under traditional attack models, peer execution layers lack privilege separation; in-process hooks cannot prevent arbitrary memory tampering if an attacker achieves native code execution.
-2. **Out-of-Process Mode (Isolated Container / Daemon / Sidecar Gateway)**:
-   * **Role & Scope**: **Process-Isolated Hardware/OS Security Boundary**.
-   * **Threat Mitigation**: Enforces isolated memory address space, preventing compromised Agent processes from hooking, tampering, or patching policy evaluation logic with $< 1\text{ ms}$ local loopback latency.
+DROS strictly decouples the **Central Governance Plane** from **Distributed Policy Enforcement Points (PEPs)**, establishing a cross-host, cross-workload execution-governance fabric:
+
+```text
+                     DROS Central Governance Plane
+            ┌───────────────────────────────────────────────┐
+            │ Policy Engine (P1)   │ Identity & PKI (P2)    │
+            │ Capability Mint (P3) │ Revocation & CRL (P6)  │
+            │ Provenance DAG (P5)  │ Cryptographic Evidence │
+            └───────────────────────┬───────────────────────┘
+                                    │ Capability C₀ (Signed, Scoped, ArgHash)
+                                    │
+       ┌────────────────────────────┼────────────────────────────┐
+       ▼                            ▼                            ▼
+┌──────────────┐             ┌──────────────┐             ┌──────────────┐
+│  Agent PEP   │             │   API PEP    │             │  Worker PEP  │
+│  (Level 1)   │             │  (Level 2)   │             │  (Level 3)   │
+└──────┬───────┘             └──────┬───────┘             └──────┬───────┘
+       │                            │                            │
+     Agent                         ERP                         Worker
+                                    │                            │
+                                    │ Derived C₁ (Scope ≤ C₀)    │ Derived C₂ (Scope ≤ C₁)
+                                    └──────────────┬─────────────┘
+                                                   ▼
+                                           Resource / Database
+```
+
+#### 1. PEP Functional Boundary & Reference Monitor Invariant
+Within the DROS architecture, the PEP is emphatically NOT another heavyweight AI agent or semantic reasoning engine. Instead, it operates strictly as an ultra-compact, deterministic reference monitor:
+> **Core Architectural Maxim:**  
+> **"The PEP must be smaller than the policy it enforces, simpler than the application it protects, and less capable than the agent it constrains."**
+>
+> **Formal Technical Invariant (PEP Functional Invariant):**  
+> **"PEP SHALL implement enforcement only; policy authoring, semantic reasoning, and autonomous decision-making SHALL remain outside the PEP."**  
+> (The PEP strictly executes Ed25519 signature verification, SHA-256 argument hash matching, $\mathcal{O}(1)$ bitmap lookups, and fail-closed containment.)
+
+#### 2. Derived Capability Monotonic Shrinkage (Derived Capability Invariant)
+When a governed upstream service (e.g., ERP) receives an execution request and must dispatch background workers or database queries, it is strictly forbidden from using generic, unconstrained service accounts. All authority must follow a cryptographic delegation chain:
+> **Derived Capability Invariant:**  
+> $$\mathrm{Scope}(C_{n}) \subseteq \mathrm{Scope}(C_{n-1}) \quad \forall n \ge 1$$  
+> **"A derived capability MUST NOT acquire authority beyond its parent capability."**  
+> (Downstream Resource and Worker PEPs verify delegation chain integrity, formally eliminating Confused Deputy and privilege amplification vulnerabilities.)
+
+#### 3. Three-Tier Deployment Model & Adapters (Included Across All Editions)
+DROS operates on the principle: **"One governance core. Multiple enforcement depths."** All deployment adapters are fully bundled across Startup and Enterprise editions without artificial security gating. Clients freely choose their enforcement boundaries according to asset value and risk profile:
+* **Level 1 (Agent Server PEP / Boundary Defense)**:
+  - **Ideal For**: Local developer hosts, 10–50 seat startups, or rapid PoCs. Deploys in minutes with zero disruption to existing network topologies.
+  - **Bundled Software**: `dros-python-sdk`, `dros-nodejs-sdk`, `vajra-local-daemon`, and cross-platform C-ABI microkernel binaries.
+* **Level 2 (Application Gateway PEP / Gateway Ingress Defense)**:
+  - **Ideal For**: Consolidating internal/external API attack surfaces. Requires zero modifications to core ERP/CRM code; enforces cryptographic token verification at HTTP/RPC ingress.
+  - **Bundled Software**: `dros-envoy-filter`, `dros-nginx-module`, and containerized `dros-gateway-proxy`.
+* **Level 3 (Deep Execution PEP / Deep Execution Governance)**:
+  - **Ideal For**: Mission-critical databases, automated financial trading, autonomous robotics/drones, or multi-hop microservice workflows. Enforces monotonic derived capability shrinkage to eliminate Confused Deputy attacks.
+  - **Bundled Software**: `dros-worker-adapter`, `dros-db-proxy-pep`, container sidecar daemons, and optional OS kernel filtering adapters (eBPF / Seccomp-BPF options).
+
+#### 4. Governed Execution vs. External Trust Boundaries
+DROS enforces explicit clarity regarding system trust boundaries:
+* **Governed Execution Domain**: All boundaries equipped with a DROS PEP operate under cryptographic capability tokens, microsecond revocation, and immutable audit logs.
+* **Ungoverned External Execution**: When an agent invokes external third-party endpoints (e.g., public webhooks, vendor APIs), **DROS deterministically governs whether the call is permitted and the exact outgoing payload format; it does NOT claim remote control over the third party's internal execution.**
 
 ### 7.2 Fail-Closed Preconditions: Network Confinement & Credential Deprivation
 
@@ -427,7 +479,16 @@ To maintain scientific reproducibility, DROS's sub-microsecond latency and 95%+ 
 | **L1 WAF/ATR** | Invoice PDF text contains no obvious malicious signatures (semantic evasion) | ❌ **Bypassed** |
 | **L2 ZTM Mesh** | Agent holds valid X.509 certificate; mesh communication authorized | ❌ **Bypassed** |
 | **L3 Orchestration** | Agent operates within nominal "invoice processing" workflow graph | ❌ **Bypassed** |
-| **L4 DROS** | Agent attempts `modify_payment_account()` and `exfiltrate_data()`; both bit positions are `0` in the `invoice-processor` role Bitmap | ✅ **Deterministic Interception (< 500 ns)**: Thread panic triggered, call never reaches database, signed audit event persisted |
+| **L4 DROS PEP** | Agent attempts `modify_payment_account()` and `exfiltrate_data()`; both bit positions are `0` in the `invoice-processor` role Bitmap | ✅ **Deterministic Interception (< 500 ns)**: Thread panic triggered, call never reaches database, signed audit event persisted |
+
+### 9.1 Multi-Hop Delegation & Confused Deputy Mitigation
+
+In deep enterprise environments, when an agent's request legitimately passes through an ERP gateway, the ERP service frequently dispatches asynchronous workers to update internal databases:
+* **Without DROS Delegation Governance**: The ERP typically queries downstream databases using a monolithic, highly privileged service account. If business logic is subtly manipulated, the database unconditionally carries out devastating commands (Confused Deputy vulnerability).
+* **With DROS Derived Capability Chains**:
+  1. The Agent holds capability $C_0$ (strictly scoped to `ERP.PROCESS_INVOICE`).
+  2. The ERP Gateway PEP can only mint derived capability $C_1$ (restricted to `DB.INSERT INTO invoices`, where $\mathrm{Scope}(C_1) \subseteq \mathrm{Scope}(C_0)$).
+  3. If a hijacked worker or compromised module subsequently attempts `DB.DROP_TABLE` or queries unauthorized `payroll` records, the Database Resource PEP verifies capability scope and immediately returns **DENY**.
 
 ---
 
@@ -491,6 +552,66 @@ Empirical metrics cited throughout this whitepaper reflect standardized evaluati
 | **GuardVM** | The high-performance C-ABI governance daemon enforcing in-band policy matching |
 | **PEP (Policy Enforcement Point)** | The architectural nexus defined under NIST SP 800-207 that enforces access decisions |
 | **EU AI Act Art. 12 & 15** | European Union mandatory statutory requirements for automated action logging and cybersecurity resilience |
+
+---
+
+## Appendix C: Comprehensive Test Suite & Platform Verification Directory
+
+In adherence to scientific reproducibility and falsification principles, this Appendix details the empirical test environment, measurement methodology, red team crucible attack vectors, and cross-platform governance boundary matrix.
+
+### C.1 Environmental Hardware & Software Specifications
+
+All physical boundary fusing and microsecond benchmark tests were executed under the following standardized environment:
+
+| Specification Area | Exact Parameters & Versions | Engineering Context |
+| :--- | :--- | :--- |
+| **Host Operating System** | Ubuntu Linux 22.04 LTS (Kernel `5.15.0-190-generic` x86_64) | Native Seccomp-BPF with BPF JIT compiler active |
+| **Processor Hardware** | Intel Xeon E3-1265L v3 (Haswell, 4C/8T @ 2.50GHz, 8MB Cache) | Hardware TSC and LFENCE speculation barriers |
+| **Physical Memory** | 16GB DDR3 ECC 1600MHz | `mlockall` page locking to prevent swap latency spikes |
+| **Toolchain & Compilers** | GCC 11.4.0 (`-O2 -Wall`) / Rust 1.78.0 (`opt-level=3, lto=true`) | Zero heap allocation, C-ABI export symbols |
+| **Development & Demo Host** | Windows 11 Enterprise (x86_64) | `dros_core_rs.dll` dynamic library boundary |
+| **Containerized Harness** | Docker Engine 26.1.0 / Docker Compose v2.27.0 | Clean-room reproducibility testbed |
+
+### C.2 Benchmark Methodology & Metric Definitions
+
+1. **Measurement Pathways:**
+   - **Protocol Gateway Latency (VEP-Lite)**: End-to-end round-trip latency measured from the ingress of an MCP/REST Tool-Call JSON frame, through GuardVM bitmask lookup, to the deterministic decision dispatch.
+   - **In-Process Kernel Fusing Latency (Enterprise)**: High-resolution hardware cycle counter (`rdtsc`) / `CLOCK_MONOTONIC_RAW` measuring the delta between an unauthorized raw syscall and the Linux kernel's `SIGSYS` process termination signal.
+2. **Statistical Confidence:**
+   - Sample Size: 24-hour continuous soak test encompassing $N = 160,611$ independent requests.
+   - Percentiles: P50 at $26.21\mu\text{s}$, P95 at $31.05\mu\text{s}$, P99 at $34.80\mu\text{s}$, maximum jitter $< 85\mu\text{s}$.
+
+### C.3 Cross-Platform Governance Boundary Matrix
+
+To eliminate platform conflation, DROS strictly delineates defensive guarantees across product tiers and operating environments:
+
+| Governance Dimension | VEP-Lite (Open Source) | Enterprise (Linux Host) | Enterprise (Windows Host) |
+| :--- | :--- | :--- | :--- |
+| **Architectural Model** | Zero-intrusion Protocol Gateway | Kernel-Level Host Sandbox | Binary C-ABI Integration |
+| **Enforcement Layer** | MCP / REST Ingress/Egress | Syscall / Process Boundary | C-ABI Dynamic Library Boundary |
+| **In-Process Bypass Defense** | Out-of-scope (Protocol Boundary) | **Enforced (Seccomp-BPF + Raw Syscall)** | Enforced (Process Token / Detours API) |
+| **Enforcement Mechanism** | HTTP 403 / MCP Error Frame | **Linux Kernel SIGSYS Termination** | STATUS_ACCESS_DENIED Panic |
+| **Ecosystem Support** | 5 Frameworks Verified (All MCP) | Native C/Rust Microkernel Injection | Native DLL Injection / Export |
+
+### C.4 Red Team Crucible Attack Vectors & Empirical Results
+
+Simulating full post-compromise agent hijacking where the adversary attempts to escape execution boundaries:
+
+| ID | Attack Vector Description | Payload / Execution Mechanics | Expected Defensive Action | Empirical Result & Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **TC-001** | **Legitimate Baseline Call**<br>(Whitelisted Baseline) | Raw asm `SYS_clock_gettime(228)`<br>+ `write(1)` output | Whitelist permit, uninterrupted | **PASS**<br>Executed cleanly, Exit Code = 0 |
+| **TC-002** | **libc Process Hijacking**<br>(Standard execve Injection) | libc `execve("/bin/echo", ...)`<br>spawning unauthorized shell | Kernel traps and kills process | **PASS**<br>Process terminated by kernel `SIGSYS` |
+| **TC-003** | **Raw Syscall Bypassing libc**<br>(Inline Assembly `asm!`) | Direct inline assembly `asm!("syscall")`<br>triggering `SYS_execve(59)` | libc-bypass caught by BPF filter | **PASS**<br>Process terminated by kernel `SIGSYS` |
+| **TC-004** | **Debugger / Memory Snooping**<br>(Process Attach Injection) | Inline assembly `SYS_ptrace(101)`<br>`PTRACE_TRACEME` call | Kernel blocks debugger attachment | **PASS**<br>Process terminated by kernel `SIGSYS` |
+| **TC-005** | **Unauthorized Secret Extraction**<br>(Arbitrary File Open) | Inline assembly `SYS_openat(257)`<br>reading `/etc/shadow` or `.env` | File open blocked at syscall table | **PASS**<br>Process terminated by kernel `SIGSYS` |
+
+### C.5 Architectural Trade-offs & Known Boundaries
+
+1. **vDSO Fast Paths:** Certain libc clock implementations utilize the vDSO memory page without issuing trap interrupts, bypassing Seccomp. DROS resolves this by strictly utilizing inline assembly raw syscalls (`CLOCK_MONOTONIC_RAW`), ensuring immutable audit timestamps.
+2. **Local In-Process Object Mutation:** VEP-Lite enforces protocol-level boundaries (MCP/REST). In-process local memory manipulation requires Enterprise host-level kernel isolation.
+3. **Static Binary Limitations:** If an attacker possesses root execution prior to Seccomp arming, kernel-level LKM modules could subvert user-space filters. DROS assumes the integrity of the host OS kernel as the Root of Trust.
+
+---
 
 ---
 
