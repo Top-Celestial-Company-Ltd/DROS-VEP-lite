@@ -37,23 +37,23 @@
 
 | Security Property | Threat Vector Evaluated | DROS (`E2_SANDBOX_RUNTIME`) | WASI (`E2_SANDBOX_RUNTIME`) | seL4 (`E3_OS_KERNEL`) | CHERI (`E4_HARDWARE`) | TLA+ (`E5_FORMAL_ASSURANCE`) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Principal Attribution** | PC-010 (Cross-Principal Action) | **ENFORCED** (Native binding) | **UNSUPPORTED** (No Agent identity) | **UNSUPPORTED** (Address space $\neq$ Agent ID) | **UNSUPPORTED** (Memory tag $\neq$ Agent ID) | **ASSURANCE** (Model Invariant) |
+| **Principal Attribution** | PC-010 (Cross-Principal Action) | **ENFORCED** (Native binding) | **N/A: Out of Scope** (No Agent identity) | **N/A: Out of Scope** (Address space $\neq$ Agent ID) | **N/A: Out of Scope** (Memory tag $\neq$ Agent ID) | **ASSURANCE** (Model Invariant) |
 | **Task-Level Authorization** | PC-003 (Privilege Escalation) | **ENFORCED** (Task-scoped bitmap) | **ALLOW** (No privilege model) | **ENFORCED\*** (Capability authority absent in execution domain) | **ENFORCED** (Sealing violation) | **ASSURANCE** (Model Invariant) |
-| **Tool / Action Binding** | PC-004 (Tool Substitution) | **ENFORCED** (Action whitelist) | **UNSUPPORTED** (No Tool concept) | **ENFORCED\*\*** (When tools represented as distinct capability endpoints) | **UNSUPPORTED** (Memory ptr $\neq$ Tool ID) | **ASSURANCE** (Model Invariant) |
-| **Argument Semantic Bounds** | PC-005 (Argument Substitution) | **ENFORCED** (Prefix & business rules) | **UNSUPPORTED** (Descriptor granularity) | **UNSUPPORTED** (Kernel ignores JSON args) | **UNSUPPORTED** (HW ignores string semantics) | **ASSURANCE** (Model Invariant) |
+| **Tool / Action Binding** | PC-004 (Tool Substitution) | **ENFORCED** (Action whitelist) | **N/A: Out of Scope** (No Tool concept) | **ENFORCED\*\*** (When tools represented as distinct capability endpoints) | **N/A: Out of Scope** (Memory ptr $\neq$ Tool ID) | **ASSURANCE** (Model Invariant) |
+| **Argument Semantic Bounds** | PC-005 (Argument Substitution) | **ENFORCED** (Prefix & business rules) | **N/A: Out of Scope** (Descriptor granularity) | **N/A: Out of Scope** (Kernel does not inspect JSON args) | **N/A: Out of Scope** (HW does not inspect string semantics) | **ASSURANCE** (Model Invariant) |
 | **Execution Boundary** | PC-001 (Unauthorized File Write) | **ENFORCED** (Scope confinement) | **ENFORCED** (Preopen boundary) | **ENFORCED** (Resource capability absent) | **ENFORCED\*\*\*** (Bounded capability fault) | **ASSURANCE** (Model Invariant) |
 | **Egress Restriction** | PC-002 (Unauthorized Network Egress) | **ENFORCED** (Gateway filter) | **ENFORCED** (Socket rights flag) | **ENFORCED** (IPC driver cap missing) | **ENFORCED\*\*\*** (MMIO bounds fault) | **ASSURANCE** (Model Invariant) |
 | **Scope Expansion** | PC-006 (Root Scope Containment) | **ENFORCED** (Scope confinement) | **ENFORCED\*\*\*\* (Configured preopen boundary) | **ENFORCED** (Rights cannot escalate) | **ENFORCED** (Bounds monotonicity) | **ASSURANCE** (Model Invariant) |
-| **Temporal Expiry (TTL)** | PC-007 (Expired Authorization) | **ENFORCED** (Dynamic timer check) | **UNSUPPORTED** (No temporal timer) | **UNSUPPORTED** (No token TTL) | **UNSUPPORTED** (No temporal timer) | **ASSURANCE** (Model Invariant) |
-| **Hot Revocation** | PC-008 (Revoked Authorization) | **ENFORCED** (In-band state revoke) | **UNSUPPORTED** (No revocation model) | **ENFORCED\*\*\*\*\* (`seL4_CNode_Revoke`) | **UNSUPPORTED\*\*\*\*\*\* (No pure HW revoke) | **ASSURANCE** (Model Invariant) |
-| **Replay / Nonce Defense** | PC-009 (Duplicate Nonce Execution) | **ENFORCED** (Nonce cache check) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **ASSURANCE** (Model Invariant) |
+| **Temporal Expiry (TTL)** | PC-007 (Expired Authorization) | **ENFORCED** (Dynamic timer check) | **N/A: Out of Scope** (No temporal timer) | **N/A: Out of Scope** (Kernel operates on unforgeable tokens, not TTL) | **N/A: Out of Scope** (Pure ISA lacks temporal timer) | **ASSURANCE** (Model Invariant) |
+| **Hot Revocation** | PC-008 (Revoked Authorization) | **ENFORCED** (In-band state revoke) | **N/A: Out of Scope** (No revocation model) | **ENFORCED\*\*\*\*\* (`seL4_CNode_Revoke`) | **N/A: Out of Scope\*\*\*\*\*\* (No pure HW revoke) | **ASSURANCE** (Model Invariant) |
+| **Replay / Nonce Defense** | PC-009 (Duplicate Nonce Execution) | **ENFORCED** (Nonce cache check) | **N/A: Out of Scope** (No nonce tracking) | **N/A: Out of Scope** (Kernel ignores app nonces) | **N/A: Out of Scope** (HW ignores app nonces) | **ASSURANCE** (Model Invariant) |
 
 *\* Modeled conditional on capability authority in the modeled execution domain; seL4 enforces capability authority, not abstract Agent task authorization.*  
 *\*\* Modeled conditional on tools being explicitly represented as distinct capability endpoints in userspace architecture; seL4 possesses no native Agent tool binding concept.*  
 *\*\*\* Modeled conditional on the target resource/device being represented as a bounded memory/MMIO capability object.*  
 *\*\*\*\* Enforced strictly within the configured preopen directory descriptor boundary; WASI does not possess general Agent authorization scope concepts.*  
 *\*\*\*\*\* Models revocation of derived capability copies via `seL4_CNode_Revoke()` in CSpace, not revocation of an abstract Agent authorization token.*  
-*\*\*\*\*\*\* Under pure CHERI ISA architecture (`CHERI_PURE_ISA_CAPABILITY_MODEL`), reported as `UNSUPPORTED`. Under `CHERI_CHERIBSD_RUNTIME`, CheriBSD OS provides temporal heap sweep.*
+*\*\*\*\*\*\* Under pure CHERI ISA architecture (`CHERI_PURE_ISA_CAPABILITY_MODEL`), reported as `N/A: Out of Scope (Pure Hardware Architecture)`. Under `CHERI_CHERIBSD_RUNTIME`, CheriBSD OS provides temporal heap sweep.*
 
 ---
 

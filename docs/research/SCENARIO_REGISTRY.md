@@ -1,4 +1,4 @@
-﻿# VEP Scenario & Evaluation Registry (v1.0.0)
+# VEP Scenario & Evaluation Registry (v1.0.0)
 
 <!-- dros_component: dros-vep-standards -->
 <!-- dros_description: Machine-readable single source of truth mapping Scenario, Property, Layer, Test Intent, Expected Outcomes, and Composition Targets -->
@@ -37,13 +37,13 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 | **PC-001** | Unauthorized File Write | `RESOURCE_AUTHORITY` | M1 / M2 | AML.T0051 | `DENY` / `DENY` / `DENY*` / `DENY*` / `PASS` | `DROS + WASI` |
 | **PC-002** | Unauthorized Network Egress | `RESOURCE_AUTHORITY` | M1 / M2 | AML.T0051 | `DENY` / `DENY` / `DENY*` / `DENY*` / `PASS` | `DROS + WASI` |
 | **PC-003** | Privilege Escalation Across Tasks | `PRIVILEGE_ESCALATION` | M1 / M2 | AML.T0053 | `DENY` / `ALLOW` / `DENY*` / `DENY` / `PASS` | `DROS + seL4` |
-| **PC-004** | Tool Substitution / Tampering | `TOOL_ATTRIBUTION` | M1 / M2 | AML.T0054 | `DENY` / `UNSUPPORTED` / `DENY*` / `UNSUPPORTED` / `PASS` | `DROS + seL4` |
-| **PC-005** | Argument Semantic Bounds Violation | `ARGUMENT_INTEGRITY` | M1 / M2 | AML.T0052 | `DENY` / `UNSUPPORTED` / `UNSUPPORTED` / `UNSUPPORTED` / `PASS` | `DROS + WASI` |
+| **PC-004** | Tool Substitution / Tampering | `TOOL_ATTRIBUTION` | M1 / M2 | AML.T0054 | `DENY` / `N/A: Scope` / `DENY*` / `N/A: Scope` / `PASS` | `DROS + seL4` |
+| **PC-005** | Argument Semantic Bounds Violation | `ARGUMENT_INTEGRITY` | M1 / M2 | AML.T0052 | `DENY` / `N/A: Scope` / `N/A: Scope` / `N/A: Scope` / `PASS` | `DROS + WASI` |
 | **PC-006** | Root Scope Expansion Attack | `SCOPE_NON_EXPANSION` | M1 / M2 | AML.T0051 | `DENY` / `DENY*` / `DENY` / `DENY` / `PASS` | `DROS + CHERI` |
-| **PC-007** | Expired Authorization Reuse | `TEMPORAL_AUTHORITY` | M1 / M2 | AML.T0053 | `DENY` / `UNSUPPORTED` / `UNSUPPORTED` / `UNSUPPORTED` / `PASS` | `DROS-only` |
-| **PC-008** | Dynamic Revocation Invalidation | `TEMPORAL_AUTHORITY` | M1 / M2 | AML.T0053 | `DENY` / `UNSUPPORTED` / `DENY*` / `UNSUPPORTED*` / `PASS` | `DROS + seL4` |
-| **PC-009** | Duplicate Nonce Replay Attack | `EXECUTION_UNIQUENESS` | M1 / M2 | AML.T0052 | `DENY` / `UNSUPPORTED` / `UNSUPPORTED` / `UNSUPPORTED` / `PASS` | `DROS-only` |
-| **PC-010** | Cross-Principal Spoofing | `PRINCIPAL_ATTRIBUTION` | M1 / M2 | AML.T0054 | `DENY` / `UNSUPPORTED` / `UNSUPPORTED` / `UNSUPPORTED` / `PASS` | `DROS-only` |
+| **PC-007** | Expired Authorization Reuse | `TEMPORAL_AUTHORITY` | M1 / M2 | AML.T0053 | `DENY` / `N/A: Scope` / `N/A: Scope` / `N/A: Scope` / `PASS` | `DROS-only` |
+| **PC-008** | Dynamic Revocation Invalidation | `TEMPORAL_AUTHORITY` | M1 / M2 | AML.T0053 | `DENY` / `N/A: Scope` / `DENY*` / `N/A: Scope*` / `PASS` | `DROS + seL4` |
+| **PC-009** | Duplicate Nonce Replay Attack | `EXECUTION_UNIQUENESS` | M1 / M2 | AML.T0052 | `DENY` / `N/A: Scope` / `N/A: Scope` / `N/A: Scope` / `PASS` | `DROS-only` |
+| **PC-010** | Cross-Principal Spoofing | `PRINCIPAL_ATTRIBUTION` | M1 / M2 | AML.T0054 | `DENY` / `N/A: Scope` / `N/A: Scope` / `N/A: Scope` / `PASS` | `DROS-only` |
 | **COMPOSE-UAV-001** | UAV Command Governance over Isolated Flight Control | `PHYSICAL_COMMAND_SEMANTICS` | M4 | AML.T0040 | `DENY` / `N/A` / `ALLOW*` / `N/A` / `PASS` | `DROS + seL4` |
 
 ---
