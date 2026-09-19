@@ -590,15 +590,18 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 | :--- | :--- | :--- | :--- |
 | **治理架構定位** | 零侵入協議閘道 (Gateway) | 宿主進程核心沙箱 (Kernel Host) | 二進位 C-ABI 整合 (Host DLL) |
 | **攔截邊界層級** | MCP / REST Ingress/Egress | Syscall / Process Boundary | C-ABI Dynamic Library Boundary |
-| **In-Process 繞過防禦** | 不支援（標註為協議盲區） | **支援 (Seccomp-BPF + Raw Syscall)** | 支援 (Process Token / Detours API) |
+| **In-Process 繞過防禦** | 不支援（標註為協議盲區） | **支援 (Seccomp-BPF + Raw Syscall)** | 部分支援（使用者空間 Hooking 邊界） |
 | **防禦執行機制** | HTTP 403 / MCP Error | **Linux 核心 SIGSYS 物理終結** | STATUS_ACCESS_DENIED 異常中斷 |
 | **支援框架生態** | 5 大框架實測 (相容所有標準 MCP) | 原生 C/Rust 微內核注入 | 原生 DLL 注入導出 |
 
 ### C.4 紅隊滲透實測向量與結果記錄 (Red Team Crucible Attack Vectors)
 
+> [!NOTE]
+> **驗證狀態聲明**：本節測試結果為內部工程實驗室真機實測數據（基於 Ubuntu 22.04 LTS x86_64 原生核心），第三方獨立社群重現與評測持續進行中，歡迎至開源倉庫提交 Issue 與 PR 交叉檢驗。
+
 針對「Agent 遭完全劫持後試圖突破執行邊界」之場景，實測之四大極端攻擊向量與核心回傳日誌：
 
-| 測試編號 | 攻擊向量描述 (Attack Vector) | 實測指令 / Payload | 預期防護行為 | 實際實測結果與退出狀態 |
+| 測試編號 | 攻擊向量描述 (Attack Vector) | 實測指令 / Payload | 預期防護行為 | 實際實測結果與退出狀態 (內部實測) |
 | :--- | :--- | :--- | :--- | :--- |
 | **TC-001** | **合規白名單調用**<br>(Baseline Legitimate) | Raw asm `SYS_clock_gettime(228)`<br>+ `write(1)` | 白名單放行，正常完成 | **PASS**<br>正常執行並輸出，Exit Code = 0 |
 | **TC-002** | **libc 標準進程替換**<br>(Standard Injection) | libc `execve("/bin/echo", ...)`<br>試圖啟動未授權 shell | 核心即時攔截並擊斃進程 | **PASS**<br>進程被 Linux 核心發出 `SIGSYS` 物理擊斃 (Killed) |
@@ -609,8 +612,9 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 ### C.5 已知限制與架構盲區揭露 (Known Limitations & Honest Trade-offs)
 
 1. **vDSO 快速路徑與時間源：** Linux 部分 libc 實作（如 `gettimeofday`）會走核心共享唯讀記憶體頁（vDSO），此路徑不產生中斷，Seccomp 無法過濾。DROS 已於核心微內核中強制使用 `asm!` Raw Syscall 繞過 libc 確保時間審計不可被操縱。
-2. **Lite 版本地物件呼叫：** VEP-Lite 作為協議閘道，對於不經過網路協定（MCP/REST）之進程內部直接記憶體操作無法監管，此部分需由 Enterprise 版之 OS 核心沙箱或原生 SDK Hook 補齊。
-3. **靜態二進位注入限制：** 若遭劫持程式具備 root 權限且在載入 Seccomp 裝甲前即已植入惡意核心模組（LKM Rootkit），則任何使用者空間與 BPF 沙箱皆可能被繞過。因此 DROS 假設「Linux 宿主核心本身之健全性為信任根（Root of Trust）」。
+2. **Windows 平台 Hooking 限制：** Windows Enterprise 版採用 C-ABI DLL 與使用者空間 API Hooking 機制，若遭劫持程式直接透過彙編發起未公開 Native Syscall（如直接執行 `syscall` 呼叫 `NtCreateFile`），使用者空間 Hooking 存在被繞過的理論風險。Windows 端目前不具備對等 Linux Seccomp 之核心層強制處置（SIGSYS），生產級極限安全建議優先部署於 Linux 宿主環境。
+3. **Lite 版本地物件呼叫：** VEP-Lite 作為協議閘道，對於不經過網路協定（MCP/REST）之進程內部直接記憶體操作無法監管，此部分需由 Enterprise 版之 OS 核心沙箱或原生 SDK Hook 補齊。
+4. **靜態二進位注入限制：** 若遭劫持程式具備 root 權限且在載入 Seccomp 裝甲前即已植入惡意核心模組（LKM Rootkit），則任何使用者空間與 BPF 沙箱皆可能被繞過。因此 DROS 假設「Linux 宿主核心本身之健全性為信任根（Root of Trust）」。
 
 ---
 
@@ -626,58 +630,68 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 8. [Cloudflare AI Gateway & Agent Security](https://developers.cloudflare.com/ai-gateway/)
 9. [ZTM: Zero Trust Mesh Networking](https://github.com/flomesh-io/ztm)
 
-## 十二、 核心學術論文與形式化理論基礎 (Foundational Academic Research & Specifications)
+---
 
-為確保執行期治理機制具備經得起國際密碼學與系統安全領域檢驗之學術嚴謹性，DROS 四層防禦模型與 VEP 評測標準建立於以下形式化理論與先前技術基礎之上：
+## 十二、 核心技術論文與形式化架構基礎 (Foundational Technical Reports & Formal Specifications)
 
-### 12.1 形式化安全定理 (Formal Security Theorem)
+DROS 四層防禦模型與 VEP 評測標準建立於形式化規格與公開技術報告之上：
 
-在 DROS 執行期治理模型中，系統於編譯期將所有合規工具呼叫集合映射為二進位授權矩陣 $\mathbf{B} \in \{0, 1\}^{M \times N}$，其中 $M$ 為角色空間，$N$ 為工具空間。
+### 12.1 形式化執行不變量宣告 (Formal Execution Invariant)
+
+在 DROS 執行期治理模型中，系統於載入期將授權工具集合映射為二進位矩陣 $\mathbf{B} \in \{0, 1\}^{M \times N}$（$M$ 為角色空間，$N$ 為工具空間）：
 
 $$\forall t \in \mathcal{T}_{\text{unauthorized}}, \quad \Pr\left(\text{Execute}(t) \mid \text{GuardVM}_{\mathbf{B}}\right) = 0$$
 
-> **定理 1 (確定性無害保證 / Deterministic In-Band Non-Execution Theorem)：**  
-> 設 $A$ 為具備任意狀態之遭劫自主 Agent。在語義感知帶內強制點（In-Process Semantic PEP）之 C-ABI 邊界下，對於任意未經位元烙印之工具呼叫 $t$（即 $\mathbf{B}[r][t] = 0$）或身分憑證已落入撤銷列表之主體（$\text{DIT} \in \text{CRL}$），GuardVM 觸發 $\text{Panic}$ 並終止執行緒之時間複雜度恆為 $\mathcal{O}(1)$，且呼叫抵達底層 OS 執行鏈之機率嚴格為零。
+> **執行不變量 (Deterministic Non-Execution Invariant)：**  
+> 在語義感知帶內強制點（In-Process Semantic PEP）之 C-ABI 邊界下，在「宿主核心未被攻陷」且「進程記憶體未遭直接跨進程改寫」的安全假設下，對於任意未經位元烙印之工具呼叫 $t$（$\mathbf{B}[r][t] = 0$）或身分已列入撤銷名單之主體（$\text{DIT} \in \text{CRL}$），GuardVM 執行 $\mathcal{O}(1)$ 常數時間查表並觸發異常終止，未授權呼叫抵達底層 OS 執行鏈之機率在理論模型上為零。
 
-### 11.2 技術白皮書與核心技術論文標準矩陣 (Technical Papers & Zenodo DOI Program)
+### 12.2 技術報告與 Zenodo 永久存證矩陣 (Technical Papers & Zenodo DOI Program)
 
-DROS 執行期確定性治理架構具備嚴謹的學術認識論基礎，全系列科研文獻已獲國際學術不可篡改 DOI 永久存證：
+DROS 執行期確定性治理架構之理論基礎已整理為六篇技術報告，並透過 Zenodo 開放典藏平台取得 DOI 永久保存與時間戳記證明，供公眾檢視、引用與批評指正。**目前這些文獻屬於預印本（Preprint）性質，尚未經過同行評審程序**；其中部分內容正在向 IEEE S&P 等會議投稿評估中，投稿結果尚未確定。
 
 #### 🧭 科研全景導讀 (Master Overview & Falsification Manifesto)
 * **《DROS 全景科研導讀：六篇論文之問題意識、理論體系與可證偽性聲明》**  
   *A Synoptic Guide to the DROS Program: Problem Formulation, Theoretical Architecture, and Falsification Criteria*  
-  **Zenodo DOI**: [`10.5281/zenodo.22255275`](https://doi.org/10.5281/zenodo.22255275) | **Record**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)
+  **Zenodo DOI**: [`10.5281/zenodo.22255275`](https://doi.org/10.5281/zenodo.22255275) | **Record**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)  
+  *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
 
-#### 🏹 六大核心技術論文 (The 6-Paper Program)
+#### 🏹 六大技術報告清單 (The 6-Paper Technical Program)
 1. 🏛️ **Paper 1: DROS-6P (治理規格層 ── 企業信任與六大邊界治理)**  
    *DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents*  
-   **Zenodo DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
+   **Zenodo DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)  
+   *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
 2. 🛡️ **Paper 2: DROS 4-Layer (執行落地層 ── 四層深度防禦縱深架構)**  
    *DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads*  
-   **Zenodo DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
+   **Zenodo DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)  
+   *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
 3. ⚙️ **Paper 3: DROS-PGM (內核控制層 ── 實體防護模組與不可否認性運行期歸責)**  
    *Runtime Attribution Framework: An External C-ABI and PKI-Based Zero-Trust Infrastructure for Non-Repudiable Execution Governance in Multi-Agent Systems*  
-   **Zenodo DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+   **Zenodo DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)  
+   *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
 4. 🌐 **Paper 4: DROS-WebMCP (網絡能力層 ── Agentic Web 與能力暴露執行治理)**  
    *DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web*  
-   **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
+   **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)  
+   *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
 5. 📱 **Paper 5: Post-Compromise Mobile (數位系統實證 ── 邊緣移動端執行衰減)**  
    *Post-Compromise Security for Autonomous Mobile Agents: A Deterministic Runtime Attenuation and Proof-Carrying Authorization Architecture*  
-   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)  
+   *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
 6. 🛸 **Paper 6: Post-Compromise Physical AI / UAV (網絡-實體實證 ── 實體無人機物理動作剛性約束)**  
    *Post-Compromise Security for Physical AI: Deterministic Runtime Enforcement of Physical Action Authority in Autonomous UAVs*  
-   **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
+   **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)  
+   *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
 
-### 11.3 學術文獻與同儕審查引用格式 (Standard Citation)
+### 12.3 引用格式建議 (BibTeX Citation)
 
 ```bibtex
-@inproceedings{dros2026inband,
-  author    = {Top Celestial Research Team and DROS Contributors},
-  title     = {Deterministic In-Band Runtime Governance for Post-Compromise Autonomous Agents: The DROS-VEP Verification Standard},
-  booktitle = {IEEE Symposium on Security and Privacy (S&P) Submission / Open Archive},
-  year      = {2026},
-  note      = {U.S. Provisional Patent Application No. 64/111,973. Open Verification Suite: RFC-010},
-  url       = {https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}
+@misc{dros2026inband,
+  author       = {Top Celestial Research Team and DROS Contributors},
+  title        = {Deterministic In-Band Runtime Governance for Post-Compromise Autonomous Agents: The DROS-VEP Verification Standard},
+  howpublished = {Preprint, Zenodo},
+  year         = {2026},
+  doi          = {10.5281/zenodo.22255275},
+  note         = {Not yet peer-reviewed. Concurrently under submission review to IEEE S\&P (outcome pending). U.S. Provisional Patent Application No. 64/111,973.},
+  url          = {https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}
 }
 ```
 
@@ -687,16 +701,15 @@ DROS 執行期確定性治理架構具備嚴謹的學術認識論基礎，全系
 
 ---
 
-## 十二、 結語與展望 (Conclusion & Vision)
+## 十三、 結語與技術展望 (Conclusion & Technical Outlook)
 
-在 AI 如同齊天大聖般擁有無邊法力與自主工具調用能力的時代，企業需要的不是更大的金箍棒（傳統語意防火牆），而是一頂能確保它永遠不會偏離合規取經之路的實體緊箍咒。
+在自主 AI Agent 具備工具調用與長鏈系統操作能力的時代，執行邊界防禦不能依賴概率性的提示詞過濾。
 
-**26.1μs 的決策延遲低於人類神經傳導速度的千分之一**。這代表 DROS 的攔截決策是在「人類或上層應用感知到攻擊發生之前」即已完成物理阻斷。這不是事後的「被動反應」，而是焊死在 C-ABI 系統呼叫邊界「生理上無法繞過的先天物理免疫」。
-
-DROS 四層防禦縱深架構（L1~L4）與 DROS-VEP 開源靶場，即是這頂實體化的緊箍咒 —— 一個基於 $\mathcal{O}(1)$ 位元對映與密碼學身分鋼印的確定性物理契約。我們不相信機率，我們用二進位物理學護衛 Agentic Web 的未來。
+DROS 4 層防禦架構（L1~L4）將安全防線從不可靠的語義層推向系統執行邊界：透過編譯期位元烙印、帶內 C-ABI 攔截與密碼學簽章稽核，在 $\mathcal{O}(1)$ 微秒級延遲內建立確定性執行約束。我們持續以嚴謹、可證偽與開源重現的科學方法，為高風險企業級 AI 工作負載提供堅實的運行期安全基底。
 
 ---
 
 *© 2026 DROS Security / Top Celestial Company Ltd. 版權所有。*  
 *DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. PPA No. 64/111,973, Patent Pending）。*  
 *本白皮書旨在提供技術資訊，不構成法律或投資建議。*
+

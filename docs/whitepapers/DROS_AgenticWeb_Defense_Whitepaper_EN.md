@@ -589,15 +589,18 @@ To eliminate platform conflation, DROS strictly delineates defensive guarantees 
 | :--- | :--- | :--- | :--- |
 | **Architectural Model** | Zero-intrusion Protocol Gateway | Kernel-Level Host Sandbox | Binary C-ABI Integration |
 | **Enforcement Layer** | MCP / REST Ingress/Egress | Syscall / Process Boundary | C-ABI Dynamic Library Boundary |
-| **In-Process Bypass Defense** | Out-of-scope (Protocol Boundary) | **Enforced (Seccomp-BPF + Raw Syscall)** | Enforced (Process Token / Detours API) |
+| **In-Process Bypass Defense** | Out-of-scope (Protocol Boundary) | **Enforced (Seccomp-BPF + Raw Syscall)** | Partial (User-Space Hooking Boundary) |
 | **Enforcement Mechanism** | HTTP 403 / MCP Error Frame | **Linux Kernel SIGSYS Termination** | STATUS_ACCESS_DENIED Panic |
 | **Ecosystem Support** | 5 Frameworks Verified (All MCP) | Native C/Rust Microkernel Injection | Native DLL Injection / Export |
 
 ### C.4 Red Team Crucible Attack Vectors & Empirical Results
 
+> [!NOTE]
+> **Verification Status Notice**: Benchmark outcomes in this section reflect empirical executions inside our internal engineering laboratory (Ubuntu 22.04 LTS x86_64 host kernel). Independent third-party community reproduction is actively underway; issues and pull requests are welcomed on our open-source repository.
+
 Simulating full post-compromise agent hijacking where the adversary attempts to escape execution boundaries:
 
-| ID | Attack Vector Description | Payload / Execution Mechanics | Expected Defensive Action | Empirical Result & Status |
+| ID | Attack Vector Description | Payload / Execution Mechanics | Expected Defensive Action | Empirical Result & Status (Internal) |
 | :--- | :--- | :--- | :--- | :--- |
 | **TC-001** | **Legitimate Baseline Call**<br>(Whitelisted Baseline) | Raw asm `SYS_clock_gettime(228)`<br>+ `write(1)` output | Whitelist permit, uninterrupted | **PASS**<br>Executed cleanly, Exit Code = 0 |
 | **TC-002** | **libc Process Hijacking**<br>(Standard execve Injection) | libc `execve("/bin/echo", ...)`<br>spawning unauthorized shell | Kernel traps and kills process | **PASS**<br>Process terminated by kernel `SIGSYS` |
@@ -608,10 +611,9 @@ Simulating full post-compromise agent hijacking where the adversary attempts to 
 ### C.5 Architectural Trade-offs & Known Boundaries
 
 1. **vDSO Fast Paths:** Certain libc clock implementations utilize the vDSO memory page without issuing trap interrupts, bypassing Seccomp. DROS resolves this by strictly utilizing inline assembly raw syscalls (`CLOCK_MONOTONIC_RAW`), ensuring immutable audit timestamps.
-2. **Local In-Process Object Mutation:** VEP-Lite enforces protocol-level boundaries (MCP/REST). In-process local memory manipulation requires Enterprise host-level kernel isolation.
-3. **Static Binary Limitations:** If an attacker possesses root execution prior to Seccomp arming, kernel-level LKM modules could subvert user-space filters. DROS assumes the integrity of the host OS kernel as the Root of Trust.
-
----
+2. **Windows Platform Hooking Limitations:** The Windows Enterprise edition operates via C-ABI DLL export and user-space API hooking. If an adversary issues direct inline assembly syscalls (e.g., executing `syscall` targeting internal `NtCreateFile`), user-space hooking can theoretically be bypassed. Windows currently lacks an equivalent kernel-level fatal signal dispatch like Linux `SIGSYS`; extreme threat environments should deploy on Linux production hosts.
+3. **Local In-Process Object Mutation:** VEP-Lite enforces protocol-level boundaries (MCP/REST). In-process local memory manipulation requires Enterprise host-level kernel isolation.
+4. **Static Binary Limitations:** If an attacker possesses root execution prior to Seccomp arming, kernel-level LKM modules could subvert user-space filters. DROS assumes the integrity of the host OS kernel as the Root of Trust.
 
 ---
 
@@ -627,60 +629,70 @@ Simulating full post-compromise agent hijacking where the adversary attempts to 
 8. [Cloudflare AI Gateway & Agent Security](https://developers.cloudflare.com/ai-gateway/)
 9. [ZTM: Zero Trust Mesh Networking](https://github.com/flomesh-io/ztm)
 
-## 12. Foundational Academic Research & Formal Specifications
+---
 
-To ensure the in-band execution governance mechanism withstands rigorous evaluation by international cryptography, systems security, and formal verification communities, the DROS 4-Layer Defense Model and the VEP verification benchmark are grounded upon the following formal specifications and theoretical foundations:
+## 12. Foundational Technical Reports & Formal Specifications
 
-### 11.1 Formal Security Theorem
+The DROS 4-Layer Defense Model and the VEP verification benchmark are grounded upon the following formal specifications and publicly verifiable technical reports:
 
-In the DROS execution governance model, the system compiles the complete set of authorized tool invocations into an immutable binary matrix $\mathbf{B} \in \{0, 1\}^{M \times N}$ at compile-time, where $M$ denotes the principal role space and $N$ denotes the tool space.
+### 12.1 Formal Execution Invariant
+
+In the DROS execution governance model, the system compiles the authorized tool invocations into an immutable binary matrix $\mathbf{B} \in \{0, 1\}^{M \times N}$ at load time ($M$ denotes the principal role space and $N$ denotes the tool space):
 
 $$\forall t \in \mathcal{T}_{\text{unauthorized}}, \quad \Pr\left(\text{Execute}(t) \mid \text{GuardVM}_{\mathbf{B}}\right) = 0$$
 
-> **Theorem 1 (Deterministic In-Band Non-Execution Theorem):**  
-> Let $A$ be a compromised autonomous agent under arbitrary adversary control. Within the C-ABI boundary of the In-Process Semantic Policy Enforcement Point (PEP), for any tool invocation $t$ not authorized in the compiled capability bitmap ($\mathbf{B}[r][t] = 0$) or any principal whose cryptographic credential resides in the revocation list ($\text{DIT} \in \text{CRL}$), the time complexity for GuardVM to invoke $\text{Panic}$ and terminate the thread is strictly $\mathcal{O}(1)$, and the probability of $t$ reaching the underlying OS execution pathway is strictly zero.
+> **Deterministic Non-Execution Invariant:**  
+> Within the C-ABI boundary of the In-Process Semantic Policy Enforcement Point (PEP), conditioned on host kernel integrity and absence of direct cross-process memory manipulation, for any tool invocation $t$ not authorized in the compiled capability bitmap ($\mathbf{B}[r][t] = 0$) or any principal whose cryptographic credential resides in the revocation list ($\text{DIT} \in \text{CRL}$), GuardVM triggers $\mathcal{O}(1)$ constant-time lookup and aborts execution, ensuring the probability of unauthorized operations reaching underlying OS dispatch pathways remains zero in the theoretical model.
 
-### 11.2 Core Scientific Papers & Zenodo DOI Standard Matrix (The 6-Paper Program)
+### 12.2 Technical Reports & Zenodo Archival Program
 
-The DROS deterministic runtime governance architecture is grounded upon rigorous academic and cryptographic foundations. The entire body of research is permanently deposited with immutable Zenodo DOIs:
+The theoretical foundations of the DROS deterministic runtime governance architecture have been consolidated into six technical reports, permanently archived with immutable digital object identifiers (DOIs) on the Zenodo open repository for public scrutiny, reproduction, and peer feedback. **These documents currently represent preprints and have not undergone formal peer review.** Select manuscripts are concurrently undergoing submission review to conferences including IEEE S&P; final acceptance outcomes remain pending.
 
 #### 🧭 Master Research Trajectory & Falsification Manifesto
 * **A Synoptic Guide to the DROS Program: Problem Formulation, Theoretical Architecture, and Falsification Criteria**  
   *《DROS 全景科研導讀：六篇論文之問題意識、理論體系與可證偽性聲明》*  
-  **Zenodo DOI**: [`10.5281/zenodo.22255275`](https://doi.org/10.5281/zenodo.22255275) | **Record**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)
+  **Zenodo DOI**: [`10.5281/zenodo.22255275`](https://doi.org/10.5281/zenodo.22255275) | **Record**: [zenodo.org/records/22255275](https://zenodo.org/records/22255275)  
+  *Status: Preprint, not peer-reviewed*
 
 #### 🏹 The 6-Paper Technical Architecture Program
 1. 🏛️ **Paper 1: DROS-6P (Governance Specification Layer — Six Trust Boundaries)**  
    *DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents*  
-   **Zenodo DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
+   **Zenodo DOI**: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970) | **Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)  
+   *Status: Preprint, not peer-reviewed*
 2. 🛡️ **Paper 2: DROS 4-Layer (Enforcement Delivery Layer — 4-Layer Defense-in-Depth)**  
    *DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads*  
-   **Zenodo DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)
+   **Zenodo DOI**: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008) | **Record**: [zenodo.org/records/22092008](https://zenodo.org/records/22092008)  
+   *Status: Preprint, not peer-reviewed*
 3. ⚙️ **Paper 3: DROS-PGM (Kernel Control Layer — Physical Guard & Non-Repudiable Attribution)**  
    *Runtime Attribution Framework: An External C-ABI and PKI-Based Zero-Trust Infrastructure for Non-Repudiable Execution Governance in Multi-Agent Systems*  
-   **Zenodo DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+   **Zenodo DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)  
+   *Status: Preprint, not peer-reviewed*
 4. 🌐 **Paper 4: DROS-WebMCP (Network Capability Layer — Agentic Web & Capability Exposure)**  
    *DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web*  
-   **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
+   **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)  
+   *Status: Preprint, not peer-reviewed*
 5. 📱 **Paper 5: Post-Compromise Mobile (Digital Systems Verification — Mobile Edge Attenuation)**  
    *Post-Compromise Security for Autonomous Mobile Agents: A Deterministic Runtime Attenuation and Proof-Carrying Authorization Architecture*  
-   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)  
+   *Status: Preprint, not peer-reviewed*
 6. 🛸 **Paper 6: Post-Compromise Physical AI / UAV (Cyber-Physical Verification — Autonomous UAVs)**  
    *Post-Compromise Security for Physical AI: Deterministic Runtime Enforcement of Physical Action Authority in Autonomous UAVs*  
-   **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
+   **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)  
+   *Status: Preprint, not peer-reviewed*
 
-### 11.3 Academic Citation & Standard BibTeX Package
+### 12.3 Academic Citation & Standard BibTeX Package
 
 Enterprise security architects, academic researchers, and compliance auditors may cite the DROS-VEP formal specifications and reproducible benchmark suite using the following standard format:
 
 ```bibtex
-@inproceedings{dros2026inband,
-  author    = {Top Celestial Research Team and DROS Contributors},
-  title     = {Deterministic In-Band Runtime Governance for Post-Compromise Autonomous Agents: The DROS-VEP Verification Standard},
-  booktitle = {IEEE Symposium on Security and Privacy (S&P) Submission / Open Archive},
-  year      = {2026},
-  note      = {U.S. Provisional Patent Application No. 64/111,973. Open Verification Suite: RFC-010},
-  url       = {https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}
+@misc{dros2026inband,
+  author       = {Top Celestial Research Team and DROS Contributors},
+  title        = {Deterministic In-Band Runtime Governance for Post-Compromise Autonomous Agents: The DROS-VEP Verification Standard},
+  howpublished = {Preprint, Zenodo},
+  year         = {2026},
+  doi          = {10.5281/zenodo.22255275},
+  note         = {Not yet peer-reviewed. Concurrently under submission review to IEEE S\&P (outcome pending). U.S. Provisional Patent Application No. 64/111,973.},
+  url          = {https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite}
 }
 ```
 
@@ -690,16 +702,15 @@ Enterprise security architects, academic researchers, and compliance auditors ma
 
 ---
 
-## 12. Conclusion & Vision
+## 13. Conclusion & Technical Outlook
 
-In an era where AI agents possess boundless autonomous capabilities like Sun Wukong (the Monkey King), enterprises do not need a bigger golden staff (probabilistic semantic firewalls); they need an unbypassable, physical tightening crown to ensure the agent never strays from its authorized path.
+As autonomous AI agents acquire long-chain system execution powers, boundary defense cannot rely upon probabilistic semantic filtering.
 
-**The median policy latency of 26.1μs is less than one-thousandth of human neural conduction speed.** This implies that DROS interception decisions complete at the physical layer long before humans or upper-layer applications even perceive an attack. This is not a reactive "response" — it is an immutable, physiological-grade innate immunity welded directly onto the C-ABI system call boundary.
-
-The DROS 4-Layer Defense-in-Depth Architecture and the DROS-VEP open-source proving ground represent this physical tightening crown — a deterministic contract forged from $\mathcal{O}(1)$ bitmap evaluation and cryptographic identity binding. We do not gamble on probabilities; we safeguard the future of the Agentic Web using binary physics.
+The DROS 4-Layer Architecture (L1~L4) shifts the final defensive line from the prompt layer to the binary execution boundary. Through compile-time bitmasking, in-band C-ABI interception, and cryptographic provenance trails, DROS establishes deterministic runtime constraints within $\mathcal{O}(1)$ microsecond latency. We remain dedicated to open reproducibility, rigorous engineering, and empirical verification to safeguard high-risk enterprise AI workloads.
 
 ---
 
 *© 2026 DROS Security / Top Celestial Company Ltd. All rights reserved.*  
 *DROS execution governance and security technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending).*  
 *This whitepaper is provided for technical informational purposes and does not constitute legal or investment advice.*
+
