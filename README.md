@@ -361,6 +361,10 @@ Traditional WAFs see a **100% legitimate user making a clean REST API call**. Th
 
 ## 🎯 Threat Scenarios & Research Fixtures (RFC-010 Standard Matrix)
 
+> [!NOTE]
+> **Synthetic Benchmark Disclaimer**  
+> All threat scenarios in this repository (ATS-001 through ATS-005, AS-001 through AS-005, and PC-001 through PC-010) are **synthetic, architectural evaluation fixtures**. They are designed exclusively to model and evaluate runtime system-call boundaries, tool authorization contracts, and post-compromise containment invariants mapped to MITRE ATLAS categories. They do not simulate, represent, or attribute actions to any specific commercial platform, model provider, or real-world organization.
+
 VEP provides standardized, synthetic evaluation fixtures reproducing critical post-compromise threat models, mapped directly to **MITRE ATLAS**:
 
 | Scenario ID | Research Fixture / Threat Model | Evaluated Failure Mode | Target Execution Surface | MITRE ATLAS | In-Band Governance Action |

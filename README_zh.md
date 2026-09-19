@@ -360,6 +360,10 @@ DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)**，並�
 
 ## 🎯 威脅模型與科研評測固件 (RFC-010 Standard Matrix)
 
+> [!NOTE]
+> **合成評測基準免責宣告 (Synthetic Benchmark Disclaimer)**  
+> 本倉庫所收錄之全量威脅評測劇本（ATS-001 至 ATS-005、AS-001 至 AS-005 以及 PC-001 至 PC-010）皆為**架構級合成測試固件（Synthetic Architectural Evaluation Fixtures）**。其目的僅在於形式化驗證 Agent 在運行期的系統呼叫邊界、工具授權合約與 MITRE ATLAS 框架定義之安全不變量，絕不影射、代表或歸因於任何特定商業實體、模型供應商或真實企業組織。
+
 VEP 提供標準化、合成化（Synthetic）之科研評測固件，嚴謹還原關鍵的入侵後威脅模型，全數對齊 **MITRE ATLAS** 威脅分類標準：
 
 | 劇本 ID | 科研評測固件 / 威脅模型 | 評測之失效模式 (Failure Mode) | 目標執行表面 (Surface) | MITRE ATLAS | 帶內確定性治理動作 |
