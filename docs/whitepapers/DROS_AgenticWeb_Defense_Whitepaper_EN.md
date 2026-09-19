@@ -61,10 +61,56 @@ Attack Path Model:
 
 ---
 
-## 2. Architecture Overview
+## 2. Architecture Overview: Defense-in-Depth
+
+### 2.1 The Three-Domain Model
+
+To eliminate conceptual ambiguity and establish rigorous architectural boundaries, this specification defines **The Three-Domain Model**:
+
+| Domain Dimension | Core Architectural Question | DROS Role & Positioning |
+| :--- | :--- | :--- |
+| **6P Governance Context** | What must DROS **know**? | **Decision Input / Trust Context**: The governance context required by the DROS execution decision model (Principal, Privilege, Payload, Posture, Policy, Provenance). |
+| **L1–L4 Enforcement Layers** | What must DROS **do**? | **Real Runtime Enforcement**: Defense-in-depth across the single execution boundary (from boundary filtering and capability binding to C-ABI panic). |
+| **External Infrastructure** | What does DROS **not need to replace**? | **Existing Enterprise Stack**: Enterprise IAM/IdP, SIEM platforms, agent orchestration frameworks, and business policy engines. |
+
+> [!IMPORTANT]
+> **The Core Architecture Doctrine**  
+> **6P defines what DROS must know.**  
+> **The enforcement layers define what DROS must do.**  
+> **The surrounding infrastructure defines what DROS does not need to replace.**  
+> 
+> **DROS deliberately narrows its product responsibility without narrowing its enforcement model.**
+
+```text
+             GOVERNANCE CONTEXT (6P)
+                        │
+                        ▼
+                 DROS DECISION
+                        │
+                       L1 (Boundary Filter)
+                        ↓
+                       L2 (Capability Bound)
+                        ↓
+                       L3 (Topology Sandbox)
+                        ↓
+                       L4 (GuardVM C-ABI)
+                        │
+                        ▼
+                 EXECUTION BOUNDARY
+                        │
+                        ▼
+                   TOOL / API
+                        ▲
+                        │ integrated, not replaced
+      ┌─────────────────┴─────────────────┐
+      │  IAM / PKI  │  SIEM  │  Agent Apps │
+      └───────────────────────────────────┘
+```
+
+### 2.2 The Four Defense-in-Depth Runtime Layers
 
 ```
-                  [ External Internet / Supply Chain / Adversarial Actors ]
+            [ External Web / Upstream Supply Chain / Adversarial Prompts ]
                                       │
                                       ▼
 ┌─────────────────────────────────────────────────────────────────────────┐

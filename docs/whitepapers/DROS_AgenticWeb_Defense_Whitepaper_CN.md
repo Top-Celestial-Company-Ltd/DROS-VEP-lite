@@ -63,6 +63,53 @@ Agentic Web 的根本性風險在於：被挾持的 AI Agent **本身即為持�
 
 ## 二、四層縱深架構全覽 (Architecture Overview)
 
+### 2.1 三大語義領域模型 (The Three-Domain Model)
+
+為了精確釐清 DROS 的邊界並防範「概念過載（Conceptual Overload）」，本白皮書確立 **三大語義領域模型 (The Three-Domain Model)**：
+
+| 領域維度 | 核心提問 | DROS 的定位與職責 |
+| :--- | :--- | :--- |
+| **6P Governance Context** | DROS 在執行決策時**必須知道什麼**？ | **決策輸入 / 信任上下文**：DROS 執行決策模型所需的治理上下文（身分、授權、負載、狀態、策略、溯源）。 |
+| **L1–L4 Enforcement Layers** | DROS 在執行路徑上**必須做什麼**？ | **真實的運行期執法**：同一執行治理邊界上的縱深控制（從邊界感知、能力綁定、沙箱隔離到 C-ABI 物理硬熔斷）。 |
+| **External Infrastructure** | DROS **不需要取代什麼**？ | **既有成熟基礎設施**：企業既有的 IAM/IdP、SIEM、Agent 編排框架與業務策略系統。 |
+
+> [!IMPORTANT]
+> **DROS 核心架構憲章 (The Core Architecture Doctrine)**：  
+> **6P defines what DROS must know.** *(6P 定義 DROS 在執行決策時必須知道什麼；)*  
+> **The enforcement layers define what DROS must do.** *(四層防禦定義 DROS 必須做什麼；)*  
+> **The surrounding infrastructure defines what DROS does not need to replace.** *(周邊基礎設施則定義 DROS 不需要取代什麼。)*  
+> 
+> **DROS deliberately narrows its product responsibility without narrowing its enforcement model.**  
+> *(DROS 刻意收斂其產品責任邊界，但不削弱其執行期的防禦深度。)*
+
+```
+             GOVERNANCE CONTEXT (6P)
+                        │
+                        ▼
+                 DROS DECISION
+                        │
+                       L1 (Boundary Filter)
+                        ↓
+                       L2 (Capability Bound)
+                        ↓
+                       L3 (Topology Sandbox)
+                        ↓
+                       L4 (GuardVM C-ABI)
+                        │
+                        ▼
+                 EXECUTION BOUNDARY
+                        │
+                        ▼
+                   TOOL / API
+                        ▲
+                        │ integrated, not replaced
+      ┌─────────────────┴─────────────────┐
+      │  IAM / PKI  │  SIEM  │  Agent Apps │
+      └───────────────────────────────────┘
+```
+
+### 2.2 四層縱深防禦執行路徑
+
 ```
                   [ 外部互聯網 / 供應鏈上游 / 對抗性使用者 ]
                                     │
