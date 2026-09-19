@@ -61,7 +61,7 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
   - `WASI`: **DENY** (`NATIVE` — Target path outside preopened directory descriptors)
   - `seL4`: **DENY\*** (`PROFILE` — Modeled assuming CSpace capability to file endpoint is absent)
   - `CHERI`: **DENY\*** (`PROFILE` — Modeled assuming MMIO/file descriptor represented as bounded memory capability)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — Evaluates state machine invariant, `assurance_status = PASS`)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — Evaluates state machine invariant, `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-002: Unauthorized Network Egress
 - **Target Property:** `RESOURCE_AUTHORITY`
@@ -74,7 +74,7 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
   - `WASI`: **DENY** (`NATIVE` — Preopened socket descriptor rights mask disabled)
   - `seL4`: **DENY\*** (`PROFILE` — Network driver IPC capability endpoint absent)
   - `CHERI`: **DENY\*** (`PROFILE` — MMIO device address bounds violation)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-003: Privilege Escalation Across Tasks
 - **Target Property:** `PRIVILEGE_ESCALATION`
@@ -84,10 +84,10 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 - **Test Intent:** Measure whether task-scoped execution tokens prevent horizontal/vertical escalation.
 - **Expected Substrate Outcomes:**
   - `DROS`: **DENY** (`NATIVE` — Task bitmap lacks requested privilege bit)
-  - `WASI`: **ALLOW** (`UNSUPPORTED` — WASI preview1 descriptor model lacks task privilege abstractions)
+  - `WASI`: **ALLOW** (`N/A: Out of Scope` — WASI preview1 descriptor model lacks task privilege abstractions)
   - `seL4`: **DENY\*** (`PROFILE` — Capability authority absent in modeled execution domain)
   - `CHERI`: **DENY** (`PROFILE` — Sealing type violation on privileged execution pointer)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-004: Tool Substitution / Tampering
 - **Target Property:** `TOOL_ATTRIBUTION`
@@ -97,10 +97,10 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 - **Test Intent:** Ensure execution gates strictly enforce positive whitelists on tool identity.
 - **Expected Substrate Outcomes:**
   - `DROS`: **DENY** (`NATIVE` — Tool not in positive task whitelist)
-  - `WASI`: **UNSUPPORTED** (`UNSUPPORTED` — Sandbox operates on descriptors, not tool identities)
+  - `WASI`: **N/A: Out of Scope** (`N/A: Out of Scope` — Sandbox operates on descriptors, not tool identities)
   - `seL4`: **DENY\*\*** (`PROFILE` — Modeled conditional on tools being distinct IPC endpoints)
-  - `CHERI`: **UNSUPPORTED** (`UNSUPPORTED` — Memory pointer cannot represent abstract Tool ID)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `CHERI`: **N/A: Out of Scope** (`N/A: Out of Scope` — Memory pointer cannot represent abstract Tool ID)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-005: Argument Semantic Bounds Violation
 - **Target Property:** `ARGUMENT_INTEGRITY`
@@ -110,10 +110,10 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 - **Test Intent:** Verify deep inspection of JSON payload parameters and path prefix policies.
 - **Expected Substrate Outcomes:**
   - `DROS`: **DENY** (`NATIVE` — Argument prefix policy violated)
-  - `WASI`: **UNSUPPORTED** (`UNSUPPORTED` — File opening layer ignores structured JSON argument policies)
-  - `seL4`: **UNSUPPORTED** (`UNSUPPORTED` — Microkernel does not inspect JSON string arguments)
-  - `CHERI`: **UNSUPPORTED** (`UNSUPPORTED` — Hardware registers ignore string semantic boundaries)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `WASI`: **N/A: Out of Scope** (`N/A: Out of Scope` — File opening layer ignores structured JSON argument policies)
+  - `seL4`: **N/A: Out of Scope** (`N/A: Out of Scope` — Microkernel does not inspect JSON string arguments)
+  - `CHERI`: **N/A: Out of Scope** (`N/A: Out of Scope` — Hardware registers ignore string semantic boundaries)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-006: Root Scope Expansion Attack
 - **Target Property:** `SCOPE_NON_EXPANSION`
@@ -126,7 +126,7 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
   - `WASI`: **DENY\*\*\*\*** (`PROFILE` — Enforced strictly within preopened directory descriptor)
   - `seL4`: **DENY** (`PROFILE` — `seL4_CNode_Derive` cannot grant rights exceeding source capability)
   - `CHERI`: **DENY** (`NATIVE` — Hardware bounds monotonicity prevents capability widening)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-007: Expired Authorization Reuse
 - **Target Property:** `TEMPORAL_AUTHORITY`
@@ -136,10 +136,10 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 - **Test Intent:** Determine whether dynamic time-to-live expiration is enforced at the C-ABI barrier.
 - **Expected Substrate Outcomes:**
   - `DROS`: **DENY** (`NATIVE` — Temporal check rejected expired token)
-  - `WASI`: **UNSUPPORTED** (`UNSUPPORTED` — Preopened descriptors lack temporal expiry concepts)
-  - `seL4`: **UNSUPPORTED** (`UNSUPPORTED` — Capabilities possess no native TTL/expiry)
-  - `CHERI`: **UNSUPPORTED** (`UNSUPPORTED` — Hardware capability registers lack temporal timers)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `WASI`: **N/A: Out of Scope** (`N/A: Out of Scope` — Preopened descriptors lack temporal expiry concepts)
+  - `seL4`: **N/A: Out of Scope** (`N/A: Out of Scope` — Capabilities possess no native TTL/expiry)
+  - `CHERI`: **N/A: Out of Scope** (`N/A: Out of Scope` — Hardware capability registers lack temporal timers)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-008: Dynamic Revocation Invalidation
 - **Target Property:** `TEMPORAL_AUTHORITY`
@@ -149,10 +149,10 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 - **Test Intent:** Measure immediate, in-band hot invalidation across active sessions.
 - **Expected Substrate Outcomes:**
   - `DROS`: **DENY** (`NATIVE` — In-band policy state table hot revocation)
-  - `WASI`: **UNSUPPORTED** (`UNSUPPORTED` — No dynamic revocation model)
+  - `WASI`: **N/A: Out of Scope** (`N/A: Out of Scope` — No dynamic revocation model)
   - `seL4`: **DENY\*\*\*\*\*** (`PROFILE` — Models `seL4_CNode_Revoke()` in CSpace)
-  - `CHERI`: **UNSUPPORTED\*\*\*\*\*\*** (`UNSUPPORTED` — Pure ISA lacks revoke; CheriBSD OS provides temporal sweep)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `CHERI`: **N/A: Out of Scope\*\*\*\*\*\*** (`N/A: Out of Scope` — Pure ISA lacks revoke; CheriBSD OS provides temporal sweep)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-009: Duplicate Nonce Replay Attack
 - **Target Property:** `EXECUTION_UNIQUENESS`
@@ -162,10 +162,10 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 - **Test Intent:** Enforce strict execution uniqueness and anti-replay nonce invalidation.
 - **Expected Substrate Outcomes:**
   - `DROS`: Phase 1 **ALLOW** ➔ Phase 2 **DENY** (`NATIVE` — Duplicate nonce cache rejection)
-  - `WASI`: Phase 1 **ALLOW** ➔ Phase 2 **ALLOW** (`UNSUPPORTED` — No nonce tracking)
-  - `seL4`: Phase 1 **ALLOW** ➔ Phase 2 **ALLOW** (`UNSUPPORTED` — No nonce tracking)
-  - `CHERI`: Phase 1 **ALLOW** ➔ Phase 2 **ALLOW** (`UNSUPPORTED` — No nonce tracking)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `WASI`: Phase 1 **ALLOW** ➔ Phase 2 **ALLOW** (`N/A: Out of Scope` — No nonce tracking)
+  - `seL4`: Phase 1 **ALLOW** ➔ Phase 2 **ALLOW** (`N/A: Out of Scope` — No nonce tracking)
+  - `CHERI`: Phase 1 **ALLOW** ➔ Phase 2 **ALLOW** (`N/A: Out of Scope` — No nonce tracking)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ### PC-010: Cross-Principal Spoofing
 - **Target Property:** `PRINCIPAL_ATTRIBUTION`
@@ -175,10 +175,10 @@ The **VEP Scenario & Evaluation Registry** acts as the canonical index connectin
 - **Test Intent:** Verify cryptographically verifiable principal attribution at the execution gate.
 - **Expected Substrate Outcomes:**
   - `DROS`: **DENY** (`NATIVE` — Token signature / principal mismatch)
-  - `WASI`: **UNSUPPORTED** (`UNSUPPORTED` — WebAssembly runtime lacks Agent identity context)
-  - `seL4`: **UNSUPPORTED** (`UNSUPPORTED` — Memory address space does not equal Agent principal)
-  - `CHERI`: **UNSUPPORTED** (`UNSUPPORTED` — Memory tags do not equal Agent principal)
-  - `TLA+`: **UNSUPPORTED** (`FORMAL` — `assurance_status = PASS`)
+  - `WASI`: **N/A: Out of Scope** (`N/A: Out of Scope` — WebAssembly runtime lacks Agent identity context)
+  - `seL4`: **N/A: Out of Scope** (`N/A: Out of Scope` — Memory address space does not equal Agent principal)
+  - `CHERI`: **N/A: Out of Scope** (`N/A: Out of Scope` — Memory tags do not equal Agent principal)
+  - `TLA+`: **FORMAL_ASSURANCE** (`FORMAL` — `assurance_status = PASS; runtime interception N/A: Out of Scope`)
 
 ---
 
