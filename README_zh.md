@@ -32,6 +32,121 @@
 
 ---
 
+## 🧭 產品定位：確定性運行期執行治理 (Deterministic Runtime Execution Governance)
+
+### 1. DROS 是什麼 (What DROS Is)
+**DROS 是一個專為 AI Agent 與具備工具調用能力之系統設計的確定性執行治理基底（Deterministic Execution-Governance Substrate）。**
+
+它在 Agent 的「行動決策」與系統的「實際執行」之間，建立了一道明確、帶內（In-Band）的硬性執法邊界。
+
+### 2. 它解決什麼問題 (Post-Compromise Containment)
+傳統 AI 資安著重於前向提示詞檢查、Guardrails 或事後日誌稽核。然而，一旦 Agent 的認知層遭到攻陷（例如透過間接提示詞注入、上下文挾持或工具調用幻覺），這些外圍防線將無聲失效。
+
+DROS 解決的是**入侵後遏制問題（Post-Compromise Containment）**：即使 Agent 的認知迴圈被完全挾持，其調用底層作業系統呼叫、檔案 API、網路 Socket 與企業內部工具的權限，依然受到數學與二進位層級的確定性約束。
+
+```text
+[ 遭攻陷/挾持之 AI Agent ] ──(發起惡意工具調用)──► [ DROS 執行治理邊界 ] ──X (硬性阻斷/熔斷)
+                                                            │
+                                                  (確定性能力驗證)
+                                                            │
+                                                            ▼
+                                                [ 實體系統動作 / 工具 API ]
+```
+
+### 3. 為什麼 DROS 刻意保持極簡？ (Why DROS Is Intentionally Minimal)
+> **設計信條 (Doctrine)：** *「責任邊界收斂，執行約束深入。(Narrow in responsibility. Deep in enforcement.)」*  
+> **DROS 刻意做得更少 (DROS deliberately does less)。**
+
+DROS 是一個**執行治理基底**，而非包山包海的通用型 AI 資安套件或平台。它的職責被刻意收斂得極為純粹：**在執行邊界實施確定性授權與攔截。**
+
+透過維持執法表面的邊界約束，DROS 絕不盲目膨脹至相鄰領域：
+- 身分驗證、通行證與憑證管理保留給企業成熟的 IAM/IdP。
+- 業務邏輯編排與工作流保留給 Agent 編排框架。
+- 日誌彙整與全域資安監控保留給企業 SIEM 與遙測基礎設施。
+
+```text
+責任範圍收斂 ──► 受信任執法表面變小 ──► 系統行為精確明確 ──► 窮舉驗證與可重現性更高
+```
+
+> *「基礎設施不需要聰明，需要的是穩定與可依賴。(Infrastructure doesn’t need to be intelligent. It needs to be dependable.)」*
+
+---
+
+## 🏛️ 三大語義領域模型 (The Three-Domain Architecture Model)
+
+為了消弭概念混淆，明確劃分決策輸入、運行期執法與外部整合邊界，DROS 採用三維解耦架構：
+
+```text
+       6P 治理上下文 (What DROS Must Know)
+                         │
+                         ▼
+        DROS 帶內執行授權決策
+                         │
+        L1 邊界過濾 (Boundary Filter)
+                         ↓
+        L2 能力邊界 (Capability Bound)
+                         ↓
+        L3 拓撲隔離 (Topology Isolation)
+                         ↓
+        L4 GuardVM 確定性執法 (C-ABI)
+                         │
+                         ▼
+                 實體執行邊界
+                         │
+                         ▼
+            工具 / 系統呼叫 / API 動作
+                         ▲
+                         │ 深度整合，而非取代
+       ┌─────────────────┴─────────────────┐
+       │  IAM / PKI  │  SIEM  │ Agent Frameworks │
+       └───────────────────────────────────┘
+```
+
+> [!IMPORTANT]
+> **DROS 核心架構憲章 (The Core Architecture Doctrine)：**  
+> **6P defines what DROS must know.** *(6P 定義 DROS 在決策時必須知道什麼——決策上下文)*  
+> **The enforcement layers define what DROS must do.** *(四層縱深防線定義 DROS 必須做什麼——執法路徑)*  
+> **The surrounding infrastructure defines what DROS does not need to replace.** *(周邊基礎設施定義 DROS 不需要取代什麼——整合邊界)*  
+> 
+> *DROS 刻意收斂其產品責任邊界，但絕不削弱其執行期的防禦深度。*
+
+### 4. 6P 治理上下文：DROS 必須知道什麼 (What DROS Must Know)
+6-Pillars 信任模型定義了 DROS 在放行任何執行前必須驗證的多維信任上下文。**這些是決策輸入（Decision Inputs），而非六個獨立的軟體產品：**
+
+| 信任維度 | 評估之上下文 | DROS 驗證內容 |
+| :--- | :--- | :--- |
+| **1. Principal (主體)** | Agent 代表何人執行？ | Agent 角色、行程身分與調用者憑證的密碼學綁定。 |
+| **2. Privilege (權限)** | 適用何種授權範圍？ | 編譯期預先計算、分配給當前任務的正向能力點陣圖 ($O(1)$ 常數時間)。 |
+| **3. Payload (負載)** | 請求執行的動作與參數為何？ | 嚴格白名單之工具/API 端點以及參數語義邊界規範。 |
+| **4. Posture (狀態)** | 運行期系統環境狀態為何？ | 主機環境完整性、執行模式與沙箱隔離邊界。 |
+| **5. Policy (策略)** | 支配執行的確定性規則為何？ | 不可變的編譯期執行不變量與動態防禦閘門。 |
+| **6. Provenance (溯源)** | 執行軌跡如何被驗證與防竄改？ | 為不可否認之稽核需求自動產出防竄改之 Merkle 雜湊鏈存證。 |
+
+### 5. L1–L4 縱深防禦執法路徑：DROS 必須做什麼 (What DROS Must Do)
+DROS 沿著單一、帶內的執行路徑貫穿四層縱深防線。**這些是單一執行邊界上的連續執法階段，而非四套獨立販售的商業產品：**
+
+```text
+[ 調用請求 ] ──► L1: 邊界過濾 ──► L2: 能力邊界 ──► L3: 拓撲隔離 ──► L4: GuardVM 確定性執法 ──► [ 實體執行 ]
+```
+
+1. **L1 邊界過濾 (Boundary Filter)**：接收傳入的工具調用，過濾語法畸形或超出基礎邊界的請求。
+2. **L2 能力邊界 (Capability Bound)**：強制執行 $O(1)$ 能力點陣圖，確保 Agent 僅具備當前任務明確賦予、無法越權提升的極小權限。
+3. **L3 拓撲隔離 (Topology Isolation)**：將執行嚴格約束在預先開啟之目錄描述符、行程命名空間與網路外聯政策邊界內。
+4. **L4 GuardVM 確定性執法 (Deterministic GuardVM Enforcement)**：微秒級 C-ABI 二進位剛性防衛，無記憶體堆積分配，提供最後硬性物理截斷。
+
+### 6. 既有企業技術棧：DROS 不需要取代什麼 (What DROS Does Not Need to Replace)
+DROS 專為與企業既有基礎設施無縫嵌入而設計，無需推倒重來：
+
+| 功能領域 | 企業既有技術棧 | DROS 的邊界與責任 |
+| :--- | :--- | :--- |
+| **身分認證與憑證管理** | Keycloak, Okta, Azure AD, Ping | 接收並消費身分 Token；於執行當下驗證 Agent 密碼學歸屬。 |
+| **觀測性與日誌稽核** | Splunk, Datadog, Elastic, Sentinel | 輸出具備防竄改 Merkle 雜湊鏈的結構化密碼學稽核包。 |
+| **Agent 業務編排框架** | LangGraph, CrewAI, AutoGen, OpenAI SDK | 專注治理下游工具與 API 邊界，絕不介入上游認知編排。 |
+| **企業業務策略** | Open Policy Agent (OPA), IAM, GRC | 將企業業務策略編譯轉譯為執行期二進位底層不變量。 |
+| **運行期執行執法** | **DROS 執行基底** | **在系統呼叫與工具邊界實施帶內、確定性的動態授權與精確攔截。** |
+
+---
+
 ## 📊 Post-Compromise 安全性質 × 執行層級 × 語義覆蓋矩陣 (M3 Matrix)
 
 > **核心科學前提 (Core Premise)：** 能力隔離 (Capability Isolation)、資源沙箱 (Resource Sandboxing)、形式化保證 (Formal Assurance) 與 Agent 執行治理 (Execution Governance) 是截然不同的安全性質；**不可將其壓縮為單一「安全分數」，亦無法互相替代**。
@@ -355,55 +470,6 @@ DROS-VEP Lite 基於 **[OpenShip 開源生態系](https://openship.org)**，在�
 在間接提示詞注入攻擊 (ATS-001) 中，AI Agent 持有 **Keycloak 發放的合法 JWT 通行證**。當被洗腦的 Agent 發起 `GET /api/erp/finance` 時，WAF 檢查：*"HTTPS 合法、JSON 格式乾淨、OAuth 通行證有效。允許通過！"*
 
 傳統資安看到的只是一個 **「100% 合法登入用戶在發起正常的 REST API 調用」**。攻擊是隱藏在 **LLM 語義上下文 (Semantic Context)** 裡面，傳統 WAF 完全看不懂。這就是為什麼需要 DROS PEP/PDP 在工具執行邊界實施最後防衛！
-
----
-
-## 🏛️ 為什麼 DROS 刻意保持極簡？ (Why DROS Is Intentionally Minimal)
-
-> **DROS 刻意做得更少 (DROS deliberately does less)。**
-
-DROS 是一個**執行治理基底（Execution-Governance Substrate）**，而非包山包海的通用型 AI 資安平台（General-Purpose AI Security Suite）。
-
-它的責任範圍刻意被收斂得非常精確：**在執行邊界實施確定性授權與攔截。**
-
-身分驗證、業務編排、日誌觀測性與企業策略制定，始終保留給本就為此設計的既有成熟系統：
-
-```text
-企業既有技術棧 (Existing Enterprise Stack)
-        │
-        ├── 身分認證 / PKI        (Keycloak, Okta, Azure AD)
-        ├── 觀測性 / SIEM 稽核    (Splunk, Datadog, Elastic)
-        ├── Agent 業務編排框架   (LangGraph, CrewAI, OpenAI Agent SDK)
-        └── 企業業務策略與法規   (Enterprise IAM & Business Policy)
-                 │
-                 ▼
-        ┌─────────────────┐
-        │      DROS       │
-        │ 執行治理邊界    │ ◄── 帶內確定性授權閘門 (In-Band PEP)
-        │ (Execution Gate)│     (零堆積、常數時間 O(1) 二進位點陣圖)
-        └─────────────────┘
-                 │
-                 ▼
-          實體工具 / API / 系統呼叫 (Tool / API / Syscall Action)
-```
-
-透過維持執法責任的高度明確與邊界約束，DROS 實現了關鍵的架構特性：
-
-```text
-更窄的責任範圍 (Narrower responsibility)
-        ↓
-更小的受信任執法表面 (Smaller enforcement surface)
-        ↓
-更明確、可預測的系統行為 (More explicit behavior)
-        ↓
-更徹底、可重現的窮舉測試 (More exhaustive, reproducible testing)
-        ↓
-更容易的審查與長期維運 (Easier inspection and maintenance)
-```
-
-> *「基礎設施不需要聰明，需要的是穩定與可驗證。(Infrastructure doesn’t need to be intelligent. It needs to be dependable.)」*
-
-DROS 不取代您的既有技術棧。它建立執行邊界，**且完全無需您替換現有的治理基礎設施 (without requiring you to replace your existing governance stack)。**
 
 ---
 

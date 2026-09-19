@@ -32,6 +32,121 @@
 
 ---
 
+## 🧭 Product Positioning: Deterministic Runtime Execution Governance
+
+### 1. What DROS Is
+**DROS is a deterministic execution-governance substrate for AI agents and tool-enabled systems.**
+
+It establishes an explicit, in-band enforcement boundary between an agent’s decision to act and the system action that follows.
+
+### 2. What Problem It Solves (Post-Compromise Containment)
+Traditional AI security focuses on prompt inspection, guardrails, or post-hoc log observation. When an agent's cognitive layer is compromised (via direct/indirect prompt injection, context hijacking, or tool hallucination), these outer defenses fail silently.
+
+DROS solves the **post-compromise confinement problem**: even if an agent’s cognitive loop is fully hijacked, its authority to invoke underlying operating system calls, file APIs, network sockets, and enterprise tools remains deterministically bounded.
+
+```text
+[ Hijacked / Compromised Agent ] ──(Attempted Malicious Tool Call)──► [ DROS Execution Boundary ] ──X (Blocked)
+                                                                               │
+                                                                    (Deterministic Verification)
+                                                                               │
+                                                                               ▼
+                                                                 [ System Action / Tool API ]
+```
+
+### 3. Why DROS Is Intentionally Minimal
+> **Doctrine:** *"Narrow in responsibility. Deep in enforcement."*  
+> **DROS deliberately does less.**
+
+DROS is an **execution-governance substrate**, not a general-purpose AI security suite or all-in-one platform. Its responsibility is deliberately narrow: **deterministic authorization and interception at the execution boundary.**
+
+By keeping the enforcement surface bounded, DROS avoids expanding into adjacent domains:
+- Identity, authentication, and credentials remain with enterprise IAM.
+- Business orchestration and workflows remain with agent orchestration frameworks.
+- Log aggregation and security monitoring remain with SIEM and telemetry stacks.
+
+```text
+Narrower responsibility ──► Smaller enforcement surface ──► Explicit behavior ──► Exhaustive verification
+```
+
+> *"Infrastructure doesn’t need to be intelligent. It needs to be dependable."*
+
+---
+
+## 🏛️ The Three-Domain Architecture Model
+
+To eliminate conceptual ambiguity and separate decision inputs, runtime actions, and integration boundaries, DROS is structured across three distinct dimensions:
+
+```text
+       6P GOVERNANCE CONTEXT (What DROS Must Know)
+                         │
+                         ▼
+        DROS IN-BAND EXECUTION DECISION
+                         │
+        L1 Boundary Filter
+                         ↓
+        L2 Capability Bound
+                         ↓
+        L3 Topology Isolation
+                         ↓
+        L4 Deterministic GuardVM Enforcement (C-ABI)
+                         │
+                         ▼
+                 EXECUTION BOUNDARY
+                         │
+                         ▼
+            TOOL / SYSCALL / API ACTION
+                         ▲
+                         │ Integrated, not replaced
+       ┌─────────────────┴─────────────────┐
+       │  IAM / PKI  │  SIEM  │ Agent Frameworks │
+       └───────────────────────────────────┘
+```
+
+> [!IMPORTANT]
+> **The Architecture Doctrine:**  
+> **6P defines what DROS must know.** (Decision context)  
+> **The enforcement layers define what DROS must do.** (Enforcement path)  
+> **The surrounding infrastructure defines what DROS does not need to replace.** (Integration boundary)  
+> 
+> *DROS deliberately narrows its product responsibility without narrowing its enforcement model.*
+
+### 4. 6P Governance Context (What DROS Must Know)
+The 6-Pillars trust model defines the multi-dimensional context that DROS evaluates before permitting any execution. **These are decision inputs, not six separate software products:**
+
+| Trust Dimension | Context Evaluated | What DROS Validates |
+| :--- | :--- | :--- |
+| **1. Principal** | Who does the agent represent? | Cryptographic binding between agent role, process identity, and caller credentials. |
+| **2. Privilege** | What authorization scope applies? | Compile-time positive capability bitmask ($O(1)$ constant time) allocated for the active task. |
+| **3. Payload** | What action and arguments are requested? | Whitelisted tool/API endpoint and strict argument boundary semantics. |
+| **4. Posture** | What is the runtime system state? | Host environment integrity, execution mode, and confinement boundaries. |
+| **5. Policy** | What deterministic rules govern execution? | Immutable compile-time invariants and dynamic verification gates. |
+| **6. Provenance** | How is the execution traced and verified? | Tamper-evident Merkle hash chain emitted for non-repudiable auditability. |
+
+### 5. L1–L4 Enforcement Layers (What DROS Must Do)
+DROS enforces governance along a unified, in-band execution path across four defense-in-depth layers. **These represent stages on the single execution boundary, not four independent commercial products:**
+
+```text
+[ Request ] ──► L1: Boundary Filter ──► L2: Capability Bound ──► L3: Topology Isolation ──► L4: Deterministic GuardVM Enforcement ──► [ Execution ]
+```
+
+1. **L1 Boundary Filter**: Ingests incoming tool invocations and filters syntactically malformed or out-of-boundary requests.
+2. **L2 Capability Bound**: Enforces $O(1)$ capability bitmasks ensuring the agent possesses explicit, non-escalatable rights for the specific task.
+3. **L3 Topology Isolation**: Confines execution within bounded directory descriptors, process namespaces, and network egress policies.
+4. **L4 Deterministic GuardVM Enforcement**: Sub-microsecond C-ABI binary guard delivering hard stop containment without heap allocations.
+
+### 6. Existing Enterprise Stack (What DROS Does Not Need to Replace)
+DROS is designed to drop into enterprise infrastructures as an execution gate without rip-and-replace disruption:
+
+| Functional Domain | Existing Enterprise Stack | DROS Boundary & Responsibility |
+| :--- | :--- | :--- |
+| **Identity & Authentication** | Keycloak, Okta, Azure AD, Ping | Consumes identity tokens; verifies cryptographic agent attribution at execution time. |
+| **Observability & Audit** | Splunk, Datadog, Elastic, Sentinel | Emits tamper-evident Merkle hashes and structured cryptographic audit packages. |
+| **Agent Orchestration** | LangGraph, CrewAI, AutoGen, OpenAI SDK | Governs the downstream tool/API boundary without interfering with cognitive orchestration. |
+| **Enterprise Business Policy** | Open Policy Agent (OPA), IAM, GRC | Enforces compiled, low-level execution invariants derived from enterprise policies. |
+| **Runtime Enforcement** | **DROS Substrate** | **In-band, deterministic authorization and interception at the syscall/tool boundary.** |
+
+---
+
 ## 📊 Post-Compromise Property × Enforcement Layer × Semantic Coverage Matrix
 
 > **Core Research Finding:** Capability isolation, resource sandboxing, formal assurance, and Agent-level execution governance represent distinct security properties. They cannot be collapsed into a single security score, nor can one substitute for another.
@@ -356,56 +471,6 @@ In this evaluation topology, while OpenAI's Terraform Provider establishes the *
 In an indirect prompt injection attack (ATS-001), the hijacked AI Agent possesses a **valid Keycloak JWT token**. When the agent queries `/api/erp/finance`, WAF inspects the request: *"Valid HTTPS, clean JSON, valid OAuth token. Access Granted!"*
 
 Traditional WAFs see a **100% legitimate user making a clean REST API call**. The attack is hidden inside the **LLM Semantic Context**. This is why DROS PEP/PDP is required at the tool execution boundary.
-
----
-
-## 🏛️ Why DROS Is Intentionally Minimal
-
-> **DROS deliberately does less.**
-
-DROS is an **execution-governance substrate**, not a general-purpose AI security suite or platform.
-
-Its responsibility is deliberately narrow: **deterministic authorization and interception at the execution boundary.**
-
-Identity, business orchestration, observability, and enterprise governance remain with the systems already designed for those functions:
-
-```text
-Your Existing Enterprise Stack
-        │
-        ├── Identity / PKI        (Keycloak, Okta, Azure AD)
-        ├── Observability / SIEM  (Splunk, Datadog, Elastic)
-        ├── Agent Framework       (LangGraph, CrewAI, OpenAI Agent SDK)
-        └── Business Policy       (Enterprise Governance & IAM Rules)
-                 │
-                 ▼
-        ┌─────────────────┐
-        │      DROS       │
-        │ Execution       │ ◄── Deterministic, in-band authorization gate
-        │ Governance      │     (Zero-heap, constant-time C-ABI bitmap)
-        │ Boundary        │
-        └─────────────────┘
-                 │
-                 ▼
-             Tool / API / Syscall Action
-```
-
-By keeping the enforcement responsibility explicit and bounded, DROS achieves an essential architectural property:
-
-```text
-Narrower responsibility
-        ↓
-Smaller enforcement surface
-        ↓
-More explicit behavior
-        ↓
-More exhaustive, reproducible testing
-        ↓
-Easier inspection and long-term maintenance
-```
-
-> *"Infrastructure doesn’t need to be intelligent. It needs to be dependable."*
-
-DROS does not replace your stack. It establishes the execution boundary **without requiring you to replace your existing governance infrastructure.**
 
 ---
 
