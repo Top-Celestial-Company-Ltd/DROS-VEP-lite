@@ -20,7 +20,7 @@ This matrix documents the native capabilities, enforcement layers, execution pro
 | **Privilege Escalation (PC-003)** | ✅ Scope check (DENY) | ✅ Kernel filter (DENY) | ❌ Allow (WASI lacks priv model) | ⚠️ TCB capability missing (DENY) | ⚠️ Sealing violation (DENY) | ⚠️ Sealing violation (DENY) | 📐 Model Invariant |
 | **Scope Expansion (PC-006)** | ✅ Scope check (DENY) | ✅ Kernel filter (DENY) | ✅ Preopen boundary (DENY) | ⚠️ Rights cannot escalate (DENY) | ⚠️ Bounds Monotonicity (DENY) | ⚠️ Bounds Monotonicity (DENY) | 📐 Model Invariant |
 | **Temporal Expiry [TTL] (PC-007)** | ✅ Dynamic timer (DENY) | ✅ Dynamic timer (DENY) | ⚪ N/A: Out of Scope | ⚪ N/A: Out of Scope | ⚪ N/A: Out of Scope | ⚪ N/A: Out of Scope | 📐 Model Invariant |
-| **Hot Revocation (PC-008)** | ✅ In-band state (DENY) | ✅ In-band state (DENY) | ⚪ N/A: Out of Scope | ⚠️ seL4_CNode_Revoke (DENY)** | ⚪ N/A: Out of Scope (Pure HW) | ⚠️ CheriBSD temporal sweep (DENY) | 📐 Model Invariant |
+| **Hot Revocation (PC-008)** | ✅ In-band state (DENY) | ✅ In-band state (DENY) | ⚪ N/A: Out of Scope | ⚠️ seL4_CNode_Revoke (DENY)\*\* | ⚪ N/A: Out of Scope (Pure HW) | ⚠️ CheriBSD temporal sweep (DENY) | 📐 Model Invariant |
 | **Replay / Nonce Protection (PC-009)** | ✅ Nonce cache (DENY) | ✅ Nonce cache (DENY) | ⚪ N/A: Out of Scope | ⚪ N/A: Out of Scope | ⚪ N/A: Out of Scope | ⚪ N/A: Out of Scope | 📐 Model Invariant |
 | **Deterministic Evidence** | ✅ SHA256 Audit log | ✅ SHA256 Audit log | ✅ Audit trace | ✅ Kernel trace | ✅ Trap evidence | ✅ Sweep log | 📐 Counterexample trace |
 
