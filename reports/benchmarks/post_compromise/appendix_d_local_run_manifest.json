@@ -1,0 +1,21 @@
+{
+  "started_at": "2026-09-21T12:36:40Z",
+  "finished_at": "2026-09-21T12:36:42Z",
+  "hostname": "Dell_Alpha_R1",
+  "os": "Windows-10-10.0.19044-SP0",
+  "python_version": "3.12.0",
+  "command": [
+    "C:\\Users\\Jimmy\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "E:\\vscode\\AI知識庫\\dros-vep-lite\\vep.py",
+    "benchmark",
+    "post-compromise",
+    "--substrate",
+    "dros,dros-kernel,opa,scopegate,wasi,tla,sel4,cheri"
+  ],
+  "exit_code": 0,
+  "latest_experiment": {
+    "latest_experiment_id": "EXP-1789994201-7452ff",
+    "path": "E:\\vscode\\AI知識庫\\dros-vep-lite\\reports\\benchmarks\\post_compromise\\EXP-1789994201-7452ff"
+  },
+  "note": "Local Appendix D wrapper. Raw syscall / lower-layer bypass artifacts must be collected on a Linux-capable host for seccomp/Landlock/container measurements."
+}

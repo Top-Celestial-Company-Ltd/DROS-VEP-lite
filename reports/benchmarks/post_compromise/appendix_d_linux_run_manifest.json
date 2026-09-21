@@ -1,0 +1,47 @@
+{
+  "started_at": "2026-09-21T12:53:41Z",
+  "host": {
+    "platform": "Linux-5.15.0-190-generic-x86_64-with-glibc2.35",
+    "system": "Linux",
+    "release": "5.15.0-190-generic",
+    "version": "#200-Ubuntu SMP Fri Aug 7 15:06:04 UTC 2026",
+    "architecture": "x86_64",
+    "python_version": "3.10.12",
+    "uname": "Linux claw-vm 5.15.0-190-generic #200-Ubuntu SMP Fri Aug 7 15:06:04 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+    "docker_available": true,
+    "seccomp_mode": "0",
+    "landlock_present": false,
+    "proc_self_status": "Name:\tpython3\nUmask:\t0022\nState:\tR (running)\nTgid:\t696579\nNgid:\t0\nPid:\t696579\nPPid:\t696578\nTracerPid:\t0\nUid:\t1032\t1032\t1032\t1032\nGid:\t100\t100\t100\t100\nFDSize:\t64\nGroups:\t27 100 \nNStgid:\t696579\nNSpid:\t696579\nNSpgid:\t696579\nNSsid:\t696579\nVmPeak:\t   20940 kB\nVmSize:\t   20940 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   12864 kB\nVmRSS:\t   12864 kB\nRssAnon:\t    6324 kB\nRssFile:\t    6540 kB\nRssShmem:\t       0 kB\nVmData:\t    8260 kB\nVmStk:\t     132 kB\nVmExe:\t    2776 kB\nVmLib:\t    2700 kB\nVmPTE:\t      80 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nThreads:\t1\nSigQ:\t0/23213\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000000000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\tf\nCpus_allowed_list:\t0-3\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t5\nnonvoluntary_ctxt_switches:\t17"
+  },
+  "post_compromise": {
+    "command": [
+      "/usr/bin/python3",
+      "/home/claw_user/scratch/dros-vep-lite/vep.py",
+      "benchmark",
+      "post-compromise",
+      "--substrate",
+      "dros,dros-kernel,opa,scopegate,wasi,tla,sel4,cheri"
+    ],
+    "returncode": 0,
+    "stdout": "\n================================================================================\n🚀 Running VEP Post-Compromise Benchmark: 10 Scenarios x 8 Substrates\n================================================================================\n\n[+] Experiment ID: EXP-1789995221-da0c4b\n[+] Total Executions Evaluated: 88 (50 scenario evaluations + 5 replay-phase evaluations = 55 execution records)\n--------------------------------------------------------------------------------\nSubstrate      | Total  | UER (%)  | Unsupported (%) | P50 (ns)  \n--------------------------------------------------------------------------------\ndros           | 22     | 0.0%     | 0.0%            | 5361      \nopa            | 11     | 0.0%     | 100.0%          | 96362     \nscopegate      | 11     | 0.0%     | 0.0%            | 4556      \nwasi           | 11     | 25.0%    | 63.6%           | 4607      \ntla            | 11     | 0.0%     | 100.0%          | 3092      \nsel4           | 11     | 0.0%     | 45.5%           | 5505      \ncheri          | 11     | 0.0%     | 63.6%           | 5006      \n================================================================================\n\n",
+    "stderr": ""
+  },
+  "linux_real_os_suite": {
+    "skipped": false,
+    "command": [
+      "/usr/bin/python3",
+      "-m",
+      "pytest",
+      "-q",
+      "/home/claw_user/scratch/dros-vep-lite/tests/security/ipc/test_ipc_p3_real_os_suite.py"
+    ],
+    "returncode": 0,
+    "stdout": "...s.                                                                    [100%]\n4 passed, 1 skipped in 2.06s\n",
+    "stderr": ""
+  },
+  "notes": [
+    "This runner orchestrates repository-native benchmark evidence only.",
+    "It does not embed exploit payloads or bypass code."
+  ],
+  "finished_at": "2026-09-21T12:53:44Z"
+}

@@ -88,10 +88,15 @@ def test_opa_and_scopegate_pc008_revocation_enforcement():
     res_opa = opa.evaluate(req)
     res_sg = scopegate.evaluate(req)
 
-    # Both OPA and ScopeGate correctly enforce dynamic revocation under SEC
-    assert res_opa.decision == DecisionType.DENY
-    assert res_opa.execution == ExecutionStatus.NOT_EXECUTED
-    assert res_opa.reason_class == "AUTHORIZATION_REVOKED"
+    # OPA is a host-dependent policy engine. On Linux agents without a native
+    # opa binary, the adapter must degrade to UNSUPPORTED instead of raising.
+    if res_opa.decision == DecisionType.UNSUPPORTED:
+        assert res_opa.execution == ExecutionStatus.UNSUPPORTED
+        assert res_opa.reason_class == "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+    else:
+        assert res_opa.decision == DecisionType.DENY
+        assert res_opa.execution == ExecutionStatus.NOT_EXECUTED
+        assert res_opa.reason_class == "AUTHORIZATION_REVOKED"
 
     assert res_sg.decision == DecisionType.DENY
     assert res_sg.execution == ExecutionStatus.NOT_EXECUTED

@@ -1,0 +1,33 @@
+{
+  "manifest_version": "1.0.0",
+  "protocol": "VEP-PLAN-2026-M5.1",
+  "report_id": "VEP-REPORT-2026-M5.1",
+  "source_experiment_family": "VEP-REPORT-2026-M5",
+  "revision": "M5.1 (Evidence & Measurement Hardened Edition)",
+  "experiment_id": "EXP-1789532251-38a4fd",
+  "timestamp": "2026-09-16T12:17:00+08:00",
+  "git_commit": "e02c4fcbd8e862afba72878122111f137ae20b18",
+  "environment": {
+    "os": "Windows 10 IoT Enterprise LTSC / Ubuntu Subsystem 24.04 (Kernel 6.8+)",
+    "architecture": "x86_64",
+    "python_version": "3.12.0",
+    "clock_source": "time.perf_counter_ns (Monotonic Hardware Timestamp)",
+    "random_seed": 42
+  },
+  "fingerprints": {
+    "bare_metal_crucible_corpus_hash": "11eff25be768756d2c7739da6cee20381e5654b247b48337173f5ece92b0241b",
+    "multi_substrate_evaluator_hash": "96d5bdbcf953a98ad3070184df068405d2ada09715a7a698e50fbaa93bd2cce0",
+    "opa_substrate_adapter_hash": "c034a0872e01f7457a4d6015aa28dcf121c50f97ef969e3b3b6a862de0316b88",
+    "scopegate_substrate_adapter_hash": "faf6b128600e2aec61e45c99843159893d74c4cb5365778a20087f3b6045cb6c"
+  },
+  "artifacts": {
+    "audit_log": "reports/audit.jsonl",
+    "benchmark_summary": "reports/benchmark_summary.json",
+    "conformance_report": "reports/conformance_report.json",
+    "benchmark_report": "reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md"
+  },
+  "measurement_boundaries": {
+    "pdp_decision_latency": "Pure C-ABI bitmask lookup & argument hash matching in memory (<1,000 ns). Excludes IO and hashing.",
+    "e2e_transaction_throughput": "Full transactional loop including mock dispatch, file system state update, and SHA-256 Merkle audit record entry generation (~12.6 μs/op, 78,910 ops/sec)."
+  }
+}

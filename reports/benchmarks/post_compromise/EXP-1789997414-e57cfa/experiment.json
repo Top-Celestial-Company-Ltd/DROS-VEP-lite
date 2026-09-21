@@ -1,0 +1,21 @@
+{
+  "experiment_id": "EXP-1789997414-e57cfa",
+  "scenarios": [
+    "PC-001",
+    "PC-002",
+    "PC-003",
+    "PC-004",
+    "PC-005",
+    "PC-006",
+    "PC-007",
+    "PC-008",
+    "PC-009",
+    "PC-010"
+  ],
+  "substrates": [
+    "dros",
+    "landlock",
+    "container"
+  ],
+  "timestamp": "2026-09-21T13:30:14Z"
+}

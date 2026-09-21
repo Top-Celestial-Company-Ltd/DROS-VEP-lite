@@ -1,0 +1,21 @@
+{
+  "experiment_id": "EXP-1789530057-779a1d",
+  "scenarios": [
+    "PC-001",
+    "PC-002",
+    "PC-003",
+    "PC-004",
+    "PC-005",
+    "PC-006",
+    "PC-007",
+    "PC-008",
+    "PC-009",
+    "PC-010"
+  ],
+  "substrates": [
+    "dros",
+    "wasi",
+    "tla"
+  ],
+  "timestamp": "2026-09-16T03:40:58Z"
+}

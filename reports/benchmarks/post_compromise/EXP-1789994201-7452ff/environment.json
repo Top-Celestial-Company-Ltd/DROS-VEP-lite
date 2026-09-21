@@ -1,0 +1,9 @@
+{
+  "os": "Windows",
+  "os_release": "10",
+  "os_version": "10.0.19044",
+  "architecture": "AMD64",
+  "python_version": "3.12.0",
+  "vep_commit": "2bfbac46560374a9650896c8decebdea6911f73d",
+  "timestamp": "2026-09-21T12:36:41Z"
+}

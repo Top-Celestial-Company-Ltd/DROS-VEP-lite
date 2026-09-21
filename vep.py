@@ -47,6 +47,8 @@ from sel4.adapter import Sel4Adapter
 from cheri.adapter import CheriAdapter
 from opa.adapter import OpaAdapter
 from scopegate.adapter import ScopeGateAdapter
+from landlock.adapter import LandlockAdapter
+from container.adapter import ContainerAdapter
 
 
 def get_available_adapters():
@@ -57,6 +59,8 @@ def get_available_adapters():
         "scopegate": ScopeGateAdapter(),
         "wasi": WasiAdapter(),
         "tla": TlaAssuranceAdapter(),
+        "landlock": LandlockAdapter(),
+        "container": ContainerAdapter(),
         "sel4": Sel4Adapter(),
         "cheri": CheriAdapter(),
     }

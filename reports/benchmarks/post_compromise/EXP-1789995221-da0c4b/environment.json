@@ -1,0 +1,9 @@
+{
+  "os": "Linux",
+  "os_release": "5.15.0-190-generic",
+  "os_version": "#200-Ubuntu SMP Fri Aug 7 15:06:04 UTC 2026",
+  "architecture": "x86_64",
+  "python_version": "3.10.12",
+  "vep_commit": "5d421e4a83cc72a79ced77f48202816d43940ee6",
+  "timestamp": "2026-09-21T12:53:41Z"
+}

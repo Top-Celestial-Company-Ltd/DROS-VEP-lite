@@ -1,0 +1,26 @@
+{
+  "experiment_id": "EXP-1789994201-7452ff",
+  "scenarios": [
+    "PC-001",
+    "PC-002",
+    "PC-003",
+    "PC-004",
+    "PC-005",
+    "PC-006",
+    "PC-007",
+    "PC-008",
+    "PC-009",
+    "PC-010"
+  ],
+  "substrates": [
+    "dros",
+    "dros",
+    "opa",
+    "scopegate",
+    "wasi",
+    "tla",
+    "sel4",
+    "cheri"
+  ],
+  "timestamp": "2026-09-21T12:36:41Z"
+}

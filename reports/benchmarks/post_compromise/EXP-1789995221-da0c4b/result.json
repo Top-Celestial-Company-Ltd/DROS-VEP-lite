@@ -1,0 +1,588 @@
+{
+  "experiment_id": "EXP-1789995221-da0c4b",
+  "experiment_name": "post-compromise-m1",
+  "total_scenarios": 10,
+  "total_executions": 88,
+  "environment": {
+    "os": "Linux",
+    "os_release": "5.15.0-190-generic",
+    "os_version": "#200-Ubuntu SMP Fri Aug 7 15:06:04 UTC 2026",
+    "architecture": "x86_64",
+    "python_version": "3.10.12",
+    "vep_commit": "5d421e4a83cc72a79ced77f48202816d43940ee6",
+    "timestamp": "2026-09-21T12:53:41Z"
+  },
+  "metrics": {
+    "dros": {
+      "total_attempts": 22,
+      "unauthorized_attempts": 20,
+      "unauthorized_executions": 0,
+      "nominal_attempts": 2,
+      "nominal_executions": 2,
+      "unsupported_attempts": 0,
+      "error_attempts": 0,
+      "unauthorized_execution_rate_pct": 0.0,
+      "unsupported_rate_pct": 0.0,
+      "replay_rejection_rate_pct": 100.0,
+      "latency_p50_ns": 5361,
+      "latency_p95_ns": 10838,
+      "adapter_metadata": {
+        "version": "1.0.0",
+        "deployment_mode": "kernel",
+        "native_semantics": [
+          "principal_attribution",
+          "task_authorization",
+          "tool_binding",
+          "argument_bounds",
+          "scope_containment",
+          "temporal_expiry",
+          "hot_revocation",
+          "replay_protection"
+        ],
+        "unsupported_semantics": [],
+        "scientific_notes": "Reference in-band execution governance for compromised agents."
+      }
+    },
+    "opa": {
+      "total_attempts": 11,
+      "unauthorized_attempts": 0,
+      "unauthorized_executions": 0,
+      "nominal_attempts": 0,
+      "nominal_executions": 0,
+      "unsupported_attempts": 11,
+      "error_attempts": 0,
+      "unauthorized_execution_rate_pct": 0.0,
+      "unsupported_rate_pct": 100.0,
+      "replay_rejection_rate_pct": 0.0,
+      "latency_p50_ns": 96362,
+      "latency_p95_ns": 134456,
+      "adapter_metadata": {
+        "version": "OPA-v0.68.0",
+        "engine": "Rego",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "native_semantics": [
+          "principal_attribution",
+          "task_authorization",
+          "tool_binding",
+          "argument_bounds",
+          "scope_containment",
+          "temporal_expiry",
+          "hot_revocation"
+        ],
+        "unsupported_semantics": [
+          "binary_cabi_gate",
+          "zero_heap_allocation"
+        ],
+        "scientific_notes": "OPA provides declarative Policy-as-Code. In-process or sidecar evaluation exhibits JSON serialization overhead compared to native binary gates."
+      }
+    },
+    "scopegate": {
+      "total_attempts": 11,
+      "unauthorized_attempts": 10,
+      "unauthorized_executions": 0,
+      "nominal_attempts": 1,
+      "nominal_executions": 1,
+      "unsupported_attempts": 0,
+      "error_attempts": 0,
+      "unauthorized_execution_rate_pct": 0.0,
+      "unsupported_rate_pct": 0.0,
+      "replay_rejection_rate_pct": 100.0,
+      "latency_p50_ns": 4556,
+      "latency_p95_ns": 6036,
+      "adapter_metadata": {
+        "version": "ScopeGate-2026-Reference",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "native_semantics": [
+          "principal_attribution",
+          "task_authorization",
+          "tool_binding",
+          "argument_bounds",
+          "scope_containment",
+          "temporal_expiry",
+          "hot_revocation",
+          "replay_protection"
+        ],
+        "unsupported_semantics": [
+          "binary_cabi_gate",
+          "kernel_syscall_interception"
+        ],
+        "scientific_notes": "ScopeGate provides in-process capability gating and authorization. In post-compromise scenarios with arbitrary code execution, in-process wrappers can be subject to memory inspection or runtime monkey-patching."
+      }
+    },
+    "wasi": {
+      "total_attempts": 11,
+      "unauthorized_attempts": 4,
+      "unauthorized_executions": 1,
+      "nominal_attempts": 0,
+      "nominal_executions": 0,
+      "unsupported_attempts": 7,
+      "error_attempts": 0,
+      "unauthorized_execution_rate_pct": 25.0,
+      "unsupported_rate_pct": 63.64,
+      "replay_rejection_rate_pct": 0.0,
+      "latency_p50_ns": 4607,
+      "latency_p95_ns": 9034,
+      "adapter_metadata": {
+        "version": "WASI-Preview1-Model",
+        "native_semantics": [
+          "filesystem_preopen_boundary",
+          "network_capability_flag"
+        ],
+        "unsupported_semantics": [
+          "principal_attribution",
+          "task_authorization",
+          "argument_bounds",
+          "temporal_expiry",
+          "hot_revocation",
+          "replay_protection"
+        ],
+        "scientific_notes": "WASI provides strong syscall and resource sandboxing, but does not possess Agent-level authorization vocabulary."
+      }
+    },
+    "tla": {
+      "total_attempts": 11,
+      "unauthorized_attempts": 0,
+      "unauthorized_executions": 0,
+      "nominal_attempts": 0,
+      "nominal_executions": 0,
+      "unsupported_attempts": 11,
+      "error_attempts": 0,
+      "unauthorized_execution_rate_pct": 0.0,
+      "unsupported_rate_pct": 100.0,
+      "replay_rejection_rate_pct": 0.0,
+      "latency_p50_ns": 3092,
+      "latency_p95_ns": 4692,
+      "adapter_metadata": {
+        "version": "TLA+ Tools v1.8.0",
+        "native_semantics": [
+          "formal_state_machine_specification",
+          "temporal_logic_invariants",
+          "counterexample_generation"
+        ],
+        "unsupported_semantics": [
+          "runtime_packet_filtering",
+          "direct_syscall_interception",
+          "in_situ_memory_governance"
+        ],
+        "scientific_notes": "TLA+ provides formal proofs and counterexamples at the specification layer, not at runtime execution."
+      }
+    },
+    "sel4": {
+      "total_attempts": 11,
+      "unauthorized_attempts": 6,
+      "unauthorized_executions": 0,
+      "nominal_attempts": 0,
+      "nominal_executions": 0,
+      "unsupported_attempts": 5,
+      "error_attempts": 0,
+      "unauthorized_execution_rate_pct": 0.0,
+      "unsupported_rate_pct": 45.45,
+      "replay_rejection_rate_pct": 0.0,
+      "latency_p50_ns": 5505,
+      "latency_p95_ns": 6984,
+      "adapter_metadata": {
+        "version": "seL4-Microkernel-12.1.0",
+        "execution_profile": "SEL4_SIM_CAPABILITY_MODEL",
+        "native_semantics": [
+          "cspace_capability_isolation",
+          "endpoint_ipc_rights",
+          "capability_derivation_revocation",
+          "privilege_confinement"
+        ],
+        "unsupported_semantics": [
+          "agent_principal_identity",
+          "argument_json_bounds",
+          "temporal_token_expiry",
+          "replay_nonce_cache"
+        ],
+        "scientific_notes": "seL4 microkernel enforces unforgeable capabilities via CSpace. User-level endpoints model services."
+      }
+    },
+    "cheri": {
+      "total_attempts": 11,
+      "unauthorized_attempts": 4,
+      "unauthorized_executions": 0,
+      "nominal_attempts": 0,
+      "nominal_executions": 0,
+      "unsupported_attempts": 7,
+      "error_attempts": 0,
+      "unauthorized_execution_rate_pct": 0.0,
+      "unsupported_rate_pct": 63.64,
+      "replay_rejection_rate_pct": 0.0,
+      "latency_p50_ns": 5006,
+      "latency_p95_ns": 15080,
+      "adapter_metadata": {
+        "version": "CHERI-Morello-v1.0",
+        "execution_profile": "CHERI_PURE_ISA_CAPABILITY_MODEL",
+        "native_semantics": [
+          "hardware_bounded_pointers",
+          "tagged_memory_protection",
+          "capability_monotonicity",
+          "capability_sealing"
+        ],
+        "unsupported_semantics": [
+          "agent_tool_identity",
+          "agent_principal_identity",
+          "argument_json_prefix_bounds",
+          "temporal_token_expiry",
+          "replay_nonce_cache"
+        ],
+        "scientific_notes": "CHERI enforces unforgeable capability pointers in hardware. It requires runtime OS (CheriBSD) for temporal heap revocation."
+      }
+    }
+  },
+  "property_matrix": {
+    "RESOURCE_AUTHORITY": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "UNAUTHORIZED_EGRESS"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE2_UNAUTHORIZED_EGRESS"
+      },
+      "wasi": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_NET_CAPABILITY_FAULT"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_SPEC_CONFORMANT"
+      },
+      "sel4": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_NO_IPC_CAPABILITY"
+      },
+      "cheri": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_MMIO_CAPABILITY_FAULT"
+      }
+    },
+    "PRIVILEGE_ESCALATION": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "PRIVILEGE_ESCALATION_DENIED"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE2_PRIVILEGE_ESCALATION_BLOCKED"
+      },
+      "wasi": {
+        "decision": "ALLOW",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_SANDBOX_ALLOW"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_SPEC_CONFORMANT"
+      },
+      "sel4": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_PRIVILEGE_VIOLATION"
+      },
+      "cheri": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_SEALING_VIOLATION"
+      }
+    },
+    "TOOL_ATTRIBUTION": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "TOOL_SUBSTITUTION_DENIED"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE2_PRIVILEGE_ESCALATION_BLOCKED"
+      },
+      "wasi": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_SPEC_CONFORMANT"
+      },
+      "sel4": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_CAPABILITY_ABSENT"
+      },
+      "cheri": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_NATIVE_SEMANTICS_UNSUPPORTED"
+      }
+    },
+    "ARGUMENT_INTEGRITY": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SCOPE_VIOLATION"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE2_SCOPE_VIOLATION"
+      },
+      "wasi": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_INVARIANT_PRESERVED"
+      },
+      "sel4": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "cheri": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_NATIVE_SEMANTICS_UNSUPPORTED"
+      }
+    },
+    "SCOPE_NON_EXPANSION": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SCOPE_VIOLATION"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE2_SCOPE_VIOLATION"
+      },
+      "wasi": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_CAPABILITY_FAULT"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_SPEC_CONFORMANT"
+      },
+      "sel4": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_CAPABILITY_RIGHTS_CANNOT_ESCALATE"
+      },
+      "cheri": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_MONOTONICITY_VIOLATION"
+      }
+    },
+    "TEMPORAL_AUTHORITY": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "AUTHORIZATION_REVOKED"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE4_REVOCATION_BLOCKED"
+      },
+      "wasi": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_INVARIANT_PRESERVED"
+      },
+      "sel4": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_CAPABILITY_DERIVATION_REVOKED"
+      },
+      "cheri": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_ARCHITECTURAL_NO_TEMPORAL_REVOCATION"
+      }
+    },
+    "EXECUTION_UNIQUENESS": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "REPLAY_DETECTED"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE5_REPLAY_DETECTED"
+      },
+      "wasi": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_SPEC_CONFORMANT"
+      },
+      "sel4": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "cheri": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_NATIVE_SEMANTICS_UNSUPPORTED"
+      }
+    },
+    "PRINCIPAL_ATTRIBUTION": {
+      "dros": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "PRINCIPAL_ATTRIBUTION_MISMATCH"
+      },
+      "opa": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "OPA_BINARY_OR_POLICY_UNAVAILABLE"
+      },
+      "scopegate": {
+        "decision": "DENY",
+        "semantic_scope": "NATIVE",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "SG_STAGE1_CONFUSED_DEPUTY_BLOCKED"
+      },
+      "wasi": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E2_SANDBOX_RUNTIME",
+        "reason_class": "WASI_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "tla": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "FORMAL",
+        "enforcement_layer": "E5_FORMAL_ASSURANCE",
+        "reason_class": "FORMAL_INVARIANT_PRESERVED"
+      },
+      "sel4": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E3_OS_KERNEL",
+        "reason_class": "SEL4_NATIVE_SEMANTICS_UNSUPPORTED"
+      },
+      "cheri": {
+        "decision": "UNSUPPORTED",
+        "semantic_scope": "UNSUPPORTED",
+        "enforcement_layer": "E4_HARDWARE",
+        "reason_class": "CHERI_NATIVE_SEMANTICS_UNSUPPORTED"
+      }
+    }
+  }
+}
