@@ -173,3 +173,16 @@ reports/evidence/exec_ATS-001_1768960000/
 
 * **Guard Policy Evaluation Latency**：在本地 Benchmark 環境實測，DROS Guard 的單次策略評估延遲為 **26.1 微秒 (0.0261 ms)**。
 * **Zero Overhead Enforcement**：執行路徑僅進行零記憶體分配的點陣圖/雜湊查表，確保高並發環境下的極致效能。
+
+## 八、MCP 與 CLI Execution Boundary 證據更新（2026-09-22）
+
+VEP 新增研究顯示：MCP 層可以降低 arbitrary CLI exposure，但不能單獨證明 host-wide CLI complete mediation。
+
+- `run_shell(command: string)` 等 arbitrary execution capability 預設 `DENY`。
+- Semantic tool 必須先通過 typed schema，再由 canonical DROS Execution Authority 決策。
+- MCP handler 是 PEP，不得自行核發 `ALLOW`。
+- `argv_hash` 僅作完整性綁定；授權依據是結構化 capability 與已驗證的參數範圍。
+- principal credential 與 executable integrity 是必要 trust-boundary，但目前 VEP contract evidence 尚未等同 production vLEI verifier 或 fd-based atomic execution。
+- `registered MCP execution path = CONFIRMED_SCOPED`；`universal host-wide CLI governance = NOT PROVEN`。
+
+公開證據與實驗細節見 `reports/evidence/agent_cli_complete_mediation/`。

@@ -1,0 +1,32 @@
+{
+  "schema": "dros.cli_execution_boundary.bpf_lsm_live.v2",
+  "test_id": "EXEC-BOUNDARY-15-BPF-LSM-LIVE-ROUND2",
+  "access_date": "2026-09-22",
+  "host": "agentserver",
+  "kernel": "Linux 6.8.0-139-generic x86_64",
+  "execution_route": "Windows -> claw-vm -> agentserver",
+  "active_lsm": "lockdown,capability,landlock,yama,apparmor,bpf",
+  "btf": "AVAILABLE",
+  "toolchain": {
+    "clang": "Ubuntu clang version 18.1.3",
+    "bpftool": "v7.4.0 using libbpf v1.4"
+  },
+  "artifacts": {
+    "bpf_object": "/tmp/dros_agentserver_bpf_lsm_exec.o",
+    "bpf_object_sha256": "cca1ac11e1c8e2179a9dd5868ea3aa91a2c68a4798e544aa2b26825be8ff1755",
+    "loader": "/tmp/dros_agentserver_bpf_lsm_loader",
+    "loader_sha256": "c261b01d103a5a8c02332204ca1a84bffba640e07f90b5f8748a63a2066f6161",
+    "loader_source_sha256": "45160049948753c60544c946b56b8a52a515b8ec8d573dd18d718a9af0a91fa0"
+  },
+  "observed": {
+    "libbpf_attach": "LSM_ATTACHED",
+    "protected_exec": {"command":"/usr/bin/true","result":"Permission denied","return_code":126},
+    "post_cleanup_baseline": {"command":"/usr/bin/true","return_code":0}
+  },
+  "layer_a_interception": "CONFIRMED",
+  "layer_b_substrate_enforcement": "CONFIRMED",
+  "layer_c_topology_coverage": "NOT_TESTED",
+  "dros_authority_binding": "NOT_CONNECTED",
+  "status": "SUBSTRATE_ENFORCEMENT_CONFIRMED_BUT_NOT_CHOKEPOINT",
+  "claim_boundary": "BPF-LSM denied a tested process execution on agentserver before process creation and baseline execution recovered after cleanup; this does not establish host-wide topology closure, canonical DROS authority binding, or complete mediation."
+}

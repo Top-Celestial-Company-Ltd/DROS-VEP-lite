@@ -226,3 +226,11 @@ python -m dros.guard --policy vajra.md --lease 10m --max-horizon 8h -- python ba
 
 ---
 *DROS VajraAgent Hacker Edition ── 乾淨、透明、純手動，個人開發者的最強防線。* 🟢🛡️
+
+## MCP／CLI 防禦邊界更新（2026-09-22）
+
+Hacker Edition 預設不暴露 arbitrary shell capability。若業務可由 semantic tool 完成，應優先使用 typed capability；不要把 `run_shell(command)` 當成一般工具。
+
+需要 CLI 時，治理範圍是「經由 DROS registered path 的 execution」，不是對整台主機宣稱 universal CLI interception。MCP handler 不得自行核發 `ALLOW`；正向決策必須進入 canonical DROS authority，並保留 TTL、revocation、principal 與 audit context。
+
+目前 VEP 已驗證 typed argument、principal credential contract、executable digest mismatch 與 fail-closed 測試；這些是 registered-path evidence，不代表 host-wide CLI governance 已完成。

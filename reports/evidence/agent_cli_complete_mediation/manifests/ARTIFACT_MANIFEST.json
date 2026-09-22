@@ -1,0 +1,67 @@
+{
+  "protocol_id": "PROTO-AGENT-CLI-COMPLETE-MEDIATION-2026-v1.0",
+  "status": "ROUND_1_AND_MCP_CONTRACT_EVIDENCE_CLOSED",
+  "generated_at": "2026-09-22",
+  "artifacts": [
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/matrix/agent_cli_execution_topology_matrix.json",
+      "sha256": "628831325CE3F076AA0A75B22CBC935B88F51618376F0AFFC25BF2B4B1743E06",
+      "bytes": 7064
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/matrix/AGENT_CLI_EXECUTION_TOPOLOGY_MATRIX.md",
+      "sha256": "A764D043B8C90020FA79C94428F497C9F6A4B1A013D576CBD5B835EBBCF1DEFF",
+      "bytes": 5114
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/protocol/PROTO-AGENT-CLI-COMPLETE-MEDIATION-2026-v1.0.md",
+      "sha256": "0AF506D334685CCBB3FE3CD1D4D2AECDEE1CC3D27B81839BE26B45F27E47C83E",
+      "bytes": 20677
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/reports/COMPLETE_MEDIATION_LANDSCAPE_REPORT_EN.md",
+      "sha256": "11D45B50758A36401B2E1A226275DC689713AADA3DAC334FACFC00F597C92913",
+      "bytes": 2213
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/reports/COMPLETE_MEDIATION_LANDSCAPE_REPORT_ZH.md",
+      "sha256": "DC02420A6D7B6441AEC6CEB4ABA2880F838BC80E2E40D2109B28876BD3942361",
+      "bytes": 2225
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/research/public_source_scan_round1.md",
+      "sha256": "068CC3E475F519CF1BBADD406ACCCBA84840B784FABE4ED70AFC367CD699E920",
+      "bytes": 22529
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/sources/source_notes.md",
+      "sha256": "94610BBF852BDF28D55894034481BC81654AC47ABE809B52D3E22E9CB102E364",
+      "bytes": 259
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/sources/sources.json",
+      "sha256": "EE0B70E408C314C16CB822AE67C76969F82AC1C66063FD2F32C0C0B69E955903",
+      "bytes": 26120
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/tests/fixtures/mcp_execution_authority_contract_v1.json",
+      "sha256": "EA0782CDBF1D4F3C75974F7EB9D26A894223FF3CF6A5204983FE41DA9792D2A2",
+      "bytes": 1510
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/tests/fixtures/mcp_execution_authority_contract_v1.md",
+      "sha256": "72B70521BEC6B0CC3EE4DD4516ECEE4CCE94D5F2C41A86125ABD056952634224",
+      "bytes": 975
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/tests/fixtures/mcp_execution_authority_pytest.xml",
+      "sha256": "5FC5590904BA6AC57C4622461CEA81DB463817BE374D65AD0D2BFC3DF178C350",
+      "bytes": 3970
+    },
+    {
+      "path": "reports/evidence/agent_cli_complete_mediation/tests/live/exec_boundary_15_bpf_lsm_agentserver_round2.json",
+      "sha256": "4CEB9C3360C5396B88CEC4FE0E9E46637E4E11262AA6D00EF0EBA29B26B646DD",
+      "bytes": 1615
+    }
+  ]
+}

@@ -1,0 +1,582 @@
+{
+  "protocol_id": "PROTO-AGENT-CLI-COMPLETE-MEDIATION-2026-v1.0",
+  "status": "ROUND_1_COMPLETE_INSUFFICIENT_PUBLIC_EVIDENCE",
+  "source_count": 23,
+  "sources": [
+    {
+      "source_id": "SRC-OAI-CODEX-001",
+      "title": "codex-linux-sandbox README",
+      "publisher": "OpenAI / openai/codex",
+      "url": "https://github.com/openai/codex/blob/main/codex-rs/linux-sandbox/README.md",
+      "publication_date": "unknown (rolling `main`)",
+      "access_date": "2026-09-22",
+      "product": "OpenAI Codex CLI; Linux bubblewrap filesystem sandbox, PID/user/network namespaces, PR_SET_NO_NEW_PRIVS, seccomp network filter, legacy Landlock distinction",
+      "evidence_level": "E2",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-08",
+        "ET-10",
+        "ET-13"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not establish ET-01/ET-02/ET-07/ET-09/ET-12/ET-14 coverage for every Codex surface; does not prove complete mediation, DROS/PDP binding, revocation, or host-wide governance."
+      ],
+      "limitations": "Describes the Linux sandbox helper and its configured child-process boundary. Behavior depends on platform, kernel, bubblewrap/user-namespace availability, and selected policy."
+    },
+    {
+      "source_id": "SRC-OAI-CODEX-002",
+      "title": "workspace_write sandbox permission template",
+      "publisher": "OpenAI / openai/codex",
+      "url": "https://github.com/openai/codex/blob/main/codex-rs/prompts/templates/permissions/sandbox_mode/workspace_write.md",
+      "publication_date": "unknown (rolling `main`)",
+      "access_date": "2026-09-22",
+      "product": "Codex CLI workspace-write policy",
+      "evidence_level": "E2",
+      "execution_paths": [
+        "ET-04",
+        "ET-08",
+        "ET-09"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove that all process-creation paths, interpreters, hooks, inherited descriptors, or external effects traverse the same policy."
+      ],
+      "limitations": "States that the policy permits reads and writes in `cwd`/configured writable roots and requires approval for other directories; this is a policy description, not an independent kernel proof."
+    },
+    {
+      "source_id": "SRC-OAI-CODEX-003",
+      "title": "Sandbox bypass due to bug in path configuration logic (GHSA-w5fx-fh39-j5rw, CVE-2025-59532)",
+      "publisher": "OpenAI / openai/codex",
+      "url": "https://github.com/openai/codex/security/advisories/GHSA-w5fx-fh39-j5rw",
+      "publication_date": "Published: 2025-09-19",
+      "access_date": "2026-09-22",
+      "product": "Codex CLI sandbox boundary validation advisory",
+      "evidence_level": "E3",
+      "execution_paths": [
+        "ET-04",
+        "ET-07",
+        "ET-09"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove current versions are bypassable, that all Codex versions are unsafe, or that one historical path bug defeats the whole execution architecture."
+      ],
+      "limitations": "Applies to affected versions `0.2.0–0.38.0`; advisory says fixed in `0.39.0`. It documents one path-configuration failure and explicitly notes that the network-disabled sandbox restriction was not impacted."
+    },
+    {
+      "source_id": "SRC-ANT-CLAUDE-001",
+      "title": "Configure the sandboxed Bash tool",
+      "publisher": "Anthropic / Claude Code Docs",
+      "url": "https://code.claude.com/docs/en/sandboxing",
+      "publication_date": "unknown (living docs)",
+      "access_date": "2026-09-22",
+      "product": "Claude Code Bash sandbox; bubblewrap, Seatbelt, optional seccomp filter, filesystem/network restrictions, credential controls",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-08",
+        "ET-10",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not establish coverage of all Claude Code tools, direct host process creation outside the command surface, ET-02, all hooks/configuration paths, or complete mediation."
+      ],
+      "limitations": "The documented boundary is commands run through Bash/PowerShell/Monitor and their child processes. Native Windows is not supported; unsupported/missing dependencies warn and run unsandboxed by default unless `sandbox.failIfUnavailable=true`; an unsandboxed retry escape hatch exists unless disabled."
+    },
+    {
+      "source_id": "SRC-ANT-CLAUDE-002",
+      "title": "Configure permissions",
+      "publisher": "Anthropic / Claude Code Docs",
+      "url": "https://docs.anthropic.com/en/docs/claude-code/permissions",
+      "publication_date": "unknown (living docs)",
+      "access_date": "2026-09-22",
+      "product": "Claude Code tool permission rules, modes, hooks, and working-directory policy",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-04",
+        "ET-08",
+        "ET-09",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not convert approval/permission rules into host-wide OS mediation or prove ET-01/ET-02/ET-03/ET-05/ET-06/ET-10 coverage."
+      ],
+      "limitations": "Permission rules are enforced by Claude Code, while sandboxing is a separate layer; command-text matching has documented alternate-invocation limitations. `bypassPermissions` is intended only for isolated environments."
+    },
+    {
+      "source_id": "SRC-ANT-CLAUDE-003",
+      "title": "Sandbox escape via symlink following allows arbitrary file write outside workspace (GHSA-vp62-r36r-9xqp, CVE-2026-39861)",
+      "publisher": "Anthropic / Claude Code",
+      "url": "https://github.com/anthropics/claude-code/security/advisories/GHSA-vp62-r36r-9xqp",
+      "publication_date": "Published: 2026-04-20",
+      "access_date": "2026-09-22",
+      "product": "Claude Code sandbox path/symlink boundary advisory",
+      "evidence_level": "E3",
+      "execution_paths": [
+        "ET-06",
+        "ET-07",
+        "ET-09"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove the current patched version is vulnerable, that Claude Code is generally unsafe, or that this one issue demonstrates universal topology bypass."
+      ],
+      "limitations": "Advisory is version-scoped (`<2.1.64` affected; `2.1.64` patched) and describes a composition failure between sandboxed symlink creation and an unsandboxed write path."
+    },
+    {
+      "source_id": "SRC-GEMINI-001",
+      "title": "Sandboxing in Gemini CLI",
+      "publisher": "Google / google-gemini/gemini-cli",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/sandbox.md",
+      "publication_date": "unknown (rolling `main`)",
+      "access_date": "2026-09-22",
+      "product": "Gemini CLI sandbox providers: Docker/Podman, macOS Seatbelt, Windows native, gVisor/runsc, LXC/LXD, tool-level sandboxing",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-08",
+        "ET-10",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove that every Gemini CLI tool or process path is inside one common enforcement boundary, nor ET-01/ET-02/ET-07/ET-09/ET-11/ET-12 complete coverage or complete mediation."
+      ],
+      "limitations": "Provider and platform behavior differ. Sandboxing is opt-in in normal configuration; workspace bind mounts, network allowance, sandbox expansion, custom flags, Docker socket sharing, and pre-existing LXC requirements materially change the boundary."
+    },
+    {
+      "source_id": "SRC-GEMINI-002",
+      "title": "Policy engine reference",
+      "publisher": "Google / google-gemini/gemini-cli",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/policy-engine.md",
+      "publication_date": "unknown (rolling `main`)",
+      "access_date": "2026-09-22",
+      "product": "Gemini CLI tool-call policy engine (allow, deny, ask_user)",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-04",
+        "ET-09",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove process-level or kernel-level mediation, argument/path completeness, resistance to alternate process paths, or universal host governance."
+      ],
+      "limitations": "Policy decisions are tool-call decisions; in non-interactive mode `ask_user` is treated as deny. This is distinct from the underlying OS/container sandbox."
+    },
+    {
+      "source_id": "SRC-CURSOR-001",
+      "title": "Run Modes — local agent approvals and sandboxing",
+      "publisher": "Cursor",
+      "url": "https://cursor.com/docs/agent/security/run-modes",
+      "publication_date": "2026-05-29 change noted in page",
+      "access_date": "2026-09-22",
+      "product": "Cursor local Agent; Auto-review/Allowlist/Run Everything, shell sandbox, macOS Seatbelt, Linux Landlock/bubblewrap",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-07",
+        "ET-08",
+        "ET-10",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove ET-01/ET-02/ET-09/ET-11/ET-12/ET-13 coverage for all agent surfaces, nor complete mediation or current behavior on every platform."
+      ],
+      "limitations": "The page limits the claim to local shell commands and says unsupported/full-system commands can run outside the sandbox with approval. SDK/local defaults and Cloud Agent behavior are separate. Network defaults and fallback backend are configurable."
+    },
+    {
+      "source_id": "SRC-CURSOR-002",
+      "title": "Security overview — Cloud Agents",
+      "publisher": "Cursor",
+      "url": "https://cursor.com/docs/cloud-agent/security",
+      "publication_date": "unknown (living docs)",
+      "access_date": "2026-09-22",
+      "product": "Cursor Cloud Agents; per-agent VM boundary, network egress, runtime secrets, file exclusion, draft-PR workflow",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-08",
+        "ET-10",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove host-wide mediation, local-agent mediation, kernel hook coverage, or that VM isolation covers every external effect."
+      ],
+      "limitations": "Describes a cloud-agent VM and service controls, not the local Cursor CLI/desktop shell boundary. Internet access is on by default unless restricted; scope is bounded by repository/user/tool configuration."
+    },
+    {
+      "source_id": "SRC-CURSOR-003",
+      "title": "Cursor TypeScript SDK — sandbox options",
+      "publisher": "Cursor",
+      "url": "https://cursor.com/docs/sdk/typescript",
+      "publication_date": "unknown (living docs)",
+      "access_date": "2026-09-22",
+      "product": "Cursor local/headless SDK agent",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-08",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove mediation of non-shell SDK operations, ET-01/ET-02/ET-07/ET-09/ET-10/ET-12/ET-13, or complete mediation."
+      ],
+      "limitations": "Local SDK sandbox is disabled by default; when enabled, shell tools and shell-spawned processes are constrained. Headless runs have no human approval callback, so classifier-blocked calls are denied."
+    },
+    {
+      "source_id": "SRC-OPENHANDS-001",
+      "title": "Runtime architecture",
+      "publisher": "OpenHands / OpenHands/docs",
+      "url": "https://github.com/OpenHands/docs/blob/main/openhands/usage/architecture/runtime.mdx",
+      "publication_date": "unknown (living docs)",
+      "access_date": "2026-09-22",
+      "product": "OpenHands Docker Runtime; backend/client to action-execution server; shell, browser, plugins, Jupyter inside runtime container",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-10",
+        "ET-12",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove all OpenHands execution surfaces use Docker, does not prove host-wide ET-01/ET-02/ET-07/ET-08/ET-09/ET-11/ET-13 mediation, and does not prove complete mediation."
+      ],
+      "limitations": "The documented Docker runtime is a deployment topology, with REST communication and a user-provided/custom image. The existence of a runtime boundary depends on deployment configuration."
+    },
+    {
+      "source_id": "SRC-OPENHANDS-002",
+      "title": "Docker Runtime (V0; legacy)",
+      "publisher": "OpenHands / OpenHands/docs",
+      "url": "https://github.com/OpenHands/docs/blob/main/openhands/usage/v0/runtimes/V0_docker.mdx",
+      "publication_date": "unknown",
+      "access_date": "2026-09-22",
+      "product": "OpenHands Docker sandbox, bind mounts, runtime user ID, network binding/isolation guidance",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-08",
+        "ET-10",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not establish complete mediation, immutable workspace protection, host escape resistance, or coverage of non-Docker/local runtime paths."
+      ],
+      "limitations": "Explicitly labeled legacy V0. Mounted files are writable/deletable by the agent; default network binding can expose interfaces; hardening requires operator configuration."
+    },
+    {
+      "source_id": "SRC-LINUX-LANDLOCK-001",
+      "title": "Landlock: unprivileged access control",
+      "publisher": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "publication_date": "Document date: 2026-08",
+      "access_date": "2026-09-22",
+      "product": "Landlock LSM; self-applied, stackable filesystem/network/IPC restrictions inherited by future children",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-01",
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-08",
+        "ET-10",
+        "ET-12",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove ET-02 or universal indirect-path coverage, identity/PDP binding, policy revocation, or complete mediation of an Agent CLI."
+      ],
+      "limitations": "Landlock restricts only handled rights and supported ABI features; availability/ABI must be checked at runtime. It is self-restriction, not a general host-wide policy service. Documented special-filesystem and topology limitations remain."
+    },
+    {
+      "source_id": "SRC-LINUX-LANDLOCK-002",
+      "title": "Landlock: system-wide management",
+      "publisher": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/admin-guide/LSM/landlock.html",
+      "publication_date": "Document date: 2026-08",
+      "access_date": "2026-09-22",
+      "product": "Landlock audit and trace events",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-01",
+        "ET-03",
+        "ET-08",
+        "ET-13"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove that an audit record exists for every execution path or that auditability equals complete mediation."
+      ],
+      "limitations": "Audit/trace visibility depends on audit configuration and privileged access to trace events; observability is not itself authorization."
+    },
+    {
+      "source_id": "SRC-LINUX-APPARMOR-001",
+      "title": "AppArmor",
+      "publisher": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/admin-guide/LSM/apparmor.html",
+      "publication_date": "unknown",
+      "access_date": "2026-09-22",
+      "product": "AppArmor task-centered MAC profiles",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-01",
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-07",
+        "ET-09",
+        "ET-10",
+        "ET-12",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove a profile exists, is attached to the intended Agent identity, covers every alternate path, fails closed on policy failure, or establishes complete mediation."
+      ],
+      "limitations": "The kernel documentation states that tasks without a loaded profile are unconfined and that restrictions require a user-space-loaded policy. Module presence is not enforcement evidence."
+    },
+    {
+      "source_id": "SRC-LINUX-LSM-001",
+      "title": "Linux Security Modules: General Security Hooks",
+      "publisher": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/security/lsm.html",
+      "publication_date": "unknown",
+      "access_date": "2026-09-22",
+      "product": "LSM framework and hook infrastructure",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-01",
+        "ET-03",
+        "ET-07",
+        "ET-09",
+        "ET-10",
+        "ET-12",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not support a claim that “LSM enabled” means a policy is enforcing, nor a complete-mediation claim without module-specific evidence."
+      ],
+      "limitations": "The framework provides hooks/infrastructure but, by itself, adds no security; an enforcing module and loaded policy are required."
+    },
+    {
+      "source_id": "SRC-LINUX-BPFLSM-001",
+      "title": "LSM BPF Programs",
+      "publisher": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/bpf/prog_lsm.html",
+      "publication_date": "unknown",
+      "access_date": "2026-09-22",
+      "product": "eBPF programs attached to LSM hooks for MAC/audit policies",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-01",
+        "ET-03",
+        "ET-07",
+        "ET-09",
+        "ET-12",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove BPF-LSM is active on a host, that `execve`/`execveat` and all alternate paths are hooked, or that a BPF program provides complete mediation."
+      ],
+      "limitations": "Loading/attachment requires privileged control and a verifier-accepted program. The document demonstrates hook attachment and detach, not a particular policy, identity model, lifecycle, or all execution hooks."
+    },
+    {
+      "source_id": "SRC-LINUX-SECCOMP-001",
+      "title": "Seccomp BPF",
+      "publisher": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/userspace-api/seccomp_filter.html",
+      "publication_date": "unknown",
+      "access_date": "2026-09-22",
+      "product": "Seccomp syscall filtering, inheritance, user notification",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-01",
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-10",
+        "ET-12",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not support filesystem/path/identity semantics by itself, arbitrary command authorization, ET-02 complete coverage, or complete mediation."
+      ],
+      "limitations": "The kernel documentation explicitly says syscall filtering is not a sandbox; filters inspect syscall number/arguments and cannot dereference pointers. Inheritance depends on allowed `fork`/`clone`/`execve`; installation requires `no_new_privs` or `CAP_SYS_ADMIN`."
+    },
+    {
+      "source_id": "SRC-OCI-RUNTIME-001",
+      "title": "Linux Container Configuration",
+      "publisher": "Open Container Initiative / opencontainers/runtime-spec",
+      "url": "https://github.com/opencontainers/runtime-spec/blob/main/config-linux.md",
+      "publication_date": "unknown (rolling `main`)",
+      "access_date": "2026-09-22",
+      "product": "OCI Linux container runtime; namespaces, cgroups, capabilities, LSM, filesystem jails, masked/readonly paths",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-03",
+        "ET-04",
+        "ET-05",
+        "ET-06",
+        "ET-08",
+        "ET-10",
+        "ET-12",
+        "ET-13",
+        "ET-14"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove a given container deployment is hardened, that the Docker/container API is itself mediated, or that container isolation is host-wide complete mediation."
+      ],
+      "limitations": "The specification defines configuration semantics; enforcement depends on the runtime, host kernel, privileges, mounts, selected namespaces, and policy. Omitted namespace types may be inherited from the runtime namespace."
+    },
+    {
+      "source_id": "SRC-LINUX-IPE-001",
+      "title": "Integrity Policy Enforcement (IPE)",
+      "publisher": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/security/ipe.html",
+      "publication_date": "unknown",
+      "access_date": "2026-09-22",
+      "product": "IPE integrity policy enforcement",
+      "evidence_level": "E1",
+      "execution_paths": [
+        "ET-01",
+        "ET-05",
+        "ET-06",
+        "ET-07",
+        "ET-09",
+        "ET-10"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not support generic command authorization, runtime identity/capability mediation, network/IPC governance, or complete mediation of Agent execution."
+      ],
+      "limitations": "IPE is an integrity-policy mechanism, not an inherent integrity verifier; the administrator chooses integrity providers. The documentation notes limitations for interpreted languages unless the interpreter uses `AT_EXECVE_CHECK`."
+    },
+    {
+      "source_id": "SRC-THEORY-SALTZER-001",
+      "title": "The Protection of Information in Computer Systems",
+      "publisher": "Jerome H. Saltzer and Michael D. Schroeder; MIT primary publication record / IEEE",
+      "url": "https://web.mit.edu/Saltzer/www/publications/pubs.html",
+      "publication_date": "Published: 1975",
+      "access_date": "2026-09-22",
+      "product": "Classical protection principles, including complete mediation as a design principle",
+      "evidence_level": "E4",
+      "execution_paths": [
+        "Conceptual anchor for ET-01–ET-14 analysis"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove any product's execution coverage, modern sandbox behavior, or impossibility of complete mediation."
+      ],
+      "limitations": "Classical information-protection principles are not an Agent-CLI implementation or an empirical claim about any current product."
+    },
+    {
+      "source_id": "SRC-THEORY-LAMPSON-001",
+      "title": "A Note on the Confinement Problem",
+      "publisher": "Butler W. Lampson; ACM",
+      "url": "https://doi.org/10.1145/362375.362389",
+      "publication_date": "Published: 1973-10",
+      "access_date": "2026-09-22",
+      "product": "Classical confinement and information-flow problem",
+      "evidence_level": "E4",
+      "execution_paths": [
+        "Conceptual anchor for ET-08, ET-13, ET-14 and alternate-path analysis"
+      ],
+      "claims_supported": [
+        "Source directly describes or constrains the listed execution topologies"
+      ],
+      "claims_not_supported": [
+        "Does not prove that a named Agent CLI is confined/unconfined, nor that any sandbox is universally bypassable."
+      ],
+      "limitations": "The paper is a historical/theoretical source about confinement; it is not a proof about AI agents, CLI products, or undecidability of this study's topology."
+    }
+  ]
+}

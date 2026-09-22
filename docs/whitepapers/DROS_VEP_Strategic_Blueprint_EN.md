@@ -172,3 +172,16 @@ reports/evidence/exec_ATS-001_1768960000/
 ---
 
 *DROS Security Research Team · Top-Celestial Company Ltd.*
+
+## MCP and CLI Execution-Boundary Evidence Update (2026-09-22)
+
+The new VEP evidence shows that the MCP layer can reduce arbitrary CLI exposure, but cannot by itself establish host-wide CLI complete mediation.
+
+- `run_shell(command: string)` and similar arbitrary-execution capabilities are `DENY` by default.
+- Semantic tools must pass typed-schema validation before canonical DROS Execution Authority evaluation.
+- The MCP handler is PEP-only and must not mint `ALLOW`.
+- `argv_hash` is an integrity binding, not the primary authorization model.
+- Principal credentials and executable integrity are required trust-boundary concerns; the current contract evidence is not a production vLEI verifier or fd-based atomic-execution proof.
+- `registered MCP execution path = CONFIRMED_SCOPED`; `universal host-wide CLI governance = NOT PROVEN`.
+
+See `reports/evidence/agent_cli_complete_mediation/` for the source registry, matrix, and live evidence.

@@ -1,0 +1,34 @@
+{
+  "schema": "dros.mcp.execution_authority.contract.v1",
+  "test_id": "MCP-EXEC-AUTHORITY-01",
+  "environment": {
+    "runner": "pytest",
+    "scope": "registered_mcp_execution_path",
+    "host": "Windows authoring environment"
+  },
+  "tests": {
+    "suite": "tests/security/cli",
+    "selected_contract_tests": 8,
+    "full_cli_security_tests": 24,
+    "passed": 24,
+    "failed": 0
+  },
+  "verified_behaviors": [
+    "arbitrary shell capability is denied by default",
+    "semantic tool arguments are validated against typed schema before authority",
+    "invalid or out-of-enum arguments are denied",
+    "forged principal credential is denied before authority",
+    "approved executable digest mismatch is denied before authority"
+  ],
+  "authority_path": {
+    "mcp_handler": "PEP_ONLY",
+    "positive_allow_source": "injected authority seam in test contract",
+    "process_creation": "NOT_EXECUTED",
+    "kernel_enforcement": "NOT_TESTED",
+    "vlei_credential_verification": "NOT_IMPLEMENTED",
+    "fd_based_execution": "NOT_IMPLEMENTED",
+    "pytest_junit_sha256": "sha256:5FC5590904BA6AC57C4622461CEA81DB463817BE374D65AD0D2BFC3DF178C350"
+  },
+  "status": "CONTRACT_GREEN_NOT_LIVE_EXECUTION_EVIDENCE",
+  "claim_boundary": "The tested MCP adapter rejects arbitrary shell capability and validates typed principal/executable bindings on the registered path; this does not establish host-wide CLI mediation, live cryptographic credential verification, or kernel-level executable integrity enforcement."
+}

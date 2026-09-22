@@ -111,7 +111,9 @@ def test_expired_capability_denies_before_pdp() -> None:
 
 
 def test_pdp_unavailable_fails_closed() -> None:
-    authority = ExecutionAuthority(UnavailablePolicy())
+    authority = ExecutionAuthority(
+        UnavailablePolicy(), now=lambda: datetime(2026, 9, 22, 12, 0, 1, tzinfo=UTC)
+    )
 
     decision = authority.decide(make_request())
 
@@ -121,7 +123,9 @@ def test_pdp_unavailable_fails_closed() -> None:
 
 @pytest.mark.parametrize("reason", ["CAPABILITY_REVOKED", "UNKNOWN_EXECUTABLE"])
 def test_policy_denials_are_preserved_by_authority_seam(reason: str) -> None:
-    authority = ExecutionAuthority(DenyPolicy(reason))
+    authority = ExecutionAuthority(
+        DenyPolicy(reason), now=lambda: datetime(2026, 9, 22, 12, 0, 1, tzinfo=UTC)
+    )
 
     decision = authority.decide(make_request())
 

@@ -60,9 +60,10 @@
 ## 🛡️ 三、 核心安全與架構實施 FAQ (Architecture & Security)
 
 ### Q8. 黑客若發動未知「零日漏洞 (0-Day) 提示注入」，DROS 能擋住嗎？
-**A：100% 能擋住。**
+**A：對接入 DROS registered execution path 的未授權 action，可依既定 capability policy 確定性拒絕；不宣稱能攔截所有未註冊的 host execution topology。**
 * DROS 採用 **Default Fail-Closed（預設關閉 / 白名單）** 哲學。
-* 無論攻擊 Payload 多麼新穎、如何繞過 LLM 認知，只要該 Agent 試圖調用未被明確授權的 API/Tool（例如客服 Agent 試圖讀取 `/etc/shadow` 或發起資料庫刪除），在抵達作業系統前就會被 FFI 門閘以常數時間直接攔死！
+* 無論攻擊 Payload 多麼新穎、如何繞過 LLM 認知，只要該 Agent 透過已註冊的 API/Tool path 呼叫未被明確授權的 action（例如客服 Agent 試圖讀取 `/etc/shadow` 或發起資料庫刪除），就會在該 path 的 FFI 門閘被拒絕。
+* CLI、subprocess、interpreter 或其他未註冊 process-creation path 不得套用「全部攔截」的宣稱；其 host-wide coverage 目前仍是 VEP 未證明範圍。
 
 ### Q9. 一般業務 Agent 偶爾因為 LLM 幻覺傳錯參數，會被直接殺掉嗎？
 **A：不會。** DROS 具備「階梯式處置狀態機 (Graduated Eviction)」：
@@ -108,3 +109,11 @@
 
 ---
 *DROS 企業級全量技術 FAQ ── 官網問答、商業授權、技術邊界與 AI 協同全覆蓋。* 🏢🌐💎🤖⚡
+
+## Q10. DROS 是否宣稱能完封 Agent 的所有 CLI execution？
+
+**A：不宣稱。** DROS 可治理接入 canonical execution-authority boundary 的 registered path；VEP 目前未證明 host-wide、拓撲閉合的 universal CLI governance。
+
+企業導入 MCP 時，建議 `run_shell(command: string)` 預設拒絕，改用 typed semantic capability。MCP handler 只能執行 PEP 職責，不能自行核發 `ALLOW`；正向決策必須進入 canonical DROS PDP，並驗證 principal credential、TTL、revocation、executable integrity 與 audit attribution。
+
+VEP 的 24/24 contract tests 與 agent-server BPF-LSM live evidence 支持的是 scoped execution evidence，不是所有 Linux process-creation topology 的完封保證。
