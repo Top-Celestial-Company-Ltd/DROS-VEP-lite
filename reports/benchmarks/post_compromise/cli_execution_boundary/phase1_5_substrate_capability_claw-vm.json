@@ -1,0 +1,39 @@
+{
+  "schema": "dros.cli_execution_boundary.substrate_capability.v1",
+  "layer": "LAYER_1_5_CANDIDATE_FEASIBILITY",
+  "host": "claw-vm",
+  "kernel": "5.15.0-190-generic",
+  "architecture": "x86_64",
+  "lsm_active": [
+    "lockdown",
+    "capability",
+    "landlock",
+    "yama",
+    "apparmor"
+  ],
+  "bpf_fs_present": true,
+  "bpf_kernel_config": {
+    "CONFIG_BPF": true,
+    "CONFIG_BPF_SYSCALL": true,
+    "CONFIG_BPF_LSM": true,
+    "CONFIG_SECCOMP": true,
+    "CONFIG_SECCOMP_FILTER": true,
+    "CONFIG_BPF_UNPRIV_DEFAULT_OFF": true
+  },
+  "bpftool_present": false,
+  "container_runtime": {
+    "docker": "29.1.3",
+    "runc": "1.3.3",
+    "podman": false,
+    "crun": false
+  },
+  "current_process": {
+    "no_new_privs": 0,
+    "seccomp": 0,
+    "seccomp_filters": 0
+  },
+  "dros_pre_exec_mediation": "NOT_PROVEN",
+  "authorization_source_of_truth": "NOT_CONNECTED",
+  "verdict": "CANDIDATE_CAPABILITY_ONLY",
+  "claim_boundary": "No candidate is DROS enforcement evidence until pre-exec mediation, policy integration, attribution, denial, revocation, and topology-bypass tests pass."
+}

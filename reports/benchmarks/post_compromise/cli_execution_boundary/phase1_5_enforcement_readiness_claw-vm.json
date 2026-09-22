@@ -1,0 +1,32 @@
+{
+  "schema": "dros.cli_execution_boundary.enforcement_readiness.v1",
+  "layer": "LAYER_1_5_CANDIDATE_ENFORCEMENT",
+  "host": "claw-vm",
+  "candidate_status": "SUBSTRATE_ENFORCEMENT_CONFIRMED_FOR_LANDLOCK",
+  "apparmor": {
+    "module_loaded": true,
+    "parser_present": true,
+    "profile_set_readable": false,
+    "exec_deny_evidence": "NOT_TESTED"
+  },
+  "landlock": {
+    "execute_access_header_present": true,
+    "securityfs_path_present": false,
+    "syscall_enforcement_evidence": "CONFIRMED_BY_EXEC_BOUNDARY_12_13"
+  },
+  "bpf_lsm": {
+    "kernel_config_present": true,
+    "clang_present": false,
+    "llc_present": false,
+    "bpftool_present": false,
+    "hook_enforcement_evidence": "NOT_TESTED"
+  },
+  "dros_integration": "NOT_STARTED",
+  "topology_bypass": "NOT_TESTED",
+  "verdict": "DROS_INTEGRATION_PENDING",
+  "next_gate": [
+    "EXEC-BOUNDARY-12",
+    "EXEC-BOUNDARY-13",
+    "EXEC-BOUNDARY-14"
+  ]
+}

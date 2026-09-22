@@ -1,0 +1,60 @@
+{
+  "schema": "dros.cli_execution_boundary.composition.v1",
+  "layer": "LAYER_1_5_DROS_INTEGRATION_FEASIBILITY",
+  "host": "claw-vm",
+  "candidate": "landlock",
+  "dros_pdp": "REFERENCE_SEAM_ONLY",
+  "canonical_dros_pdp_guardvm": "NOT_CONNECTED",
+  "results": [
+    {
+      "case": "14-A_DROS_DENY_SUBSTRATE_ALLOW",
+      "dros_authority_source": "phase1_deterministic_reference_seam",
+      "dros_decision": "DENY",
+      "dros_reason_code": "EXECUTABLE_OUT_OF_SCOPE",
+      "substrate": "landlock",
+      "substrate_policy": "ALLOW_EXECUTE",
+      "argv_hash": "sha256:4804907a714b1241286e2fd6b1c59597d24a3d4cf8139b637429944dda0cc73f",
+      "executable": "/bin/sh",
+      "exec_attempted": false,
+      "target_process_created": false,
+      "parent_pid": 719602,
+      "child_pid": null,
+      "audit": "COMPOSITION_OBSERVATION_ONLY"
+    },
+    {
+      "case": "14-B_DROS_ALLOW_SUBSTRATE_DENY",
+      "dros_authority_source": "phase1_deterministic_reference_seam",
+      "dros_decision": "ALLOW",
+      "dros_reason_code": "AUTHORIZED_PENDING_OS_EXECUTION",
+      "substrate": "landlock",
+      "substrate_policy": "DENY_EXECUTE",
+      "argv_hash": "sha256:8894cdad26ef749f311249c169d54f2f48118502d7fdacfad532d5d190fb98ff",
+      "executable": "/usr/bin/true",
+      "exec_attempted": true,
+      "target_process_created": false,
+      "parent_pid": 719602,
+      "child_pid": 719603,
+      "audit": "COMPOSITION_OBSERVATION_ONLY",
+      "child_exit_code": 127
+    },
+    {
+      "case": "14-C_DROS_ALLOW_SUBSTRATE_ALLOW",
+      "dros_authority_source": "phase1_deterministic_reference_seam",
+      "dros_decision": "ALLOW",
+      "dros_reason_code": "AUTHORIZED_PENDING_OS_EXECUTION",
+      "substrate": "landlock",
+      "substrate_policy": "ALLOW_EXECUTE",
+      "argv_hash": "sha256:8894cdad26ef749f311249c169d54f2f48118502d7fdacfad532d5d190fb98ff",
+      "executable": "/usr/bin/true",
+      "exec_attempted": true,
+      "target_process_created": true,
+      "parent_pid": 719602,
+      "child_pid": 719604,
+      "audit": "COMPOSITION_OBSERVATION_ONLY",
+      "child_exit_code": 0
+    }
+  ],
+  "verdict": "DROS_INTEGRATION_NOT_PROVEN",
+  "claim_boundary": "Composition behavior observed; canonical DROS authority integration is not established.",
+  "finished_at_ns": 1790065639838059485
+}

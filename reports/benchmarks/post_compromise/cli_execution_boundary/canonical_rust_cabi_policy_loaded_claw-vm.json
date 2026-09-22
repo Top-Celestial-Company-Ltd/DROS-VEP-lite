@@ -1,0 +1,58 @@
+{
+  "schema": "dros.cli_execution_boundary.canonical_rust_cabi_policy_loaded.v1",
+  "layer": "LAYER_1_5_CANONICAL_RUST_C_ABI_POLICY_LOADED",
+  "host": "claw-vm",
+  "kernel": "Linux 5.15.0-190-generic x86_64",
+  "rustc": "1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "1.98.1 (797e8a9bc 2026-08-05)",
+  "target": "x86_64-unknown-linux-gnu",
+  "landlock_abi": 1,
+  "dros_core_package": "dros-core-rs 7.2.0",
+  "dros_core_submodule_commit": "754858d88ed36e8f27a26d6f92a6c00f87a32898",
+  "workspace_commit": "833b0673a0902054710e6e3da94fe2c0fedfd048",
+  "ffi_source_sha256": "D16F3A4FF8BFF30128C74965F4536051BB206214C383677E997240676CF6210E",
+  "authority_source_sha256": "72ABCBEBA4E9D66BDCD3642EB048EBFBCB0684C5932049AD37660AE78309E4F5",
+  "harness_source_sha256": "45385D76BBD02597FE1F4E785223384862D8CB558189D8DBE00C2FD1E7F4F94B",
+  "policy_format": "DCTX extension, one static ALLOW rule for /usr/bin/true",
+  "authority_source": "canonical_rust_c_abi_execution_authorization_pdp",
+  "execution_request_contract": "CONNECTED",
+  "policy_path_loading": "EXECUTED",
+  "mock_allow_path": "REMOVED_FROM_DECIDE_EXPLAIN",
+  "guardvm_execution_request_mapping": "NOT_USED_BY_DESIGN",
+  "audit_emission": "CONNECTED_TO_CANONICAL_C_ABI_DECISION_PATH",
+  "results": [
+    {
+      "case": "14-A_DROS_DENY_SUBSTRATE_ALLOW",
+      "dros_decision": "DENY",
+      "ffi_return_code": 0,
+      "substrate": "ALLOW_EXECUTE",
+      "target_process_created": false,
+      "parent_pid": 729594,
+      "child_pid": null,
+      "exit_code": null
+    },
+    {
+      "case": "14-B_DROS_ALLOW_SUBSTRATE_DENY",
+      "dros_decision": "ALLOW",
+      "ffi_return_code": 0,
+      "substrate": "DENY_EXECUTE",
+      "target_process_created": false,
+      "parent_pid": 729594,
+      "child_pid": null,
+      "exit_code": null
+    },
+    {
+      "case": "14-C_DROS_ALLOW_SUBSTRATE_ALLOW",
+      "dros_decision": "ALLOW",
+      "ffi_return_code": 0,
+      "substrate": "ALLOW_EXECUTE",
+      "target_process_created": true,
+      "parent_pid": 729594,
+      "child_pid": 729871,
+      "exit_code": 0
+    }
+  ],
+  "verdict": "CANONICAL_EXECUTION_AUTHORITY_PATH_CONFIRMED",
+  "formal_dros_integration_verdict": "CONFIRMED_SCOPED_TO_DCT_AUTHORITY_AND_LANDLOCK",
+  "claim_boundary": "Canonical Rust C-ABI ExecutionRequest authority path is policy-loaded, fail-closed, and compositionally enforced with Landlock; GuardVM remains cognition-only and topology non-bypassability remains unproven."
+}

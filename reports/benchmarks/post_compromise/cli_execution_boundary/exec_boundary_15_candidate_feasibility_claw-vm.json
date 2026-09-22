@@ -1,0 +1,93 @@
+{
+  "schema": "dros.cli_execution_boundary.candidate_feasibility.v1",
+  "test_id": "EXEC-BOUNDARY-15",
+  "layer": "PHASE_2_PRE_EXEC_INTERCEPTION_FEASIBILITY",
+  "host": "claw-vm",
+  "kernel": "Linux 5.15.0-190-generic x86_64",
+  "active_lsm": ["lockdown", "capability", "landlock", "yama", "apparmor"],
+  "kernel_capabilities": {
+    "CONFIG_BPF": true,
+    "CONFIG_BPF_SYSCALL": true,
+    "CONFIG_BPF_LSM": true,
+    "CONFIG_SECCOMP": true,
+    "CONFIG_SECCOMP_FILTER": true,
+    "CONFIG_LANDLOCK": true,
+    "CONFIG_SECURITY_APPARMOR": true
+  },
+  "tooling": {
+    "bpftool": false,
+    "clang": false,
+    "bpf_filesystem": true,
+    "runc": "1.3.3-0ubuntu1~22.04.3",
+    "docker_server_access": false
+  },
+  "candidates": [
+    {
+      "candidate": "LANDLOCK",
+      "hook_location": "process self-restriction before subsequent exec",
+      "pre_exec": "CONFIRMED_FOR_SELF_RESTRICTED_PROCESS",
+      "process_identity": "PARENT_PID_CAPTURED_IN_EXISTING_EVIDENCE",
+      "executable_identity": "TARGET_PATH_BOUND_IN_EXISTING_HARNESS",
+      "argv_context": "NOT_BOUND",
+      "authority_binding": "NOT_NATIVE",
+      "deny_prevents_process_creation": "CONFIRMED_AS_SUBSTRATE",
+      "alternate_path_coverage": "NOT_HOST_WIDE",
+      "topology_limitation": "must be installed by the process before exec; alternate processes can avoid it",
+      "status": "SUBSTRATE_ONLY"
+    },
+    {
+      "candidate": "APPARMOR_LSM",
+      "hook_location": "LSM exec mediation (live hook not directly observed)",
+      "pre_exec": "CAPABILITY_ONLY",
+      "process_identity": "NOT_LIVE_VERIFIED",
+      "executable_identity": "NOT_LIVE_VERIFIED",
+      "argv_context": "NOT_LIVE_VERIFIED",
+      "authority_binding": "NOT_TESTED",
+      "deny_prevents_process_creation": "NOT_TESTED",
+      "alternate_path_coverage": "NOT_TESTED",
+      "topology_limitation": "profile set inaccessible to current user; deployment/profile loading required",
+      "status": "CANDIDATE_CAPABILITY_ONLY"
+    },
+    {
+      "candidate": "BPF_LSM",
+      "hook_location": "BPF LSM execution hook (specific hook not live selected)",
+      "pre_exec": "CAPABILITY_ONLY",
+      "process_identity": "NOT_LIVE_VERIFIED",
+      "executable_identity": "NOT_LIVE_VERIFIED",
+      "argv_context": "NOT_LIVE_VERIFIED",
+      "authority_binding": "NOT_TESTED",
+      "deny_prevents_process_creation": "NOT_TESTED",
+      "alternate_path_coverage": "NOT_TESTED",
+      "topology_limitation": "bpftool/clang absent; no loaded BPF program evidence",
+      "status": "CANDIDATE_CAPABILITY_ONLY"
+    },
+    {
+      "candidate": "CONTAINER_RUNTIME",
+      "hook_location": "runc/container lifecycle boundary",
+      "pre_exec": "TOPOLOGY_DEPENDENT",
+      "process_identity": "RUNTIME_CAPABILITY_PRESENT",
+      "executable_identity": "NOT_DROS_BOUND",
+      "argv_context": "NOT_DROS_BOUND",
+      "authority_binding": "NOT_TESTED",
+      "deny_prevents_process_creation": "NOT_TESTED",
+      "alternate_path_coverage": "NOT_HOST_WIDE",
+      "topology_limitation": "Docker API inaccessible to current user; host/privileged/outside-container paths untested",
+      "status": "TOPOLOGY_DEPENDENT_PENDING"
+    },
+    {
+      "candidate": "SECCOMP",
+      "hook_location": "syscall filter",
+      "pre_exec": "SYSCALL_HARDENING_ONLY",
+      "process_identity": "LOW",
+      "executable_identity": "NOT_NATIVE",
+      "argv_context": "NOT_NATIVE",
+      "authority_binding": "NOT_NATIVE",
+      "deny_prevents_process_creation": "FIXED_FILTER_ONLY",
+      "alternate_path_coverage": "PROCESS_FILTER_SCOPE",
+      "topology_limitation": "cannot express dynamic principal/capability/argv-bound DROS authority",
+      "status": "DEFENSE_IN_DEPTH_ONLY"
+    }
+  ],
+  "verdict": "BOUNDARY_SELECTION_REQUIRED",
+  "claim_boundary": "No candidate has yet produced live evidence of a non-bypassable host execution choke point bound to canonical DROS authority. Landlock remains substrate-only; LSM/BPF-LSM/container require dedicated enforcement experiments."
+}

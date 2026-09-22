@@ -1,0 +1,50 @@
+{
+  "schema": "dros.cli_execution_boundary.canonical_rust_dct_fixture.v1",
+  "layer": "LAYER_1_5_CANONICAL_RUST_DCT_FIXTURE",
+  "host": "claw-vm",
+  "kernel": "Linux 5.15.0-190-generic x86_64",
+  "rustc": "1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "1.98.1 (797e8a9bc 2026-08-05)",
+  "target": "x86_64-unknown-linux-gnu",
+  "landlock_abi": 1,
+  "dros_core_package": "dros-core-rs 7.2.0",
+  "dros_core_submodule_commit": "754858d88ed36e8f27a26d6f92a6c00f87a32898",
+  "workspace_commit": "833b0673a0902054710e6e3da94fe2c0fedfd048",
+  "dct_source_sha256": "1DAEE196A93F95610F6157B97EA8EF0977640E563D519FE2682BD27FA8E614D9",
+  "harness_source_sha256": "00C54EC0B45004B52CC8C791F227A7D5ABCC0067A5840ED053A55D6B27CC98A2",
+  "authority_source": "canonical_rust_dct_fixture",
+  "canonical_ffi_policy_loading": "NOT_USED_POLICY_PATH_TODO",
+  "canonical_guardvm_integration": "NOT_CONNECTED",
+  "results": [
+    {
+      "case": "14-A_DCT_DENY_SUBSTRATE_ALLOW",
+      "dct_decision": "DENY",
+      "substrate": "ALLOW_EXECUTE",
+      "target_process_created": false,
+      "parent_pid": 721449,
+      "child_pid": null,
+      "exit_code": null
+    },
+    {
+      "case": "14-B_DCT_ALLOW_SUBSTRATE_DENY",
+      "dct_decision": "ALLOW",
+      "substrate": "DENY_EXECUTE",
+      "target_process_created": false,
+      "parent_pid": 721449,
+      "child_pid": null,
+      "exit_code": null
+    },
+    {
+      "case": "14-C_DCT_ALLOW_SUBSTRATE_ALLOW",
+      "dct_decision": "ALLOW",
+      "substrate": "ALLOW_EXECUTE",
+      "target_process_created": true,
+      "parent_pid": 721449,
+      "child_pid": 721507,
+      "exit_code": 0
+    }
+  ],
+  "verdict": "CANONICAL_RUST_DCT_FIXTURE_ONLY",
+  "formal_dros_integration_verdict": "UNDETERMINED / PENDING",
+  "claim_boundary": "Canonical Rust DctEngine fixture composed with Landlock; this is not policy-loaded C-ABI PDP/GuardVM evidence."
+}

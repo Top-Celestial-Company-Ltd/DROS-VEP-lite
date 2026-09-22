@@ -1,0 +1,33 @@
+{
+  "schema": "dros.cli_execution_boundary.bpf_lsm_enforcement.v1",
+  "test_id": "EXEC-BOUNDARY-15",
+  "candidate": "BPF_LSM",
+  "host": "agentserver",
+  "scope": "substrate_enforcement_only",
+  "kernel": "Linux 6.8.0-139-generic x86_64",
+  "kernel_config": {
+    "CONFIG_BPF": true,
+    "CONFIG_BPF_SYSCALL": true,
+    "CONFIG_BPF_LSM": true
+  },
+  "boot_and_tools": {
+    "cmdline_lsm": "landlock,lockdown,yama,apparmor,bpf",
+    "active_lsm": "lockdown,capability,landlock,yama,apparmor,bpf",
+    "btf": "AVAILABLE",
+    "clang": "18.1.3",
+    "bpftool": "7.4.0",
+    "libbpf": "1.4"
+  },
+  "evidence": {
+    "bpf_object_compile": "SUCCESS",
+    "libbpf_lsm_attach": "LSM_ATTACHED",
+    "process_creation_denial": "new SSH session could not start /bin/bash; Permission denied",
+    "cleanup_baseline": "/usr/bin/true returned 0 after loader termination"
+  },
+  "layer_a_interception": "CONFIRMED_BY_LIBBPF_LSM_ATTACH",
+  "layer_b_enforcement": "CONFIRMED_BY_NEW_SSH_SHELL_DENIAL",
+  "layer_c_topology_coverage": "NOT_TESTED",
+  "dros_authority_binding": "NOT_CONNECTED",
+  "status": "SUBSTRATE_ENFORCEMENT_CONFIRMED_BUT_NOT_CHOKEPOINT",
+  "claim_boundary": "BPF-LSM can enforce a tested process-execution denial on agentserver; host-wide topology closure and canonical DROS authority binding remain unproven."
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "dros.cli_execution_boundary.substrate_enforcement.v1",
+  "layer": "LAYER_1_5_CANDIDATE_ENFORCEMENT",
+  "host": "claw-vm",
+  "platform": "Linux-5.15.0-190-generic-x86_64-with-glibc2.35",
+  "candidate": "landlock",
+  "dros_integration": "NOT_CONNECTED",
+  "results": [
+    {
+      "candidate": "landlock",
+      "syscall": "execve",
+      "policy": "DENY_EXECUTE",
+      "parent_pid": 719370,
+      "child_pid": 719372,
+      "target_process_created": false,
+      "child_exit_code": 127,
+      "executable": "/usr/bin/true",
+      "substrate_decision": "DENY",
+      "dros_decision": "NOT_CONNECTED",
+      "audit": "SUBSTRATE_OBSERVATION_ONLY"
+    },
+    {
+      "candidate": "landlock",
+      "syscall": "execve",
+      "policy": "ALLOW_EXECUTE",
+      "parent_pid": 719370,
+      "child_pid": 719373,
+      "target_process_created": true,
+      "child_exit_code": 0,
+      "executable": "/usr/bin/true",
+      "substrate_decision": "ALLOW",
+      "dros_decision": "NOT_CONNECTED",
+      "audit": "SUBSTRATE_OBSERVATION_ONLY"
+    }
+  ],
+  "verdict": "SUBSTRATE_ENFORCEMENT_CONFIRMED",
+  "finished_at_ns": 1790065539195775269,
+  "duration_ns": 6423616
+}

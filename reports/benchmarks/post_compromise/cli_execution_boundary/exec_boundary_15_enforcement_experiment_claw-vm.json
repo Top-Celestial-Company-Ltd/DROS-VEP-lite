@@ -1,0 +1,81 @@
+{
+  "schema": "dros.cli_execution_boundary.enforcement_experiment.v1",
+  "test_id": "EXEC-BOUNDARY-15",
+  "layer": "PHASE_2_CANDIDATE_ENFORCEMENT",
+  "host": "claw-vm",
+  "kernel": "Linux 5.15.0-190-generic x86_64",
+  "layers": {
+    "A_interception": "candidate-specific",
+    "B_enforcement": "hard_gate",
+    "C_coverage": "alternate-path coverage"
+  },
+  "candidates": [
+    {
+      "candidate": "LANDLOCK",
+      "layer_a_interception": "CONFIRMED_FOR_SELF_RESTRICTED_PROCESS",
+      "layer_b_deny_prevents_target_process": "CONFIRMED_BY_EXISTING_EXEC_BOUNDARY_12",
+      "layer_b_allow_creates_real_process": "CONFIRMED_BY_EXISTING_EXEC_BOUNDARY_13",
+      "layer_c_exec_variants": "NOT_HOST_WIDE",
+      "status": "SUBSTRATE_ENFORCEMENT_CONFIRMED_BUT_NOT_CHOKEPOINT",
+      "evidence_refs": [
+        "landlock_exec_enforcement_claw-vm.json",
+        "exec_boundary_11_topology_bypass_claw-vm.json"
+      ]
+    },
+    {
+      "candidate": "APPARMOR_LSM",
+      "layer_a_interception": "CONFIRMED_BY_ENFORCE_PROFILE",
+      "layer_b_deny_prevents_target_process": "CONFIRMED_BY_PERMISSION_DENIED_RC_126",
+      "layer_c_exec_variants": "NOT_EXECUTED",
+      "observed": {
+        "profile": "dros_phase2_exec_deny",
+        "profile_load": "PROFILE_LOADED",
+        "aa_status": "79 profiles loaded; 79 profiles in enforce mode; dros_phase2_exec_deny listed",
+        "denied_command": "sudo aa-exec -p dros_phase2_exec_deny -- /bin/sh -c 'exec /usr/bin/true'",
+        "denied_result": "/bin/sh: exec: /usr/bin/true: Permission denied",
+        "denied_return_code": 126,
+        "unconfined_baseline": "/usr/bin/true returned 0; execveat probe returned 0",
+        "alternate_dash_path": "/usr/bin/dash -c /usr/bin/true returned Permission denied with return code 126",
+        "execveat_variant": "/tmp/dros_execveat_probe called execveat(AT_EMPTY_PATH) for /usr/bin/true and received Permission denied with return code 126",
+        "audit_log_lookup": "NO_MATCH_IN_JOURNAL_OR_DMESG"
+      },
+      "status": "SUBSTRATE_ENFORCEMENT_CONFIRMED_BUT_NOT_CHOKEPOINT"
+    },
+    {
+      "candidate": "BPF_LSM",
+      "layer_a_interception": "CONFIRMED_BY_LIBBPF_LSM_ATTACH",
+      "layer_b_deny_prevents_target_process": "CONFIRMED_BY_SSH_SHELL_EXEC_DENIAL",
+      "layer_c_exec_variants": "NOT_EXECUTED",
+      "observed": {
+        "kernel_cmdline": "lsm=landlock,lockdown,yama,apparmor,bpf",
+        "active_lsm": "lockdown,capability,landlock,yama,apparmor,bpf",
+        "kernel_config": "CONFIG_BPF_LSM=y",
+        "btf": "AVAILABLE",
+        "bpf_object_compile": "SUCCESS",
+        "bpf_program_load": "SUCCESS",
+        "bpf_program_type": "lsm",
+        "libbpf_attach": "LSM_ATTACHED",
+        "denial_observed": "second SSH reached sshd but /bin/bash returned Permission denied",
+        "cleanup_baseline": "/usr/bin/true returned 0 after loader termination"
+      },
+      "status": "SUBSTRATE_ENFORCEMENT_CONFIRMED_BUT_NOT_CHOKEPOINT"
+    },
+    {
+      "candidate": "CONTAINER_RUNTIME",
+      "layer_a_interception": "NOT_EXECUTED",
+      "layer_b_deny_prevents_target_process": "NOT_EXECUTED",
+      "layer_c_exec_variants": "NOT_EXECUTED",
+      "blocking_fact": "runc exists, but Docker API access is denied for current user",
+      "status": "NOT_TESTED_RUNTIME_ACCESS_BLOCKER"
+    },
+    {
+      "candidate": "SECCOMP",
+      "layer_a_interception": "SYSCALL_FILTER_ONLY",
+      "layer_b_deny_prevents_target_process": "FIXED_FILTER_BEHAVIOR_ONLY",
+      "layer_c_exec_variants": "PROCESS_FILTER_SCOPE",
+      "status": "DEFENSE_IN_DEPTH_ONLY"
+    }
+  ],
+  "verdict": "NO_CANDIDATE_HOST_CHOKEPOINT_CONFIRMED",
+  "claim_boundary": "Landlock has independent substrate enforcement evidence but is bypassable outside the self-restricted process topology. Other candidates were not live-enforced on this node because required privilege/tool/runtime access was unavailable."
+}

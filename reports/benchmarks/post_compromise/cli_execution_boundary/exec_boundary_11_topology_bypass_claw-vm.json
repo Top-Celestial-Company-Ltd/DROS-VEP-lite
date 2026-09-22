@@ -1,0 +1,108 @@
+{
+  "schema": "dros.cli_execution_boundary.topology_bypass.v1",
+  "test_id": "EXEC-BOUNDARY-11",
+  "layer": "LAYER_1_5_TOPOLOGY_BYPASS",
+  "host": "claw-vm",
+  "kernel": "Linux 5.15.0-190-generic x86_64",
+  "rustc": "1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "1.98.1 (797e8a9bc 2026-08-05)",
+  "target": "x86_64-unknown-linux-gnu",
+  "dros_core_submodule_commit": "754858d88ed36e8f27a26d6f92a6c00f87a32898",
+  "workspace_commit": "833b0673a0902054710e6e3da94fe2c0fedfd048",
+  "harness_source_sha256": "DEEDA6AC263E666F00FC5DC462F91EABF10B8E13EB8BD660351710FA326EE5E9",
+  "harness_cargo_sha256": "D2632216B5228082C2E13894384B41F6969641DBE5CFF1B05F91DC8FAE0774B7",
+  "registered_path": "ExecutionRequest -> canonical Rust C-ABI -> DctExecutionAuthority -> ExecutionDecision -> Landlock/execve",
+  "results": [
+    {
+      "case": "REGISTERED-DENY",
+      "classification": "GOVERNED",
+      "authority_called": true,
+      "process_created": false,
+      "child_pid": null,
+      "exit_code": null,
+      "authority_reason": "UNKNOWN_EXECUTABLE"
+    },
+    {
+      "case": "B1_SHELL_EXECVE",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730432,
+      "exit_code": 0
+    },
+    {
+      "case": "B2_DIRECT_EXECVEAT",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730433,
+      "exit_code": 0
+    },
+    {
+      "case": "B3_CHILD_PROCESS_EXEC",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730434,
+      "exit_code": 0
+    },
+    {
+      "case": "B4_DIRECT_SYSCALL_VARIANT",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730435,
+      "exit_code": 0
+    },
+    {
+      "case": "B5_INTERPRETER_MEDIATED",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730436,
+      "exit_code": 0
+    },
+    {
+      "case": "B6_EXECUTABLE_PATH_MUTATION",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730437,
+      "exit_code": 0
+    },
+    {
+      "case": "B7_INHERITED_CONTEXT",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730438,
+      "exit_code": 0
+    },
+    {
+      "case": "B8_NAMESPACE_CONTAINER",
+      "classification": "OUTSIDE_CURRENT_BOUNDARY",
+      "authority_called": false,
+      "process_created": false,
+      "child_pid": null,
+      "exit_code": null
+    },
+    {
+      "case": "B9_OUTSIDE_REGISTERED_PEP",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730439,
+      "exit_code": 0
+    },
+    {
+      "case": "B10_SECOND_EXECUTION_SURFACE",
+      "classification": "BYPASS_CONFIRMED",
+      "authority_called": false,
+      "process_created": true,
+      "child_pid": 730440,
+      "exit_code": 0
+    }
+  ],
+  "verdict": "TOPOLOGY_BYPASS_CONFIRMED",
+  "claim_scope": "The tested registered authority path is governed; alternate process-creation paths on the same host/topology bypass the authority seam. Universal CLI execution governance is not proven."
+}

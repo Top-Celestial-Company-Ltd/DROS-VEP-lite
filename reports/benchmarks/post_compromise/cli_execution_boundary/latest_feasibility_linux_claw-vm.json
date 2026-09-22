@@ -1,0 +1,38 @@
+{
+  "schema": "dros.cli_execution_boundary.feasibility.v1",
+  "layer": "LAYER_2_LINUX_LIVE_FEASIBILITY",
+  "host": "claw-vm",
+  "platform": "Linux-5.15.0-190-generic-x86_64-with-glibc2.35",
+  "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+  "selected_boundary": [
+    "execve",
+    "execveat"
+  ],
+  "dros_pep_available": false,
+  "dros_decision": "NOT_AVAILABLE",
+  "audit": "NOT_AVAILABLE",
+  "provenance": "HOST_OBSERVATION_ONLY",
+  "results": [
+    {
+      "pid": 718451,
+      "exit_code": 0,
+      "signaled": false,
+      "signal": null,
+      "syscall": "execve",
+      "executable": "/usr/bin/true",
+      "parent_pid": 718449
+    },
+    {
+      "pid": 718452,
+      "exit_code": 0,
+      "signaled": false,
+      "signal": null,
+      "syscall": "execveat",
+      "executable": "/usr/bin/true",
+      "parent_pid": 718449
+    }
+  ],
+  "verdict": "BOUNDARY_SELECTION_REQUIRED",
+  "finished_at_ns": 1790064057464986027,
+  "duration_ns": 5824562
+}

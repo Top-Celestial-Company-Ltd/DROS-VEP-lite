@@ -1,0 +1,9 @@
+[package]
+name = "canonical-rust-dct-landlock-feasibility"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dros-core-rs = { path = "../../../dros-microkernels/dros-core-rs" }
+serde_json = "1.0"
+libc = "0.2"
