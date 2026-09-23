@@ -35,4 +35,6 @@ The framework-baseline closure index and bilingual reports are in [`reports/evid
 
 The evidence is limited to the declared Pixel_7 Android 34 x86_64 AVD paths and their specific application-runtime or framework fixtures. The 2/4/8 series is descriptive, not a scalability law or causal attribution. The work does not establish Android-wide or OS-wide enforcement, general Binder/SELinux properties, physical-device performance or energy behavior, or product-wide mobile security guarantees. Frozen T4–T20 canonical artifacts are not modified by this addendum.
 
+Legacy Mobile SDK battery, host-adapter, and 24-hour soak claims were separately audited in [`DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_EN.md`](../../reports/DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_EN.md); they are not evidence for this AVD study.
+
 The associated manuscript is the v2.0.1 Zenodo preprint, submitted to IEEE Transactions on Mobile Computing: <https://doi.org/10.5281/zenodo.22913070>.

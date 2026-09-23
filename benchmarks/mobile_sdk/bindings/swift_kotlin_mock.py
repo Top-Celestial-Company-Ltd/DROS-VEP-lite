@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-True Native C-ABI FFI Bridge Wrapper (Calling compiled Rust release dynamic library).
-Emulates iOS Swift SPM and Android Kotlin AAR JNI bindings against real compiled binary.
+Host-side Python adapters for mobile-style request schemas.
+
+The adapter loads a host Windows DLL via ctypes. KotlinDROSClient delegates to
+the Swift-style adapter; neither class launches Android JNI or an iOS runtime.
+These wrappers support local policy-path testing, not on-device performance or
+energy measurement.
 """
 
 import ctypes
@@ -40,7 +44,7 @@ class NativeDROSCore:
         return cls._instance
 
 class SwiftDROSClient:
-    """True Native iOS Swift SPM FFI Interface"""
+    """Python emulation of the Swift request interface over a host DLL."""
     def __init__(self):
         self._native = NativeDROSCore.get_instance()
         self.role_map = {
@@ -84,7 +88,7 @@ class SwiftDROSClient:
         }
 
 class KotlinDROSClient:
-    """True Native Android Kotlin AAR JNI FFI Interface"""
+    """Python adapter emulating the Kotlin request shape; not Android JNI."""
     def __init__(self):
         self._swift_equiv = SwiftDROSClient()
 

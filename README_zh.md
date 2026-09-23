@@ -273,7 +273,7 @@ python scripts/run_cybermes_crucible.py
 
 ## 🎯 跨領域科研評測矩陣 (Cross-Domain Research Testbed Matrix)
 
-VEP 提供真實還原 2026 年安全事件之跨領域評測固件，涵蓋雲端 B2B、端側行動裝置與具身機器人/無人機：
+VEP 提供雲端 B2B 與具身機器人／無人機評測 fixtures；Mobile 部分區分為 host-side 情境 harness，以及另行索引的 Android AVD application-runtime lane：
 
 | 評測領域 Track | 攻擊情境與威脅向量 | 目標執行表面 (Surface) | MITRE ATLAS | 系統層帶內治理動作 |
 | :--- | :--- | :--- | :--- | :--- |
@@ -281,7 +281,7 @@ VEP 提供真實還原 2026 年安全事件之跨領域評測固件，涵蓋雲�
 | **企業級 ERP** | **ATS-002**: 混淆代理人勒索加密 | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
 | **自主模型管線** | **ATS-004**: PyTorch 模型權重投毒勒索 | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
 | **Physical AI 無人機** | **論文 6**: 空中惡意 Disarm 與蜂群越權 | 飛控動態遙測數據鏈 | **AML.T0040** | **Kinematic Envelope Hold** |
-| **Mobile 端側裝置** | **論文 5**: SMS Prompt 注入與內購劫持 | 行動 OS Intent / 密鑰庫 | **AML.T0055** | **Dynamic Redaction (脫敏)** |
+| **Mobile-agent host harness** | 舊版 prompt injection／payment 情境 | 模擬 request wrapper；不是 OS/API enforcement | **AML.T0055** | 本地 policy-fixture assertion；非裝置證據 |
 
 ---
 
@@ -298,10 +298,10 @@ VEP 提供真實還原 2026 年安全事件之跨領域評測固件，涵蓋雲�
 │    • 第四部曲 (WebMCP 網絡治理): dros-webmcp/ (Agentic Web 歸因閉包)         │
 │    • 第五部曲 (Mobile 端側安全): paper-mobile/ (行動作業系統執行權限約束)    │
 │    • 第六部曲 (Physical AI 無人機): paper-uav/ (網絡-實體動能包絡線保持)    │
-│    • 72 小時長效連續多場景壓測 (160,611 次請求)                             │
+│    • 舊版 24 小時 soak aggregate（runner 存在；隨機、僅 aggregate、無 memory profile） │
 │      └─ 報告：reports/DROS_24H_Soak_Test_Final_Report_ZH.md                 │
-│      └─ 運行器：scripts/run_24h_soak_test.py                                │
-│    • ⚡ 系統開銷與效能微基準全量評測 (納秒級延遲、CPU/記憶體/手機功耗)        │
+│      └─ Aggregate JSON：reports/soak_test_24h_report.json                  │
+│    • ⚡ 歷史系統開銷報告（手機能耗尚未驗證）                                  │
 │      └─ 報告：reports/DROS_SYSTEM_OVERHEAD_BENCHMARK_REPORT_ZH.md           │
 │                                                                             │
 │ 🧪 2. 擴充評測場景庫 (RFC-010 Standard Matrix)                              │
@@ -329,10 +329,13 @@ VEP 提供真實還原 2026 年安全事件之跨領域評測固件，涵蓋雲�
 │      └─ 模組路徑: benchmarks/physical_drone/                                │
 │      └─ 一鍵運行器: python benchmarks/physical_drone/run_drone_bench.py      │
 │                                                                             │
-│ 📱 6. Mobile SDK 與智慧手機端側治理評測 (iOS/Android 隱私與內購防禦)          │
-│    • 覆蓋 SMS/網頁 Prompt 注入竊取相簿、未授權 Apple Pay 內購劫持防禦         │
+│ 📱 6. Mobile 情境 host harness + TMC Android AVD evidence                    │
+│    • Host harness：Python adapter + Windows DLL，非 iOS/Android 裝置證據    │
 │      └─ 模組路徑: benchmarks/mobile_sdk/                                     │
 │      └─ 一鍵運行器: python benchmarks/mobile_sdk/run_mobile_bench.py          │
+│    • Android AVD：Pixel_7 / Android 34 / x86_64，有界 app/framework paths     │
+│      └─ Index：reports/evidence/tmc_android_phase1_2_index/                  │
+│      └─ 實體裝置能耗：仍在研究範圍之外                                      │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -609,6 +612,7 @@ DROS-VEP Lite 遵循 Apache 2.0 協議完全開源，旨在為全球 AI 安全�
 * **雙語證據補充**：[English](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_EN.md) | [繁體中文](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_ZH.md)
 * **Application-runtime canonical index**：[Android Baseline Evidence Index](reports/evidence/tmc_android_phase1_2_index/20260922T_INDEX_CLOSED/ANDROID_BASELINE_EVIDENCE_INDEX.md)
 * **Framework-baseline closure**：[Index](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_INDEX.md) | [English report](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_EN.md) | [繁體中文報告](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_ZH.md)
+* **舊版電池／soak claim 稽核**：[English](reports/DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_EN.md) | [繁體中文](reports/DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_ZH.md)
 * **證據範圍**：僅限宣告的 Pixel_7 / Android 34 / x86_64 AVD paths。Permission、AppOps、protected Binder-service slices 為 `Verified`；SELinux 僅為 observational、非 canonical；不主張 Android-wide 或 OS-level security。
 * 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs (具身智能與自主無人載具攻陷後物理動作權限確定性約束)**: [英文論文 (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [中文論文 (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
   * **DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Zenodo 紀錄**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)

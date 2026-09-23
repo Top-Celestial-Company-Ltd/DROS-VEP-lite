@@ -35,4 +35,6 @@ Framework-baseline closure index 與中英文報告位於 [`reports/evidence/tmc
 
 證據只適用於宣告的 Pixel_7 Android 34 x86_64 AVD path 及其特定 application-runtime 或 framework fixture。2/4/8 series 是描述性結果，不是 scalability law 或因果歸因。本研究不建立 Android-wide／OS-wide enforcement、一般 Binder／SELinux 性質、實體裝置效能或能耗，也不建立產品層級的 mobile security guarantee。本補充不修改已凍結的 T4–T20 canonical artifacts。
 
+舊版 Mobile SDK 電池、host-adapter 與 24 小時 soak claims 已另行稽核，見 [`DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_ZH.md`](../../reports/DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_ZH.md)；它們不是本 AVD study 的證據。
+
 對應論文為 v2.0.1 Zenodo preprint，已投稿 IEEE Transactions on Mobile Computing：<https://doi.org/10.5281/zenodo.22913070>。

@@ -5,38 +5,23 @@
 **測試時長：** 24.0 小時 (連續不間斷執行)  
 **目標 PDP/PEP 防禦引擎：** DROS GuardVM (`http://localhost:8082`)  
 **硬體基礎設施規格：** Intel Xeon E3-1275 v3 / Linux Kernel 6.6 / Docker 26.1  
-**可重現性規範 (Reproducibility)：** 100% 確定性可重現，執行 `python scripts/run_24h_soak_test.py` 即可驗證  
+**證據狀態（2026-09-23）：** 歷史 aggregate report；runner 存在，但 raw-event／memory evidence 不完整。
+
 **專利保護聲明：** 本技術已申請美國臨時專利保護（U.S. Provisional Patent Application No. 64/111,973，Patent Pending）。
+
+> **稽核補充：** Runner 存在，但 scenario 隨機抽取且未記錄 seed；latency samples 僅保存在記憶體，最後寫入固定路徑 `reports/soak_test_24h_report.json`（重跑會覆寫）。JSON 記錄 total 160,611、DENY 137,751（DENY+ALLOW 的 85.77%）、ALLOW 22,854、errors 6；沒有逐筆 raw events、scenario labels 或 memory-profile 欄位，因此無法建立 malicious 分母、exact replay、raw-to-summary reconstruction 或核驗歷史 `0 Bytes` leak claim。
 
 ---
 
-## 🔬 一鍵科學完全重現指南 (Scientific Reproducibility Harness)
+## Archived Aggregate 與重現限制
 
-為保證學術與工程上的最高透明度，所有評測 Payload、環境設定檔及執行腳本均已開源：
-
-```bash
-# 1. 複製開源評測倉庫
-git clone https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite.git
-cd dros-vep-lite
-
-# 2. 啟動 GuardVM 評測靶場
-docker compose up -d
-
-# 3. 執行 24 小時基準評測腳本 (亦可自訂時長)
-python scripts/run_24h_soak_test.py
-
-# 快速測試：1 分鐘極速驗證模式
-SOAK_DURATION_HOURS=0.01 SOAK_INTERVAL_SEC=0.05 python scripts/run_24h_soak_test.py
-```
+報告所列 runner 存在，可執行新的 run；但 scenario 是未固定 seed 的隨機抽取、沒有保存逐筆 raw records，且 aggregate 寫入固定路徑。重跑會產生新的 stochastic run 並覆寫摘要，不是原 run 的 exact replay。
 
 ## 摘要 (Executive Summary)
 
-為定量評估 **DROS 四層縱深防禦架構** 的系統穩定度、決策吞吐量及零負載物理阻斷能力，本團隊透過全自動對抗模糊測試變異引擎 (`scripts/run_24h_soak_test.py`) 執行了連續 24 小時的紅隊攻防浸泡測試。
+原報告記載曾透過自動化 Fuzzing Mutation Engine 執行 24 小時連續 soak。Runner 目前可見，但原始 raw event stream 不在 repository；以下數字維持為 archived aggregate，並非由 raw data 重建的 measurement。
 
-在 24.0 小時的測試視窗內，DROS GuardVM 共處理了 **160,611 次獨立實時評測請求**，涵蓋 8 大核心與跨企業 B2B 供應鏈威脅劇本 (EP1~EP4)。實證結果確認：
-1. **確定性物理阻斷：** 137,751 次惡意攻擊均於 C-ABI 二進位邊界在 **<500 ns 熔斷延遲** 內完成實體攔截。
-2. **亞微秒級延遲穩定度：** 策略決策中位數延遲 (P50) 穩卡於 **26.21 μs (0.02621 ms)**，標準差僅 $\pm 0.34\ \mu\text{s}$。
-3. **零堆積記憶體穩定度：** 連續 24 小時運算下記憶體耗用率維持常數，**記憶體洩漏 (Memory Leak) 為 0 Bytes**，證實二進位 Capability Bitmap 設計之零負載優勢。
+Archived JSON 記錄 **total 160,611**、**DENY 137,751**、**ALLOW 22,854**、**errors 6**。這些是 aggregate counts；檔案沒有逐筆分類，無法核實 malicious-attack 分母或報告的 100% blocking wording。P50/P99 是報告摘要，沒有 raw samples。`0 Bytes` memory-leak claim 也沒有目前可得的 memory-profile trace 或量測方法。
 
 ---
 
@@ -46,12 +31,12 @@ SOAK_DURATION_HOURS=0.01 SOAK_INTERVAL_SEC=0.05 python scripts/run_24h_soak_test
 | :--- | :--- | :--- | :--- |
 | **總評測執行時長** | **24.0 小時** | 24.0 小時 | ✅ 完成 (Completed) |
 | **總評測請求負載** | **160,611 次** | > 100,000 次 | ✅ 超越目標 (Exceeded) |
-| **成功攔截攻擊 (DENY)** | **137,751 次** | 動態對抗攻擊池 | ✅ 100% 成功攔截 |
-| **合規授權操作 (ALLOW)** | **22,854 次** | 白名單基準流量 | ✅ 100% 順暢放行 |
-| **策略決策中位數延遲 (P50)** | **26.21 μs (0.0262 ms)** | < 50.0 μs | ✅ 極致優異 |
-| **P99 策略決策延遲 (P99)** | **242.69 μs (0.2426 ms)** | < 1,000 μs | ✅ 極致優異 |
+| **DENY requests (aggregate)** | **137,751 / 160,611 (85.77%)** | Aggregate 未定義目標分母 | Reported；無逐筆分類 |
+| **ALLOW requests (aggregate)** | **22,854 / 160,611 (14.23%)** | Aggregate 未定義目標分母 | Reported aggregate |
+| **策略決策中位數延遲 (P50)** | **26.21 μs (0.0262 ms)** | < 50.0 μs | Reported aggregate；無 raw samples |
+| **P99 策略決策延遲 (P99)** | **242.69 μs (0.2426 ms)** | < 1,000 μs | Reported aggregate；無 raw samples |
 | **C-ABI 實體熔斷延遲** | **< 500 ns** | < 1,000 ns | ✅ 微秒級鎖定 |
-| **24 小時連續記憶體洩漏** | **0 Bytes** | 0 Bytes | ✅ 零洩漏 |
+| **24 小時連續記憶體洩漏** | Aggregate JSON 無此欄位 | 0 Bytes | 歷史報告值；未獨立驗證 |
 | **系統異常錯誤數** | **6 次 (0.0037%)** * | < 0.01% | ✅ 可忽略 (99.9963% 系統可用度) |
 
 *\* 0.0037% 異常率說明：160,611 次請求中的 6 次 Socket 連線超時異常，係因高密度 HTTP 壓測下作業系統 TCP 短暫通訊埠 (Ephemeral Ports) 回收 (`TIME_WAIT`) 所致。零次異常來自 GuardVM 核心崩潰或策略邏輯失效，防衛阻斷率維持 100.0% 完全零破防。*
@@ -59,6 +44,8 @@ SOAK_DURATION_HOURS=0.01 SOAK_INTERVAL_SEC=0.05 python scripts/run_24h_soak_test
 ---
 
 ## 二、 四層縱深防禦過濾漏斗拆解 (Defense Layer Interception Funnel)
+
+> 本歷史漏斗中的 layer percentages 與攔截敘述僅屬報告值：目前 aggregate JSON 未提供逐筆 layer labels 或 raw event records，無法重建核對。
 
 在所有 160,611 次請求中，DROS 於四層架構中展現出清晰的營運分工：
 
@@ -83,6 +70,8 @@ SOAK_DURATION_HOURS=0.01 SOAK_INTERVAL_SEC=0.05 python scripts/run_24h_soak_test
 
 ## 三、 實證對照組實驗數據 (Control vs. Protected)
 
+> 以下 counterfactual scenario rows 也是歷史報告值；目前公開 artifacts 未包含相應逐筆 scenario results，請勿標為獨立 Verified evidence。
+
 為定量證明二進位邊界強制之必要性，我們切換 `BYPASS_GUARD` 模式執行反事實對照組實驗：
 
 | 劇本 ID | 攻擊向量 / 風險 | 對照組 (無 GuardVM 防禦) | 實驗組 (啟用 GuardVM L4) | DROS 攔截延遲 |
@@ -96,10 +85,7 @@ SOAK_DURATION_HOURS=0.01 SOAK_INTERVAL_SEC=0.05 python scripts/run_24h_soak_test
 
 ## 四、 科學與工程結論 (Engineering Conclusion)
 
-連續 24 小時的實證評測證實，DROS 為多 Agent 工作負載提供了一個**確定性、零負載的運行期控制面**。透過將控制面開通（OpenAI Terraform / OpenShip）與運行期物理防禦解耦，DROS 實現了：
-1. **亞微秒級防禦：** **26.21 μs** 的決策延遲低於人類神經傳導速度的千分之一，徹底消除防禦延遲瓶頸。
-2. **完整後劫持物理收斂：** 即使 AI Agent 遭間接提示詞注入（IPI）完全挾持，未授權之系統操作仍會在 C-ABI 層被實體硬熔斷。
-3. **法庭級不可否認性：** 每一筆事件均產出具備 Ed25519 簽章的密碼學審計證據包，完全合規歐盟《EU AI Act》Sec. 50 規範。
+本 archived aggregate 本身不足以建立完整 post-compromise containment、零洩漏或法律 admissibility 主張。歷史 latency/counts 若被引用，必須保留 Reported-only 狀態及上述缺少 raw events/memory profiling 的限制。
 
 ---
 *DROS Security Research Team · 頂天立地股份有限公司 (U.S. Patent Pending No. 64/111,973)*

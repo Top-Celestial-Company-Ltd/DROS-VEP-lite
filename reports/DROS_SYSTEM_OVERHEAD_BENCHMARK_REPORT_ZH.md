@@ -1,5 +1,5 @@
 # ⚡ DROS 系統開銷與效能微基準全量評測報告 (System Overhead Benchmark Report)
-## 從雲端伺服器、邊緣無人機到智慧手機之納秒級決策與零負載實證
+## 歷史報告數字與目前證據邊界
 
 **文件版本：** 1.0 — 系統開銷與效能基準  
 **維護機構：** DROS 工程團隊 / 康宸園有限公司  
@@ -8,17 +8,19 @@
 * **邊緣/嵌入式端：** ARM Cortex-A72 (Raspberry Pi 4B)
 * **移動端 (Mobile)：** Apple A17 Pro (iOS 18) / Snapdragon 8 Gen 3 (Android 14) 模擬環境
 
+> **證據狀態稽核（2026-09-23）：** 舊版 mobile harness 是 host-side adapter：`KotlinDROSClient` 委派至 Python `ctypes` adapter，載入 Windows DLL；並未執行 Android JNI、iOS Swift 或手機裝置 runtime。歷史 `<0.001 mAh` 與 `<0.05 μJ` 數字在目前 artifacts 中沒有電量計、計算輸入、校準程序或 raw energy trace，不得視為實測。24 小時 soak runner 存在但使用隨機 scenario、只輸出至固定路徑的 aggregate，且沒有 memory profiling；其 `0 Bytes` 數字僅為 report-only。詳見[雙語舊版主張稽核](DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_ZH.md)。
+
 ---
 
 ## 🧭 一、 摘要 (Executive Summary)
 
 在企業與實體設備部署 AI Agent 執行期治理時，**「系統開銷 (System Overhead)」** 往往是決定產品生死的第一核心指標。傳統大模型護欄（如 NVIDIA NeMo、Llama Guard、Palo Alto AIRS）每次檢查需花費數百毫秒（ms）並佔用龐大 GPU/記憶體，導致無法在飛控、高頻交易與手機端落地。
 
-本報告整合 **24小時浸泡測試 (160,611 次請求)**、**多架構微基準對照 ($N=10,000$)** 與 **端側高頻壓測** 之實測數據，定量證明 DROS 具備：
+本歷史報告整合先前記載的 **24 小時 soak aggregate (160,611 次請求)**、**多架構微基準 ($N=10,000$)** 與 **host-side mobile-style adapter harness** 數字。這些數字的 evidence level 與 measurement boundary 不同，且目前 repository 無法獨立重現全部項目：
 1. **納秒級決策延遲：** C-ABI 本地決策中位數延遲 $P_{50} = \mathbf{500\text{ ns}\ (0.5\ \mu\text{s})}$，極端延遲 $P_{99} = \mathbf{1.2\ \mu\text{s}}$。
 2. **極致輕量 CPU 佔用：** 額外 CPU 負載 $<\mathbf{1.8\%}$，RCU 無鎖指針熱切換僅耗時 $\mathbf{420\text{ ns}}$。
-3. **零堆積分配與零洩漏：** 24~72 小時連續運算下，**記憶體洩漏 (Memory Leak) 為 0 Bytes**，核心二進位體積 $<\mathbf{2\text{ MB}}$。
-4. **手機端超低功耗：** 端側 10,000 次連續調用電池能耗 $<\mathbf{0.001\text{ mAh}}$，網路流量消耗 $\mathbf{0\text{ KB}}$。
+3. **記憶體：** 舊報告記載 24 小時 0 Bytes leak；runner 沒有 memory-profile instrumentation，故狀態為 **Reported，未獨立驗證**。
+4. **手機能耗：** host-side harness 未量測。歷史電池／能耗數字是**未驗證估算**，不列為商品 claim。
 
 ---
 
@@ -30,9 +32,9 @@
 | **2. 策略決策尾端延遲 ($P_{99}$)** | **1.2 μs (0.0012 ms)** | 800 ms ~ 2,000 ms | 150 ms ~ 350 ms | ⚡ **快 120,000 倍** |
 | **3. CPU 額外開銷 (CPU Overhead)** | **< 1.8%** | 30% ~ 100% (耗盡 GPU/CPU) | 5% ~ 15% (網路 I/O 序列化) | 🛡️ **低功耗常駐** |
 | **4. 記憶體佔用 (Memory Footprint)** | **< 16 MB** | 2 GB ~ 8 GB (加載模型權重) | 250 MB ~ 500 MB (Container) | 💎 **省 95% 以上記憶體** |
-| **5. 連續浸泡記憶體洩漏 (Memory Leak)** | **0 Bytes (72小時實測)** | 存在 Python GC 與快取膨脹 | 存在連線 Session 殘留 | ✅ **絕對穩定零洩漏** |
+| **5. 連續浸泡記憶體洩漏 (Memory Leak)** | 舊報告記載 0 Bytes；profile artifact 不在目前包內 | 存在 Python GC 與快取膨脹 | 存在連線 Session 殘留 | Reported；未獨立驗證 |
 | **6. 政策熱更新無鎖切換延遲 ($T_{\text{swap}}$)** | **420 ns** | 需重啟或重載模型 (數秒至數分鐘) | 50 ms ~ 200 ms | ⚡ **微秒級熱生效** |
-| **7. 手機端電池能耗 (Battery Power)** | **< 0.001 mAh / 萬次** | 劇烈發燙、電池快速消耗 | 消耗 4G/5G 射頻電量 | 📱 **全天候無感運行** |
+| **7. 手機端電池能耗 (Battery Power)** | **引用 harness 未量測** | 未比較 | 未比較 | 不提出電池 claim |
 
 ---
 
@@ -60,14 +62,11 @@
 
 ---
 
-## 🔋 四、 手機端 (Mobile SDK) 與邊緣無人機 (Edge Drone) 能耗實測
+## 🔋 四、 Mobile-style host adapter 與 edge-drone 歷史報告數字
 
-### 1. 手機端 (iOS Swift / Android Kotlin JNI)
-* **測試規模：** 10,000 次連續本機權限驗證（相簿、簡訊、Apple Pay）
-* **端側決策耗時：**
-  * $P_{50} = \mathbf{1.70\ \mu\text{s}}$
-  * $P_{99} = \mathbf{7.30\ \mu\text{s}}$
-* **能耗評估：** 由於無需喚醒 4G/5G 晶片，且計算僅在 L1/L2 快取內完成，單次調用能量消耗 $< 0.05\ \mu\text{J}$，10,000 次累計功耗 $< 0.001\text{ mAh}$。
+### 1. 舊版 mobile-style host adapter（非 Android/iOS 裝置）
+* 舊報告列出 $P_{50}=1.70\ \mu\text{s}$、$P_{99}=7.30\ \mu\text{s}$；目前 harness 使用 Python host adapter 與 Windows DLL，不是 Android/iOS 裝置；raw timing samples 未保存，故僅為 host-side reported values。
+* **Battery/energy：未量測。** 舊 `<0.05 μJ`／`<0.001 mAh` 數字無儀器、公式或 raw trace 支持，不得當成實測值。
 
 ### 2. 邊緣無人機 (MAVLink 飛控防護)
 * **即時性約束：** 飛控姿態迴路頻率通常為 $400\text{ Hz} \sim 1\text{ kHz}$（每週期 $1\text{ ms} \sim 2.5\text{ ms}$）。
@@ -81,7 +80,7 @@
 * **處理總請求數：** 160,611 次
 * **成功攔截 (DENY)：** 137,751 次
 * **合規放行 (ALLOW)：** 22,854 次
-* **記憶體洩漏 (Memory Leak)：** **0 Bytes**
+* **記憶體洩漏 (Memory Leak)：** 舊報告記載 0 Bytes；目前無 memory-profile trace 或可重現 runner，未獨立驗證。
 * **GuardVM 核心崩潰次數：** **0 次 (Zero Crash)**
 * **系統可用度：** **99.9963%**
 
@@ -89,8 +88,8 @@
 
 ## 🎯 六、 結論 (Conclusion)
 
-實測數據客觀證明：**DROS 在提供全球最嚴格物理執行期硬熔斷的同時，將系統開銷壓縮到了物理與數學極限。**
+本報告的歷史 overhead 數字須依各自 evidence boundary 解讀。舊 mobile battery 數字屬未驗證估算；mobile-style adapter timing 並非手機裝置結果。作為商品或論文主張前，請先參照稽核補充並補齊各自 artifacts。
 
 * **在雲端**：不搶佔業務 CPU/記憶體，支持每秒數萬次的高併發；
 * **在無人機/邊緣**：納秒級熔斷滿足硬實時（Hard Real-Time）要求；
-* **在智慧手機**：零網路、零耗電、無感常駐守護。
+* **Mobile-style host adapter**：只測 host-side policy wrapper；實體裝置 latency、network egress 與 energy 未由此 report 驗證。

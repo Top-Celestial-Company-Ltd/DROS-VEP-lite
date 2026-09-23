@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-DROS Mobile SDK Core v2.0 (Emulating On-Device iOS/Android FFI Runtime)
-Provides sub-microsecond in-process execution gating for mobile LLM tool calls.
+DROS Mobile SDK policy core v2.0 (host-side emulation)
+Provides a policy fixture for mobile-agent scenarios. This Python module and its
+ctypes adapter are not an Android/iOS runtime or device benchmark.
 Supports MobileSafetyBench & MobileWorldSafety threat vectors:
 - SMS/Notification Environmental Injection (Clipboard/Exfiltration)
 - Stealth Background Geolocation Tracking
@@ -28,7 +29,7 @@ class DROSMobileGuard:
 
     def verify_tool_invocation(self, role_id, action_name, params=None, biometric_token=None, is_background=False):
         """
-        On-device FFI boundary verification (Sub-microsecond, Zero Network).
+        Host-side policy-fixture decision. Timing here is not device latency.
         Returns: (allowed: bool, reason: str, latency_ns: int)
         """
         t0 = time.perf_counter_ns()

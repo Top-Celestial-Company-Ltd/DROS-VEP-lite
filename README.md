@@ -273,7 +273,7 @@ Inspect interactive audit logs and evidence artifacts in real time at `http://lo
 
 ## 🎯 Cross-Domain Research Testbed Matrix
 
-VEP provides multi-domain evaluation fixtures reproducing 2026 real-world security incidents across enterprise cloud, on-device mobile, and physical robotics:
+VEP provides multi-domain evaluation fixtures across enterprise cloud and physical robotics, plus a host-side mobile-scenario harness and a separately indexed Android AVD application-runtime lane:
 
 | Domain Track | Incident & Threat Vector | Target Execution Surface | MITRE ATLAS | In-Band Governance Action |
 | :--- | :--- | :--- | :--- | :--- |
@@ -281,7 +281,7 @@ VEP provides multi-domain evaluation fixtures reproducing 2026 real-world securi
 | **Enterprise ERP** | **ATS-002**: Confused Deputy ERP Ransomware | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
 | **Autonomous Model** | **ATS-004**: PyTorch Model Weight Hijacking | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
 | **Physical AI / UAV** | **Paper 6**: Mid-Air Disarm & 100-Drone Mesh Swarm | Flight Controller Telemetry | **AML.T0040** | **Kinematic Envelope Hold** |
-| **Mobile On-Device** | **Paper 5**: SMS Prompt Injection & In-App Purchase | Mobile OS Intent / Keystore | **AML.T0055** | **Dynamic Redaction (Mask)** |
+| **Mobile-agent host harness** | Legacy mobile scenarios: prompt injection / payment requests | Emulated request wrapper; not OS/API enforcement | **AML.T0055** | Local policy-fixture assertion; not device evidence |
 
 ---
 
@@ -299,10 +299,10 @@ VEP provides multi-domain evaluation fixtures reproducing 2026 real-world securi
 │    • Paper 4 (WebMCP Governance): dros-webmcp/ (Agentic Web Attribution)    │
 │    • Paper 5 (Mobile Security): paper-mobile/ (Digital Action Containment)  │
 │    • Paper 6 (Physical AI UAV): paper-uav/ (Cyber-Physical Containment)     │
-│    • 72-Hour Continuous Multi-Scenario Soak Test (160,611 Requests)         │
+│    • Legacy 24-Hour Soak Aggregate (runner present; stochastic, aggregate-only; no memory profile) │
 │      └─ Report: reports/DROS_24H_Soak_Test_Final_Report.md                  │
-│      └─ Harness: scripts/run_24h_soak_test.py                               │
-│    • ⚡ System Overhead & Performance Microbenchmark (Latency, CPU, Mobile)  │
+│      └─ Aggregate JSON: reports/soak_test_24h_report.json                   │
+│    • ⚡ Historical System Overhead Report (mobile energy is not verified)   │
 │      └─ Report: reports/DROS_SYSTEM_OVERHEAD_BENCHMARK_REPORT_EN.md          │
 │                                                                             │
 │ 🧪 2. Extended Evaluation Scenarios (RFC-010 Standard Matrix)               │
@@ -328,10 +328,13 @@ VEP provides multi-domain evaluation fixtures reproducing 2026 real-world securi
 │      └─ Location: benchmarks/physical_drone/                                │
 │      └─ Master Runner: python benchmarks/physical_drone/run_drone_bench.py   │
 │                                                                             │
-│ 📱 6. Mobile SDK & On-Device App Governance Benchmark (iOS/Android Safety)   │
-│    • Coverage: SMS/Web Prompt Injection, Biometric In-App Purchase Defense   │
+│ 📱 6. Mobile-Scenario Host Harness + TMC Android AVD Evidence                │
+│    • Host harness: Python adapter + Windows DLL; not iOS/Android device evidence │
 │      └─ Location: benchmarks/mobile_sdk/                                     │
 │      └─ Master Runner: python benchmarks/mobile_sdk/run_mobile_bench.py      │
+│    • Android AVD: Pixel_7 / Android 34 / x86_64, bounded app/framework paths │
+│      └─ Index: reports/evidence/tmc_android_phase1_2_index/                  │
+│      └─ Energy: physical-device energy remains out of scope                  │
 │                                                                             │
 │ 🧪 7. The Bare-Metal Isolation Crucible (Post-Compromise Authority Survives) │
 │    • Invariant: Integrity(Agent)=0, Integrity(Upper Governance)=0            │
@@ -622,6 +625,7 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
 * **Bilingual evidence addendum**: [English](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_EN.md) | [繁體中文](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_ZH.md)
 * **App-runtime canonical index**: [Android Baseline Evidence Index](reports/evidence/tmc_android_phase1_2_index/20260922T_INDEX_CLOSED/ANDROID_BASELINE_EVIDENCE_INDEX.md)
 * **Framework-baseline closure**: [Index](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_INDEX.md) | [English report](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_EN.md) | [繁體中文報告](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_ZH.md)
+* **Legacy battery/soak claim audit**: [English](reports/DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_EN.md) | [繁體中文](reports/DROS_MOBILE_LEGACY_ENERGY_AND_SOAK_CLAIM_AUDIT_ZH.md)
 * **Scope**: Pixel_7 / Android 34 / x86_64 declared AVD paths only. Permission, AppOps, and protected Binder-service slices are `Verified`; SELinux is observational, not canonical. No Android-wide or OS-level claim is made.
 * 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs**: [Paper (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [Paper (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
   * **DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Zenodo Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
