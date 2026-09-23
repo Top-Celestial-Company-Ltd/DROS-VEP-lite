@@ -1,0 +1,22 @@
+{
+  "apk_sha256": "8104c7c0e8346d845e31187fa80b2a14ae700948001b29748ba799c6f4e6b1ef",
+  "authority": "Android native AppOps READ_CONTACTS",
+  "checks": {
+    "allow_decision": true,
+    "allow_effect": true,
+    "allow_execution": true,
+    "deny_decision": true,
+    "deny_no_effect": true,
+    "deny_no_execution": true,
+    "deny_reason": true
+  },
+  "claim_ceiling": "Declared Pixel_7 Android 34 x86_64 AppOps application-runtime path only; not Android-wide or OS-wide security proof.",
+  "run_id": "ANDROID-APPOPS-01",
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-23T07:15:07.480415+00:00"
+}

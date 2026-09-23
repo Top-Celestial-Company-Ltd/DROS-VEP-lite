@@ -1,0 +1,66 @@
+{
+  "closure_schema": "TMC-ANDROID-PHASE1-SECURITY-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_RUNTIME_INVARIANT",
+  "aggregate_unit": "ANDROID-PHASE1-SECURITY-SEmantics",
+  "generated_at_utc": "2026-09-22T13:19:16.7744890Z",
+  "canonical_inputs": [
+    {
+      "unit": "ANDROID-BASE-03",
+      "artifact_id": "T5",
+      "closure": "../../tmc_android_base_03_avd/20260922T5/evidence_closure.json",
+      "role": "grant",
+      "observed_outcome": {
+        "decision": "ALLOW",
+        "execution_started": true,
+        "execution_completed": true,
+        "execution_effect": "BOUNDED_FIXTURE",
+        "effect_marker_present": true
+      },
+      "closure_sha256": "75F6D59B8BE12A0E6FD46694E7980448B9852FE8696FA1FCED578846929C7026"
+    },
+    {
+      "unit": "ANDROID-BASE-04",
+      "artifact_id": "T4",
+      "closure": "../../tmc_android_base_04_avd/20260922T4/evidence_closure.json",
+      "role": "invalid-capability deny",
+      "observed_outcome": {
+        "decision": "DENY",
+        "execution_started": false,
+        "execution_completed": false,
+        "execution_effect": "NONE",
+        "effect_marker_present": false
+      },
+      "closure_sha256": "5BEB87871D5A589FAE9BB55C6BCCC4CF727D8D57032B45580BAADA4EA579E61E"
+    },
+    {
+      "unit": "ANDROID-BASE-05",
+      "artifact_id": "T7",
+      "closure": "../../tmc_android_base_05_avd/20260922T7/evidence_closure.json",
+      "role": "revocation",
+      "observed_sequence": {
+        "before_revoke": "ALLOW -> completed -> BOUNDED_FIXTURE",
+        "revocation": "revoked=true",
+        "after_revoke": "DENY -> not started -> NONE",
+        "new_effect_created": false
+      },
+      "closure_sha256": "0D1C79312A0102BFB7E3BD8FEF5CEB46620DCB0498E83CAD6DCCB3FFF22EE941"
+    }
+  ],
+  "consistency_checks": {
+    "closure_schema_consistent": true,
+    "target_consistent": {
+      "avd": "Pixel_7",
+      "android_api": 34,
+      "abi": "x86_64",
+      "verified": true
+    },
+    "runner_exit_status_all_zero": true,
+    "policy_version_consistent": true,
+    "apk_and_policy_source_identity_consistent": false,
+    "identity_note": "T7 was produced after the BASE-05 implementation change; this aggregate preserves that provenance distinction and does not treat T4/T5/T7 as byte-identical implementation runs."
+  },
+  "phase1_security_conclusion": "The Android baseline demonstrates a reproducible grant-enforce-revoke execution-authority lifecycle on the declared Pixel_7 Android 34 x86_64 application-runtime boundary.",
+  "claim_ceiling": "Verified only for the declared Pixel_7 Android 34 x86_64 app-runtime boundary. This aggregate does not establish Android-wide security, SELinux enforcement, Binder enforcement, kernel enforcement, physical-device behavior, or all-Android-platform generalization.",
+  "measurement_boundary": "Security semantics and bounded fixture effects only; performance, throughput, tail latency, CPU, memory, energy, and physical-device measurements remain outside this closure.",
+  "canonicality": "This aggregate references immutable T4, T5, and T7 closure artifacts; it does not modify or replace them."
+}

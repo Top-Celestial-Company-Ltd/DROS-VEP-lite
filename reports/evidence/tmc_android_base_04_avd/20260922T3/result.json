@@ -1,0 +1,11 @@
+{
+  "app_elapsed_ns": 809500,
+  "decision": "DENY",
+  "decision_latency_ns": 771100,
+  "execution_completed": false,
+  "execution_effect": "NONE",
+  "execution_started": false,
+  "policy_hash": "android-baseline-policy-v1",
+  "reason": "CAPABILITY_MISSING",
+  "request_id": "ANDROID-BASE-04-000001"
+}

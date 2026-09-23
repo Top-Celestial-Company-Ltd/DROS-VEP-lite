@@ -1,0 +1,3 @@
+permission: READ_CONTACTS granted
+deny phase: appops deny
+allow phase: appops allow

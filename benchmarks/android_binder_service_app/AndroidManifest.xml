@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.dros.tmc.binderfixture">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34" />
+    <permission android:name="io.dros.tmc.binderfixture.permission.EXECUTE_FIXTURE"
+        android:protectionLevel="dangerous" />
+    <application android:debuggable="true" android:label="DROS TMC Binder Fixture">
+        <service android:name=".BoundedFixtureService" android:exported="true"
+            android:permission="io.dros.tmc.binderfixture.permission.EXECUTE_FIXTURE" />
+    </application>
+</manifest>

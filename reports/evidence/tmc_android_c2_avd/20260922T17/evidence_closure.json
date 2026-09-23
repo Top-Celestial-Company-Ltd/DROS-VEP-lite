@@ -1,0 +1,36 @@
+{
+  "closure_schema": "TMC-ANDROID-C2-PIPELINE-ACCOUNTING-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_C2_APP_SIDE_PIPELINE_ACCOUNTING",
+  "run_id": "ANDROID-C2",
+  "artifact_id": "T17",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "concurrency": 4,
+  "pipeline_invariant": {
+    "submitted_count": 4,
+    "received_count": 4,
+    "dispatched_count": 4,
+    "result_count": 4,
+    "submitted_equals_received": true,
+    "received_equals_dispatched": true,
+    "dispatched_equals_result": true,
+    "result_invariant": "4/4 DENY; not started; not completed; NONE effect"
+  },
+  "stage_boundary": "Host Controller -> explicit BroadcastReceiver -> app-side ingress record -> deterministic dispatcher record -> bounded result record",
+  "order_claim": "Request order is not treated as semantic; only per-request identity completeness is checked.",
+  "claim_ceiling": "Four concurrently submitted requests were completely accounted for through the declared app-side receive, dispatch, and result-record stages on the Pixel_7 Android 34 x86_64 AVD path.",
+  "non_claims": "No latency, throughput, CPU, memory, energy, FIFO ordering, C2 performance, C3 behavior, Android-wide, Binder, SELinux, or kernel claim is established.",
+  "artifact_hashes": {
+    "ingress_records.jsonl": "EC08E83C6F1669F598D68FEC521068579E7F827C488A3BEF874EF0E1179743E4",
+    "dispatch_records.jsonl": "58290B062F55DA90DEB513DB65E99A630E307D4FAFBF6FD2C865CA2E59F49C5D",
+    "result_records.jsonl": "A2943F2520832255D03B2B83CB4B4D1DF1A2408463B1043CC4A79F7163574D54",
+    "submitted.json": "02528A19CF3F20B7691A6251BCC66B26452329F0B6D1F8D1CF63ED304D79F460",
+    "summary.json": "7FCE87A896F049C621223F7160948C17FCEFF91B73C8C552271F6790000774B2",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D"
+  },
+  "canonicality": "T17 is the canonical C2 pipeline-accounting artifact. T16 remains the C1 performance anchor; C2 performance and C3 remain unstarted."
+}

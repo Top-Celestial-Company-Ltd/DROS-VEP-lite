@@ -1,0 +1,44 @@
+{
+  "closure_schema": "TMC-ANDROID-EVIDENCE-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_RUNTIME_INVARIANT",
+  "run_id": "ANDROID-BASE-03",
+  "execution_timestamp_utc": "2026-09-22T13:06:36.334166+00:00",
+  "runner_exit_status": 0,
+  "runner_exit_source": "captured terminal result for canonical T5 run",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "observed_invariant": {
+    "decision": "ALLOW",
+    "execution_started": true,
+    "execution_completed": true,
+    "execution_effect": "BOUNDED_FIXTURE",
+    "effect_marker_present": true
+  },
+  "identity": {
+    "vep_git_head": "d8b25084b78eea29d89445de0d9f5ef3bf0d01df",
+    "relevant_worktree_dirty": true,
+    "workload_id": "ANDROID-BASE-03-000001",
+    "workload_request_sha256": "B56086702A75EA63BF3FCDBFE713E738222A5C2B845BFFEE5E19C09EBA75128F",
+    "policy_version": "android-baseline-policy-v1",
+    "policy_source_sha256": "6D42310B103E0B98EC456A0862FFF02D88B86B7F98DDA3F6E1CAAEBC62FE1CA1",
+    "apk_sha256": "5B9516EA9A43210A27E213D88611666B8B148D36D7F766327429880C8B3D095A"
+  },
+  "artifact_hashes": {
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D",
+    "device_getprop.txt": "DE97F8D5DC5DB419965A814590B07631BC8A7EC83C9BED2D5E284D783795F26B",
+    "effects.jsonl": "3F878B63D61862CDC2209BC084F12E978416107EE3CCC2D143F3FF3DA63D608B",
+    "request.json": "B56086702A75EA63BF3FCDBFE713E738222A5C2B845BFFEE5E19C09EBA75128F",
+    "result.json": "8EE6A40D1D466C15C24D8CB2D1ECBEE69070D66A1A71BAF4040182556DDEE7B6",
+    "summary.json": "2CF5DE9B10C0259EBFC7D5AA6DB0DA63EB91E64D4147E76AA7D19C663135EC7A"
+  },
+  "measurement_boundary": "authorization/execution ordering and bounded fixture effect only; no performance, energy, OS-wide, SELinux, Binder, kernel, or all-Android claim",
+  "effect_marker": {
+    "path": "effects.jsonl",
+    "present": true,
+    "expected_effect": "BOUNDED_FIXTURE"
+  }
+}

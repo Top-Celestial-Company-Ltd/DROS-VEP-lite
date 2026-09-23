@@ -1,0 +1,43 @@
+{
+  "closure_schema": "TMC-ANDROID-EVIDENCE-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_RUNTIME_INVARIANT",
+  "run_id": "ANDROID-BASE-04",
+  "execution_timestamp_utc": "2026-09-22T12:56:43.088499+00:00",
+  "runner_exit_status": 0,
+  "runner_exit_source": "captured terminal result for canonical T4 run",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "observed_invariant": {
+    "decision": "DENY",
+    "execution_started": false,
+    "execution_completed": false,
+    "execution_effect": "NONE",
+    "effect_marker_present": false
+  },
+  "identity": {
+    "vep_git_head": "d8b25084b78eea29d89445de0d9f5ef3bf0d01df",
+    "relevant_worktree_dirty": true,
+    "workload_id": "ANDROID-BASE-04-000001",
+    "workload_request_sha256": "914868BBE7A6745D5121A7C358932A611C71F47B1FC339C5CA375EFFC5F66C46",
+    "policy_version": "android-baseline-policy-v1",
+    "policy_source_sha256": "6D42310B103E0B98EC456A0862FFF02D88B86B7F98DDA3F6E1CAAEBC62FE1CA1",
+    "apk_sha256": "5B9516EA9A43210A27E213D88611666B8B148D36D7F766327429880C8B3D095A"
+  },
+  "artifact_hashes": {
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D",
+    "device_getprop.txt": "DE97F8D5DC5DB419965A814590B07631BC8A7EC83C9BED2D5E284D783795F26B",
+    "request.json": "914868BBE7A6745D5121A7C358932A611C71F47B1FC339C5CA375EFFC5F66C46",
+    "result.json": "6E8C5F68EB5DD1A507B9C87349F15E5CE81F16754F61FBA4A7C3DB50D9806701",
+    "summary.json": "89A077C69746BE48AD1D18C7E0DB960C256B123D6750BAB928DDDFF0BD160F22"
+  },
+  "measurement_boundary": "security ordering only; no performance, energy, OS-wide, SELinux, Binder, kernel, or all-Android claim",
+  "effect_marker": {
+    "path": "effects.jsonl",
+    "present": false,
+    "verification": "run-as cat reported no file after the deny path"
+  }
+}

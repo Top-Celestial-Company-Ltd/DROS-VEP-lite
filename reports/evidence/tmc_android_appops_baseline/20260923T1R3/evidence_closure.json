@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "allow_decision": true,
+    "allow_effect": true,
+    "allow_execution": true,
+    "deny_decision": true,
+    "deny_no_effect": true,
+    "deny_no_execution": true,
+    "deny_reason": true
+  },
+  "run_id": "ANDROID-APPOPS-01",
+  "status": "VERIFIED"
+}

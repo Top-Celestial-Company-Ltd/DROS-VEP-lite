@@ -1,0 +1,23 @@
+{
+  "authority": "Android protected Binder service with a declared runtime permission",
+  "checks": {
+    "allow_decision": true,
+    "allow_effect": true,
+    "allow_execution": true,
+    "deny_decision": true,
+    "deny_no_effect": true,
+    "deny_no_execution": true,
+    "deny_permission_reason": true
+  },
+  "claim_ceiling": "Declared Pixel_7 Android 34 x86_64 protected Binder service path only; not Binder framework-wide or Android-wide security proof.",
+  "client_apk_sha256": "1c96bae4f2850cf3d26b9666e27ca526945a79ca56c240bdcd3a5a848535b8ff",
+  "run_id": "ANDROID-BINDER-01",
+  "service_apk_sha256": "56a3ac869a3294749201ccc41b3c02fbbaf14ed07e6ac4ee30f4415e03b2fdea",
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-23T07:27:35.392727+00:00"
+}

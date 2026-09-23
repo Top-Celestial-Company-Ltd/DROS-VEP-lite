@@ -1,0 +1,58 @@
+{
+  "closure_schema": "TMC-ANDROID-EVIDENCE-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_RUNTIME_INVARIANT",
+  "run_id": "ANDROID-BASE-05",
+  "execution_timestamp_utc": "2026-09-22T13:14:10.141029+00:00",
+  "runner_exit_status": 0,
+  "runner_exit_source": "captured terminal result for canonical T7 run",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "observed_sequence": {
+    "before_revoke": {
+      "decision": "ALLOW",
+      "execution_started": true,
+      "execution_completed": true,
+      "execution_effect": "BOUNDED_FIXTURE"
+    },
+    "revocation": {
+      "principal": "revocable-agent",
+      "revoked": true
+    },
+    "after_revoke": {
+      "decision": "DENY",
+      "reason": "AUTHORITY_REVOKED",
+      "execution_started": false,
+      "execution_completed": false,
+      "execution_effect": "NONE"
+    },
+    "effect_count": {
+      "before": 1,
+      "after": 1,
+      "new_effect_created": false
+    }
+  },
+  "identity": {
+    "vep_git_head": "d8b25084b78eea29d89445de0d9f5ef3bf0d01df",
+    "relevant_worktree_dirty": true,
+    "workload_id": "ANDROID-BASE-05-000001",
+    "workload_request_sha256": "5D8CCEFB646990A1B620C1909142E120D8F0447F0A4CC4E26F768D686B70C82C",
+    "policy_version": "android-baseline-policy-v1",
+    "policy_source_sha256": "D79B9B4328D1A3793C0A6EF225C684C3AE2FF101E091D58A42E292AF3F25670C",
+    "apk_sha256": "5A78A50FE37D846D59828026CB569AABAB85EB92FDBC90E86D253257C6661505"
+  },
+  "artifact_hashes": {
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D",
+    "before_result.json": "E243619BDC65C7594D3A96778B6E1A39BDC84CD2E07CDEE401D1D8456602A711",
+    "device_getprop.txt": "91EA2D69D655279786E64C5DAFE504D25F64CAE24C74D03F7670E68BC5E6C08B",
+    "effects.jsonl": "5C5B1678AD88721DF4C16D9CB9BB17738BE3099371E24CC9D5A46D5B486AF635",
+    "request.json": "5D8CCEFB646990A1B620C1909142E120D8F0447F0A4CC4E26F768D686B70C82C",
+    "result.json": "D4E87B5E88DFB128B0259CA17391953E0D16528C3EA6E178B274BDF213FFFA6E",
+    "revocation.json": "21CB68831862CAC65098D4608A48D5B523CAF4DCF29D4BBCBAB79DD77526DF54",
+    "summary.json": "EEC0FED8B9D35AD2B07C07765B21B99E642F95782D834C36D5E048E66847941F"
+  },
+  "measurement_boundary": "revocation and bounded fixture effect only; no performance, energy, OS-wide, SELinux, Binder, kernel, or all-Android claim"
+}

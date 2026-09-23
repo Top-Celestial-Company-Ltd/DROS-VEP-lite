@@ -1,0 +1,11 @@
+{
+  "app_elapsed_ns": 1503700,
+  "decision": "DENY",
+  "decision_latency_ns": 1473000,
+  "execution_completed": false,
+  "execution_effect": "NONE",
+  "execution_started": false,
+  "policy_hash": "android-baseline-policy-v1",
+  "reason": "AUTHORITY_REVOKED",
+  "request_id": "ANDROID-BASE-05-000001"
+}

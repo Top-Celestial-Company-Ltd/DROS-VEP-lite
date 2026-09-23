@@ -1,0 +1,23 @@
+{
+  "apk_sha256": "87139e56bb922cde4a22736404b3d45022cb915d3ccacab2e2a472dacd935fcb",
+  "authority": "Android native READ_CONTACTS permission manager",
+  "checks": {
+    "allow_completed": true,
+    "allow_decision": true,
+    "allow_effect": true,
+    "allow_started": true,
+    "deny_decision": true,
+    "deny_no_complete": true,
+    "deny_no_effect": false,
+    "deny_no_start": true
+  },
+  "claim_ceiling": "Declared Pixel_7 Android 34 x86_64 app-runtime permission baseline only; not Android-wide or OS-wide security proof.",
+  "run_id": "ANDROID-PERM-01",
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-23T06:35:01.135434+00:00"
+}

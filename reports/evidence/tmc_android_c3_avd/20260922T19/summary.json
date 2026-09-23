@@ -1,0 +1,30 @@
+{
+  "accounting": {
+    "complete": true,
+    "dispatched_complete": true,
+    "received_complete": true,
+    "result_complete": true,
+    "submitted_count": 8
+  },
+  "concurrency": 8,
+  "measurement_scope": "app-side ingress/dispatch/result accounting only; no latency, throughput, CPU, memory, or energy claim",
+  "result_invariant": true,
+  "run_id": "ANDROID-C3",
+  "submitted_request_ids": [
+    "ANDROID-C3-000001",
+    "ANDROID-C3-000002",
+    "ANDROID-C3-000003",
+    "ANDROID-C3-000004",
+    "ANDROID-C3-000005",
+    "ANDROID-C3-000006",
+    "ANDROID-C3-000007",
+    "ANDROID-C3-000008"
+  ],
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-22T14:00:46.654932+00:00"
+}

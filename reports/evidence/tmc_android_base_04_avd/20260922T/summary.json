@@ -1,0 +1,24 @@
+{
+  "apk_sha256": "39a0958d06f10fb62a2853bbb89456c3df80b8d4d776030286c1287e54a42487",
+  "effect_marker_present": true,
+  "measurement_scope": "security ordering only; no performance or energy claim",
+  "result": {
+    "app_elapsed_ns": 760400,
+    "decision": "DENY",
+    "decision_latency_ns": 722900,
+    "execution_completed": false,
+    "execution_effect": "NONE",
+    "execution_started": false,
+    "policy_hash": "",
+    "reason": "MALFORMED_REQUEST",
+    "request_id": ""
+  },
+  "run_id": "ANDROID-BASE-04",
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-22T12:54:32.701589+00:00"
+}

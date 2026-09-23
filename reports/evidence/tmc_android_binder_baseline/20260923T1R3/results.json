@@ -1,0 +1,26 @@
+{
+  "allow": {
+    "result": {
+      "authority": "ANDROID_BINDER_SERVICE_PERMISSION",
+      "decision": "ALLOW",
+      "execution_completed": true,
+      "execution_effect": "BOUNDED_BINDER_FIXTURE",
+      "execution_started": true,
+      "reason": "BINDER_SERVICE_PERMISSION_GRANTED",
+      "request_id": "ANDROID-BINDER-01-ALLOW-000001"
+    },
+    "service_effects": "{\"request_id\":\"ANDROID-BINDER-01-ALLOW-000001\",\"effect\":\"BOUNDED_BINDER_FIXTURE\"}"
+  },
+  "deny": {
+    "result": {
+      "authority": "ANDROID_BINDER_SERVICE_PERMISSION",
+      "decision": "ALLOW",
+      "execution_completed": true,
+      "execution_effect": "BOUNDED_BINDER_FIXTURE",
+      "execution_started": true,
+      "reason": "BINDER_SERVICE_PERMISSION_GRANTED",
+      "request_id": "ANDROID-BINDER-01-DENY-000001"
+    },
+    "service_effects": "{\"request_id\":\"ANDROID-BINDER-01-DENY-000001\",\"effect\":\"BOUNDED_BINDER_FIXTURE\"}"
+  }
+}

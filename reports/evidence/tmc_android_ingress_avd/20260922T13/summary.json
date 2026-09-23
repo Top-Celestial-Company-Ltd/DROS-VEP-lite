@@ -1,0 +1,26 @@
+{
+  "accounting": {
+    "complete": false,
+    "duplicate_request_ids": [],
+    "missing_request_ids": [
+      "ANDROID-INGRESS-000011",
+      "ANDROID-INGRESS-000012"
+    ],
+    "observed_count": 0,
+    "submitted_count": 2,
+    "unexpected_request_ids": []
+  },
+  "measurement_scope": "app-side ingress accounting only; no authorization, execution, latency, throughput, or energy claim",
+  "run_id": "ANDROID-INGRESS-C1",
+  "submitted_request_ids": [
+    "ANDROID-INGRESS-000011",
+    "ANDROID-INGRESS-000012"
+  ],
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-22T13:45:05.944407+00:00"
+}

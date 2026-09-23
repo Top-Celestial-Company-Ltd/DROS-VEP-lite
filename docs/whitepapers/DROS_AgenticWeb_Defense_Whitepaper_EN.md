@@ -717,10 +717,9 @@ The theoretical foundations of the DROS deterministic runtime governance archite
    *DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web*  
    **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)  
    *Status: Preprint, not peer-reviewed*
-5. 📱 **Paper 5: Post-Compromise Mobile (Digital Systems Verification — Mobile Edge Attenuation)**  
-   *Post-Compromise Security for Autonomous Mobile Agents: A Deterministic Runtime Attenuation and Proof-Carrying Authorization Architecture*  
-   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)  
-   *Status: Preprint, not peer-reviewed*
+5. 📱 **Paper 5: Post-Compromise Mobile (Digital Systems Evaluation — Android Application-Runtime Boundary)**
+   *Post-Compromise Security for Autonomous Mobile Agents: Deterministic Runtime Enforcement of Mobile Execution Authority*; **Zenodo v2.0.1 DOI**: [`10.5281/zenodo.22913070`](https://doi.org/10.5281/zenodo.22913070) | **Concept DOI**: [`10.5281/zenodo.22253146`](https://doi.org/10.5281/zenodo.22253146)
+   *Status: Preprint submitted to IEEE TMC; not peer-reviewed. Evidence is limited to the declared Android AVD and framework-baseline paths; no Android-wide or OS-level enforcement claim is made.*
 6. 🛸 **Paper 6: Post-Compromise Physical AI / UAV (Cyber-Physical Verification — Autonomous UAVs)**  
    *Post-Compromise Security for Physical AI: Deterministic Runtime Enforcement of Physical Action Authority in Autonomous UAVs*  
    **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)  

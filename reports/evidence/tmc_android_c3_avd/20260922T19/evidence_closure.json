@@ -1,0 +1,36 @@
+{
+  "closure_schema": "TMC-ANDROID-C3-PIPELINE-ACCOUNTING-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_C3_APP_SIDE_PIPELINE_ACCOUNTING",
+  "run_id": "ANDROID-C3",
+  "artifact_id": "T19",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "concurrency": 8,
+  "pipeline_invariant": {
+    "submitted_count": 8,
+    "received_count": 8,
+    "dispatched_count": 8,
+    "result_count": 8,
+    "submitted_equals_received": true,
+    "received_equals_dispatched": true,
+    "dispatched_equals_result": true,
+    "result_invariant": "8/8 DENY; not started; not completed; NONE effect"
+  },
+  "stage_boundary": "Host Controller -> explicit BroadcastReceiver -> app-side ingress record -> deterministic dispatcher record -> bounded result record",
+  "order_claim": "Request order is not treated as semantic; only per-request identity completeness is checked.",
+  "claim_ceiling": "Eight concurrently submitted requests were completely accounted for through the declared app-side receive, dispatch, and result-record stages on the Pixel_7 Android 34 x86_64 AVD path.",
+  "non_claims": "No latency, throughput, CPU, memory, energy, FIFO ordering, C3 performance, Android-wide, Binder, SELinux, or kernel claim is established.",
+  "artifact_hashes": {
+    "ingress_records.jsonl": "45E18BC0417C06B5EDB00C66DA36AA38C9CAD14436BEF10E643A58CB4EA40B41",
+    "dispatch_records.jsonl": "8596F346E115B9B0A3F21A95B90436AB8EA33F2598A96EBE88BD9BDE44DB573B",
+    "result_records.jsonl": "7DC054F68B874C9600E4F86DA1C9112BE2D20812C73025DF728E61BDB9CDED06",
+    "submitted.json": "3C5DF3F9FB429EC90E4A59FA0CC760061DC98A257AAE126BDF3A4B2E02E877C5",
+    "summary.json": "47D0A132F41035A448912FB3AF318C22F97F239FB7F76B0B19B3212BC9360344",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D"
+  },
+  "canonicality": "T19 is the canonical C3 pipeline-accounting artifact. T16/T18 remain the C1/C2 performance anchors; C3 performance remains unstarted."
+}

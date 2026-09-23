@@ -1,0 +1,11 @@
+{
+  "app_elapsed_ns": 760400,
+  "decision": "DENY",
+  "decision_latency_ns": 722900,
+  "execution_completed": false,
+  "execution_effect": "NONE",
+  "execution_started": false,
+  "policy_hash": "",
+  "reason": "MALFORMED_REQUEST",
+  "request_id": ""
+}

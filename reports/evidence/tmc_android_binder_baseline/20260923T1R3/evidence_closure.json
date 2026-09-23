@@ -1,0 +1,14 @@
+{
+  "canonical": false,
+  "checks": {
+    "allow_decision": true,
+    "allow_effect": true,
+    "allow_execution": true,
+    "deny_decision": false,
+    "deny_no_effect": false,
+    "deny_no_execution": false,
+    "deny_permission_reason": false
+  },
+  "run_id": "ANDROID-BINDER-01",
+  "status": "FAILED"
+}

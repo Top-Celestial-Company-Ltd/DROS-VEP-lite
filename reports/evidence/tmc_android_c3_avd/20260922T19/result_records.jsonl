@@ -1,0 +1,8 @@
+{"request_id":"ANDROID-C3-000005","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":972000,"app_elapsed_ns":1013700}
+{"request_id":"ANDROID-C3-000001","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":6787500,"app_elapsed_ns":6817500}
+{"request_id":"ANDROID-C3-000003","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":787400,"app_elapsed_ns":806500}
+{"request_id":"ANDROID-C3-000004","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":915300,"app_elapsed_ns":950200}
+{"request_id":"ANDROID-C3-000008","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":2524300,"app_elapsed_ns":2584700}
+{"request_id":"ANDROID-C3-000002","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":9963700,"app_elapsed_ns":10016600}
+{"request_id":"ANDROID-C3-000007","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":969600,"app_elapsed_ns":1009900}
+{"request_id":"ANDROID-C3-000006","event":"RESULT","decision":"DENY","execution_started":false,"execution_completed":false,"execution_effect":"NONE","decision_latency_ns":790800,"app_elapsed_ns":829200}

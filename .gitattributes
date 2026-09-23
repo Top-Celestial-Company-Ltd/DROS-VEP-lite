@@ -1,0 +1,3 @@
+# Preserve byte-exact evidence artifacts so closure SHA-256 values survive
+# Windows checkouts with core.autocrlf enabled.
+/reports/evidence/tmc_android_*/** -text

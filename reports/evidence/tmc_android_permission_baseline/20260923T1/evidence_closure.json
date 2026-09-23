@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "allow_completed": true,
+    "allow_decision": true,
+    "allow_effect": true,
+    "allow_started": true,
+    "deny_decision": true,
+    "deny_no_complete": true,
+    "deny_no_effect": false,
+    "deny_no_start": true
+  },
+  "run_id": "ANDROID-PERM-01",
+  "status": "FAILED"
+}

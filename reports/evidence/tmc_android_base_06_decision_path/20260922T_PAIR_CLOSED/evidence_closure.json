@@ -1,0 +1,48 @@
+{
+  "closure_schema": "TMC-ANDROID-BASE-06-DECISION-PATH-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_OBSERVED_DECISION_LATENCY_PAIR",
+  "aggregate_unit": "ANDROID-BASE-06-DECISION-PATH",
+  "canonical_inputs": [
+    {
+      "artifact_id": "T9",
+      "run_id": "ANDROID-BASE-06",
+      "role": "DENY decision path",
+      "closure": "../../tmc_android_base_06_avd/20260922T9/evidence_closure.json",
+      "closure_sha256": "A8264650F8BC5E7D1F17AABECD8A805F9E2DF100DAB2464D04B59C7FECA6BA95",
+      "samples": 100,
+      "outcome": "100/100 DENY; 0 started; 0 completed; 0 effects",
+      "latency_ns": {"p50": 1200200, "p95": 21970600, "p99": 89285200}
+    },
+    {
+      "artifact_id": "T10",
+      "run_id": "ANDROID-BASE-06-ALLOW",
+      "role": "ALLOW decision path",
+      "closure": "../../tmc_android_base_06_allow_avd/20260922T10/evidence_closure.json",
+      "closure_sha256": "23F318F951BDC668A3F6CE65F0F22E81305519FB4B878D7BFAC7EBD8642FD1FB",
+      "samples": 100,
+      "outcome": "100/100 ALLOW; 100 started; 100 completed; 100 measured effects",
+      "latency_ns": {"p50": 1122300, "p95": 7453500, "p99": 27274000}
+    }
+  ],
+  "consistency_checks": {
+    "same_target": true,
+    "same_avd": "Pixel_7",
+    "same_android_api": 34,
+    "same_abi": "x86_64",
+    "same_apk_sha256": true,
+    "same_environment_manifest_sha256": true,
+    "same_measurement_contract": true,
+    "same_warmup_count": 10,
+    "same_measured_sample_count": 100,
+    "same_serial_mode": true,
+    "same_percentile_algorithm": true,
+    "raw_to_summary_reconstruction_t9": true,
+    "raw_to_summary_reconstruction_t10": true
+  },
+  "controlled_difference": "Only the authority input differs: T9 uses invalid CAP_CAMERA for READ_CONTACTS; T10 uses valid CAP_CONTACTS for READ_CONTACTS.",
+  "observed_comparison": "Under the declared measurement configuration, the observed ALLOW and DENY samples exhibited different latency distributions, including a more pronounced upper tail in the DENY run.",
+  "causality_boundary": "The current instrumentation does not establish the runtime cause of this distribution difference. No claim is made about DROS being faster or slower, Android framework overhead, scheduling, GC, IPC, or any other causal mechanism.",
+  "measurement_boundary": "App-observed request-to-authorization-decision interval only; ADB transport, framework launch, fixture execution, CPU, memory, throughput, energy, and physical-device behavior are excluded.",
+  "claim_ceiling": "Verified as a controlled DENY/ALLOW decision-path measurement pair on the declared warm Pixel_7 Android 34 x86_64 app-runtime boundary. No Android-wide or OS-level performance claim is established.",
+  "canonicality": "This aggregate references immutable T9 and T10 closure artifacts; it does not modify or replace them."
+}

@@ -1,0 +1,12 @@
+{
+  "allow": {
+    "action": "READ_CONTACTS",
+    "authority_state": "permission_granted",
+    "request_id": "ANDROID-PERM-01-ALLOW-000001"
+  },
+  "deny": {
+    "action": "READ_CONTACTS",
+    "authority_state": "permission_revoked",
+    "request_id": "ANDROID-PERM-01-DENY-000001"
+  }
+}

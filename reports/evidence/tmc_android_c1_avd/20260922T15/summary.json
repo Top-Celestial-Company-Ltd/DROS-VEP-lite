@@ -1,0 +1,24 @@
+{
+  "accounting": {
+    "complete": true,
+    "dispatched_complete": true,
+    "received_complete": true,
+    "result_complete": true,
+    "submitted_count": 2
+  },
+  "concurrency": 2,
+  "measurement_scope": "app-side ingress/dispatch/result accounting only; no latency, throughput, CPU, memory, or energy claim",
+  "result_invariant": true,
+  "run_id": "ANDROID-C1",
+  "submitted_request_ids": [
+    "ANDROID-C1-000011",
+    "ANDROID-C1-000012"
+  ],
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-22T13:47:52.699187+00:00"
+}

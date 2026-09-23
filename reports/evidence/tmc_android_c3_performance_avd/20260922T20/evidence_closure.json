@@ -1,0 +1,56 @@
+{
+  "closure_schema": "TMC-ANDROID-C3-PERFORMANCE-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_C3_PIPELINE_PERFORMANCE_BOUNDARY",
+  "run_id": "ANDROID-C3-PERFORMANCE",
+  "artifact_id": "T20",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "frozen_parameters": {
+    "concurrency": 8,
+    "warmup_count": 10,
+    "measured_sample_count": 100,
+    "dispatch_mode": "fixed-size waves of eight",
+    "workload": "READ_CONTACTS with invalid CAP_CAMERA; expected DENY/no effect",
+    "percentile_algorithm": "nearest-rank; rank=ceil(p*n), clamped to [1,n]"
+  },
+  "pipeline_accounting": {
+    "submitted": 100,
+    "received": 100,
+    "dispatched": 100,
+    "result": 100,
+    "accounting_complete": true,
+    "result_invariant": "100/100 DENY; 0 started; 0 completed; 0 effects"
+  },
+  "observed_metrics": {
+    "app_decision_latency_ns": {
+      "p50": 859100,
+      "p95": 6492900,
+      "p99": 21480700
+    },
+    "host_elapsed_ns": 6058312900,
+    "host_throughput_requests_per_second": 16.506245492866505
+  },
+  "reconstruction": {
+    "raw_source": "results.jsonl",
+    "analysis_script": "benchmark/analyze_tmc_android_base_06.py",
+    "raw_to_summary_verified": true,
+    "runner_exit_status": 0
+  },
+  "measurement_boundary": "Host throughput covers measured broadcast calls; app decision latency covers dispatcher request-to-authorization-result interval. ADB transport subcomponents are not isolated; CPU, memory, energy, and physical-device claims are excluded.",
+  "claim_ceiling": "This artifact characterizes one C3=8 DENY pipeline run on the declared warm Pixel_7 Android 34 x86_64 app-runtime boundary. It supports a descriptive 2/4/8 observation series with T16/T18, not an Android scalability law or causal runtime explanation.",
+  "artifact_hashes": {
+    "results.jsonl": "03704E7C6F275A5DD91A994D9FBEF82C4F005C13FBFFDBFCC04363EDD3D87E4F",
+    "summary.json": "9059D3A90ABD6A493A96484FEA093E66594F032B36E697D1B84AAFD6AA1855DF",
+    "environment.json": "61C0BCA7A13091B7E46CF8C01275AB5CA0EF6CD2B5A19EB51E998DBFE5936EC9",
+    "ingress_records.jsonl": "DCD4DF29597D8F1AB5246B6A8DFC4523252A38A7263D72657F3A6396A6E53B7B",
+    "dispatch_records.jsonl": "5102503AEB1F7FF63C497A08452E5D3D31387E38BE8948A36E7881CE7A48F39A",
+    "submitted.json": "5726E8A464F9EE8D8A5E7EFE6ACB217E83C040686B3DC9920151695E4B665572",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D",
+    "device_getprop.txt": "909F962D3E3B582EBC333242158BD0027381151F850349EE568DC6151E47D2EC"
+  },
+  "canonicality": "T20 is the canonical C3 performance artifact. T16 and T18 remain immutable C1/C2 performance anchors; T14/T15/T17/T19 remain accounting anchors."
+}

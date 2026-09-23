@@ -1,0 +1,35 @@
+{
+  "closure_schema": "TMC-ANDROID-INGRESS-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_SIDE_INGRESS_ACCOUNTING",
+  "run_id": "ANDROID-INGRESS-C1",
+  "artifact_id": "T14",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "submitted_request_ids": [
+    "ANDROID-INGRESS-000011",
+    "ANDROID-INGRESS-000012"
+  ],
+  "observed_invariant": {
+    "submitted_count": 2,
+    "observed_count": 2,
+    "missing_request_ids": [],
+    "duplicate_request_ids": [],
+    "unexpected_request_ids": [],
+    "complete": true,
+    "observed_order_is_not_semantic": true
+  },
+  "ingress_boundary": "Host Controller -> explicit Android BroadcastReceiver -> app-side ingress_records.jsonl",
+  "claim_ceiling": "The declared app-side ingress receiver observed one RECEIVED record for each of two submitted request IDs on the Pixel_7 Android 34 x86_64 AVD path.",
+  "non_claims": "This artifact does not establish authorization, queue dispatch, execution, effect, latency, throughput, dropped-request rate beyond this two-request accounting check, Android-wide behavior, Binder, SELinux, or kernel properties.",
+  "artifact_hashes": {
+    "ingress_records.jsonl": "F6E0247D07A8B0A27C220EC2F74AEC0F0B683F42D8B418496E4252064E1DE5BA",
+    "summary.json": "8F8EFAF8F289E9D6B71FA290C4E7750C7F52BC5735134D9D912E5D82414CB3DA",
+    "submitted.json": "43E1BE71384272CA50224334CF8B023A4765FA103D991B0CF197A9DE3F09EDAE",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D"
+  },
+  "canonicality": "T11/T12 remain failure provenance. T14 is the first canonical ingress-seam artifact and does not replace any T4/T5/T7/T9/T10 artifact."
+}

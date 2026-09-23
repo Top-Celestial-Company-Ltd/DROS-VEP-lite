@@ -1,0 +1,56 @@
+{
+  "closure_schema": "TMC-ANDROID-C2-PERFORMANCE-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_C2_PIPELINE_PERFORMANCE_BOUNDARY",
+  "run_id": "ANDROID-C2-PERFORMANCE",
+  "artifact_id": "T18",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "frozen_parameters": {
+    "concurrency": 4,
+    "warmup_count": 10,
+    "measured_sample_count": 100,
+    "dispatch_mode": "fixed-size waves of four",
+    "workload": "READ_CONTACTS with invalid CAP_CAMERA; expected DENY/no effect",
+    "percentile_algorithm": "nearest-rank; rank=ceil(p*n), clamped to [1,n]"
+  },
+  "pipeline_accounting": {
+    "submitted": 100,
+    "received": 100,
+    "dispatched": 100,
+    "result": 100,
+    "accounting_complete": true,
+    "result_invariant": "100/100 DENY; 0 started; 0 completed; 0 effects"
+  },
+  "observed_metrics": {
+    "app_decision_latency_ns": {
+      "p50": 896100,
+      "p95": 5594500,
+      "p99": 11310600
+    },
+    "host_elapsed_ns": 7124876100,
+    "host_throughput_requests_per_second": 14.035331786330994
+  },
+  "reconstruction": {
+    "raw_source": "results.jsonl",
+    "analysis_script": "benchmark/analyze_tmc_android_base_06.py",
+    "raw_to_summary_verified": true,
+    "runner_exit_status": 0
+  },
+  "measurement_boundary": "Host throughput covers measured broadcast calls; app decision latency covers dispatcher request-to-authorization-result interval. ADB transport subcomponents are not isolated; CPU, memory, energy, and physical-device claims are excluded.",
+  "claim_ceiling": "This artifact characterizes one C2=4 DENY pipeline run on the declared warm Pixel_7 Android 34 x86_64 app-runtime boundary. It does not establish C3 behavior, Android-wide performance, or causal explanations for differences from T16.",
+  "artifact_hashes": {
+    "results.jsonl": "BB94A3A044C46725366D2AFD86FC27B988E54056A1DE1A2EBCB64B62B149029B",
+    "summary.json": "9E48D90B0B7E3DE202CD07CA38B8DD0BA9095EAE98FB488F97DCA728C037F15C",
+    "environment.json": "CDE18419BFFEF54079ED21656BB8DC74F29A4C0B1865F2138A512FC6D9C22B34",
+    "ingress_records.jsonl": "1F4759E928A14ADF678B4D8878CFEAF8BF19E0C77B27261BF6FA7FAE028791EA",
+    "dispatch_records.jsonl": "CCDCE11CFA28E62E431E54229C670BE92B475D54B40FF0E1F4184DD67FE29E53",
+    "submitted.json": "CDF2520185B950FF652775DA9A74C2C1EBC4F670683F098C247563A661A3381C",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D",
+    "device_getprop.txt": "909F962D3E3B582EBC333242158BD0027381151F850349EE568DC6151E47D2EC"
+  },
+  "canonicality": "T18 is the canonical C2 performance artifact. T17 remains the C2 pipeline-accounting anchor; T16 remains the C1 performance anchor; C3 remains unstarted."
+}

@@ -1,0 +1,43 @@
+{
+  "analysis_schema": "TMC-ANDROID-BASE-06-SUMMARY-v1",
+  "apk_sha256": "428f9b13d2728d4e608595f3f8da086435eedfaded89fb3877d0e424106d1576",
+  "concurrency": 2,
+  "decision_counts": {
+    "DENY": 100
+  },
+  "decision_latency_ns": {
+    "algorithm": "nearest-rank; rank=ceil(p*n), clamped to [1,n]",
+    "p50": 715700,
+    "p95": 1879400,
+    "p99": 3494200
+  },
+  "dispatch_mode": "fixed-size waves of two",
+  "effect_counts": {
+    "NONE": 100
+  },
+  "execution_completed_count": 0,
+  "execution_started_count": 0,
+  "host_elapsed_ns": 6339915600,
+  "host_throughput_requests_per_second": 15.773080638486732,
+  "measured_sample_count": 100,
+  "measurement_boundary": "host throughput covers measured broadcast calls; decision latency is app-observed dispatcher interval; CPU, memory, and energy excluded",
+  "pipeline_accounting": {
+    "complete": true,
+    "dispatched_complete": true,
+    "received_complete": true,
+    "result_complete": true,
+    "submitted_count": 100
+  },
+  "result_invariant": true,
+  "run_id": "ANDROID-C1-PERFORMANCE",
+  "sample_count": 100,
+  "source_raw_file": "results.jsonl",
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-22T13:50:01.230342+00:00",
+  "warmup_count": 10
+}

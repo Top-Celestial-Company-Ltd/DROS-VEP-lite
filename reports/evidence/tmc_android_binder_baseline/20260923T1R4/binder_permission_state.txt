@@ -1,0 +1,3 @@
+deny phase: client permission revoked
+grant command output: 
+allow phase: client permission granted

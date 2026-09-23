@@ -1,0 +1,47 @@
+{
+  "closure_schema": "TMC-ANDROID-BASE-06-MEASUREMENT-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_OBSERVED_DECISION_LATENCY",
+  "run_id": "ANDROID-BASE-06",
+  "artifact_id": "T9",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "frozen_parameters": {
+    "warmup_count": 10,
+    "measured_sample_count": 100,
+    "mode": "serial",
+    "avd_state": "warm",
+    "background_and_animation_configuration": "not modified by benchmark",
+    "percentile_algorithm": "nearest-rank; rank=ceil(p*n), clamped to [1,n]",
+    "reset_procedure": "app package cleared once before warm-up; no reset between measured samples"
+  },
+  "observed_result": {
+    "decision_counts": {"DENY": 100},
+    "execution_started_count": 0,
+    "execution_completed_count": 0,
+    "effect_counts": {"NONE": 100},
+    "decision_latency_ns": {
+      "p50": 1200200,
+      "p95": 21970600,
+      "p99": 89285200
+    }
+  },
+  "reconstruction": {
+    "raw_source": "results.jsonl",
+    "analysis_script": "benchmark/analyze_tmc_android_base_06.py",
+    "raw_to_summary_verified": true,
+    "runner_exit_status": 0
+  },
+  "artifact_hashes": {
+    "results.jsonl": "B3C9E78E28FB4D9C0417D40925B67E543BEDD176638DA1309E5D8FC678B3BBBA",
+    "summary.json": "88C3CC1BDF48907573B5BE0F251D71457B3238CAF9859235E607FA2F5DF9A555",
+    "environment.json": "CA68574DCDE3AF8421553602A44321C36373FE0410416306E15D8321AAF9CFEA",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D",
+    "device_getprop.txt": "B8CA25BEE94E6C1CDD3286906B0C9E5936FE1F6957C01C46404CDB7FAF5BFB91"
+  },
+  "measurement_boundary": "app-observed request-to-authorization-decision interval only; ADB transport, framework launch, fixture execution, and physical energy excluded",
+  "claim_ceiling": "These percentiles characterize this declared warm Pixel_7 Android 34 x86_64 app-runtime run only. They do not establish Android-wide performance, physical-device behavior, CPU/memory overhead, throughput, energy, SELinux, Binder, or kernel claims."
+}

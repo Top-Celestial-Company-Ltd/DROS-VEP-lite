@@ -602,8 +602,14 @@ DROS-VEP Lite 遵循 Apache 2.0 協議完全開源，旨在為全球 AI 安全�
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo 紀錄**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
 * 🌐 **DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web (面向 Agentic Web 之密碼學可歸因執行治理層)**: [開放治理草案 (DWGR-8)](dros-webmcp/README.md)
   * **DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Zenodo 紀錄**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
-* 📱 **Post-Compromise Security for Autonomous Mobile Agents (自主行動端 Agent 攻陷後安全與執行權限強制執行)**: [英文論文 (EN)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE.md) | [中文論文 (ZH)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
-  * **DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Zenodo 紀錄**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+* 📱 **Post-Compromise Security for Autonomous Mobile Agents: Deterministic Runtime Enforcement of Mobile Execution Authority**： [v2.0.1 英文／繁體中文 IEEE preprint](https://doi.org/10.5281/zenodo.22913070)，已投稿 IEEE TMC。
+  * **版本 DOI**：[`10.5281/zenodo.22913070`](https://doi.org/10.5281/zenodo.22913070) | **作品 Concept DOI**：[`10.5281/zenodo.22253146`](https://doi.org/10.5281/zenodo.22253146)
+
+### 📱 TMC Mobile Android 證據
+* **雙語證據補充**：[English](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_EN.md) | [繁體中文](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_ZH.md)
+* **Application-runtime canonical index**：[Android Baseline Evidence Index](reports/evidence/tmc_android_phase1_2_index/20260922T_INDEX_CLOSED/ANDROID_BASELINE_EVIDENCE_INDEX.md)
+* **Framework-baseline closure**：[Index](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_INDEX.md) | [English report](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_EN.md) | [繁體中文報告](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_ZH.md)
+* **證據範圍**：僅限宣告的 Pixel_7 / Android 34 / x86_64 AVD paths。Permission、AppOps、protected Binder-service slices 為 `Verified`；SELinux 僅為 observational、非 canonical；不主張 Android-wide 或 OS-level security。
 * 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs (具身智能與自主無人載具攻陷後物理動作權限確定性約束)**: [英文論文 (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [中文論文 (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
   * **DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Zenodo 紀錄**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
 * 🧭 **《DROS 統一學術研究導讀：全景科研軌跡》Zenodo v2.0 永久存證紀錄**: [中文導讀](docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md) | [英文導讀 (EN)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md)
@@ -611,6 +617,7 @@ DROS-VEP Lite 遵循 Apache 2.0 協議完全開源，旨在為全球 AI 安全�
 
 ### 📖 技術白皮書與規格協定
 * 📖 **[完整技術白皮書 (繁體中文 v2.0)](docs/whitepapers/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**：*自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
+* 📱 **[TMC Android 證據補充（繁體中文）](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_ZH.md)**：行動端有界證據、canonical indexes 與 claim ceiling。
 * 📖 **[Full Whitepaper (English v2.0)](docs/whitepapers/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**：*Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
 * ⚡ **[4 頁 A4 極速白皮書 (HTML)](dashboard/whitepaper_4page.html)**：*專為 CISO 與資安研究員設計之視覺化摘要*
 * 📋 **[RFC-010: DROS-VEP 規格協定](docs/specifications/RFC-010-dros-vep-spec.md)**：*AI Agent 安全與威脅劇本開放標準*

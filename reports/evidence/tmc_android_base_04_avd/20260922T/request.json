@@ -1,0 +1,9 @@
+{
+  "action": "READ_CONTACTS",
+  "arguments_hash": "sha256:android-base-04-args",
+  "capability": "CAP_CAMERA",
+  "policy_version": "android-baseline-policy-v1",
+  "principal": "compromised-agent",
+  "request_id": "ANDROID-BASE-04-000001",
+  "revocation_epoch": 0
+}

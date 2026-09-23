@@ -1,0 +1,51 @@
+{
+  "status": "CLOSED",
+  "index_id": "ANDROID-FRAMEWORK-BASELINES-20260923",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "baselines": [
+    {
+      "run_id": "ANDROID-PERM-01",
+      "artifact": "reports/evidence/tmc_android_permission_baseline/20260923T1R4/",
+      "closure": "VERIFIED",
+      "closure_sha256": "7d87fb87076286be2306428a1c6088add6482720e8f0ed1733e53325cf13e070",
+      "report_sha256": "0cd865ce6754de3366f522d4baf57e04267c231b089e90b72ce759a0a61d5a8a",
+      "evidence_ceiling": "Declared Pixel_7 Android 34 x86_64 application-runtime permission path only"
+    },
+    {
+      "run_id": "ANDROID-APPOPS-01",
+      "artifact": "reports/evidence/tmc_android_appops_baseline/20260923T1R3/",
+      "closure": "VERIFIED",
+      "closure_sha256": "48a57c680e6747c1e2441e977311bb553b6551f99e36d0bca5a48642ea92167a",
+      "report_sha256": "d87cc26c82d9336e9aa6c06d0e142f3519e0f58c8ab673736d8e503bc36e34f1",
+      "evidence_ceiling": "Declared Pixel_7 Android 34 x86_64 AppOps application-runtime path only"
+    },
+    {
+      "run_id": "ANDROID-BINDER-01",
+      "artifact": "reports/evidence/tmc_android_binder_baseline/20260923T1R4/",
+      "closure": "VERIFIED",
+      "closure_sha256": "d35b8874926279085d0482920ca3458204cd0c1136c1f11a1fcaf0f424a5757b",
+      "report_sha256": "92046c50694001669b5df2a9f46a2cf1232276b0364499b19fb6d4f230be2e08",
+      "evidence_ceiling": "Declared Pixel_7 Android 34 x86_64 protected Binder service path only"
+    },
+    {
+      "run_id": "ANDROID-SELINUX-01",
+      "artifact": "reports/evidence/tmc_android_selinux_baseline/20260923T1/",
+      "closure": "OBSERVED_NOT_CANONICAL",
+      "summary_sha256": "7989d46c7c5ea6e58f986c733e9fd77c44022ef4bcaf4d3cd788c964a1c53d7e",
+      "report_sha256": "48f572dbf7f5284ec013a90105155a165103f10a5e3f2af67a0c6907d6853b0f",
+      "evidence_ceiling": "SELinux enforcing-mode and untrusted_app context observed; no isolated denial attribution"
+    }
+  ],
+  "frozen_exclusions": [
+    "tmc_android_phase1_2_index",
+    "DROS Android T4-T20 canonical artifacts",
+    "Android-wide security",
+    "physical-device energy",
+    "kernel or Binder-framework-wide enforcement"
+  ]
+}

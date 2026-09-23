@@ -1,0 +1,40 @@
+{
+  "apk_sha256": "5a78a50fe37d846d59828026cb569aabab85eb92fdbc90e86d253257c6661505",
+  "before_result": {
+    "app_elapsed_ns": 1434400,
+    "decision": "ALLOW",
+    "decision_latency_ns": 1412700,
+    "execution_completed": true,
+    "execution_effect": "BOUNDED_FIXTURE",
+    "execution_started": true,
+    "policy_hash": "android-baseline-policy-v1",
+    "reason": "CAPABILITY_AUTHORIZED",
+    "request_id": "ANDROID-BASE-05-000001"
+  },
+  "effect_count_after": 1,
+  "effect_count_before": 1,
+  "measurement_scope": "revocation and bounded fixture effect only; no performance or energy claim",
+  "result": {
+    "app_elapsed_ns": 1503700,
+    "decision": "DENY",
+    "decision_latency_ns": 1473000,
+    "execution_completed": false,
+    "execution_effect": "NONE",
+    "execution_started": false,
+    "policy_hash": "android-baseline-policy-v1",
+    "reason": "AUTHORITY_REVOKED",
+    "request_id": "ANDROID-BASE-05-000001"
+  },
+  "revocation": {
+    "principal": "revocable-agent",
+    "revoked": true
+  },
+  "run_id": "ANDROID-BASE-05",
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-22T13:14:10.141029+00:00"
+}

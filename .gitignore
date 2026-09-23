@@ -70,3 +70,8 @@ benchmarks/claude-red-vep/adapters/claude_red/upstream/
 # Large Historical Benchmark Execution Dumps
 reports/evidence/exec_*
 reports/evidence/cybermes*
+
+# Android baseline local signing/build material (never publish keystores)
+benchmarks/android_binder_baseline_build/
+**/*.keystore
+**/*.jks

@@ -1,0 +1,109 @@
+{
+  "analysis_schema": "TMC-ANDROID-BASE-06-TAIL-ANALYSIS-v1",
+  "distribution": {
+    "10ms_to_lt_25ms": 4,
+    "1ms_to_lt_2ms": 48,
+    "25ms_to_lt_50ms": 2,
+    "2ms_to_lt_5ms": 12,
+    "5ms_to_lt_10ms": 4,
+    "gte_50ms": 2,
+    "lt_1ms": 28
+  },
+  "interpretation_boundary": "Descriptive characterization of the preserved T9 app-observed decision-latency samples only; no causal attribution and no outlier removal.",
+  "latency_ns": {
+    "algorithm": "nearest-rank; rank=ceil(p*n), clamped to [1,n]",
+    "max": 115186200,
+    "mean": 5049073,
+    "min": 661900,
+    "p50": 1200200,
+    "p90": 7537500,
+    "p95": 21970600,
+    "p99": 89285200
+  },
+  "ordering": {
+    "raw_timestamp_available": false,
+    "runtime_event_correlation": "not assessed; T9 contains no raw timestamp or logcat artifact",
+    "sequence_position_available": true,
+    "tail_sample_indices": [
+      39,
+      88,
+      57,
+      85,
+      19,
+      97,
+      61,
+      87,
+      56,
+      40
+    ]
+  },
+  "sample_count": 100,
+  "source_hashes": {
+    "results.jsonl": "b3c9e78e28fb4d9c0417d40925b67e543bedd176638da1309e5d8fc678b3bbba",
+    "summary.json": "88c3cc1bdf48907573b5be0f251d71457b3238caf9859235e607fa2f5df9a555"
+  },
+  "source_raw_file": "results.jsonl",
+  "source_summary_file": "summary.json",
+  "top_10_tail_samples": [
+    {
+      "app_elapsed_ns": 115237600,
+      "decision_latency_ns": 115186200,
+      "request_id": "ANDROID-BASE-06-000049",
+      "sample_index": 39
+    },
+    {
+      "app_elapsed_ns": 89318400,
+      "decision_latency_ns": 89285200,
+      "request_id": "ANDROID-BASE-06-000098",
+      "sample_index": 88
+    },
+    {
+      "app_elapsed_ns": 46471600,
+      "decision_latency_ns": 46399100,
+      "request_id": "ANDROID-BASE-06-000067",
+      "sample_index": 57
+    },
+    {
+      "app_elapsed_ns": 26299900,
+      "decision_latency_ns": 26264500,
+      "request_id": "ANDROID-BASE-06-000095",
+      "sample_index": 85
+    },
+    {
+      "app_elapsed_ns": 23829400,
+      "decision_latency_ns": 23737300,
+      "request_id": "ANDROID-BASE-06-000029",
+      "sample_index": 19
+    },
+    {
+      "app_elapsed_ns": 22132900,
+      "decision_latency_ns": 21970600,
+      "request_id": "ANDROID-BASE-06-000107",
+      "sample_index": 97
+    },
+    {
+      "app_elapsed_ns": 16256200,
+      "decision_latency_ns": 16182900,
+      "request_id": "ANDROID-BASE-06-000071",
+      "sample_index": 61
+    },
+    {
+      "app_elapsed_ns": 14130300,
+      "decision_latency_ns": 14099100,
+      "request_id": "ANDROID-BASE-06-000097",
+      "sample_index": 87
+    },
+    {
+      "app_elapsed_ns": 8507700,
+      "decision_latency_ns": 8478900,
+      "request_id": "ANDROID-BASE-06-000066",
+      "sample_index": 56
+    },
+    {
+      "app_elapsed_ns": 7846500,
+      "decision_latency_ns": 7812500,
+      "request_id": "ANDROID-BASE-06-000050",
+      "sample_index": 40
+    }
+  ]
+}

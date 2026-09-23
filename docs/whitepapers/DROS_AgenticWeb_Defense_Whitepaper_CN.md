@@ -719,10 +719,9 @@ DROS 執行期確定性治理架構之理論基礎已整理為六篇技術報告
    *DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web*  
    **Zenodo DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)  
    *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
-5. 📱 **Paper 5: Post-Compromise Mobile (數位系統實證 ── 邊緣移動端執行衰減)**  
-   *Post-Compromise Security for Autonomous Mobile Agents: A Deterministic Runtime Attenuation and Proof-Carrying Authorization Architecture*  
-   **Zenodo DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)  
-   *狀態：預印本，未經同行評審（Preprint, not peer-reviewed）*
+5. 📱 **Paper 5: Post-Compromise Mobile (數位系統評測 ── Android Application-Runtime Boundary)**
+   *Post-Compromise Security for Autonomous Mobile Agents: Deterministic Runtime Enforcement of Mobile Execution Authority*；**Zenodo v2.0.1 DOI**：[`10.5281/zenodo.22913070`](https://doi.org/10.5281/zenodo.22913070) | **Concept DOI**：[`10.5281/zenodo.22253146`](https://doi.org/10.5281/zenodo.22253146)
+   *狀態：預印本，已投稿 IEEE TMC，尚未經同行評審。證據僅限宣告的 Android AVD 與 framework-baseline paths；不主張 Android-wide 或 OS-level enforcement。*
 6. 🛸 **Paper 6: Post-Compromise Physical AI / UAV (網絡-實體實證 ── 實體無人機物理動作剛性約束)**  
    *Post-Compromise Security for Physical AI: Deterministic Runtime Enforcement of Physical Action Authority in Autonomous UAVs*  
    **Zenodo DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)  

@@ -1,0 +1,36 @@
+{
+  "closure_schema": "TMC-ANDROID-C1-PIPELINE-ACCOUNTING-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_SIDE_PIPELINE_ACCOUNTING",
+  "run_id": "ANDROID-C1",
+  "artifact_id": "T15",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "concurrency": 2,
+  "pipeline_invariant": {
+    "submitted_count": 2,
+    "received_count": 2,
+    "dispatched_count": 2,
+    "result_count": 2,
+    "submitted_equals_received": true,
+    "received_equals_dispatched": true,
+    "dispatched_equals_result": true,
+    "result_invariant": "2/2 DENY; not started; not completed; NONE effect"
+  },
+  "stage_boundary": "Host Controller -> explicit BroadcastReceiver -> app-side ingress record -> deterministic dispatcher record -> bounded result record",
+  "order_claim": "Request order is not treated as semantic; only per-request identity completeness is checked.",
+  "claim_ceiling": "Two concurrent requests were completely accounted for through the declared app-side receive, dispatch, and result-record stages on the Pixel_7 Android 34 x86_64 AVD path.",
+  "non_claims": "No latency, throughput, CPU, memory, energy, FIFO ordering, higher-concurrency, Android-wide, Binder, SELinux, or kernel claim is established.",
+  "artifact_hashes": {
+    "ingress_records.jsonl": "29591F1ECDE854CE7F824D1EBF1528EA44C395DF981A60357128800F99F5F9DF",
+    "dispatch_records.jsonl": "B8C0FFB512009F50DAD9A2BB334A8F05DC91165BE5A08ED85B357F2BB5C96C23",
+    "result_records.jsonl": "A05CA6D1DB0610B27639FC190449073B828C77EBAA0D77AA5AA358601039D902",
+    "submitted.json": "5666A255D01492C00B8AFE9334998AA74A084FE3CE912D24D11C78D01982FB8D",
+    "summary.json": "345E5C28F0EF760DCD47BCBB1002EFABF7ACDEE9DC57C7E9AB4DE1C82B54781C",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D"
+  },
+  "canonicality": "T15 is the first C1 pipeline-accounting artifact. T11/T12 remain failure provenance, T14 remains ingress-only, and T4/T5/T7/T9/T10 remain immutable anchors."
+}

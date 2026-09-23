@@ -1,0 +1,57 @@
+{
+  "closure_schema": "TMC-ANDROID-BASE-06-MEASUREMENT-CLOSURE-v1",
+  "closure_status": "VERIFIED_FOR_DECLARED_AVD_APP_OBSERVED_DECISION_LATENCY",
+  "run_id": "ANDROID-BASE-06-ALLOW",
+  "artifact_id": "T10",
+  "controlled_pair": "T9 DENY / T10 ALLOW",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "frozen_parameters": {
+    "warmup_count": 10,
+    "measured_sample_count": 100,
+    "mode": "serial",
+    "avd_state": "warm",
+    "background_and_animation_configuration": "not modified by benchmark",
+    "percentile_algorithm": "nearest-rank; rank=ceil(p*n), clamped to [1,n]",
+    "reset_procedure": "app package cleared once before warm-up; no reset between measured samples"
+  },
+  "observed_result": {
+    "decision_counts": {"ALLOW": 100},
+    "execution_started_count": 100,
+    "execution_completed_count": 100,
+    "effect_counts": {"BOUNDED_FIXTURE": 100},
+    "effect_marker_line_count": 110,
+    "decision_latency_ns": {
+      "p50": 1122300,
+      "p95": 7453500,
+      "p99": 27274000
+    }
+  },
+  "reconstruction": {
+    "raw_source": "results.jsonl",
+    "analysis_script": "benchmark/analyze_tmc_android_base_06.py",
+    "raw_to_summary_verified": true,
+    "runner_exit_status": 0
+  },
+  "pair_consistency": {
+    "same_avd_api_abi": true,
+    "same_apk_sha256": "5a78a50fe37d846d59828026cb569aabab85eb92fdbc90e86d253257c6661505",
+    "same_environment_manifest_sha256": "CA68574DCDE3AF8421553602A44321C36373FE0410416306E15D8321AAF9CFEA",
+    "only_authority_input_changed": true,
+    "note": "T9 used CAP_CAMERA and DENY; T10 used CAP_CONTACTS and ALLOW. Both use the same action, principal, policy version, timing boundary, and frozen sampling parameters."
+  },
+  "artifact_hashes": {
+    "results.jsonl": "5AF423BBB3195F3BCD78B820DB0F7D4C9E0E516C34FC6532CCA5E5F3370176D3",
+    "summary.json": "EE7A411B55F8432E9B4E8AC0397F63EB9C072C18EE7499D2183D44CA015B503C",
+    "environment.json": "CA68574DCDE3AF8421553602A44321C36373FE0410416306E15D8321AAF9CFEA",
+    "effects.jsonl": "4470FAB06D02868B49BCA74C5C3D0A027756CC74AFF440574F202F51F4D56A0B",
+    "adb_version.txt": "402541F876AFCC51D7DD5046DCDAC29BF646E2187D1AF11F32605CD390AED10D",
+    "device_getprop.txt": "B8CA25BEE94E6C1CDD3286906B0C9E5936FE1F6957C01C46404CDB7FAF5BFB91"
+  },
+  "measurement_boundary": "app-observed request-to-authorization-decision interval only; ADB transport, framework launch, fixture execution, and physical energy excluded",
+  "claim_ceiling": "These percentiles characterize this declared warm Pixel_7 Android 34 x86_64 app-runtime ALLOW run and its controlled comparison with T9 DENY. They do not establish Android-wide performance, physical-device behavior, CPU/memory overhead, throughput, energy, SELinux, Binder, or kernel claims."
+}

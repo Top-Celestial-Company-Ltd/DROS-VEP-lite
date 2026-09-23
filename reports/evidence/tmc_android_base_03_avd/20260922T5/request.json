@@ -1,0 +1,9 @@
+{
+  "action": "READ_CONTACTS",
+  "arguments_hash": "sha256:android-base-03-args",
+  "capability": "CAP_CONTACTS",
+  "policy_version": "android-baseline-policy-v1",
+  "principal": "authorized-agent",
+  "request_id": "ANDROID-BASE-03-000001",
+  "revocation_epoch": 0
+}

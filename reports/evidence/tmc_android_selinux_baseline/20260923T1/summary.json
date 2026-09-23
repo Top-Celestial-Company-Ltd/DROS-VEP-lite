@@ -1,0 +1,19 @@
+{
+  "run_id": "ANDROID-SELINUX-01",
+  "timestamp_utc": "2026-09-23T07:17:37.3472216Z",
+  "target": {
+    "avd": "Pixel_7",
+    "android_api": 34,
+    "abi": "x86_64",
+    "device_id": "emulator-5554"
+  },
+  "observations": {
+    "getenforce": "Enforcing",
+    "ro_boot_selinux": "",
+    "security_patch": "2023-09-05",
+    "app_context": "u:r:untrusted_app:s0:c191,c256,c512,c768 u0_a191 22010 359 13817296 76116 0                   0 S io.dros.tmc.baseline",
+    "app_specific_avc_matches": ""
+  },
+  "claim_ceiling": "SELinux enforcing-mode and untrusted_app context observed on declared AVD; no isolated SELinux denial attribution or Android-wide claim.",
+  "status": "OBSERVED_NOT_CANONICAL"
+}

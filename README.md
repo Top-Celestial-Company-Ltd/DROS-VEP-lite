@@ -615,8 +615,14 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
   * **DOI**: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687) | **Zenodo Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
 * 🌐 **DROS-WebMCP: A Cryptographically Attributable Execution Governance Layer for the Agentic Web**: [Open Governance Draft (DWGR-8)](dros-webmcp/README.md)
   * **DOI**: [`10.5281/zenodo.22290238`](https://doi.org/10.5281/zenodo.22290238) | **Zenodo Record**: [zenodo.org/records/22290238](https://zenodo.org/records/22290238)
-* 📱 **Post-Compromise Security for Autonomous Mobile Agents**: [Paper (EN)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE.md) | [Paper (ZH)](paper-mobile/DROS_MOBILE_AGENT_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
-  * **DOI**: [`10.5281/zenodo.22253147`](https://doi.org/10.5281/zenodo.22253147) | **Zenodo Record**: [zenodo.org/records/22253147](https://zenodo.org/records/22253147)
+* 📱 **Post-Compromise Security for Autonomous Mobile Agents: Deterministic Runtime Enforcement of Mobile Execution Authority**: [v2.0.1 English/Traditional Chinese IEEE preprint](https://doi.org/10.5281/zenodo.22913070) — submitted to IEEE TMC.
+  * **Version DOI**: [`10.5281/zenodo.22913070`](https://doi.org/10.5281/zenodo.22913070) | **Concept DOI**: [`10.5281/zenodo.22253146`](https://doi.org/10.5281/zenodo.22253146)
+
+### 📱 TMC Mobile Android Evidence
+* **Bilingual evidence addendum**: [English](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_EN.md) | [繁體中文](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_ZH.md)
+* **App-runtime canonical index**: [Android Baseline Evidence Index](reports/evidence/tmc_android_phase1_2_index/20260922T_INDEX_CLOSED/ANDROID_BASELINE_EVIDENCE_INDEX.md)
+* **Framework-baseline closure**: [Index](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_INDEX.md) | [English report](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_EN.md) | [繁體中文報告](reports/evidence/tmc_android_framework_baselines/20260923T_INDEX_CLOSED/ANDROID_FRAMEWORK_BASELINE_TEST_REPORT_ZH.md)
+* **Scope**: Pixel_7 / Android 34 / x86_64 declared AVD paths only. Permission, AppOps, and protected Binder-service slices are `Verified`; SELinux is observational, not canonical. No Android-wide or OS-level claim is made.
 * 🛸 **Post-Compromise Security for Physical AI: Autonomous UAVs**: [Paper (EN)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE.md) | [Paper (ZH)](paper-uav/DROS_PHYSICAL_AI_POST_COMPROMISE_SECURITY_IEEE_ZH.md)
   * **DOI**: [`10.5281/zenodo.22254372`](https://doi.org/10.5281/zenodo.22254372) | **Zenodo Record**: [zenodo.org/records/22254372](https://zenodo.org/records/22254372)
 * 🧭 **Reading Guide to the DROS Research Trajectory (v2.0)**: [Guide (EN)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md) | [Guide (ZH)](docs/trilogy_guide/DROS_Trilogy_Reading_Guide.md)
@@ -624,6 +630,7 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
 
 ### 📖 Whitepapers & Protocol Specifications
 * 📖 **[Full Whitepaper (English v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**: *Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer Paradigm)*
+* 📱 **[TMC Android evidence addendum (English)](docs/whitepapers/DROS_VEP_TMC_ANDROID_EVIDENCE_ADDENDUM_EN.md)**: bounded mobile evidence, canonical indexes, and claim ceiling.
 * 📖 **[完整白皮書 (繁體中文 v2.0)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**: *自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深架構)*
 * ⚡ **[4-Page A4 Executive Summary (HTML)](dashboard/whitepaper_4page_EN.html)**: *Fast visual summary for CISOs & Security Researchers*
 * 📋 **[RFC-010: DROS-VEP Specification Protocol](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/RFC-010-dros-vep-spec.md)**: *Open Agent Security & Threat Scenario Protocol*

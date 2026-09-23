@@ -1,0 +1,169 @@
+{
+  "index_schema": "TMC-ANDROID-BASELINE-EVIDENCE-INDEX-v1",
+  "index_status": "PHASE-1-2-ANDROID-BASELINE-CLOSED",
+  "generated_at_utc": "2026-09-22",
+  "target_scope": "Pixel_7 AVD / Android 34 / x86_64 / declared application-runtime boundary",
+  "canonical_units": [
+    {
+      "artifact_id": "T4",
+      "unit": "ANDROID-BASE-04",
+      "lane": "security-semantics",
+      "role": "unauthorized execution",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_base_04_avd/20260922T4/evidence_closure.json",
+      "closure_sha256": "5BEB87871D5A589FAE9BB55C6BCCC4CF727D8D57032B45580BAADA4EA579E61E",
+      "observation": "DENY; not started; not completed; NONE effect",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "policy_version_recorded": true, "raw_reconstruction": "not_applicable"},
+      "claim_ceiling": "Declared Pixel_7 Android 34 x86_64 app-runtime invariant only."
+    },
+    {
+      "artifact_id": "T5",
+      "unit": "ANDROID-BASE-03",
+      "lane": "security-semantics",
+      "role": "authorized execution",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_base_03_avd/20260922T5/evidence_closure.json",
+      "closure_sha256": "75F6D59B8BE12A0E6FD46694E7980448B9852FE8696FA1FCED578846929C7026",
+      "observation": "ALLOW; started; completed; BOUNDED_FIXTURE effect",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "policy_version_recorded": true, "raw_reconstruction": "not_applicable"},
+      "claim_ceiling": "Declared Pixel_7 Android 34 x86_64 app-runtime invariant only."
+    },
+    {
+      "artifact_id": "T7",
+      "unit": "ANDROID-BASE-05",
+      "lane": "security-semantics",
+      "role": "revocation",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_base_05_avd/20260922T7/evidence_closure.json",
+      "closure_sha256": "0D1C79312A0102BFB7E3BD8FEF5CEB46620DCB0498E83CAD6DCCB3FFF22EE941",
+      "observation": "ALLOW before revoke; DENY after revoke; no new effect",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "policy_source_identity_same_as_T4_T5": false, "raw_reconstruction": "not_applicable"},
+      "claim_ceiling": "Declared Pixel_7 Android 34 x86_64 app-runtime revocation invariant only; T7 implementation provenance differs and is disclosed."
+    },
+    {
+      "artifact_id": "T9",
+      "unit": "ANDROID-BASE-06",
+      "lane": "decision-latency",
+      "role": "DENY measurement and tail characterization",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_base_06_avd/20260922T9/evidence_closure.json",
+      "closure_sha256": "A8264650F8BC5E7D1F17AABECD8A805F9E2DF100DAB2464D04B59C7FECA6BA95",
+      "observation": "100 DENY samples; P50/P95/P99 1,200,200 / 21,970,600 / 89,285,200 ns",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "policy_version_recorded": true, "raw_reconstruction": true, "tail_analysis": true},
+      "claim_ceiling": "Declared warm Pixel_7 Android 34 x86_64 app-observed decision-latency run; tail cause unclaimed."
+    },
+    {
+      "artifact_id": "T10",
+      "unit": "ANDROID-BASE-06-ALLOW",
+      "lane": "decision-latency",
+      "role": "ALLOW measurement",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_base_06_allow_avd/20260922T10/evidence_closure.json",
+      "closure_sha256": "23F318F951BDC668A3F6CE65F0F22E81305519FB4B878D7BFAC7EBD8642FD1FB",
+      "observation": "100 ALLOW samples; P50/P95/P99 1,122,300 / 7,453,500 / 27,274,000 ns",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "environment_identity_same_as_T9": true, "raw_reconstruction": true},
+      "claim_ceiling": "Declared warm Pixel_7 Android 34 x86_64 app-observed ALLOW decision-latency run; no causal comparison claim."
+    },
+    {
+      "artifact_id": "PAIR",
+      "unit": "ANDROID-BASE-06-DECISION-PATH",
+      "lane": "decision-latency",
+      "role": "T9/T10 controlled pair",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_base_06_decision_path/20260922T_PAIR_CLOSED/evidence_closure.json",
+      "closure_sha256": "B1981C0B8DD494FA348311769D8D97BC79A606AD45F37B65946B50C40D0A90BD",
+      "observation": "Different observed ALLOW/DENY distributions; DENY has more pronounced upper tail",
+      "provenance": {"same_target": true, "same_apk": true, "same_contract": true, "raw_reconstruction_both": true},
+      "claim_ceiling": "Controlled decision-path observation only; runtime cause unclaimed."
+    },
+    {
+      "artifact_id": "T14",
+      "unit": "ANDROID-INGRESS-C1",
+      "lane": "concurrency-accounting",
+      "role": "deterministic ingress prerequisite",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_ingress_avd/20260922T14/evidence_closure.json",
+      "closure_sha256": "D2A03F72002203E44A65F13B556760EA3498B83D783DA6B4B44BD3E4519F4CB4",
+      "observation": "2 submitted = 2 RECEIVED records",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": false, "policy_identity_recorded": false, "raw_reconstruction": "not_applicable"},
+      "claim_ceiling": "App-side ingress accounting only; no dispatch, execution, latency, or throughput claim."
+    },
+    {
+      "artifact_id": "T15",
+      "unit": "ANDROID-C1",
+      "lane": "concurrency-accounting",
+      "role": "C1 pipeline accounting",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_c1_avd/20260922T15/evidence_closure.json",
+      "closure_sha256": "FE91C4C2E35249A3E1D32B4B54C841762E40F3FF46485341FDC7BD2EC5EAAF81",
+      "observation": "2 submitted = 2 RECEIVED = 2 DISPATCHED = 2 RESULT; all DENY/no effect",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": false, "policy_identity_recorded": false, "raw_reconstruction": "not_applicable"},
+      "claim_ceiling": "C1 app-side pipeline accounting only; no performance claim."
+    },
+    {
+      "artifact_id": "T16",
+      "unit": "ANDROID-C1-PERFORMANCE",
+      "lane": "concurrency-performance",
+      "role": "C1=2 performance",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_c1_performance_avd/20260922T16/evidence_closure.json",
+      "closure_sha256": "28E0FC4EBE2B357F80B344423E30F35690BECDA98BC2A826C449F753FE3201C6",
+      "observation": "P50/P95/P99 715,700 / 1,879,400 / 3,494,200 ns; 15.773080638486732 host req/s",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "raw_reconstruction": true, "accounting_gate": "100/100/100/100"},
+      "claim_ceiling": "One declared C1=2 DENY pipeline performance run; no Android-wide scaling claim."
+    },
+    {
+      "artifact_id": "T17",
+      "unit": "ANDROID-C2",
+      "lane": "concurrency-accounting",
+      "role": "C2 pipeline accounting",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_c2_avd/20260922T17/evidence_closure.json",
+      "closure_sha256": "AD8DCEC202D41C634D6DEB231F1CB2DB721AA55BB50B583EA2673196CB57F37C",
+      "observation": "4 submitted = 4 RECEIVED = 4 DISPATCHED = 4 RESULT; all DENY/no effect",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": false, "policy_identity_recorded": false, "raw_reconstruction": "not_applicable"},
+      "claim_ceiling": "C2 app-side pipeline accounting only; no performance claim."
+    },
+    {
+      "artifact_id": "T18",
+      "unit": "ANDROID-C2-PERFORMANCE",
+      "lane": "concurrency-performance",
+      "role": "C2=4 performance",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_c2_performance_avd/20260922T18/evidence_closure.json",
+      "closure_sha256": "BA3E1C5209C00B00570F210EF86281F1EE0A499E498FADE68F4CF201CCF6A071",
+      "observation": "P50/P95/P99 896,100 / 5,594,500 / 11,310,600 ns; 14.035331786330994 host req/s",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "raw_reconstruction": true, "accounting_gate": "100/100/100/100"},
+      "claim_ceiling": "One declared C2=4 DENY pipeline performance run; no causal scaling claim."
+    },
+    {
+      "artifact_id": "T19",
+      "unit": "ANDROID-C3",
+      "lane": "concurrency-accounting",
+      "role": "C3 pipeline accounting",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_c3_avd/20260922T19/evidence_closure.json",
+      "closure_sha256": "B8E34F0CA012853A732EAD17822BABD5AF9AA5A8453EF28A2337D41F2959E7C7",
+      "observation": "8 submitted = 8 RECEIVED = 8 DISPATCHED = 8 RESULT; all DENY/no effect",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": false, "policy_identity_recorded": false, "raw_reconstruction": "not_applicable"},
+      "claim_ceiling": "C3 app-side pipeline accounting only; no performance claim."
+    },
+    {
+      "artifact_id": "T20",
+      "unit": "ANDROID-C3-PERFORMANCE",
+      "lane": "concurrency-performance",
+      "role": "C3=8 performance",
+      "status": "CLOSED_IMMUTABLE",
+      "path": "../../tmc_android_c3_performance_avd/20260922T20/evidence_closure.json",
+      "closure_sha256": "E67BBD5C78B3FE7208F4FC56D2D5EE95AA954183DD84F67E6F7D9BA97A88FB8D",
+      "observation": "P50/P95/P99 859,100 / 6,492,900 / 21,480,700 ns; 16.506245492866505 host req/s",
+      "provenance": {"target_recorded": true, "apk_sha256_recorded": true, "raw_reconstruction": true, "accounting_gate": "100/100/100/100"},
+      "claim_ceiling": "One declared C3=8 DENY pipeline performance run; supports descriptive 2/4/8 series only."
+    }
+  ],
+  "failure_provenance": [
+    {"attempt": "T11/T12", "status": "NOT_CANONICAL", "finding": "Concurrent Activity launch lost request/result pairing; do not interpret as Android, DROS, or throughput behavior."}
+  ],
+  "series_claim": "Under the declared Android application-runtime measurement boundary, T16/T18/T20 provide a reproducible 2/4/8-concurrency descriptive performance series. Observed latency and host-observed throughput vary across levels; no scalability law, saturation point, or runtime-causal relationship is established.",
+  "global_claim_ceiling": "No Android-wide, OS-level, Binder, SELinux, kernel, physical-device, energy, CPU, memory, or causal runtime claim is established by this index."
+}

@@ -1,0 +1,24 @@
+{
+  "apk_sha256": "5b9516ea9a43210a27e213d88611666b8b148d36d7f766327429880c8b3d095a",
+  "effect_marker_present": true,
+  "measurement_scope": "security ordering and bounded fixture effect only; no performance or energy claim",
+  "result": {
+    "app_elapsed_ns": 409500,
+    "decision": "ALLOW",
+    "decision_latency_ns": 386400,
+    "execution_completed": true,
+    "execution_effect": "BOUNDED_FIXTURE",
+    "execution_started": true,
+    "policy_hash": "android-baseline-policy-v1",
+    "reason": "CAPABILITY_AUTHORIZED",
+    "request_id": "ANDROID-BASE-03-000001"
+  },
+  "run_id": "ANDROID-BASE-03",
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "timestamp_utc": "2026-09-22T13:06:36.334166+00:00"
+}

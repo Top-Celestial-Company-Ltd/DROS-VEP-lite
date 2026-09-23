@@ -1,0 +1,14 @@
+{
+  "concurrency": 2,
+  "dispatch_mode": "fixed-size waves of two",
+  "measurement_boundary": "host throughput covers measured broadcast calls; decision latency is app-observed dispatcher interval; CPU, memory, and energy excluded",
+  "percentile_algorithm": "nearest-rank; rank=ceil(p*n), clamped to [1,n]",
+  "sample_count": 100,
+  "target": {
+    "abi": "x86_64",
+    "android_api": 34,
+    "avd": "Pixel_7",
+    "device_id": "emulator-5554"
+  },
+  "warmup_count": 10
+}

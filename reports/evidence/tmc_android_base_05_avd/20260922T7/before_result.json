@@ -1,0 +1,11 @@
+{
+  "app_elapsed_ns": 1434400,
+  "decision": "ALLOW",
+  "decision_latency_ns": 1412700,
+  "execution_completed": true,
+  "execution_effect": "BOUNDED_FIXTURE",
+  "execution_started": true,
+  "policy_hash": "android-baseline-policy-v1",
+  "reason": "CAPABILITY_AUTHORIZED",
+  "request_id": "ANDROID-BASE-05-000001"
+}

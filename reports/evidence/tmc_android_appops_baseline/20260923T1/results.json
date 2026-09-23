@@ -1,0 +1,25 @@
+{
+  "allow": {
+    "app_elapsed_ns": 471093500,
+    "authority": "ANDROID_PERMISSION_READ_CONTACTS",
+    "decision": "ALLOW",
+    "decision_latency_ns": 471020500,
+    "execution_completed": true,
+    "execution_effect": "BOUNDED_PERMISSION_FIXTURE",
+    "execution_started": true,
+    "fixture_rows_observed": 0,
+    "reason": "ANDROID_APPOPS_ALLOWED",
+    "request_id": "ANDROID-APPOPS-01-ALLOW-000001"
+  },
+  "deny": {
+    "app_elapsed_ns": 28184200,
+    "authority": "ANDROID_PERMISSION_READ_CONTACTS",
+    "decision": "DENY",
+    "decision_latency_ns": 28136700,
+    "execution_completed": false,
+    "execution_effect": "NONE",
+    "execution_started": false,
+    "reason": "ANDROID_PERMISSION_DENIED",
+    "request_id": "ANDROID-APPOPS-01-DENY-000001"
+  }
+}
