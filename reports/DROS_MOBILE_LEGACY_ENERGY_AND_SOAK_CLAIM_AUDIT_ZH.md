@@ -12,7 +12,7 @@
 | 每次調用能量 `<0.05 μJ` | 舊報告有此數字，但未提供推導、儀器、raw trace 或校準流程。 | **不得宣稱為實測值。** | 不提出量化能耗主張。 |
 | Mobile energy claim 中的 `0 KB` network egress | 引用的 harness 沒有網路封包或流量 accounting instrumentation。 | **該 harness 未量測。** | 不得當成實測網路結果。 |
 | 24 小時 soak「memory leak `0 Bytes`」 | `scripts/run_24h_soak_test.py` 存在，但沒有 heap/RSS/profile collection；JSON aggregate 沒有 memory 欄位或原始 memory profile。 | **僅為報告值；目前 artifacts 無法獨立核驗。** | 可保留為歷史報告敘述並加限制，不可標成 Verified。 |
-| 24 小時報告「100% 攔截攻擊」 | aggregate 記錄總數 160,611、DENY 137,751、ALLOW 22,854、errors 6，且 `containment_rate_percent` 為 85.77。它沒有獨立的 malicious-request 分母或逐筆分類。 | **無法由 aggregate 重建 100% malicious-blocking claim。** | 報告 aggregate 數量與分母；不得推論 100% 攔截率。 |
+| 24 小時報告「100% 攔截攻擊」 | aggregate 記錄總數 160,611、DENY 137,751、ALLOW 22,854、errors 6。`containment_rate_percent` = 137,751 / (137,751 + 22,854) = 85.77%；errors 不納入分母。它沒有獨立的 malicious-request 分母或逐筆分類。 | **無法由 aggregate 重建 100% malicious-blocking claim。** | 報告 aggregate 數量與分母；不得推論 100% 攔截率。 |
 
 ## 重現性與範圍說明
 

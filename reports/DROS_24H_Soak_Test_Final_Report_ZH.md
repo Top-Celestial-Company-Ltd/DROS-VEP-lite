@@ -31,7 +31,7 @@ Archived JSON 記錄 **total 160,611**、**DENY 137,751**、**ALLOW 22,854**、*
 | :--- | :--- | :--- | :--- |
 | **總評測執行時長** | **24.0 小時** | 24.0 小時 | ✅ 完成 (Completed) |
 | **總評測請求負載** | **160,611 次** | > 100,000 次 | ✅ 超越目標 (Exceeded) |
-| **DENY requests (aggregate)** | **137,751 / 160,611 (85.77%)** | Aggregate 未定義目標分母 | Reported；無逐筆分類 |
+| **DENY requests (aggregate)** | **137,751 / 160,605 DENY+ALLOW (85.77%)** | Aggregate 未定義目標分母 | Reported；errors 不納入分母，無逐筆分類 |
 | **ALLOW requests (aggregate)** | **22,854 / 160,611 (14.23%)** | Aggregate 未定義目標分母 | Reported aggregate |
 | **策略決策中位數延遲 (P50)** | **26.21 μs (0.0262 ms)** | < 50.0 μs | Reported aggregate；無 raw samples |
 | **P99 策略決策延遲 (P99)** | **242.69 μs (0.2426 ms)** | < 1,000 μs | Reported aggregate；無 raw samples |

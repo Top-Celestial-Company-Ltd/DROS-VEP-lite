@@ -31,7 +31,7 @@ The archived JSON reports **160,611 total requests**, **137,751 DENY**, **22,854
 | :--- | :--- | :--- | :--- |
 | **Total Evaluation Duration** | **24.0 Hours** | 24.0 Hours | ✅ Completed |
 | **Total Evaluated Requests** | **160,611 Requests** | > 100,000 Requests | ✅ Exceeded Target |
-| **DENY requests (aggregate)** | **137,751 / 160,611 (85.77%)** | Not defined in aggregate | Reported; per-request class labels unavailable |
+| **DENY requests (aggregate)** | **137,751 / 160,605 DENY+ALLOW (85.77%)** | Not defined in aggregate | Reported; errors excluded from rate; per-request class labels unavailable |
 | **ALLOW requests (aggregate)** | **22,854 / 160,611 (14.23%)** | Not defined in aggregate | Reported aggregate |
 | **Policy Decision Latency (P50)** | **26.21 μs (0.0262 ms)** | < 50.0 μs | Reported aggregate; raw samples unavailable |
 | **P99 Decision Latency (P99)** | **242.69 μs (0.2426 ms)** | < 1,000 μs | Reported aggregate; raw samples unavailable |

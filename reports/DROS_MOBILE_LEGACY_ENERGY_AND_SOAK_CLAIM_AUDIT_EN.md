@@ -12,7 +12,7 @@
 | Energy `<0.05 μJ / invocation` | Appears in the legacy report without a derivation, instrument, raw trace, or calibration procedure. | **Do not claim as a measurement.** | No quantitative energy claim. |
 | `0 KB` network egress in the mobile energy claim | The cited harness does not include network packet/accounting instrumentation. | **Not measured by this harness.** | Do not present as a measured network result. |
 | `0 Bytes` memory leak during a 24-hour soak | `scripts/run_24h_soak_test.py` exists, but it does not collect heap/RSS/profile data. The JSON aggregate contains no memory fields or raw memory profile. | **Reported; not independently verifiable from the current artifact set.** | Preserve only as a historical report statement with this limitation; do not call Verified. |
-| `100%` attack interception in the 24-hour report | The aggregate records 160,611 total, 137,751 denied, 22,854 allowed, and 6 errors; its `containment_rate_percent` is 85.77. It does not provide a separate malicious-request denominator or per-request classifications. | **The 100% malicious-blocking claim is not reconstructable from the aggregate.** | Report the aggregate counts and denominator; do not infer a 100% rate. |
+| `100%` attack interception in the 24-hour report | The aggregate records 160,611 total, 137,751 denied, 22,854 allowed, and 6 errors. Its `containment_rate_percent` is 137,751 / (137,751 + 22,854) = 85.77%; errors are excluded. It does not provide a separate malicious-request denominator or per-request classifications. | **The 100% malicious-blocking claim is not reconstructable from the aggregate.** | Report the aggregate counts and denominator; do not infer a 100% rate. |
 
 ## Reproduction and scope notes
 
