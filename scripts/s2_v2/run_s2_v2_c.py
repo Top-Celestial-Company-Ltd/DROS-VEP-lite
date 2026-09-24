@@ -23,6 +23,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from canonical_git_snapshot import (
+    _resolve_repo_path,
     build_authority_index,
     canonical_endpoint_key,
     endpoint_surface_digest,
@@ -126,8 +127,8 @@ def run_reconciliation(
             git_root = parent
             break
 
-    s1_manifest_path = git_root / s1_manifest_rel
-    s1_audit_path = git_root / s1_audit_rel
+    s1_manifest_path, _ = _resolve_repo_path(git_root, s1_manifest_rel)
+    s1_audit_path, _ = _resolve_repo_path(git_root, s1_audit_rel)
     s1_manifest = json.loads(s1_manifest_path.read_text(encoding="utf-8"))
     s1_audit_data = json.loads(s1_audit_path.read_text(encoding="utf-8"))
     s1_routes = s1_manifest.get("governed_routes", [])
@@ -166,8 +167,8 @@ def run_reconciliation(
         if "authority.json" in k
     ][0]
 
-    s2_b_summary_path = git_root / s2_b_summary_rel
-    s2_b_authority_path = git_root / s2_b_authority_rel
+    s2_b_summary_path, _ = _resolve_repo_path(git_root, s2_b_summary_rel)
+    s2_b_authority_path, _ = _resolve_repo_path(git_root, s2_b_authority_rel)
     s2_b_summary = json.loads(s2_b_summary_path.read_text(encoding="utf-8"))
     s2_b_authority = json.loads(s2_b_authority_path.read_text(encoding="utf-8"))
 

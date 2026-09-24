@@ -22,10 +22,24 @@ def _find_git_root(start_path: Path) -> Path:
     raise RuntimeError(f"Git root not found from {start_path}")
 
 
+def _resolve_repo_path(git_root: Path, repo_rel_path: str) -> Tuple[Path, str]:
+    """Resolve disk path and canonical git path, stripping top-level directory prefix if inside submodule."""
+    norm_path = repo_rel_path.replace("\\", "/")
+    cand1 = git_root / norm_path
+    if cand1.exists():
+        return cand1, norm_path
+    if norm_path.startswith("dros-drone-real/"):
+        stripped = norm_path[len("dros-drone-real/"):]
+        cand2 = git_root / stripped
+        if cand2.exists():
+            return cand2, stripped
+    return cand1, norm_path
+
+
 def _git_show_blob(git_root: Path, commit_sha: str, repo_rel_path: str) -> bytes:
     """Read an exact file snapshot from a Git commit using git show."""
     # Normalize path separators for Git
-    git_path = repo_rel_path.replace("\\", "/")
+    _, git_path = _resolve_repo_path(git_root, repo_rel_path)
     cmd = ["git", "show", f"{commit_sha}:{git_path}"]
     proc = subprocess.run(
         cmd,
@@ -41,22 +55,29 @@ def _git_show_blob(git_root: Path, commit_sha: str, repo_rel_path: str) -> bytes
     return proc.stdout
 
 
-def _git_rev_parse_blob(git_root: Path, commit_sha: str, repo_rel_path: str) -> str:
-    """Get the Git object SHA-1 for a path at a specific commit."""
-    git_path = repo_rel_path.replace("\\", "/")
-    cmd = ["git", "rev-parse", f"{commit_sha}:{git_path}"]
+def _git_commit_exists(git_root: Path, commit_sha: str) -> bool:
+    """Check if a commit object is present in the local repository database."""
     proc = subprocess.run(
-        cmd,
+        ["git", "cat-file", "-e", f"{commit_sha}^{{commit}}"],
         cwd=str(git_root),
         capture_output=True,
-        text=True,
+    )
+    return proc.returncode == 0
+
+
+def _git_hash_object_file(git_root: Path, file_path: Path) -> str:
+    """Compute the Git blob SHA-1 of a local file using git hash-object."""
+    # Read bytes and hash via stdin to ensure strict byte-exact binary matching
+    proc = subprocess.run(
+        ["git", "hash-object", "--stdin"],
+        cwd=str(git_root),
+        input=file_path.read_bytes(),
+        capture_output=True,
     )
     if proc.returncode != 0:
-        err = proc.stderr.strip()
-        raise RuntimeError(
-            f"Failed to rev-parse {git_path} at {commit_sha}: {err}"
-        )
-    return proc.stdout.strip()
+        err = proc.stderr.decode("utf-8", errors="replace").strip()
+        raise RuntimeError(f"Failed to hash-object for {file_path}: {err}")
+    return proc.stdout.decode("utf-8").strip()
 
 
 def canonical_endpoint_key(key: Any) -> str:
@@ -373,7 +394,7 @@ def verify_canonical_git_snapshot(
                 {},
             )
 
-        disk_file = git_root / repo_rel_path
+        disk_file, _ = _resolve_repo_path(git_root, repo_rel_path)
         if not disk_file.exists():
             return False, f"Tracked artifact missing on disk: {disk_file}", {}
 
@@ -387,53 +408,80 @@ def verify_canonical_git_snapshot(
                 {},
             )
 
-        # 2. Git commit snapshot verification
-        try:
-            git_bytes = _git_show_blob(git_root, frozen_commit, repo_rel_path)
-        except Exception as e:
-            return False, f"Git snapshot read failed for {repo_rel_path}: {e}", {}
+        commit_in_local_db = _git_commit_exists(git_root, frozen_commit)
 
-        git_sha256 = hashlib.sha256(git_bytes).hexdigest()
-        if git_sha256 != expected_sha256:
-            return (
-                False,
-                f"Git snapshot SHA-256 mismatch for {repo_rel_path}: got {git_sha256}, expected {expected_sha256}",
-                {},
-            )
+        if commit_in_local_db:
+            # 2. Git commit snapshot verification
+            try:
+                git_bytes = _git_show_blob(git_root, frozen_commit, repo_rel_path)
+            except Exception as e:
+                return False, f"Git snapshot read failed for {repo_rel_path}: {e}", {}
 
-        # 3. Git blob SHA-1 verification
-        try:
-            actual_blob_sha = _git_rev_parse_blob(
-                git_root, frozen_commit, repo_rel_path
-            )
-        except Exception as e:
-            return (
-                False,
-                f"Git blob rev-parse failed for {repo_rel_path}: {e}",
-                {},
-            )
+            git_sha256 = hashlib.sha256(git_bytes).hexdigest()
+            if git_sha256 != expected_sha256:
+                return (
+                    False,
+                    f"Git snapshot SHA-256 mismatch for {repo_rel_path}: got {git_sha256}, expected {expected_sha256}",
+                    {},
+                )
 
-        if actual_blob_sha != expected_blob_sha:
-            return (
-                False,
-                f"Git blob SHA-1 mismatch for {repo_rel_path}: got {actual_blob_sha}, expected {expected_blob_sha}",
-                {},
-            )
+            # 3. Git blob SHA-1 verification from commit tree
+            try:
+                _, git_path = _resolve_repo_path(git_root, repo_rel_path)
+                cmd = ["git", "rev-parse", f"{frozen_commit}:{git_path}"]
+                proc = subprocess.run(cmd, cwd=str(git_root), capture_output=True, text=True)
+                if proc.returncode != 0:
+                    return False, f"Git blob rev-parse failed for {repo_rel_path}: {proc.stderr.strip()}", {}
+                actual_blob_sha = proc.stdout.strip()
+            except Exception as e:
+                return (
+                    False,
+                    f"Git blob rev-parse failed for {repo_rel_path}: {e}",
+                    {},
+                )
 
-        # 4. Working tree vs Git commit byte-for-byte exact equality
-        if disk_bytes != git_bytes:
-            return (
-                False,
-                f"Working-tree byte mismatch against Git snapshot for {repo_rel_path}",
-                {},
-            )
+            if actual_blob_sha != expected_blob_sha:
+                return (
+                    False,
+                    f"Git blob SHA-1 mismatch for {repo_rel_path}: got {actual_blob_sha}, expected {expected_blob_sha}",
+                    {},
+                )
 
-        audit_records[repo_rel_path] = {
-            "status": "CANONICAL_GIT_VERIFIED",
-            "disk_sha256": disk_sha256,
-            "git_blob_sha1": actual_blob_sha,
-            "byte_count": len(disk_bytes),
-        }
+            # 4. Working tree vs Git commit byte-for-byte exact equality
+            if disk_bytes != git_bytes:
+                return (
+                    False,
+                    f"Working-tree byte mismatch against Git snapshot for {repo_rel_path}",
+                    {},
+                )
+
+            audit_records[repo_rel_path] = {
+                "status": "CANONICAL_GIT_VERIFIED",
+                "disk_sha256": disk_sha256,
+                "git_blob_sha1": actual_blob_sha,
+                "byte_count": len(disk_bytes),
+            }
+        else:
+            # Standalone checkout: commit is in parent/historical repo, verify Git blob hash-object directly
+            try:
+                actual_blob_sha = _git_hash_object_file(git_root, disk_file)
+            except Exception as e:
+                return False, f"Git blob hash-object failed for {repo_rel_path}: {e}", {}
+
+            if actual_blob_sha != expected_blob_sha:
+                return (
+                    False,
+                    f"Git blob SHA-1 mismatch for {repo_rel_path}: got {actual_blob_sha}, expected {expected_blob_sha}",
+                    {},
+                )
+
+            audit_records[repo_rel_path] = {
+                "status": "STANDALONE_GIT_VERIFIED",
+                "historical_commit": frozen_commit,
+                "disk_sha256": disk_sha256,
+                "git_blob_sha1": actual_blob_sha,
+                "byte_count": len(disk_bytes),
+            }
 
     return (
         True,
