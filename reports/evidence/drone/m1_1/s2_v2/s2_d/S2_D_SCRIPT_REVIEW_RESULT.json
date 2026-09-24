@@ -1,12 +1,12 @@
 {
   "gate": "S2-D-GATE-0",
   "verdict": "PASS",
-  "timestamp_utc": "2026-09-24T21:23:00Z",
+  "timestamp_utc": "2026-09-24T21:50:00Z",
   "claim_status": "NO_S2_D_CLAIM",
   "live_execution_authorized": false,
   "review_scope": {
     "target_directory": "scripts/s2_v2/s2_d",
-    "file_count": 10,
+    "file_count": 11,
     "test_count": 1,
     "modules": [
       "__init__.py",
@@ -20,7 +20,20 @@
       "rollback_verifier.py",
       "runner.py",
       "snapshot.py"
-    ]
+    ],
+    "module_sha256": {
+      "__init__.py": "16f5c198c97a8cffa11899ce589723d74eef1efd766903bc9afb8a92b3887f7f",
+      "firewall_manager.py": "550b5f68c3b0544bbb70b8850d04e8fc0e0ae0f654a3cc10f1ab9f759188f7de",
+      "models.py": "9d0aaf84d1244e7db49ffe0c3c9c66d58332177572cf698d65fda16c0a1486a1",
+      "normalizer.py": "7d0956ea79445876e4740d700ea0ef76548cb7b222012e2631a58b2c1b849a26",
+      "oracles.py": "08fc66fef575bdf5ddcd37ba6a5b9770a65ac103bcf6da6a514588fd4b9492a1",
+      "preflight.py": "7faca8b75bc048a75079f50cb5cc9fa411b2a09af783727d9cc515420b85eead",
+      "probe_executor.py": "e145181bfb82de9db6198c7183b5076be98fcd7a7f43f0fe4a3f8e2251e0a75d",
+      "report_generator.py": "ecd5784ffa0b88fa5e075a4b5a2bab457c7b6bcc2d0bb783bc1919efd822d065",
+      "rollback_verifier.py": "fc866724b98600c3eceecd29bef2624be094a1eed808c30432a87e9dffa5d846",
+      "runner.py": "e47f59a232d8a57b1d2972c984c42b178479c1d6ff97af447f6b8491f2ae0cb3",
+      "snapshot.py": "a1574c65af1823ce35b4f9a68914bc16d4a25c9ea091668ae3d24e6f5c0b408e"
+    }
   },
   "core_review_answers": {
     "Q1_dry_run_default": "PASS",
@@ -28,11 +41,16 @@
     "Q3_pep_protected": "PASS",
     "Q4_px4_untouched": "PASS",
     "Q5_rollback_symmetric": "PASS",
-    "Q6_oracle_c_independent": "PASS",
-    "Q7_oracle_ab_combined": "PASS",
+    "Q6_oracle_c_independent_observation": "PASS",
+    "Q7_composite_verdict_derivation": "PASS",
     "Q8_indeterminate_fail_closed": "PASS",
     "Q9_schema_compatible": "PASS",
     "Q10_no_governance_claim": "PASS"
+  },
+  "epistemic_definitions": {
+    "oracle_c_role": "Independent observation of control plane availability, PEP enforcement, and runtime continuity. Failure of Oracle C indicates control path disruption or PEP failure, not failure of host perimeter packet containment.",
+    "composite_verdict_rule": "Final S2-D PASS requires Oracle A (drop counter > 0), Oracle B (target state delta = 0), and Oracle C (control path preserved). A failure in any mandatory oracle fails the composite S2-D verdict.",
+    "gate_scope": "Gate 0 certifies script safety and contract adherence only; it produces NO containment claim and NO governance claim."
   },
   "privilege_surface": {
     "sudo_required": false,
