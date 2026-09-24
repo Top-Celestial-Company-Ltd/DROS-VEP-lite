@@ -7,8 +7,14 @@ strictly adhere to contract schemas, and enforce fail-closed oracles.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 import pytest
+
+# Ensure repo root is importable when running pytest from any directory
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from scripts.s2_v2.canonical_git_snapshot import verify_canonical_git_snapshot
 from scripts.s2_v2.s2_d.firewall_manager import (
