@@ -1,0 +1,537 @@
+{
+  "evidence_type": "machine_generated_execution_authority_summary",
+  "canonical_package_version": "M1.1-S2-B (Canonical v2.1 Rev 5)",
+  "experiment_test_suite_version": "M1.1-S2-B (Canonical v2.1 Rev 4)",
+  "independent_verifier_version": "M1.1-S2-B (Canonical v2.1 Rev 5)",
+  "audit_mode": "INDEPENDENT_DUAL_READER_VERIFICATION",
+  "timestamp_iso": "2026-09-24T12:54:20Z",
+  "execution_window": {
+    "started_at_iso": "2026-09-24T12:54:13Z",
+    "finished_at_iso": "2026-09-24T12:54:20Z",
+    "duration_seconds": 6.555
+  },
+  "test_suite": "tests/drone/s2_v2/test_s2_v2_b_execution_authority.py",
+  "software_attestation": {
+    "test_suite_path": "/home/ai_user/dros_drone_real/tests/drone/s2_v2/test_s2_v2_b_execution_authority.py",
+    "test_suite_sha256": "f388a7f9cd335fb4239781f12bf8ced29176e9058228363b1829d8ab8ee64bd4",
+    "runner_path": "/home/ai_user/dros_drone_real/scripts/s2_v2/run_s2_v2_b.py",
+    "runner_sha256": "e2378a561548885eb1e0eb760cd76a354b914ad68cf5ce34336d9a96845e4c4d"
+  },
+  "px4_binary_attestation": {
+    "path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+    "sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "runner_execution": {
+    "exit_code": 0,
+    "pytest_pass": true,
+    "artifacts_present": true,
+    "all_predicates_pass": true,
+    "all_verdicts_converged": true,
+    "clean_teardown_verified": true,
+    "status": "PASS"
+  },
+  "post_test_clean_room_audit": {
+    "verified": true,
+    "returncode": 0,
+    "conflicts": []
+  },
+  "provenance_attestation": {
+    "s2_a_source_artifact": "/home/ai_user/dros_drone_real/reports/evidence/drone/m1_1/s2_v2/s2_v2_a_discovery.json",
+    "s2_a_source_sha256": "f4d67592444f663b75b139b7192ffc1a7afc6b7194468928799d80f449d43bee",
+    "s2_a_recorded_sha256": "f4d67592444f663b75b139b7192ffc1a7afc6b7194468928799d80f449d43bee",
+    "s2_a_hash_match": true,
+    "s2_b_raw_kernel_log": "/home/ai_user/dros_drone_real/reports/evidence/drone/m1_1/s2_v2/s2_v2_b_kernel_ss_raw.log",
+    "s2_b_raw_kernel_sha256": "d6ea52cac25dc5919c0fdf714ca20dfd84920b42d20ad4da7a11fcc0e3ad491d",
+    "runner_raw_derived_px4_pids": [
+      104791
+    ],
+    "runner_raw_derived_px4_pid": 104791,
+    "artifact_recorded_current_px4_pid": 104791,
+    "raw_derived_pid_matches_artifact_pid": true
+  },
+  "endpoint_ingestion_audit": {
+    "s2_a_endpoint_count": 5,
+    "s2_a_endpoint_unique": true,
+    "s2_b_endpoint_count": 5,
+    "s2_b_endpoint_unique": true,
+    "exact_set_identity": true,
+    "exact_cardinality": true
+  },
+  "authority_classification_predicates": {
+    "P1_S2_A_INPUT_ARTIFACT_HASH_CONSISTENCY": true,
+    "P2_SUBSET_INGESTION_AND_UNIQUENESS": true,
+    "P3_EXACT_ENDPOINT_SET_INGESTION": true,
+    "P4_SOCKET_FD_DISJOINT": true,
+    "P5_PORT_DISJOINT": true,
+    "P6_TRANSACTION_ID_DISJOINT": true,
+    "P7_STRICT_10_POINT_TEMPORAL_CAUSALITY": true,
+    "P8_ANTI_SELF_ATTESTATION": true,
+    "P9_STATE_DELTA_RIGOR": true,
+    "P10_NEGATIVE_EVIDENCE_CONSERVATISM": true,
+    "P11_CLOSED_TAXONOMY_ADHERENCE": true,
+    "P12_REVERSIBILITY_RIGOR": true,
+    "P13_CURRENT_SESSION_OWNERSHIP_VERIFIED": true,
+    "P14_CLEAN_ROOM_TEARDOWN_VERIFIED": true
+  },
+  "taxonomy_counts": {
+    "execution_capable_count": 4,
+    "non_execution_count": 0,
+    "unreachable_count": 1,
+    "indeterminate_count": 0
+  },
+  "independent_second_reader": {
+    "runner_raw_kernel_socket_count": 5,
+    "runner_raw_px4_pid_unique": true,
+    "verdict_convergence": true,
+    "endpoint_reconstructions": [
+      {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:18570",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254456965793882,
+          "t_base_response_ns": 1790254456966110287,
+          "t_attack_sent_ns": 1790254457016343739,
+          "t_attack_finished_ns": 1790254457316779733,
+          "t_post_request_ns": 1790254457367205179,
+          "t_post_response_ns": 1790254457367568367,
+          "t_restore_sent_ns": 1790254457417787159,
+          "t_restore_finished_ns": 1790254457718201522,
+          "t_verify_request_ns": 1790254457768608192,
+          "t_verify_response_ns": 1790254457768915471
+        }
+      },
+      {
+        "endpoint_key": [
+          97730,
+          "127.0.0.1:36287",
+          "127.0.0.1:8888",
+          "ESTAB"
+        ],
+        "test_verdict": "UNREACHABLE",
+        "runner_expected_verdict": "UNREACHABLE",
+        "verdict_converged": true,
+        "ownership_verified": false,
+        "mutation_probe": "NOT_ATTEMPTED",
+        "method_boundary": "No execution-authority mutation probe performed because raw S2-A primitives recorded no protocol liveness."
+      },
+      {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:13030",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254457769216010,
+          "t_base_response_ns": 1790254457769503945,
+          "t_attack_sent_ns": 1790254457819726433,
+          "t_attack_finished_ns": 1790254458120153551,
+          "t_post_request_ns": 1790254458170425598,
+          "t_post_response_ns": 1790254458170763053,
+          "t_restore_sent_ns": 1790254458220983355,
+          "t_restore_finished_ns": 1790254458521407698,
+          "t_verify_request_ns": 1790254458571683640,
+          "t_verify_response_ns": 1790254458571997491
+        }
+      },
+      {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:14280",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254458572276244,
+          "t_base_response_ns": 1790254458572680587,
+          "t_attack_sent_ns": 1790254458622888107,
+          "t_attack_finished_ns": 1790254458923318012,
+          "t_post_request_ns": 1790254458973640122,
+          "t_post_response_ns": 1790254458973905889,
+          "t_restore_sent_ns": 1790254459024113933,
+          "t_restore_finished_ns": 1790254459324537889,
+          "t_verify_request_ns": 1790254459374846441,
+          "t_verify_response_ns": 1790254459375153679
+        }
+      },
+      {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:14580",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254459375428018,
+          "t_base_response_ns": 1790254459375760325,
+          "t_attack_sent_ns": 1790254459425964724,
+          "t_attack_finished_ns": 1790254459726384722,
+          "t_post_request_ns": 1790254459776953887,
+          "t_post_response_ns": 1790254459777276069,
+          "t_restore_sent_ns": 1790254459827488837,
+          "t_restore_finished_ns": 1790254460127896226,
+          "t_verify_request_ns": 1790254460178448612,
+          "t_verify_response_ns": 1790254460178766004
+        }
+      }
+    ]
+  },
+  "classified_surface": [
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:18570",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "probe_target": "127.0.0.1:18570",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "test_temporal_ordering_valid": true,
+      "test_state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "test_reversibility_verified": true,
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:18570",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:18570   0.0.0.0:*    users:((\"px4\",pid=104791,fd=10))"
+      },
+      "runner_reconstruction": {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:18570",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254456965793882,
+          "t_base_response_ns": 1790254456966110287,
+          "t_attack_sent_ns": 1790254457016343739,
+          "t_attack_finished_ns": 1790254457316779733,
+          "t_post_request_ns": 1790254457367205179,
+          "t_post_response_ns": 1790254457367568367,
+          "t_restore_sent_ns": 1790254457417787159,
+          "t_restore_finished_ns": 1790254457718201522,
+          "t_verify_request_ns": 1790254457768608192,
+          "t_verify_response_ns": 1790254457768915471
+        }
+      },
+      "rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 44788, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 56433, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "127.0.0.1:36287",
+        "127.0.0.1:8888",
+        "ESTAB"
+      ],
+      "probe_target": "127.0.0.1:36287",
+      "eligibility": "NON_PROTOCOL_CAPABLE",
+      "authority_verdict": "UNREACHABLE",
+      "test_temporal_ordering_valid": null,
+      "test_state_delta": null,
+      "test_reversibility_verified": null,
+      "current_session_mapping": {
+        "mapping_verified": false,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": null,
+        "raw_kernel_socket_record": null
+      },
+      "runner_reconstruction": {
+        "endpoint_key": [
+          97730,
+          "127.0.0.1:36287",
+          "127.0.0.1:8888",
+          "ESTAB"
+        ],
+        "test_verdict": "UNREACHABLE",
+        "runner_expected_verdict": "UNREACHABLE",
+        "verdict_converged": true,
+        "ownership_verified": false,
+        "mutation_probe": "NOT_ATTEMPTED",
+        "method_boundary": "No execution-authority mutation probe performed because raw S2-A primitives recorded no protocol liveness."
+      },
+      "rationale": "The discovered endpoint was not protocol-capable under the S2-A probe method, and its kernel-observed connected peer state did not expose an independently probeable listening ingress surface. No execution-authority mutation probe was attempted."
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:13030",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "probe_target": "127.0.0.1:13030",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "test_temporal_ordering_valid": true,
+      "test_state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "test_reversibility_verified": true,
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:13030",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:13030   0.0.0.0:*    users:((\"px4\",pid=104791,fd=13))"
+      },
+      "runner_reconstruction": {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:13030",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254457769216010,
+          "t_base_response_ns": 1790254457769503945,
+          "t_attack_sent_ns": 1790254457819726433,
+          "t_attack_finished_ns": 1790254458120153551,
+          "t_post_request_ns": 1790254458170425598,
+          "t_post_response_ns": 1790254458170763053,
+          "t_restore_sent_ns": 1790254458220983355,
+          "t_restore_finished_ns": 1790254458521407698,
+          "t_verify_request_ns": 1790254458571683640,
+          "t_verify_response_ns": 1790254458571997491
+        }
+      },
+      "rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 54248, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 54559, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14280",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "probe_target": "127.0.0.1:14280",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "test_temporal_ordering_valid": true,
+      "test_state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "test_reversibility_verified": true,
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:14280",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:14280   0.0.0.0:*    users:((\"px4\",pid=104791,fd=12))"
+      },
+      "runner_reconstruction": {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:14280",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254458572276244,
+          "t_base_response_ns": 1790254458572680587,
+          "t_attack_sent_ns": 1790254458622888107,
+          "t_attack_finished_ns": 1790254458923318012,
+          "t_post_request_ns": 1790254458973640122,
+          "t_post_response_ns": 1790254458973905889,
+          "t_restore_sent_ns": 1790254459024113933,
+          "t_restore_finished_ns": 1790254459324537889,
+          "t_verify_request_ns": 1790254459374846441,
+          "t_verify_response_ns": 1790254459375153679
+        }
+      },
+      "rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 52305, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 36945, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14580",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "probe_target": "127.0.0.1:14580",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "test_temporal_ordering_valid": true,
+      "test_state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "test_reversibility_verified": true,
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:14580",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:14580   0.0.0.0:*    users:((\"px4\",pid=104791,fd=11))"
+      },
+      "runner_reconstruction": {
+        "endpoint_key": [
+          97730,
+          "0.0.0.0:14580",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "test_verdict": "EXECUTION_CAPABLE",
+        "runner_expected_verdict": "EXECUTION_CAPABLE",
+        "verdict_converged": true,
+        "ownership_verified": true,
+        "attack_transmission_verified": true,
+        "restore_transmission_verified": true,
+        "restore_target_matches_baseline": true,
+        "baseline_observation_success": true,
+        "post_observation_success": true,
+        "restore_observation_success": true,
+        "state_delta_verified": true,
+        "temporal_ordering_verified": true,
+        "restore_temporal_ordering_verified": true,
+        "reversibility_verified": true,
+        "primitive_timestamps": {
+          "t_base_request_ns": 1790254459375428018,
+          "t_base_response_ns": 1790254459375760325,
+          "t_attack_sent_ns": 1790254459425964724,
+          "t_attack_finished_ns": 1790254459726384722,
+          "t_post_request_ns": 1790254459776953887,
+          "t_post_response_ns": 1790254459777276069,
+          "t_restore_sent_ns": 1790254459827488837,
+          "t_restore_finished_ns": 1790254460127896226,
+          "t_verify_request_ns": 1790254460178448612,
+          "t_verify_response_ns": 1790254460178766004
+        }
+      },
+      "rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 47772, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 33733, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    }
+  ],
+  "claim_boundary": "Within the tested PX4 SITL surface, endpoints dynamically identified by S2-A were independently mapped to the active PX4 session using a secondary parser of the raw kernel ss record. For protocol-capable endpoints, the Runner independently reconstructed transmission, target equality, state delta, strict 10-point temporal causality (<), and reversibility from primitive transaction evidence, then derived an expected authority verdict and compared it with the Test verdict. Non-protocol surfaces were reconstructed directly from raw S2-A discovery primitives. Following the attack mutation, independent observation confirmed a reversible state transition. ACK replies and bytes-sent values were not treated as proof of state mutation by themselves. Clean teardown was independently verified by process audit. No claim is made beyond the tested PX4 SITL execution surface and the stated observation method boundaries."
+}

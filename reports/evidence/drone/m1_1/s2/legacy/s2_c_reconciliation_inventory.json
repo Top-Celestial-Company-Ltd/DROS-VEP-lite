@@ -1,0 +1,71 @@
+{
+  "evidence_type": "machine_generated_reconciliation_inventory",
+  "milestone_stage": "M1.1-S2-C (Topology Reconciliation & Boundary)",
+  "timestamp_iso": "2026-09-24T07:22:04Z",
+  "test_suite": "tests/drone/s2/test_s2_c_reconciliation.py",
+  "software_attestation": {
+    "test_suite_sha256": "8fbeab6e490d4a9125671e2195be4daa0e6bf65e71ac798a668c0d9c9db79367",
+    "runner_sha256": "06166503e3f4a6555c550cc76f0862dfd74f1ddf5fc9704512b4d987f0cb3d56"
+  },
+  "runner_execution": {
+    "exit_code": 0,
+    "duration_seconds": 4.57,
+    "status": "PASS"
+  },
+  "px4_binary_attestation": {
+    "path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+    "sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "ingress_inventory": [
+    {
+      "ingress_id": "INGRESS_GCS",
+      "protocol": "MAVLink over UDP",
+      "endpoint": "0.0.0.0:18570",
+      "reachable": true,
+      "execution_capable": true,
+      "dros_mediated": false,
+      "authority_evidence": "Confirmed mutation of MIS_TAKEOFF_ALT",
+      "classification": "UNMEDIATED_ACTIVE_BYPASS"
+    },
+    {
+      "ingress_id": "INGRESS_CAMERA",
+      "protocol": "MAVLink over UDP",
+      "endpoint": "0.0.0.0:14280",
+      "reachable": true,
+      "execution_capable": true,
+      "dros_mediated": false,
+      "authority_evidence": "Confirmed mutation of TRIG_INTERVAL",
+      "classification": "UNMEDIATED_ACTIVE_BYPASS"
+    },
+    {
+      "ingress_id": "INGRESS_GIMBAL",
+      "protocol": "MAVLink over UDP",
+      "endpoint": "0.0.0.0:13030",
+      "reachable": true,
+      "execution_capable": true,
+      "dros_mediated": false,
+      "authority_evidence": "Confirmed mutation of MIS_TAKEOFF_ALT",
+      "classification": "UNMEDIATED_ACTIVE_BYPASS"
+    },
+    {
+      "ingress_id": "INGRESS_ONBOARD_MAVLINK",
+      "protocol": "MAVLink over UDP",
+      "endpoint": "0.0.0.0:14580",
+      "reachable": true,
+      "execution_capable": true,
+      "dros_mediated": true,
+      "authority_evidence": "Mediated via DROS PEP (14540) -> Tap (14588) -> 14580",
+      "classification": "DROS_GOVERNED_PATH"
+    }
+  ],
+  "reconciliation_metrics": {
+    "known_execution_capable_ingress_count": 4,
+    "dros_mediated_ingress_count": 1,
+    "unmanaged_bypass_ingress_count": 3,
+    "observed_bypass_authority_count": 3,
+    "unresolved_ingress_count": 0,
+    "reconciliation_status": "PARTIAL",
+    "whole_vehicle_governance": "NOT_PROVEN"
+  },
+  "governance_conclusion": "Reconciliation confirms that exactly 1 execution path (Onboard 14580) is mediated by DROS PEP, while 3 execution-capable ingress points (18570, 14280, 13030) remain active bypasses directly reachable on PX4. Accordingly, Whole-Vehicle Governance is strictly NOT_PROVEN in this baseline topology."
+}

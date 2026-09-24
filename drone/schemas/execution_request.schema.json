@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://dros-vep.local/schemas/drone/execution_request.schema.json",
+  "title": "DroneExecutionRequest",
+  "description": "Cyber-physical ExecutionRequest schema for DROS Drone Extension (v0.3, spec ref: DROS-VEP-DRONE-PLAN-2026-v0.3 §13). NOT_PROVEN until validated against a live adapter (see T3-01/T3-02).",
+  "type": "object",
+  "required": [
+    "request_id",
+    "principal",
+    "capability",
+    "action",
+    "target",
+    "runtime_posture",
+    "provenance",
+    "policy_context",
+    "expiry",
+    "arg_hash"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Unique nonce for this request. Used for replay protection (ATS-008)."
+    },
+    "principal": {
+      "type": "string",
+      "description": "Identity of the requesting agent (maps to 6P Principal)."
+    },
+    "capability": {
+      "type": "string",
+      "description": "Declared capability being invoked. Must correspond to an entry in the action taxonomy (§13 T3-01)."
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "READ_TELEMETRY",
+        "PLAN_WAYPOINT",
+        "SET_WAYPOINT",
+        "TAKEOFF",
+        "LAND",
+        "RTL",
+        "SET_MODE",
+        "ARM",
+        "DISARM",
+        "ACTUATOR_COMMAND",
+        "MISSION_UPLOAD",
+        "PARAMETER_WRITE",
+        "SHELL_COMMAND",
+        "FILE_OPERATION"
+      ],
+      "description": "NOTE: adapter must explicitly declare which of these it actually supports; this list is a superset, not a guarantee (§13 T3-01)."
+    },
+    "target": {
+      "type": "object",
+      "description": "The execution target (e.g. flight_controller.actuator_bus, mission_planner, parameter_store).",
+      "properties": {
+        "interface": { "type": "string" },
+        "endpoint": { "type": "string" }
+      },
+      "required": ["interface"]
+    },
+    "payload": {
+      "type": "object",
+      "description": "Action-specific parameters (waypoint, velocity vector, actuator params, etc). Must be boundary-value tested (§13 T3-02)."
+    },
+    "runtime_posture": {
+      "type": "object",
+      "description": "External, non-self-reported posture context. See drone_posture.schema.json. Agent self-reported posture MUST NOT be trusted directly (ATS-010).",
+      "properties": {
+        "posture_ref": { "type": "string", "description": "Reference/hash of the posture object supplied by an external authority." }
+      },
+      "required": ["posture_ref"]
+    },
+    "provenance": {
+      "type": "object",
+      "description": "See provenance.schema.json. Must be cryptographically verifiable, not agent-asserted (ATS-009).",
+      "properties": {
+        "provenance_ref": { "type": "string" }
+      },
+      "required": ["provenance_ref"]
+    },
+    "policy_context": {
+      "type": "object",
+      "description": "Which policy version/bundle this request is evaluated against."
+    },
+    "expiry": {
+      "type": "string",
+      "format": "date-time",
+      "description": "TTL / hard expiry timestamp (UTC). Expired requests must be denied (T2-04, ATS-008)."
+    },
+    "arg_hash": {
+      "type": "string",
+      "description": "SHA-256 hash of the full argument set, for tamper detection and deterministic replay (T8)."
+    }
+  },
+  "additionalProperties": false
+}

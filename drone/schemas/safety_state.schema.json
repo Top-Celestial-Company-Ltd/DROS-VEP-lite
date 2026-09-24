@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://dros-vep.local/schemas/drone/safety_state.schema.json",
+  "title": "DroneSafetyState",
+  "description": "Records the governance response AND the physical response for a given failure condition (v0.3 §18 T5-05). DENY is a governance verdict, not a physical action — this schema keeps the two explicitly separate so they are never conflated.",
+  "type": "object",
+  "required": ["failure_condition", "governance_response", "physical_response", "status"],
+  "properties": {
+    "failure_condition": {
+      "type": "string",
+      "enum": [
+        "PDP_TIMEOUT",
+        "PEP_CRASH",
+        "PROVENANCE_MISSING",
+        "CAPABILITY_EXPIRED",
+        "CONTROL_LINK_LOST",
+        "GPS_DEGRADED",
+        "GPS_UNTRUSTED",
+        "MID_EXECUTION_REVOCATION"
+      ]
+    },
+    "governance_response": {
+      "type": "string",
+      "description": "What DROS decides, e.g. 'DENY new privileged action', 'DENY / isolate'."
+    },
+    "physical_response": {
+      "type": "string",
+      "description": "What the flight-control/safety architecture actually does as a result — e.g. hover, controlled hold, RTL, controlled landing, mission abort, capability reduction. This is owned by the flight-safety architecture, not asserted unilaterally by DROS (v0.3 §5 Level E)."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PROVEN", "PARTIALLY_PROVEN", "NOT_PROVEN", "FAILED", "NOT_APPLICABLE"]
+    },
+    "evidence_ref": {
+      "type": "string",
+      "description": "Pointer to the artifact in DRONE_EVIDENCE_MANIFEST.json that supports this row."
+    }
+  },
+  "additionalProperties": false
+}

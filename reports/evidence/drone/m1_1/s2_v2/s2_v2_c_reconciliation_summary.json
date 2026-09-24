@@ -1,0 +1,20 @@
+{
+  "schema_version": "2.1",
+  "timestamp_utc": "2026-09-24T15:32:26.108804+00:00",
+  "reconciliation_computation_status": "COMPLETED",
+  "canonical_snapshot_verified": true,
+  "s2_b_frozen_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+  "endpoint_surface_sha256": "1e78d2b2eef1c4ca25d42e2d703a5f93abbbcd549a9ac7e6148467ac9999cd44",
+  "partition_counts": {
+    "S": 5,
+    "G": 0,
+    "B": 3,
+    "I": 1,
+    "U": 1,
+    "N": 0
+  },
+  "whole_vehicle_governance": {
+    "status": "NOT_PROVEN",
+    "coverage_assessment": "PARTIAL_GOVERNANCE_ACTIVE_BYPASS_B3_I1_U1"
+  }
+}

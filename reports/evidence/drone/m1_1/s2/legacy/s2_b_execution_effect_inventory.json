@@ -1,0 +1,54 @@
+{
+  "evidence_type": "machine_generated_test_result_summary",
+  "milestone_stage": "M1.1-S2-B (Execution Effect Confirmation)",
+  "timestamp_iso": "2026-09-24T07:16:10Z",
+  "test_suite": "tests/drone/s2/test_s2_b_execution_effect.py",
+  "software_attestation": {
+    "test_suite_sha256": "44507610d8f79cbcd5718b5f98b3e92c17ab935950966606ebcdefdc5e5dc3d5",
+    "pep_proxy_sha256": "3e8cdbb287e7fd918a93e9dfe8ddabb0b8a250ff2fd43e1bbc86ee24135399c8",
+    "runner_sha256": "bce0178c7264c442d72f94be03cebb7a396a846391638c0721806f89b217b387"
+  },
+  "runner_execution": {
+    "exit_code": 0,
+    "duration_seconds": 6.38,
+    "status": "PASS"
+  },
+  "px4_binary_attestation": {
+    "path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+    "sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "execution_effect_matrix": [
+    {
+      "test_id": "test_s2_b_01_unmediated_gcs_path_induces_parameter_state_transition",
+      "target_path": "UDP 0.0.0.0:18570 (GCS Normal)",
+      "input_action": "MAVLink PARAM_SET (MIS_TAKEOFF_ALT)",
+      "dros_pep_mediated": false,
+      "pre_state": "MIS_TAKEOFF_ALT = baseline",
+      "post_state": "MIS_TAKEOFF_ALT = mutated",
+      "state_transition_observed": true,
+      "conclusion": "Unmediated GCS path directly induces confirmed internal parameter state transition in PX4."
+    },
+    {
+      "test_id": "test_s2_b_02_unmediated_camera_path_induces_parameter_state_transition",
+      "target_path": "UDP 0.0.0.0:14280 (Camera Onboard)",
+      "input_action": "MAVLink PARAM_SET (TRIG_INTERVAL)",
+      "dros_pep_mediated": false,
+      "pre_state": "TRIG_INTERVAL = baseline",
+      "post_state": "TRIG_INTERVAL = mutated",
+      "state_transition_observed": true,
+      "conclusion": "Unmediated Camera path directly induces confirmed internal parameter state transition in PX4."
+    },
+    {
+      "test_id": "test_s2_b_03_contrast_pair_mediated_path_blocks_unauthorized_state_transition",
+      "target_path": "UDP 127.0.0.1:14540 (DROS PEP Ingress)",
+      "input_action": "Unauthenticated MAVLink PARAM_SET",
+      "dros_pep_mediated": true,
+      "pre_state": "MIS_TAKEOFF_ALT = baseline",
+      "post_state": "MIS_TAKEOFF_ALT = baseline (unchanged)",
+      "state_transition_observed": false,
+      "conclusion": "Mediated path intercepts unauthenticated input; zero state mutation observed in PX4."
+    }
+  ],
+  "substage_disposition": "CONFIRMED_UNMEDIATED_EXECUTION_EFFECTS_OBSERVED",
+  "governance_implication": "Proves that unmediated execution paths identified in S2-A possess concrete, observable execution authority over PX4 internal state. Whole-vehicle execution governance remains NOT_PROVEN until these bypass paths are formally reconciled."
+}

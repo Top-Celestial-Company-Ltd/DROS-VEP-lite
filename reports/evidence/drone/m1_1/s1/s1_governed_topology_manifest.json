@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "evidence_type": "canonical_s1_governed_topology_manifest",
+  "manifest_version": "M1.1-S1-TOPOLOGY-v1.0",
+  "normalized_at_iso": "2026-09-24T14:29:59Z",
+  "source_execution": {
+    "status": "PASS",
+    "exit_code": 0,
+    "timestamp": null,
+    "px4_binary_sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "governed_routes": [
+    {
+      "route_id": "S1-ROUTE-PX4-MAVLINK",
+      "target_port": 14580,
+      "ingress_port": 14540,
+      "forward_port": 14580,
+      "downstream_tap_port": 14588,
+      "protocol": "UDP",
+      "pep_owner": "drone/pep_proxy.py",
+      "path_identity": "pep:14540",
+      "derivation": {
+        "target_port": "MACHINE_DERIVED_TAP_FORWARDING_TARGET",
+        "downstream_tap_port": "MACHINE_DERIVED_INSTRUMENTED_TAP",
+        "ingress_port": "SOURCE_CODE_ATTESTED_PEP_BIND"
+      }
+    }
+  ],
+  "provenance": {
+    "s1_audit_evidence_sha256": "dd5c80ba81d1d7d6665b8160eb7cb9e2237d4e057bbe2542dc7f1b60a0217148",
+    "s1_stdout_sha256": "e7af6d8b81829f54c29e0fe698678ae55b4562024ee65ec96240a18543d9c3c1",
+    "s1_exit_code_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "pep_proxy_source_sha256": "91b0faf9213b9e0150090ac7361cb5f23f6dc71d1577ec7ef34dd911b1e6f3f9",
+    "test_suite_source_sha256": "df5002d2ecc69451617609f43e9fe53d7de5a7f543af835faca9061b36b6acec"
+  },
+  "completeness_scope": {
+    "statement": "This manifest is a closed set of empirically verified DROS-mediated paths produced by S1 evidence normalization.",
+    "closed_set_scope": "EMPIRICALLY_VERIFIED_DROS_MEDIATED_PATHS",
+    "not_a_vehicle_wide_topology_claim": true
+  }
+}

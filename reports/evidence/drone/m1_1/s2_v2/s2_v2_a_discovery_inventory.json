@@ -1,0 +1,187 @@
+{
+  "evidence_type": "machine_generated_dynamic_discovery_summary",
+  "milestone_stage": "M1.1-S2-A (Canonical v2.1)",
+  "timestamp_iso": "2026-09-24T11:53:03Z",
+  "execution_window": {
+    "started_at_iso": "2026-09-24T11:52:55Z",
+    "finished_at_iso": "2026-09-24T11:53:03Z",
+    "duration_seconds": 8.709
+  },
+  "test_suite": "tests/drone/s2_v2/test_s2_v2_a_discovery.py",
+  "software_attestation": {
+    "test_suite_path": "/home/ai_user/dros_drone_real/tests/drone/s2_v2/test_s2_v2_a_discovery.py",
+    "test_suite_sha256": "ad609612364f43f7a6fef9104653f4ccaaefeac81e7ef28c3a16a7b55a2e49fb",
+    "runner_path": "/home/ai_user/dros_drone_real/scripts/s2_v2/run_s2_v2_a.py",
+    "runner_sha256": "56c4b0e553e4bd81794e9c0ec65c3d03f7ec06ea865b52698b798e5b1a6b5551"
+  },
+  "px4_binary_attestation": {
+    "path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+    "sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "runner_execution": {
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  "provenance_attestation": {
+    "raw_kernel_observation_file": "/home/ai_user/dros_drone_real/reports/evidence/drone/m1_1/s2_v2/s2_v2_a_kernel_ss_raw.log",
+    "raw_kernel_observation_file_recorded": "/home/ai_user/dros_drone_real/reports/evidence/drone/m1_1/s2_v2/s2_v2_a_kernel_ss_raw.log",
+    "raw_kernel_observation_sha256": "3fc5abd0fc115d28192e38d3c117ec3ba85eb92872483e1a476a0092954111a3",
+    "raw_hash_verified_by_runner": true,
+    "raw_file_path_verified_by_runner": true,
+    "kernel_command": "ss -u -a -n -p -H",
+    "kernel_returncode": 0,
+    "kernel_stderr": "",
+    "raw_observation_valid": true
+  },
+  "dynamic_discovery_predicate": {
+    "predicate_name": "P_DYNAMIC_KERNEL_SOCKET_DISCOVERY",
+    "stage_valid": true,
+    "discovery_method_valid": true,
+    "px4_pid_valid": true,
+    "count_consistent": true,
+    "epistemic_boundary_valid": true,
+    "discovered_endpoints_count": 5,
+    "protocol_observed_count": 4,
+    "derived_verdict": "PASS"
+  },
+  "empirically_discovered_surface": [
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:18570",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:18570",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 18570,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "protocol_observed": true,
+      "probe_target": "127.0.0.1:18570",
+      "address_family": "AF_INET",
+      "observed_message_types": [
+        "ALTITUDE",
+        "EXTENDED_SYS_STATE",
+        "HEARTBEAT",
+        "LOCAL_POSITION_NED",
+        "STATUSTEXT",
+        "SYS_STATUS",
+        "UNKNOWN_380",
+        "UNKNOWN_411",
+        "UNKNOWN_8",
+        "VFR_HUD"
+      ]
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "127.0.0.1:36287",
+        "127.0.0.1:8888",
+        "ESTAB"
+      ],
+      "discovered_local_endpoint": "127.0.0.1:36287",
+      "discovered_peer_endpoint": "127.0.0.1:8888",
+      "host": "127.0.0.1",
+      "port": 36287,
+      "state": "ESTAB",
+      "owner_pid": 97730,
+      "protocol_observed": false,
+      "probe_target": "127.0.0.1:36287",
+      "address_family": "AF_INET",
+      "observed_message_types": []
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:13030",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:13030",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 13030,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "protocol_observed": true,
+      "probe_target": "127.0.0.1:13030",
+      "address_family": "AF_INET",
+      "observed_message_types": [
+        "HEARTBEAT",
+        "STATUSTEXT"
+      ]
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14280",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:14280",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 14280,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "protocol_observed": true,
+      "probe_target": "127.0.0.1:14280",
+      "address_family": "AF_INET",
+      "observed_message_types": [
+        "ALTITUDE",
+        "ATTITUDE",
+        "ATTITUDE_QUATERNION",
+        "DISTANCE_SENSOR",
+        "ESTIMATOR_STATUS",
+        "EXTENDED_SYS_STATE",
+        "HEARTBEAT",
+        "HIGHRES_IMU",
+        "LOCAL_POSITION_NED",
+        "STATUSTEXT",
+        "SYSTEM_TIME",
+        "SYS_STATUS",
+        "TIMESYNC",
+        "UNKNOWN_331",
+        "UNKNOWN_380",
+        "UNKNOWN_410",
+        "UNKNOWN_411",
+        "UNKNOWN_8",
+        "VFR_HUD"
+      ]
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14580",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:14580",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 14580,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "protocol_observed": true,
+      "probe_target": "127.0.0.1:14580",
+      "address_family": "AF_INET",
+      "observed_message_types": [
+        "ALTITUDE",
+        "ATTITUDE",
+        "ATTITUDE_QUATERNION",
+        "DISTANCE_SENSOR",
+        "EXTENDED_SYS_STATE",
+        "HIGHRES_IMU",
+        "LOCAL_POSITION_NED",
+        "STATUSTEXT",
+        "SYS_STATUS",
+        "TIMESYNC",
+        "UNKNOWN_331",
+        "VFR_HUD"
+      ]
+    }
+  ],
+  "claim_boundary": "Within the tested PX4 SITL execution surface, PX4-attributed UDP endpoints were dynamically identified from a complete kernel `ss` observation without a predefined ingress-port list. Protocol liveness observations are reported separately; execution authority is not inferred by S2-A and is reserved for S2-B."
+}
