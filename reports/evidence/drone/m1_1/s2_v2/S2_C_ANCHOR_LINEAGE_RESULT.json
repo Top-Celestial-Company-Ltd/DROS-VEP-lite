@@ -1,0 +1,59 @@
+{
+  "gate": "S2-C-LINEAGE-RECONCILIATION-AUDIT",
+  "audit_timestamp_utc": "2026-09-24T22:00:00Z",
+  "status": "REPLAYABLE_IN_MAIN_REPO__NOT_REPLAYABLE_FROM_VEP_LITE",
+  "verdict_summary": {
+    "main_repository_scope": "REPLAYABLE",
+    "public_vep_lite_checkout_scope": "NOT_REPLAYABLE_FROM_CHECKOUT"
+  },
+  "core_reconciliation_answers": {
+    "A1_commit_object_resolvability": {
+      "main_repo": "EXISTS_AND_RESOLVABLE (c402bf05024613501083441c2f26316b47e88d78, commit object)",
+      "vep_lite": "MISSING (exit code 128: fatal: git cat-file: could not get object info)"
+    },
+    "A2_exact_tree_verification": {
+      "main_repo": "EXISTS (tree 845ba96ef2f660492572acb016f911697b7162a1)",
+      "vep_lite": "MISSING (unresolvable in vep-lite git database)"
+    },
+    "A3_freeze_anchor_integrity": {
+      "file": "s2_c_freeze_anchor.json",
+      "main_repo_sha256": "96d4198bc19c11b43c6372e42124311173d9a427ef605f0bb596805c2e92c0b2",
+      "vep_lite_presence": false
+    },
+    "A4_internal_consistency": {
+      "status": "MATCH",
+      "details": "Anchor frozen_commit c402bf... exact blob hashes match reconciliation.json (55619273...), summary (27ea2f88...), exit_code (18748286...)"
+    },
+    "A5_s2_c_report_consistency": {
+      "status": "MATCH",
+      "details": "S2_C_EVIDENCE_INDEX.md, DROS_VEP_DRONE_M1_1_S2_C_RECONCILIATION_REPORT.md, and M1_1_CLAIM_MATRIX.md strictly match mathematical partition S = G(0) + B(3) + I(1) + U(1) + N(0)"
+    },
+    "A6_endpoint_inventory_consistency": {
+      "status": "MATCH",
+      "endpoint_surface_sha256": "1e78d2b2eef1c4ca25d42e2d703a5f93abbbcd549a9ac7e6148467ac9999cd44",
+      "details": "Matches S2-B anchor digest and S2-C input digest identically"
+    },
+    "A7_independent_reproducibility": {
+      "main_repo": "PASS (Test suite 6/6 PASS in 2.32s; runner exits code 0 in 3.1s)",
+      "vep_lite": "BLOCKED (Runner, test suite, and raw JSONs not mirrored into vep-lite submodule/repo)"
+    },
+    "A8_codex_gate2_finding_comparison": {
+      "codex_finding": "S2-B/C v2 in local checkout lacks claimed frozen source/artifacts/Git objects -> BLOCKED_FROM_THIS_CHECKOUT",
+      "reconciliation_finding": "CONFIRMED. Codex audited dros-vep-lite exclusively, where S2-B/C raw files and parent commit objects are absent. AGY Gate 1 was run from the root repository where all commit objects, test suites, and raw artifacts exist and pass."
+    }
+  },
+  "missing_in_vep_lite": [
+    "reports/evidence/drone/m1_1/s2_v2/s2_c_freeze_anchor.json",
+    "reports/evidence/drone/m1_1/s2_v2/s2_b_freeze_anchor.json",
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation.json",
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation_summary.json",
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation.exit_code",
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority.json",
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority_summary.json",
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority.exit_code",
+    "scripts/s2_v2/run_s2_v2_c.py",
+    "scripts/s2_v2/run_s2_v2_b.py",
+    "tests/drone/s2_v2/test_s2_v2_c_reconciliation.py",
+    "tests/drone/s2_v2/test_s2_v2_b_execution_authority.py"
+  ]
+}
