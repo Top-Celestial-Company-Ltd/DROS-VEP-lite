@@ -253,13 +253,13 @@ ZTM 與 DROS PKI 基於 **三階憑證授權鏈（Root CA -> AIA 中繼憑證 ->
    經由外部投毒數據集遭挾持                        └──────────────────────────────┘
    (ATS-004 跨企業資料鏈投毒威脅模擬)                              │
                 │                                                  ▼
-   企圖越權讀取 Alpha ERP 財務密件                 [ 於 C-ABI 層實施 100% 硬阻斷 ]
+   企圖越權讀取 Alpha ERP 財務密件                 [ 於 C-ABI 層實施 確定性 C-ABI 阻斷 ]
 ```
 *(註：ATS-004 為架構防衛有效性之合成威脅模擬情境，不指涉任何特定歷史公開事件)*
 
 1. **跨域密碼學通關護照 (DIT 指紋繫定)：** 每筆跨企業請求均攜帶三階簽章之 `DrosIdentityToken (DIT)`。買方 Corp-Alpha 的 GuardVM 透過檢驗 SHA-256 根憑證指紋，一秒辨識並防止任何身分冒用。
-2. **B2B 不可否認性雙重簽章：** 執行日誌同時附上雙方 GuardVM 的密碼學簽章，為企業 SLA 賠償與資安保險提供不可篡改的法律鐵證。
-3. **供應鏈即時動態撤銷 (CRL)：** 一旦發現供應商 Corp-Beta 的 Agent 遭資安通報劫持，買方企業無需重新編譯政策或部署程式碼，可在 <1μs 內於 GuardVM 藉由無鎖 CRL 撤銷該供應商憑證指紋，即刻阻斷級聯式供應鏈感染。
+2. **B2B 不可否認性雙重簽章：** 執行日誌同時附上雙方 GuardVM 的密碼學簽章，為企業 SLA 與稽核提供可由密碼學驗證的技術溯源證據。
+3. **供應鏈即時動態撤銷 (CRL)：** 一旦發現供應商 Corp-Beta 的 Agent 遭資安通報劫持，買方企業無需重新編譯政策或部署程式碼，可在 GuardVM 內透過無鎖 CRL 路徑撤銷該供應商憑證指紋；撤銷延遲取決於實際執行環境與部署路徑。
 
 ### 4.4 供應鏈網路集體免疫效應 (Network Immune Effect)
 
@@ -267,7 +267,7 @@ ZTM 與 DROS PKI 基於 **三階憑證授權鏈（Root CA -> AIA 中繼憑證 ->
 
 - **細胞級爆炸半徑控制 (Cellular Blast Radius Containment)：** 每一隻 Agent 均為獨立隔離細胞。當三階供應商 Agent 在外部遭毒化劫持時，破口最遠僅被封鎖於該供應商的 DROS 邊界內，絕無法跨企業級聯感染上游買方。
 - **零信任連鎖升級機制：** 買方企業要求外聯 Agent 強制攜帶 DIT 密碼學指紋，驅使整體供應鏈生態系自發性升級至確定性零信任治理標準。
-- **無縫抗體阻斷：** 一旦特定資安事件爆發，全球買方 GuardVM 瞬間更新黑名單指紋，在 <1μs 內對該破口產生「確定性集體免疫」，無需更換任何一列商業業務程式碼。
+- **無縫抗體阻斷：** 一旦特定資安事件爆發，全球買方 GuardVM 瞬間更新黑名單指紋，透過撤銷指紋更新對該破口進行確定性阻斷，無需更換任何一列商業業務程式碼。
 
 ---
 
@@ -317,7 +317,7 @@ $$\text{Decision}(tool\_id) = \begin{cases} \text{ALLOW} & \text{if } \text{Bitm
 
 **此決策為確定性布林運算，不存在概率空間。**
 
-#### 原則二：$O(1)$ 常數時間策略執行（Scale-Invariant Policy Enforcement）
+#### 原則二：$O(1)$ 常數時間策略比對（$O(1)$ Algorithmic Policy Matching）
 
 | 對比維度 | 基於 LLM 的語意防護 | DROS Bitmap 查表 |
 | :--- | :--- | :--- |
@@ -544,8 +544,8 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 
 | 標準 / 法規框架 | 對齊條目 / 條文 | DROS 四層防禦覆蓋與合規機制 |
 | :--- | :--- | :--- |
-| **歐盟 EU AI Act (2026/08/02 著手強制執行)** | **Article 12: Automatic Logging** (自動化動作層日誌與不可否認性) | **L2 PKI 憑證網格 + Ed25519 數位簽章**：發行 `DrosIdentityToken (DIT)`，每一筆工具呼叫均產出具密碼學時間戳與簽章之 `decision.json`，提供法庭級舉證能力。 |
-| **歐盟 EU AI Act (2026/08/02 著手強制執行)** | **Article 15: Cybersecurity & Deterministic Resilience** (確定性資安韌性) | **L4 C-ABI 物理硬熔斷**：針對 IPI 與 Goal Hijacking 攻擊，於 <500ns 內強制執行 $O(1)$ Capability Bitmap 熔斷，提供 100% 確定性防衛保證，解決機率性 WAF 破防合規風險。 |
+| **歐盟 EU AI Act (2026/08/02 著手強制執行)** | **Article 12: Automatic Logging** (自動化動作層日誌與不可否認性) | **L2 PKI 憑證網格 + Ed25519 數位簽章**：發行 `DrosIdentityToken (DIT)`，每一筆工具呼叫均產出具密碼學時間戳與簽章之 `decision.json`，提供密碼學不可否認性稽核能力。 |
+| **歐盟 EU AI Act (2026/08/02 著手強制執行)** | **Article 15: Cybersecurity & Deterministic Resilience** (確定性資安韌性) | **L4 C-ABI 物理硬熔斷**：針對 IPI 與 Goal Hijacking 攻擊，於 <500ns 內強制執行 $O(1)$ Capability Bitmap 熔斷，提供 確定性 C-ABI 邊界阻斷，解決機率性 WAF 破防合規風險。 |
 | **NIST SP 800-207** | Zero Trust Architecture — Micro-segmentation | L2 ZTM + L4 C-ABI Policy Enforcement Point (PEP) |
 | **NIST SP 800-53** | SI-16 Memory Protection, SI-3 Malicious Code Protection | L4 Thread Panic & Fail-Closed Design |
 | **OWASP LLM Top 10** | LLM01 (Prompt Injection), LLM06 (Excessive Agency) | L1 ATR + L4 Deterministic Tool Authorization |
