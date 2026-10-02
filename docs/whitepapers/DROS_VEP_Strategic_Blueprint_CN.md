@@ -7,7 +7,7 @@
 
 ### 企業級 AI Agent 運行期安全與治理評測標準平台
 
-* **定位**：開源、可重現、可量化的企業 AI Agent 運行期安全與治理評測基準（Benchmark Standard），遵守 [DROS-VEP-RFC-010](file:///e:/vscode/AI知識庫/dros-spec/RFC-010-dros-vep-spec.md) 規範。
+* **定位**：開源、可重現、可量化的企業 AI Agent 運行期安全與治理評測基準（Benchmark Standard），遵守 [DROS-VEP-RFC-010](../specifications/RFC-010-dros-vep-spec.md) 規範。
 * **官方網站 / 參考實現**：`dr-os.io` / `DROS Core` / `DROS-VEP-Lite`
 * **專利聲明**：DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. Patent Application No. 64/111,973，Patent Pending）
 

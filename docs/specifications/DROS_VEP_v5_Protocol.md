@@ -4,7 +4,7 @@
 
 **Document Version:** 5.0 Strict Adversarial Protocol  
 **Date:** August 27, 2026  
-**Target Environment:** DROS-VEP Lite Sandbox (`E:\vscode\AI知識庫\dros-vep-lite` & `E:\vscode\AI知識庫\DROS-Hackathon-Showcase`)  
+**Target Environment:** DROS-VEP Lite Sandbox (DROS-VEP-lite & DROS-Hackathon-Showcase)
 **Execution Orchestrator:** Antigravity (Agy) & Strix Autonomous Multi-Agent Red Team  
 **Evaluation Invariant:**
 $$\boxed{C_A \land \neg C_E \implies I_{\text{physical}} = 0}$$

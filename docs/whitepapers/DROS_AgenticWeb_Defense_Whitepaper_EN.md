@@ -582,7 +582,7 @@ Empirical metrics cited throughout this whitepaper reflect standardized evaluati
 - **Host OS & Toolchain:** Linux kernel 6.x, Rust stable toolchain 1.78+
 - **Evaluation Harness:** `dros-vep-lite benchmark` suite (open-source, independently reproducible)
 - **Statistical Rigor:** Continuous 24-hour soak test comprising 160,611 independent requests evaluated at P50/P99 percentiles
-- **Verification Container:** Fully reproducible via Docker Compose in the open [DROS-VEP-lite repository](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
+- **Verification Container:** Evaluated via standard Docker Compose configurations in the open [DROS-VEP-lite repository](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
 
 ---
 

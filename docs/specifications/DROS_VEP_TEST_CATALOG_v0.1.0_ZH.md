@@ -6,7 +6,7 @@
 
 > **版本：** `v0.2.0` (Epoch: 2026-09-02)  
 > **適用產品：** DROS Community, Enterprise C-ABI Gateway, PGM Microkernel, Mobile SDK  
-> **關聯清單：** [`config/vep_suite_manifest.json`](file:///E:/vscode/AI知識庫/dros-vep-lite/config/vep_suite_manifest.json)
+> **關聯清單：** [`config/vep_suite_manifest.json`](../../config/vep_suite_manifest.json)
 
 ---
 

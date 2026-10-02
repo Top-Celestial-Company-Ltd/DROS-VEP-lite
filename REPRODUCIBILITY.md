@@ -22,11 +22,11 @@ Before running tests, verify that local fixtures, target definitions, and previo
 
 ```powershell
 # In PowerShell (Windows):
-cd e:\vscode\AI知識庫\dros-vep-lite\benchmarks\claude-red-vep
+cd benchmarks/claude-red-vep
 Get-FileHash targets.py, targets_2d.py, targets_2e.py, targets_2f.py -Algorithm SHA256
 ```
 
-Compare outputs against [`FREEZE_MANIFEST_PHASE2.md`](file:///e:/vscode/AI知識庫/dros-vep-lite/benchmarks/claude-red-vep/FREEZE_MANIFEST_PHASE2.md).
+Compare outputs against [`FREEZE_MANIFEST_PHASE2.md`](benchmarks/claude-red-vep/FREEZE_MANIFEST_PHASE2.md).
 
 ---
 
@@ -84,4 +84,4 @@ python run_autonomous_phase2f.py
 ## 4. Metric Computation & Output Audit
 
 Every run generates an immutable JSONL trace in `benchmarks/claude-red-vep/logs/`.  
-Formal metric definitions (UER, PC-EER, RER, AAR) and inclusion/exclusion rules are governed by [`docs/VEP_METRIC_SPECIFICATION.md`](file:///e:/vscode/AI知識庫/dros-vep-lite/docs/VEP_METRIC_SPECIFICATION.md).
+Formal metric definitions (UER, PC-EER, RER, AAR) and inclusion/exclusion rules are governed by [`docs/VEP_METRIC_SPECIFICATION.md`](docs/VEP_METRIC_SPECIFICATION.md).

@@ -20,8 +20,8 @@
 [![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-開放組合式架構與執行期閉環)
 [![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Open Falsification: Accepting Counterexamples](https://img.shields.io/badge/Open%20Falsification-Accepting%20Counterexamples-brightgreen.svg)](#-反例提交與開放式對抗證偽-submit-a-counterexample)
-[![Policy Evaluation P50: 26.1μs](https://img.shields.io/badge/Policy%20Evaluation%20P50-26.1%CE%BCs-emerald.svg)](#測試方法學與數據透明度)
-[![Emergency Panic Path: <500ns](https://img.shields.io/badge/Emergency%20Panic%20Path-%3C500ns-red.svg)](#測試方法學與數據透明度)
+[![確定性防禦門閥: C-ABI FFI](https://img.shields.io/badge/%E7%A2%BA%E5%AE%9A%E6%80%A7%E9%98%B2%E7%A6%A6%E9%96%80%E9%96%a5-C--ABI%20FFI-emerald.svg)](#-測試方法學與執行路徑嚴謹區分-benchmark-methodology)
+[![評測範疇: 宣告基準](https://img.shields.io/badge/%E8%A9%95%E6%88%90%E7%af%84%E7%95%82-%E5%AE%A3%E5%91%8A%E5%9F%BA%E6%ba%96-blue.svg)](#-測試方法學與執行路徑嚴謹區分-benchmark-methodology)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
@@ -640,7 +640,7 @@ VEP Lite 被設計為**人機可讀、零門檻之開放評測沙盒 (RFC-010)**
 **完全不會。PGM 從架構底層即杜絕「過度阻斷 (Over-Blocking)」與「業務誤殺」現象。**  
 傳統 WAF 或 LLM 語意審查之所以常誤殺正常業務，是因為依賴模糊的「正則猜測（Regex）」或「大模型二次判斷」；而 PGM 採用的是 **「多維度正向能力白名單矩陣（Multidimensional Positive Capability Bitmasks）」**：
 
-1. **正向能力授權（Capability-Based Inclusion，非啟發式瞎猜）**：PGM 採用細粒度向量（角色 $\times$ 工具 $\times$ 方法 $\times$ 資源範疇）。Agent 執行本職任務時，位元運算在 1 個 CPU 週期內必然匹配為 `1`（放行，延遲僅 $26.1\mu s$），**對合法業務路徑之誤殺率為 0%**。
+1. **正向能力授權（Capability-Based Inclusion，非啟發式瞎猜）**：PGM 採用細粒度向量（角色 $\times$ 工具 $\times$ 方法 $\times$ 資源範疇）。Agent 執行本職任務時，位元運算透過確定性位元遮罩比對可將符合授權條件的操作判定為 1（放行）；既有 26.1μs 數據則指歷史完整策略評估路徑，而非單一 CPU 週期，**對合法業務路徑之誤殺率為 0%**。
 2. **階梯式漸進門閥（Graduated Progressive Enforcement）**：遇到高敏感邊界動作（如大額撥款、病歷導出），PGM 不是粗暴斬斷整個連線，而是觸發 **「帶內動態脫敏（18-PHI Masking）」** 或 **「人機協同 (HITL) 軟性暫停簽署」**，讓主幹業務順暢推進，絕不中斷商業流程。
 3. **毫秒級無鎖 RCU 熱調優（Zero-Downtime Hot Reload）**：若需放寬新業務權限，資安長更新策略後，背景影子編譯在 **<1 毫秒** 內生成新 Bitmap，並以 CPU 原子指針（Atomic Pointer Swap）無縫替換，**全域零停機、零業務卡頓**。
 

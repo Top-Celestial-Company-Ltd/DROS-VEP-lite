@@ -4,7 +4,7 @@
 **Version:** 6.0 Formal Engineering & Stress Test Protocol  
 **Date:** August 27, 2026  
 **Execution Orchestrator:** Antigravity Autonomous Orchestrator + Strix v1.5.3  
-**Target Environment:** DROS-VEP Lite / DROS-Hackathon-Showcase (`E:\vscode\AI知識庫\dros-vep-lite` & `E:\vscode\AI知識庫\DROS-Hackathon-Showcase`)  
+**Target Environment:** DROS-VEP Lite / DROS-Hackathon-Showcase (DROS-VEP-lite & DROS-Hackathon-Showcase)
 **Repository Strategy:** In-tree extension within current `DROS-Adversarial-Validation/` suite (No new repository created)  
 **Core Invariant Under Falsification:**
 $$\boxed{C_A \land \neg C_E \implies I_{\text{physical}} = 0}$$

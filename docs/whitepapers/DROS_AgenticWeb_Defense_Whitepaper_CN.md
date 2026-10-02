@@ -584,7 +584,7 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 - **作業系統：** Linux 6.x (kernel), Rust 1.78+ (stable toolchain)
 - **測試工具：** 自研 `dros-vep-lite benchmark` 測試套件（開源，可獨立重現）
 - **統計方法：** 24 小時連續 160,611 次獨立執行取 P50/P99 分位數
-- **開源驗證：** 所有數據可透過 [DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite) 在標準 Docker 環境中獨立重現
+- **開源驗證：** 評測架構可透過 [DROS-VEP-lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite) 在標準 Docker 環境中運行驗證
 
 ---
 
