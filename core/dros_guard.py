@@ -238,11 +238,14 @@ def proxy_intercept(path):
     # Forward authorized request
     target_url = f"{ERP_URL}{full_path}"
     headers = dict(request.headers)
-    if agent_role == "ciso-agent" or bypass_guard:
-        headers["X-Privileged-Token"] = "ERP-ADMIN-TOKEN-999"
-        
+    # DISABLED_UNTIL_TRUSTED_AUTHORIZATION: caller-controlled role and bypass
+    # no longer independently produce privileged downstream authority.
+    # X-Privileged-Token requires a verified authorization result.
+    # See C07 Historical Impact Audit H3/H5.
+    pass  # NO-OP: privileged token injection disabled
+
     try:
-        if request.method == 'GET':
+        if request.method == "GET":
             resp = requests.get(target_url, headers=headers, params=request.args, timeout=5)
         else:
             resp = requests.post(target_url, headers=headers, json=request.json, timeout=5)
@@ -252,6 +255,5 @@ def proxy_intercept(path):
             "status": "error",
             "message": f"DROS-Guard failed to forward: {e}"
         }), 502
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8082)
