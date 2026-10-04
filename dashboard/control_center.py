@@ -95,7 +95,7 @@ def trigger_benchmark():
     selected_scenarios = data.get("scenarios", [])
     duration_mode = data.get("duration", "quick")
     agent_roles = data.get("agent_roles", ["support-agent"])
-    bypass_guard = data.get("bypass_guard", False)
+    bypass_guard = data.get("bypass_guard", False)  # CONTROL_PLANE / TEST_ONLY: isolated test-subprocess env only
     
     # Enforce Agent Role Limit for Community Edition
     if len(agent_roles) > COMMUNITY_CONFIG["agent_role_limit"]:
@@ -108,7 +108,7 @@ def trigger_benchmark():
     benchmark_script = os.path.join(BASE_DIR, "benchmark", "run_benchmark.py")
     env = dict(os.environ)
     if bypass_guard:
-        env["BYPASS_GUARD"] = "true"
+        env["BYPASS_GUARD"] = "true"  # CONTROL_PLANE / TEST_ONLY: does NOT reach Guard container via data-plane HTTP
 
     try:
         res = subprocess.run([sys.executable, benchmark_script], capture_output=True, text=True, cwd=BASE_DIR, env=env, encoding='utf-8', errors='ignore')

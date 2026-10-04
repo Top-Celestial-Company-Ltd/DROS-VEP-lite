@@ -149,7 +149,9 @@ def proxy_intercept(path):
     rule_desc = "Default allow rule"
     lookup_key = (agent_role, full_path)
     
-    bypass_guard = (os.environ.get("BYPASS_GUARD", "false").lower() == "true")
+    # CONTROL_PLANE / TEST_ONLY: BYPASS_GUARD env is set via deployment config or isolated test subprocess only.
+    # HTTP data-plane callers cannot influence this value. No HTTP header, query, body, or cookie is accepted.
+    bypass_guard = (os.environ.get("BYPASS_GUARD", "false").lower() == "true")  # TEST_CONTROL_ONLY
     
     # RFC-010 O(1) Pre-compiled Bitmap/Hashtable Policy Lookup
     if bypass_guard:
@@ -157,7 +159,7 @@ def proxy_intercept(path):
         policy_id = "DROS-POL-BYPASS"
         rule_desc = "DROS Guard BYPASSED for Control Group Experiment"
         reason = "WARNING: Guard disabled. Attack payload passed directly to target system."
-        defense_layer = "L0_CONTROL_GROUP"
+        defense_layer = "L0_CONTROL_GROUP"  # CONTROL_PLANE / TEST_ONLY bypass
         status_code = 200
     elif lookup_key in PRECOMPILED_POLICY_INDEX:
         decision, policy_id, rule_desc = PRECOMPILED_POLICY_INDEX[lookup_key]
