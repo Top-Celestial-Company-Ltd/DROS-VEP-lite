@@ -109,7 +109,7 @@ def verify_pki_dit_identity(headers, role):
         "ca_chain": PKI_CA_CHAIN["root_ca"] + " -> " + PKI_CA_CHAIN["intermediate_ca"],
         "signature_algorithm": PKI_CA_CHAIN["algorithm"],
         "identity_assertion_source": "caller_header",
-        "principal_verified": false,
+        "principal_verified": False,
         "execution_signature": sig_display,
     }
 
