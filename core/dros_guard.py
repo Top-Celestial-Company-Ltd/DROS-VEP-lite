@@ -95,12 +95,12 @@ def verify_pki_dit_identity(headers, role):
         # Verify immediately (proves the signing worked)
         try:
             _SESSION_PUBLIC_KEY.verify(signature_bytes, dit_token.encode("utf-8"))
-            cert_status = "VALID_ED25519"
+            cert_status = "LOCAL_SELF_SIGN_AND_VERIFY"
         except Exception:
             cert_status = "INVALID_SIGNATURE"
         sig_display = signature_b64[:24] + "..."
     else:
-        cert_status = "MOCK_VALID"
+        cert_status = "CRYPTO_UNAVAILABLE"
         sig_display = "CRYPTO_UNAVAILABLE"
 
     return {
@@ -108,7 +108,8 @@ def verify_pki_dit_identity(headers, role):
         "cert_status": cert_status,
         "ca_chain": PKI_CA_CHAIN["root_ca"] + " -> " + PKI_CA_CHAIN["intermediate_ca"],
         "signature_algorithm": PKI_CA_CHAIN["algorithm"],
-        "session_pubkey": _SESSION_PUBLIC_KEY_B64,
+        "identity_assertion_source": "caller_header",
+        "principal_verified": false,
         "execution_signature": sig_display,
     }
 
@@ -199,6 +200,8 @@ def proxy_intercept(path):
         "pki_ca_chain": pki_info["ca_chain"],
         "dit_token": pki_info["dit_token"],
         "execution_signature": pki_info.get("execution_signature", "N/A"),
+        "identity_assertion_source": pki_info.get("identity_assertion_source", "unknown"),
+        "principal_verified": pki_info.get("principal_verified", False),
         "session_pubkey": pki_info.get("session_pubkey", "N/A"),
         "evaluation_latency_ns": eval_latency_ns,
         "evaluation_latency_ms": eval_latency_ns / 1_000_000.0,
