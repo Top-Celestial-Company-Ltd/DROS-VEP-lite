@@ -148,7 +148,7 @@ def proxy_intercept(path):
     rule_desc = "Default allow rule"
     lookup_key = (agent_role, full_path)
     
-    bypass_guard = (os.environ.get("BYPASS_GUARD", "false").lower() == "true") or (request.headers.get("X-Bypass-Guard", "false").lower() == "true")
+    bypass_guard = (os.environ.get("BYPASS_GUARD", "false").lower() == "true")
     
     # RFC-010 O(1) Pre-compiled Bitmap/Hashtable Policy Lookup
     if bypass_guard:
