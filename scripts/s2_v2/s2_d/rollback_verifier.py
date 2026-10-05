@@ -58,15 +58,26 @@ class RollbackVerifier:
 
         # Step 2: Verify post-rollback firewall state matches pre-test baseline
         post_firewall_snap = acquire_firewall_state(mode="DRY_RUN" if self.dry_run else "LIVE")
+
+        raw_identical = (pre_firewall_snap.raw_rules_hash == post_firewall_snap.raw_rules_hash)
+        semantic_identical = (pre_firewall_snap.semantic_rules_hash == post_firewall_snap.semantic_rules_hash)
+
+        audit_details["raw_serialization_identical"] = raw_identical
+        audit_details["semantic_state_identical"] = semantic_identical
+        audit_details["pre_raw_hash"] = pre_firewall_snap.raw_rules_hash
+        audit_details["post_raw_hash"] = post_firewall_snap.raw_rules_hash
+        audit_details["pre_semantic_hash"] = pre_firewall_snap.semantic_rules_hash
+        audit_details["post_semantic_hash"] = post_firewall_snap.semantic_rules_hash
         audit_details["pre_hash"] = pre_firewall_snap.rules_hash
         audit_details["post_hash"] = post_firewall_snap.rules_hash
 
-        if pre_firewall_snap.rules_hash != post_firewall_snap.rules_hash:
+        # Fail closed if semantic state does not match
+        if not semantic_identical:
             audit_details["verdict"] = Verdict.FAIL.value
             return (
                 False,
-                f"Firewall state hash mismatch after rollback: pre={pre_firewall_snap.rules_hash[:12]} "
-                f"!= post={post_firewall_snap.rules_hash[:12]}",
+                f"Firewall semantic state mismatch after rollback: pre={pre_firewall_snap.semantic_rules_hash[:12]} "
+                f"!= post={post_firewall_snap.semantic_rules_hash[:12]} (raw_identical={raw_identical})",
                 audit_details,
             )
         audit_details["firewall_hash_restored"] = True

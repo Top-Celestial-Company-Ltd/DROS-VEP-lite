@@ -187,8 +187,9 @@ while True:
             print("[DROS_PEP_PROXY] BLOCKED malformed unparseable wire bytes!", flush=True)
             continue
 
-        # CRITICAL: Invoke full DROS Policy Engine (evaluate_and_execute)
-        verdict = adapter.evaluate_and_execute(req)
+        # CRITICAL: Invoke full DROS Policy Engine (evaluate_and_authorize)
+        # Separates PDP authorization verification from downstream execution forwarding
+        verdict = adapter.evaluate_and_authorize(req)
         
         if verdict.get("verdict") == "ALLOW":
             # Policy explicitly permitted the execution request -> Forward to real FC

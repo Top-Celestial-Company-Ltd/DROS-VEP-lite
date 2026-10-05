@@ -44,10 +44,13 @@ class PX4SubjectSnapshot:
 
 @dataclass
 class HostFirewallSnapshot:
-    rules_hash: str
+    rules_hash: str  # Kept for backward compatibility (maps to semantic_rules_hash)
     filter_dump: str
     active_drop_rules_count: int = 0
     mode: str = "DRY_RUN"
+    raw_rules_hash: str = ""
+    semantic_rules_hash: str = ""
+    canonical_dump: str = ""
 
 
 @dataclass

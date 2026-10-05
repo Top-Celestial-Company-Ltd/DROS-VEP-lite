@@ -90,6 +90,9 @@ class DroneExecutionAdapter:
             "FILE_OPERATION": "FILE_OPERATION"
         }
 
+        # Companion interface prohibited actions
+        self.disallowed_companion_paths: Set[str] = {"SHELL_COMMAND", "FILE_OPERATION"}
+
     def register_external_posture(self, posture_obj: Dict[str, Any]):
         """Registers verified external posture from navigation integrity service."""
         posture_ref = posture_obj.get("posture_ref")

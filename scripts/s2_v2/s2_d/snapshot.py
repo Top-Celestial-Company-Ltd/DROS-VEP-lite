@@ -13,8 +13,13 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
+from .firewall_canonicalizer import (
+    FirewallParseError,
+    canonicalize_firewall_dump,
+    compute_semantic_firewall_hash,
+)
 from .models import (
     HostFirewallSnapshot,
     PX4SubjectSnapshot,
@@ -161,7 +166,13 @@ def acquire_px4_identity(pid: Optional[int] = None) -> PX4SubjectSnapshot:
 
 
 def acquire_firewall_state(mode: str = "DRY_RUN") -> HostFirewallSnapshot:
-    """Capture snapshot of host packet filtering tables without modifying state."""
+    """Capture snapshot of host packet filtering tables without modifying state.
+
+    Enforces dual-layer representation:
+      1. raw_rules_hash: SHA-256 over raw iptables-save stdout (verifies serialization identity)
+      2. semantic_rules_hash: SHA-256 over C(F) canonicalized dump (verifies security filtering state)
+      3. rules_hash: mapped to semantic_rules_hash for backward compatibility
+    """
     dump = ""
     active_count = 0
     if sys.platform.startswith("linux") and mode != "DRY_RUN":
@@ -182,12 +193,25 @@ def acquire_firewall_state(mode: str = "DRY_RUN") -> HostFirewallSnapshot:
         # Dry-run or non-Linux host baseline
         dump = "# DRY_RUN_FIREWALL_BASELINE_EMPTY\n*filter\n:INPUT ACCEPT [0:0]\nCOMMIT\n"
 
-    rules_hash = hashlib.sha256(dump.encode("utf-8")).hexdigest()
+    raw_rules_hash = hashlib.sha256(dump.encode("utf-8")).hexdigest()
+
+    # Compute canonical semantic dump and semantic hash (FAIL-CLOSED on parse failure)
+    try:
+        canonical_dump = canonicalize_firewall_dump(dump)
+        semantic_rules_hash = hashlib.sha256(canonical_dump.encode("utf-8")).hexdigest()
+    except FirewallParseError as err:
+        # If parsing fails, do NOT silently ignore; record error and generate invalid hash
+        canonical_dump = f"ERROR_FIREWALL_PARSE_FAILED: {err}"
+        semantic_rules_hash = f"PARSE_ERROR_{hashlib.sha256(str(err).encode('utf-8')).hexdigest()[:16]}"
+
     return HostFirewallSnapshot(
-        rules_hash=rules_hash,
+        rules_hash=semantic_rules_hash,
         filter_dump=dump,
         active_drop_rules_count=active_count,
         mode=mode,
+        raw_rules_hash=raw_rules_hash,
+        semantic_rules_hash=semantic_rules_hash,
+        canonical_dump=canonical_dump,
     )
 
 

@@ -258,8 +258,8 @@ When operating across distinct enterprise boundaries (e.g., **Corp-Alpha (Buyer 
 *(Note: ATS-004 is a synthetic threat simulation scenario designed for architectural resilience validation and does not reference any specific real-world incident)*
 
 1. **Cross-Domain Cryptographic Passport (DIT Fingerprinting):** Every cross-enterprise request carries a 3-tier signed `DrosIdentityToken (DIT)`. Corp-Alpha's GuardVM inspects the SHA-256 root authority fingerprint to instantly detect identity spoofing.
-2. **B2B Non-Repudiation Audit Stamps:** Execution logs append cryptographic signatures from both enterprise GuardVMs, establishing tamper-proof, legally defensible evidence for enterprise SLAs and insurance.
-3. **Instant Supply Chain Revocation (CRL):** If Corp-Beta's agent is compromised, Corp-Alpha can revoke the supplier's CA fingerprint in <1μs via lock-free CRL without code redeployment or policy re-compilation, isolating the enterprise from cascading supply chain attacks.
+2. **B2B Non-Repudiation Audit Stamps:** Execution logs append cryptographic signatures from both enterprise GuardVMs, providing cryptographically verifiable technical provenance evidence for enterprise SLA and audit workflows.
+3. **Instant Supply Chain Revocation (CRL):** If Corp-Beta's agent is compromised, Corp-Alpha can revoke the supplier's CA fingerprint through a lock-free CRL path without code redeployment or policy re-compilation; revocation latency depends on the actual execution environment and deployment path.
 
 ### 4.4 Supply Chain Network Immune Effect
 
@@ -267,7 +267,7 @@ Traditional security patches holes in enterprise walls; DROS injects cryptograph
 
 - **Cellular Blast Radius Containment:** Every AI agent operates as an isolated cellular unit. If a Tier-3 supplier agent is hijacked externally, the exploit is contained entirely within that supplier's DROS boundary, preventing cascading cross-enterprise infection.
 - **Cascading Zero-Trust Adoption:** Mandating DIT cryptographic tokens for cross-enterprise API access drives the entire supply chain ecosystem to naturally conform to deterministic zero-trust governance standards.
-- **Seamless Antibody Defense:** Upon vulnerability disclosure, enterprise GuardVMs update CA revocation fingerprints instantly, deploying a deterministic <1μs network antibody without altering a single line of business application code.
+- **Seamless Antibody Defense:** Upon vulnerability disclosure, enterprise GuardVMs update CA revocation fingerprints instantly, applying a deterministic revocation-fingerprint update without altering business application code.
 
 ---
 
@@ -317,7 +317,7 @@ $$\text{Decision}(tool\_id) = \begin{cases} \text{ALLOW} & \text{if } \text{Bitm
 
 **This decision is a deterministic Boolean operation — there is no probabilistic space.**
 
-#### Principle 2: $O(1)$ Constant-Time Policy Enforcement (Scale-Invariant)
+#### Principle 2: $O(1)$ Constant-Time Policy Matching ($O(1)$ Algorithmic Lookup)
 
 | Comparison Dimension | LLM-Based Semantic Guardrail | DROS Bitmap Lookup |
 | :--- | :--- | :--- |
@@ -542,7 +542,7 @@ In deep enterprise environments, when an agent's request legitimately passes thr
 
 | Standard / Regulatory Framework | Article / Section | DROS 4-Layer Coverage & Compliance Mechanism |
 | :--- | :--- | :--- |
-| **EU AI Act (Enforcement from 2026-08-02)** | **Article 12: Automatic Logging** (Action-level logging & non-repudiation) | **L2 PKI Mesh + Ed25519 Signatures**: Issues `DrosIdentityToken (DIT)`; every tool invocation generates cryptographically signed `decision.json` for court-admissible auditability. |
+| **EU AI Act (Enforcement from 2026-08-02)** | **Article 12: Automatic Logging** (Action-level logging & non-repudiation) | **L2 PKI Mesh + Ed25519 Signatures**: Issues `DrosIdentityToken (DIT)`; every tool invocation generates cryptographically signed `decision.json` for cryptographically auditable decision trails. |
 | **EU AI Act (Enforcement from 2026-08-02)** | **Article 15: Cybersecurity & Deterministic Resilience** | **L4 C-ABI Physical Interception**: Enforces $O(1)$ Capability Bitmap containment in <500ns under IPI/Goal Hijacking, eliminating probabilistic compliance vulnerabilities. |
 | **NIST SP 800-207** | Zero Trust Architecture — Micro-segmentation | L2 ZTM + L4 C-ABI Policy Enforcement Point (PEP) |
 | **NIST SP 800-53** | SI-16 Memory Protection, SI-3 Malicious Code Protection | L4 Thread Panic & Fail-Closed Design |

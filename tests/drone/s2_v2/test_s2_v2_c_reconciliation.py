@@ -36,8 +36,7 @@ from canonical_git_snapshot import (
 )
 
 EVIDENCE_BASE = REPO_ROOT / "reports" / "evidence" / "drone" / "m1_1"
-S1_ANCHOR_V2 = EVIDENCE_BASE / "s1" / "s1_freeze_anchor_v2.json"
-S1_ANCHOR = S1_ANCHOR_V2 if S1_ANCHOR_V2.exists() else EVIDENCE_BASE / "s1" / "s1_freeze_anchor.json"
+S1_ANCHOR = EVIDENCE_BASE / "s1" / "s1_freeze_anchor.json"
 S1_MANIFEST = EVIDENCE_BASE / "s1" / "s1_governed_topology_manifest.json"
 S2_B_ANCHOR = EVIDENCE_BASE / "s2_v2" / "s2_b_freeze_anchor.json"
 S2_B_SUMMARY = EVIDENCE_BASE / "s2_v2" / "s2_v2_b_authority_summary.json"

@@ -559,9 +559,9 @@
   <div class="sec-label">L4 Performance Benchmark (Measured)</div>
   <div class="perf-grid">
     <div class="perf-card"><span class="pv">26.1μs</span><div class="pl">P50 Decision Latency<br>Invisible to legitimate ops</div></div>
-    <div class="perf-card"><span class="pv">41.2μs</span><div class="pl">P99 Decision Latency<br>Constant under load</div></div>
+    <div class="perf-card"><span class="pv">41.2μs</span><div class="pl">P99 Decision Latency<br>Legacy aggregate report</div></div>
     <div class="perf-card"><span class="pv">&lt;500ns</span><div class="pl">Thread Panic Speed<br>C-ABI physical block</div></div>
-    <div class="perf-card"><span class="pv">O(1)</span><div class="pl">Policy Lookup Complexity<br>Scale-invariant</div></div>
+    <div class="perf-card"><span class="pv">O(1)</span><div class="pl">Policy Lookup Complexity<br>Algorithmic complexity</div></div>
     <div class="perf-card"><span class="pv">&lt;2MB</span><div class="pl">Guard Module Footprint<br>Zero-allocation Rust</div></div>
     <div class="perf-card"><span class="pv">&lt;0.3%</span><div class="pl">CPU Overhead<br>Legitimate path only</div></div>
   </div>
@@ -580,7 +580,7 @@
     <div class="p-icon" style="background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.3);">⚡</div>
     <div class="p-body">
       <div class="p-title">Axiom 2 — O(1) Constant-Time Enforcement</div>
-      <div class="p-desc">Whether the enterprise deploys 10 or 100,000 policies, DROS guarantees constant P99 ≤ 41.2 μs. Unlike ML classifiers that degrade linearly under load, the Bitmap lookup is <strong>mathematically scale-invariant</strong>.</div>
+      <div class="p-desc">The core Bitmap evaluation operates in <strong>O(1) algorithmic time complexity</strong> relative to rule count, avoiding the linear degradation seen in prompt-based semantic classifiers. (Historical testbeds reported aggregate P99 ≤ 41.2 μs; runtime performance remains dependent on host OS scheduling).</div>
     </div>
   </div>
 

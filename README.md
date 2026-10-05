@@ -8,10 +8,10 @@
 > **"VEP (Vulnerability & Exploitability Protocol) is an open, implementation-independent research evaluation environment for studying Agent security controls at the boundary between authorization and system execution. DROS-VEP Lite is an open reference implementation of the VEP research protocol (RFC-010), providing evaluation fixtures and execution-governance interfaces alongside other Agent runtime and execution-control implementations."**
 >
 > > [!IMPORTANT]
-> > **Scientific Research Charter & Current Status (v0.2.0 Frozen):**  
-> > **VEP does not produce a single security score. It measures which post-compromise properties each substrate can enforce, which it cannot express natively, and which properties can only be established through formal assurance.**  
-> > *(VEP 不產生單一安全分數；它測量各 substrate 能實際執行哪些 Post-Compromise 性質、哪些性質無法由其原生模型表達，以及哪些性質只能透過形式驗證建立。)*  
-> > 
+> > **Scientific Research Charter & Current Status (v0.2.0 Frozen):**
+> > **VEP does not produce a single security score. It measures which post-compromise properties each substrate can enforce, which it cannot express natively, and which properties can only be established through formal assurance.**
+> > *(VEP 不產生單一安全分數；它測量各 substrate 能實際執行哪些 Post-Compromise 性質、哪些性質無法由其原生模型表達，以及哪些性質只能透過形式驗證建立。)*
+> >
 > > 🧊 **Research protocol baseline: M1–M3 frozen (Open Observation Period)**
 > > This refers to the existing VEP research-protocol baseline; it does not imply that later Mobile/Drone deployment profiles or pilots are approved or validated. See [EVIDENCE_STATUS.md](EVIDENCE_STATUS.md) for the current public evidence status.
 >
@@ -32,9 +32,27 @@
 > **Evidence status:** This repository contains current implementation, synthetic fixtures, and historical reports with different verification states. Repository presence alone does not establish runtime validation, reproducibility, or claim support. Historical latency figures and fixture summaries are not currently promoted as independently validated evidence; see [EVIDENCE_STATUS.md](EVIDENCE_STATUS.md) and [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
 
 > [!TIP]
-> 📚 **Academic & Research Citation**: If you use this research testbed or benchmark suite in your work, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-010 Specification](docs/RFC-010-dros-vep-spec.md).  
-> 🔬 **Open Research Infrastructure**: Built on the **OpenShip** containerized substrate, VEP allows researchers to independently swap reasoning models (LLMs), agent frameworks, and defense kernels without vendor lock-in.  
+> 📚 **Academic & Research Citation**: If you use this research testbed or benchmark suite in your work, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-010 Specification](docs/RFC-010-dros-vep-spec.md).
+> 🔬 **Open Research Infrastructure**: Built on the **OpenShip** containerized substrate, VEP allows researchers to independently swap reasoning models (LLMs), agent frameworks, and defense kernels without vendor lock-in.
 > 🧨 **Open Adversarial Falsification Channel is LIVE**: We actively invite researchers to challenge and falsify our execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. All submissions are triaged against formal criteria.
+
+---
+
+## AI / Automated Verification
+
+This repository is evidence-oriented.
+
+README summaries are not the complete evidence set.
+
+For complete repository verification:
+1. Clone this repository locally.
+2. Pin the exact commit under audit.
+3. Read [`AI_VERIFY.md`](AI_VERIFY.md).
+4. Follow [`EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md).
+5. Trace claims to primary reports and raw evidence.
+6. Verify integrity records where applicable.
+
+Web-page inspection alone does not establish complete repository verification.
 
 ---
 
@@ -60,7 +78,7 @@ DROS is designed to constrain agent actions at configured, instrumented executio
 ```
 
 ### 3. Why DROS Is Intentionally Minimal
-> **Doctrine:** *"Narrow in responsibility. Deep in enforcement."*  
+> **Doctrine:** *"Narrow in responsibility. Deep in enforcement."*
 > **DROS deliberately does less.**
 
 DROS is an **execution-governance substrate**, not a general-purpose AI security suite or all-in-one platform. Its responsibility is deliberately narrow: **deterministic authorization and interception at the execution boundary.**
@@ -109,11 +127,11 @@ To eliminate conceptual ambiguity and separate decision inputs, runtime actions,
 ```
 
 > [!IMPORTANT]
-> **The Architecture Doctrine:**  
-> **6P defines what DROS must know.** (Decision context)  
-> **The enforcement layers define what DROS must do.** (Enforcement path)  
-> **The surrounding infrastructure defines what DROS does not need to replace.** (Integration boundary)  
-> 
+> **The Architecture Doctrine:**
+> **6P defines what DROS must know.** (Decision context)
+> **The enforcement layers define what DROS must do.** (Enforcement path)
+> **The surrounding infrastructure defines what DROS does not need to replace.** (Integration boundary)
+>
 > *DROS deliberately narrows its product responsibility without narrowing its enforcement model.*
 
 ### 4. 6P Governance Context (What DROS Must Know)
@@ -146,7 +164,7 @@ DROS is designed to drop into enterprise infrastructures as an execution gate wi
 | Functional Domain | Existing Enterprise Stack | DROS Boundary & Responsibility |
 | :--- | :--- | :--- |
 | **Identity & Authentication** | Keycloak, Okta, Azure AD, Ping | Consumes identity tokens; verifies cryptographic agent attribution at execution time. |
-| **Observability & Audit** | Splunk, Datadog, Elastic, Sentinel | Emits tamper-evident Merkle hashes and structured cryptographic audit packages. |
+| **Observability & Audit** | Splunk, Datadog, Elastic, Sentinel | Emits sequential cryptographic audit hashes and structured provenance events. |
 | **Agent Orchestration** | LangGraph, CrewAI, AutoGen, OpenAI SDK | Governs the downstream tool/API boundary without interfering with cognitive orchestration. |
 | **Enterprise Business Policy** | Open Policy Agent (OPA), IAM, GRC | Enforces compiled, low-level execution invariants derived from enterprise policies. |
 | **Runtime Enforcement** | **DROS Substrate** | **In-band, deterministic authorization and interception at the syscall/tool boundary.** |
@@ -170,11 +188,11 @@ DROS is designed to drop into enterprise infrastructures as an execution gate wi
 | **Hot Revocation** | PC-008 (Revoked Authorization) | **ENFORCED** (In-band state revoke) | **UNSUPPORTED** (No revocation model) | **ENFORCED\*\*\*\*\* (`seL4_CNode_Revoke`) | **UNSUPPORTED\*\*\*\*\*\* (No pure HW revoke) | **ASSURANCE** (Model Invariant) |
 | **Replay / Nonce Defense** | PC-009 (Duplicate Nonce Execution) | **ENFORCED** (Nonce cache check) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **ASSURANCE** (Model Invariant) |
 
-*\* Modeled conditional on capability authority in the modeled execution domain; seL4 enforces capability authority, not abstract Agent task authorization.*  
-*\*\* Modeled conditional on tools being explicitly represented as distinct capability endpoints in userspace architecture.*  
-*\*\*\* Modeled conditional on target resource/device being represented as a bounded memory/MMIO capability object.*  
-*\*\*\*\* Enforced strictly within the configured preopen directory descriptor boundary.*  
-*\*\*\*\*\* Models revocation of derived capability copies via `seL4_CNode_Revoke()`, not abstract Agent token revocation.*  
+*\* Modeled conditional on capability authority in the modeled execution domain; seL4 enforces capability authority, not abstract Agent task authorization.*
+*\*\* Modeled conditional on tools being explicitly represented as distinct capability endpoints in userspace architecture.*
+*\*\*\* Modeled conditional on target resource/device being represented as a bounded memory/MMIO capability object.*
+*\*\*\*\* Enforced strictly within the configured preopen directory descriptor boundary.*
+*\*\*\*\*\* Models revocation of derived capability copies via `seL4_CNode_Revoke()`, not abstract Agent token revocation.*
 *\*\*\*\*\*\* Under pure CHERI ISA (`CHERI_PURE_ISA_CAPABILITY_MODEL`), reported as `UNSUPPORTED`. Under `CHERI_CHERIBSD_RUNTIME`, CheriBSD OS provides temporal heap sweep.*
 
 *For complete formal definitions, see [Property Enforcement Coverage Matrix (Full Document)](docs/research/PROPERTY_ENFORCEMENT_COVERAGE_MATRIX.md).*
@@ -349,8 +367,8 @@ VEP provides multi-domain evaluation fixtures across enterprise cloud and physic
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-📖 **Research Note**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
-🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)  
+📖 **Research Note**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
+🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
 🧭 **Reading Guide to Trajectory**: [DROS Trilogy Reading Guide](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md)
 
 ---
@@ -369,9 +387,9 @@ This repository and protocol may be relevant to researchers, evaluators, and sys
 * **Agent Capability & Dynamic Authorization**: Fine-grained capability bitmask evaluations ($O(1)$ constant time) and zero-window RCU policy revocation.
 * **Deterministic Runtime Enforcement**: Enforcing fail-closed containment under adversarial resource starvation and syscall flood conditions.
 * **Agent Security Benchmarks & Testbeds**: Providing reproducible, multi-track testbeds across Cloud B2B, Physical Robotics/Drones, and Mobile on-device SDKs.
-* **Execution Provenance & Cryptographic Audit**: Maintaining append-only, tamper-evident Merkle hash chains supporting technical traceability relevant to EU AI Act / NIST SP 800-207 requirements.
+* **Execution Provenance & Cryptographic Audit**: Maintaining append-only, sequential SHA-256 hash chains in memory supporting technical traceability relevant to EU AI Act / NIST SP 800-207 requirements.
 
-> **💡 Conformance & Substrate Decoupling:**  
+> **💡 Conformance & Substrate Decoupling:**
 > **DROS is not required for VEP conformance.** VEP defines an open, vendor-neutral evaluation protocol; DROS is provided as **one concrete executable reference substrate** for demonstrating, benchmarking, and validating VEP experiments.
 
 ---
@@ -410,7 +428,7 @@ Attack ───► Policy Evaluation ───► Evidence Artifact ───�
 
 DROS-VEP adheres strictly to the principle of **Open Adversarial Falsification**. We invite the academic community, security researchers, and engineers to submit reproducible counterexamples that violate our empirical core invariants:
 
-> Within the explicitly instrumented operation classes $X_{\text{covered}}$, whenever `Auth_E(x) = DENY`:  
+> Within the explicitly instrumented operation classes $X_{\text{covered}}$, whenever `Auth_E(x) = DENY`:
 > **Unauthorized execution count is zero ($Exec_{\text{unauthorized}} = 0$) and observable state drift is zero ($\Delta S_{\mathcal{S}_{\text{obs}}} = 0$).**
 
 ### Criteria for a Valid Counterexample
@@ -486,7 +504,7 @@ Traditional WAFs may see an authenticated user making a syntactically valid REST
 ## 🎯 Threat Scenarios & Research Fixtures (RFC-010 Standard Matrix)
 
 > [!NOTE]
-> **Synthetic Benchmark Disclaimer**  
+> **Synthetic Benchmark Disclaimer**
 > All threat scenarios in this repository (ATS-001 through ATS-005, AS-001 through AS-005, and PC-001 through PC-010) are **synthetic, architectural evaluation fixtures**. They are designed exclusively to model and evaluate runtime system-call boundaries, tool authorization contracts, and post-compromise containment invariants mapped to MITRE ATLAS categories. They do not simulate, represent, or attribute actions to any specific commercial platform, model provider, or real-world organization.
 
 VEP provides standardized, synthetic evaluation fixtures reproducing critical post-compromise threat models, mapped directly to **MITRE ATLAS**:
@@ -650,7 +668,7 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
 ## ❓ Frequently Asked Questions (FAQ)
 
 ### Why does VEP use open-spec policy representations rather than compiled `policy.bin` binaries?
-VEP Lite is engineered as a **human-readable, open-spec evaluation sandbox (RFC-010)** to allow security researchers, CISOs, and developers to easily audit policy rules, inspect threat scenarios, and conduct red-teaming without proprietary compiled binaries.  
+VEP Lite is engineered as a **human-readable, open-spec evaluation sandbox (RFC-010)** to allow security researchers, CISOs, and developers to easily audit policy rules, inspect threat scenarios, and conduct red-teaming without proprietary compiled binaries.
 Claims about separate commercial implementations or production deployments are outside this repository's verification scope and should be assessed against their own version-bound evidence.
 
 ---

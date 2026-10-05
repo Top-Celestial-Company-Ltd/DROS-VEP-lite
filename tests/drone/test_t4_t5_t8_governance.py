@@ -110,6 +110,10 @@ def test_t8_deterministic_replay():
     privkey = "e5933ab83d0ee642a9848cd7623067d5a546a98ec0e2827ac4a21235321d186f"
     principal = "onboard-mission-agent"
 
+    now_ts = time.time()
+    issued_str = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now_ts - 10))
+    expiry_str = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now_ts + 300))
+
     payload = {"mode": "STANDBY"}
     req = {
         "request_id": "REQ-DET-REPLAY-1",
@@ -125,13 +129,13 @@ def test_t8_deterministic_replay():
                 "principal_id": principal,
                 "credential_type": "HARDWARE_ATTESTATION",
                 "signature": "",
-                "issued_at": "2026-09-24T00:00:00Z",
-                "expires_at": "2026-09-25T00:00:00Z",
+                "issued_at": issued_str,
+                "expires_at": expiry_str,
                 "verification_status": "VALID"
             }
         },
         "policy_context": {"policy_version": "v1.0"},
-        "expiry": "2026-09-25T00:00:00Z",
+        "expiry": expiry_str,
         "arg_hash": compute_arg_hash(payload)
     }
     req["provenance"]["data"]["signature"] = sign_execution_request(req, privkey)

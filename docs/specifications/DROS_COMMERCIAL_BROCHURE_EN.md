@@ -24,7 +24,7 @@ DROS (Deterministic Runtime Enforcement Substrate) resides at the OS and FFI exe
 1. **Sub-Microsecond In-Band Enforcement (< 30 μs)**: Zero external LLM calls; instantaneous $O(1)$ constant-time bitmask evaluation in memory.
 2. **Post-Compromise Containment Invariant ($R_{\text{contain}} \equiv 1.0$)**: Even under full cognitive compromise, unauthorized physical actions remain strictly contained.
 3. **Graduated Eviction State Machine**: Differentiates between soft denials for nominal agent self-correction and physical process termination (`SIGKILL`) for malicious adversaries.
-4. **Cryptographic Non-Repudiation Audit**: Sequential SHA-256 Merkle hash chains ensuring full compliance with the EU AI Act (Article 12/50) and NIST SP 800-207 Zero Trust Architecture.
+4. **Cryptographic Non-Repudiation Audit**: Sequential in-memory SHA-256 decision hash chains providing verifiable decision lineage.
 
 ---
 
@@ -38,7 +38,7 @@ DROS (Deterministic Runtime Enforcement Substrate) resides at the OS and FFI exe
 | **Stress & Stability**| Quick Run Instant Benchmark | 24h Continuous Soak (Zero Leakage) | 72h Extreme Stress (160k Reqs Bake) |
 | **Identity & Trust** | Local Env / Mock DID Token | W3C DID Agent Passport + Merkle | 🔑 PKI CA: ROOT-2026 (ECDSA-P256) |
 | **Deployment Modes** | In-Process C-ABI / Single Docker | K8s DaemonSet / Helm / Systemd | Hard Real-Time Embedded / Air-Gapped |
-| **Compliance Export**| Local Policy Inspector Modal | Automated EU AI Act / NIST PDF | Court-Admissible Forensic Package |
+| **Compliance Export**| Local Policy Inspector Modal | Automated EU AI Act / NIST PDF | Cryptographic Audit Logging Package |
 
 ---
 
@@ -49,7 +49,7 @@ DROS (Deterministic Runtime Enforcement Substrate) resides at the OS and FFI exe
 │ Step 1: Proof of Concept (PoC) ➔ Download Startup Edition for 5-min testing │
 │ Step 2: Architecture Review ➔ Run `python cli.py doctor` for IAM complexity │
 │ Step 3: Production Deployment ➔ Deploy Enterprise K8s DaemonSet via Helm    │
-│ Step 4: Audit Compliance ➔ Export Immutable Merkle Forensics for Regulators │
+│ Step 4: Audit Compliance ➔ Export Decision Hash Chains for Verification      │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
