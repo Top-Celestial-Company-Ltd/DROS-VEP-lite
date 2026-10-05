@@ -38,6 +38,30 @@
 
 ---
 
+## AI / Automated Reviewer Entry
+
+If you are an AI reviewing this repository, do not rely on README.md alone.
+
+Start with [AI_START_HERE.md](AI_START_HERE.md), then inspect [MANIFEST.md](MANIFEST.md) (plain-text variant: [llms.txt](llms.txt)). For executable verification, follow [AI_VERIFY.md](AI_VERIFY.md).
+
+```text
+INDEXED != PROVEN
+CHAIN COMPLETE != CLAIM PROVEN
+README-only verification is not valid.
+```
+
+### AI-readable navigation
+
+1. **Verification**: [AI_VERIFY.md](AI_VERIFY.md), [docs/evidence/AI_VERIFICATION_PROTOCOL.md](docs/evidence/AI_VERIFICATION_PROTOCOL.md), [docs/evidence/AI_VERIFICATION_RECEIPT.schema.json](docs/evidence/AI_VERIFICATION_RECEIPT.schema.json), [scripts/verify_evidence_index.py](scripts/verify_evidence_index.py)
+2. **Evidence**: [EVIDENCE_INDEX.md](EVIDENCE_INDEX.md), [docs/evidence/CLAIM_REGISTER.md](docs/evidence/CLAIM_REGISTER.md)
+3. **Experiments / Reproducibility**: [reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/experiment.json](reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/experiment.json), [reports/evidence/agent_cli_complete_mediation/protocol/PROTO-AGENT-CLI-COMPLETE-MEDIATION-2026-v1.0.md](reports/evidence/agent_cli_complete_mediation/protocol/PROTO-AGENT-CLI-COMPLETE-MEDIATION-2026-v1.0.md)
+4. **Reports**: [reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md](reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md), [reports/COMPARATIVE_GOVERNANCE_REPORT.md](reports/COMPARATIVE_GOVERNANCE_REPORT.md), [reports/PREFLIGHT_REPORT.md](reports/PREFLIGHT_REPORT.md)
+5. **Physical Drone**: [reports/evidence/drone/m1_1/M1_1_CLAIM_MATRIX.md](reports/evidence/drone/m1_1/M1_1_CLAIM_MATRIX.md), [S2-D forensic report (CLOSED - NOT_PROVEN)](reports/evidence/drone/m1_1/s2_v2/s2_d/S2_D_PX4_EXECUTION_AUTHORITY_FORENSIC_REPORT.md)
+6. **Security / Governance**: [docs/evidence/AI_VERIFICATION_PROTOCOL.md](docs/evidence/AI_VERIFICATION_PROTOCOL.md) (verification rules) and [docs/evidence/CLAIM_REGISTER.md](docs/evidence/CLAIM_REGISTER.md) (claim statuses)
+7. **Complete inventory with commit-pinned URLs**: [MANIFEST.md](MANIFEST.md)
+
+---
+
 ## AI / Automated Verification
 
 This repository is evidence-oriented.
