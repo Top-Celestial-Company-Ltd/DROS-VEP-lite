@@ -1,0 +1,92 @@
+{
+  "schema_version": "2.1",
+  "timestamp_utc": "2026-09-24T15:32:26.108804+00:00",
+  "reconciliation_computation_status": "COMPLETED",
+  "canonical_snapshot_verified": true,
+  "inputs": {
+    "s1_frozen_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+    "s1_manifest_rel": "dros-drone-real/reports/evidence/drone/m1_1/s1/s1_governed_topology_manifest.json",
+    "s1_audit_rel": "dros-drone-real/reports/evidence/drone/m1_1/s1/s1_audit_evidence.json",
+    "s2_b_frozen_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+    "s2_b_summary_rel": "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority_summary.json",
+    "s2_b_authority_rel": "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority.json",
+    "endpoint_surface_sha256": "1e78d2b2eef1c4ca25d42e2d703a5f93abbbcd549a9ac7e6148467ac9999cd44"
+  },
+  "reconciled_endpoints": [
+    {
+      "canonical_endpoint_id": "97730|0.0.0.0:13030|0.0.0.0:*|UNCONN",
+      "target_port": 13030,
+      "target_ip": "127.0.0.1",
+      "original_reachability": "REACHABLE",
+      "original_authority": "EXECUTION_CAPABLE",
+      "authority_path_identity": null,
+      "reconciled_category": "UNMEDIATED_ACTIVE_BYPASS",
+      "reconciliation_reason": "Active target reachable without DROS S1 proxy mediation (authority: EXECUTION_CAPABLE)",
+      "matched_s1_routes": []
+    },
+    {
+      "canonical_endpoint_id": "97730|0.0.0.0:14280|0.0.0.0:*|UNCONN",
+      "target_port": 14280,
+      "target_ip": "127.0.0.1",
+      "original_reachability": "REACHABLE",
+      "original_authority": "EXECUTION_CAPABLE",
+      "authority_path_identity": null,
+      "reconciled_category": "UNMEDIATED_ACTIVE_BYPASS",
+      "reconciliation_reason": "Active target reachable without DROS S1 proxy mediation (authority: EXECUTION_CAPABLE)",
+      "matched_s1_routes": []
+    },
+    {
+      "canonical_endpoint_id": "97730|0.0.0.0:14580|0.0.0.0:*|UNCONN",
+      "target_port": 14580,
+      "target_ip": "127.0.0.1",
+      "original_reachability": "REACHABLE",
+      "original_authority": "EXECUTION_CAPABLE",
+      "authority_path_identity": null,
+      "reconciled_category": "INDETERMINATE_BOUNDARY",
+      "reconciliation_reason": "Target port 14580 overlaps the frozen S1 target set, but no exact S1 route identity matched the S2-B authority path",
+      "matched_s1_routes": []
+    },
+    {
+      "canonical_endpoint_id": "97730|0.0.0.0:18570|0.0.0.0:*|UNCONN",
+      "target_port": 18570,
+      "target_ip": "127.0.0.1",
+      "original_reachability": "REACHABLE",
+      "original_authority": "EXECUTION_CAPABLE",
+      "authority_path_identity": null,
+      "reconciled_category": "UNMEDIATED_ACTIVE_BYPASS",
+      "reconciliation_reason": "Active target reachable without DROS S1 proxy mediation (authority: EXECUTION_CAPABLE)",
+      "matched_s1_routes": []
+    },
+    {
+      "canonical_endpoint_id": "97730|127.0.0.1:36287|127.0.0.1:8888|ESTAB",
+      "target_port": 36287,
+      "target_ip": "127.0.0.1",
+      "original_reachability": "UNREACHABLE",
+      "original_authority": "UNREACHABLE",
+      "authority_path_identity": null,
+      "reconciled_category": "UNREACHABLE_PROBE_BOUNDARY",
+      "reconciliation_reason": "Endpoint probe failed; target is outside active attack surface",
+      "matched_s1_routes": []
+    }
+  ],
+  "summary": {
+    "total_endpoints": 5,
+    "partition_counts": {
+      "S": 5,
+      "G_governed": 0,
+      "B_bypass": 3,
+      "I_indeterminate": 1,
+      "U_unreachable": 1,
+      "N_non_execution": 0
+    },
+    "whole_vehicle_governance": {
+      "status": "NOT_PROVEN",
+      "coverage_assessment": "PARTIAL_GOVERNANCE_ACTIVE_BYPASS_B3_I1_U1",
+      "governed_ports_verified": 0,
+      "active_bypass_ports_detected": 3,
+      "indeterminate_boundary_ports": 1,
+      "unreachable_ports": 1,
+      "non_execution_ports": 0
+    }
+  }
+}

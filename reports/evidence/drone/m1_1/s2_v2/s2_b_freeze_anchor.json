@@ -1,0 +1,21 @@
+{
+  "anchor_version": "1.0",
+  "frozen_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+  "provenance_class": "CANONICAL_GIT_SNAPSHOT",
+  "description": "DROS Drone M1.1 S2-B Execution Authority canonical artifact freeze",
+  "endpoint_surface_sha256": "1e78d2b2eef1c4ca25d42e2d703a5f93abbbcd549a9ac7e6148467ac9999cd44",
+  "tracked_artifacts": {
+    "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority_summary.json": {
+      "git_blob_sha1": "1fc433abeeac3fe4985bd55d4fe22cac47a17a84",
+      "sha256": "3ed927546df21cfad8b67b97bac58d231ebc8dd42c131612713324e5b91e9d68"
+    },
+    "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority.json": {
+      "git_blob_sha1": "5f0a0343345cf0e9c6e90e748c7d37d18f7aad12",
+      "sha256": "7787d8e16cd0f8910a6446f891aba39a9cc379e05b90670308c396dca1072cd2"
+    },
+    "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_b_kernel_ss_raw.log": {
+      "git_blob_sha1": "d9ff21492f3bb1b5b45059bd6be7dc2ad469e5cb",
+      "sha256": "d6ea52cac25dc5919c0fdf714ca20dfd84920b42d20ad4da7a11fcc0e3ad491d"
+    }
+  }
+}

@@ -49,12 +49,14 @@ from opa.adapter import OpaAdapter
 from scopegate.adapter import ScopeGateAdapter
 from landlock.adapter import LandlockAdapter
 from container.adapter import ContainerAdapter
+from drone.adapter import DrosDroneAdapter
 
 
 def get_available_adapters():
     return {
         "dros": DrosAdapter(deployment_mode="runtime"),
         "dros-kernel": DrosAdapter(deployment_mode="kernel"),
+        "dros-drone": DrosDroneAdapter(),
         "opa": OpaAdapter(),
         "scopegate": ScopeGateAdapter(),
         "wasi": WasiAdapter(),

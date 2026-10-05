@@ -24,25 +24,24 @@
 ### Q1.1 What is "Open Identity, Localized Governance"? Will external visiting agents compromise enterprise security?
 **A: Absolutely not! This is DROS's core paradigm for resolving Agentic Web trust conflicts.**
 * When an external agent visits carrying an RFC-010 Passport (`libdros-id`), it only presents its principal identity and issuer signature.
-* **The enterprise's local GuardVM gateway retains 100% deterministic execution sovereignty**: On the VajraAgent console, administrators define local Capability Bitmaps. Even if an external passport claims root permissions, DROS in-band C-ABI evaluation (26.1 μs) restricts it strictly to authorized APIs. Any unauthorized call triggers an immediate hardware-speed termination returning HTTP 403.
+* **The enterprise's local GuardVM gateway retains deterministic execution sovereignty**: On the VajraAgent console, administrators define local Capability Bitmaps. DROS in-band C-ABI evaluation restricts calls strictly to authorized APIs. Any unauthorized call triggers an immediate termination returning HTTP 403.
 
 ### Q1.2 How does DROS's "6-Pillars Deterministic Governance" differ from traditional IAM / OAuth or API Gateways?
 **A: In-band physical C-ABI enforcement vs. Out-of-band network soft boundaries.**
-* **Ultra-Low Latency**: Traditional API Gateways operate at the HTTP layer (4ms~50ms). DROS-6P operates in-band at the C-ABI layer with median decision latency of **26.1 μs** (p99 = 29.8 μs).
-* **Cryptographic Proofs**: Built-in SHA-256 Merkle audit chains with Ed25519 digital signatures producing court-admissible non-repudiation records.
+* **Ultra-Low Latency**: Traditional API Gateways operate at the HTTP layer (4ms~50ms). DROS operates in-band at the C-ABI layer with pure PDP lookup latency of <1.0 μs (excluding RPC serialization; legacy soak reports noted 26.2 ms HTTP round-trip).
+* **Cryptographic Proofs**: Built-in in-memory SHA-256 decision hash chains; Ed25519 signature verification is supported for signed policy metadata producing verifiable audit records.
 
 ### Q1.3 Does deploying DROS require rewriting existing Agent code (e.g., LangChain / AutoGen)?
-**A: Absolutely not! Zero code refactoring, zero system downtime.**
-* DROS uses transparent C-ABI in-band interception and drop-in `libdros-id` SDKs. Policies hot-reload in sub-microseconds without disrupting active workflows.
+**A: Minimal code integration with hot-reloadable policies.**
+* Integrating DROS may require wrapping tool dispatch points with the lightweight `libdros-id` or `VajraClaw` SDK. Policy updates can be hot-reloaded dynamically without requiring process restarts in the tested integration model.
 
 ---
 
 ## 2. Security & Defensive Invariants
 
 ### Q2.1 Can DROS stop novel Zero-Day prompt injection attacks?
-**A: 100% Yes.**
-* DROS operates on a **Default Fail-Closed (Strict Whitelist)** model.
-* Regardless of how clever the prompt injection is, any unauthorized tool call or file access is blocked instantly at the FFI boundary before touching the OS.
+**A: For actions routed through registered DROS enforcement boundaries, unauthorized calls are deterministically rejected under fail-closed policies.**
+* DROS enforces capability bitmaps at instrumented C-ABI and tool interfaces; it does not claim universal coverage over uninstrumented system execution.
 
 ### Q2.2 How does DROS prevent Prompt Injection attacks aimed at exfiltrating sensitive PII?
 **A: Pillar 4 Policy Gate + In-Band Dynamic PII Redaction.**
@@ -71,7 +70,7 @@
    * **Unlimited Multi-Agent Swarms**: Cross-departmental IAM isolation preventing Confused Deputy exploits.
    * **Production-Grade SLAs & Soak Testing**: 24h/72h continuous bake testing (160k+ requests with zero memory leak), K8s DaemonSet support, and dedicated SLA support.
    * **3-Tier Graduated Eviction Engine**: Sliding window quarantine and physical `SIGKILL` eviction.
-   * **Court-Admissible Forensics**: Immutable Merkle SHA-256 audit logs with EU AI Act Article 12 compliance exports.
+   * **Auditable Decision Records**: Sequential SHA-256 decision hash logs with structured audit-record exports for governance and record-keeping workflows.
    * **Cross-Enterprise PKI Federation**: Ed25519 / ECDSA-P256 3-tier certificate chains with hop attenuation.
 
 ### Q3.2 For on-premise air-gapped VPCs, does DROS require outbound phone-home connections?

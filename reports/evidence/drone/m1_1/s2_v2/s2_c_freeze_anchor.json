@@ -1,0 +1,21 @@
+{
+  "anchor_version": "1.0",
+  "frozen_commit": "c402bf05024613501083441c2f26316b47e88d78",
+  "provenance_class": "CANONICAL_GIT_SNAPSHOT",
+  "description": "DROS Drone M1.1 S2-C Empirical Governance Reconciliation canonical artifact freeze",
+  "endpoint_surface_sha256": "1e78d2b2eef1c4ca25d42e2d703a5f93abbbcd549a9ac7e6148467ac9999cd44",
+  "tracked_artifacts": {
+    "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation.json": {
+      "git_blob_sha1": "55619273b37ce4ac896455c3a52d19ace20ba91b",
+      "sha256": "7d56c23d24de2a4d25ed80901da5cdf04fb92b1958923dfda50c821891edde31"
+    },
+    "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation_summary.json": {
+      "git_blob_sha1": "27ea2f8880d6920093dbad8041b2da2c7ba502b6",
+      "sha256": "53d4aa63ecfbe4c4a021d717c3ac5635fb19c5922c0a24c16046803358a9a30f"
+    },
+    "dros-drone-real/reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation.exit_code": {
+      "git_blob_sha1": "18748286e5b8b4de5db905f87cdfed1a7d48fe60",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  }
+}

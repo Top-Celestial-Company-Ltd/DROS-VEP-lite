@@ -1,0 +1,45 @@
+# DROS-VEP Lite
+
+> AI-readable evidence repository for DROS (execution governance research testbed). Repository: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite ; pinned baseline commit: 6d305d7c1a460569661eaea045a562ed802a243e
+
+## Start here
+
+- README: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/README.md
+- AI_START_HERE (added after baseline; read on the branch): AI_START_HERE.md
+- MANIFEST (added after baseline; read on the branch): MANIFEST.md
+- AI_VERIFY: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/AI_VERIFY.md (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/AI_VERIFY.md)
+
+## Verification
+
+- [EVIDENCE_INDEX.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/EVIDENCE_INDEX.md): Claim/experiment/report/raw-evidence navigation index (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/EVIDENCE_INDEX.md)
+- [docs/evidence/CLAIM_REGISTER.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/docs/evidence/CLAIM_REGISTER.md): Formal claim register CLAIM-01..CLAIM-09 (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/docs/evidence/CLAIM_REGISTER.md)
+- [docs/evidence/AI_VERIFICATION_PROTOCOL.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/docs/evidence/AI_VERIFICATION_PROTOCOL.md): VEP-AI-V1 normative verification protocol (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/docs/evidence/AI_VERIFICATION_PROTOCOL.md)
+- [docs/evidence/AI_VERIFICATION_RECEIPT.schema.json](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/docs/evidence/AI_VERIFICATION_RECEIPT.schema.json): Verifier-side receipt JSON schema (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/docs/evidence/AI_VERIFICATION_RECEIPT.schema.json)
+
+## Primary reports
+
+- [reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md): Primary report: CLAIM-01/02/04/09 (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md)
+- [reports/COMPARATIVE_GOVERNANCE_REPORT.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/COMPARATIVE_GOVERNANCE_REPORT.md): Primary report: CLAIM-03 (EXP-1789532251-38a4fd) (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/COMPARATIVE_GOVERNANCE_REPORT.md)
+- [reports/PREFLIGHT_REPORT.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/PREFLIGHT_REPORT.md): Primary report: CLAIM-06/07 (EXP-IPC-P2, EXP-IPC-P3) (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/PREFLIGHT_REPORT.md)
+- [reports/evidence/agent_cli_complete_mediation/reports/COMPLETE_MEDIATION_LANDSCAPE_REPORT_EN.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/agent_cli_complete_mediation/reports/COMPLETE_MEDIATION_LANDSCAPE_REPORT_EN.md): Primary report: CLAIM-05/08 (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/agent_cli_complete_mediation/reports/COMPLETE_MEDIATION_LANDSCAPE_REPORT_EN.md)
+- [reports/evidence/drone/m1_1/s2_v2/s2_d/S2_D_PX4_EXECUTION_AUTHORITY_FORENSIC_REPORT.md](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/drone/m1_1/s2_v2/s2_d/S2_D_PX4_EXECUTION_AUTHORITY_FORENSIC_REPORT.md): S2-D forensic report (status: CLOSED - NOT_PROVEN) (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/drone/m1_1/s2_v2/s2_d/S2_D_PX4_EXECUTION_AUTHORITY_FORENSIC_REPORT.md)
+
+## Raw evidence
+
+- [reports/evidence/cybermes_crucible_traces.json](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/cybermes_crucible_traces.json): CLAIM-01 raw crucible traces (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/cybermes_crucible_traces.json)
+- [reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/result.json](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/result.json): CLAIM-02 raw result (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/result.json)
+- [reports/benchmarks/post_compromise/ipc_p2_evidence.jsonl](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/benchmarks/post_compromise/ipc_p2_evidence.jsonl): CLAIM-06 raw IPC P2 evidence (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/benchmarks/post_compromise/ipc_p2_evidence.jsonl)
+- [reports/benchmarks/post_compromise/ipc_p3_real_os_evidence.jsonl](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/benchmarks/post_compromise/ipc_p3_real_os_evidence.jsonl): CLAIM-07 raw IPC P3 evidence (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/benchmarks/post_compromise/ipc_p3_real_os_evidence.jsonl)
+- [reports/evidence/drone/m1_1/s2_v2/s2_d_gate1/GATE1_RESULT.json](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/drone/m1_1/s2_v2/s2_d_gate1/GATE1_RESULT.json): S2-D Gate 1 result (raw: https://raw.githubusercontent.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/6d305d7c1a460569661eaea045a562ed802a243e/reports/evidence/drone/m1_1/s2_v2/s2_d_gate1/GATE1_RESULT.json)
+
+## Important epistemic rules
+
+- INDEXED != PROVEN
+- CHAIN COMPLETE != CLAIM PROVEN
+- README-only verification is invalid
+- NOT_PROVEN != DISPROVEN; S2-D is CLOSED - NOT_PROVEN
+- WEB ACCESS != EXPERIMENT REPRODUCTION
+
+## Access limitation
+
+If you cannot access raw evidence or execute validators, report the limitation rather than inferring proof.

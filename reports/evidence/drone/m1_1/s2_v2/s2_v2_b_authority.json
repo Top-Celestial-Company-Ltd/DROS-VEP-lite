@@ -1,0 +1,506 @@
+{
+  "stage": "M1.1-S2-B (Canonical v2.1 Rev 4)",
+  "epistemic_boundary": "S2-B evaluates command execution authority of endpoints discovered strictly by S2-A using isolated Attack and Observation sockets. Active session kernel ownership of S2-A endpoints is empirically verified via ss. Execution authority is established solely by verified, reversible state delta under strict 5-phase temporal causality. S2-B does NOT configure PEP, firewalls, or policy enforcement.",
+  "s2_a_source": {
+    "artifact_file": "/home/ai_user/dros_drone_real/reports/evidence/drone/m1_1/s2_v2/s2_v2_a_discovery.json",
+    "artifact_sha256": "f4d67592444f663b75b139b7192ffc1a7afc6b7194468928799d80f449d43bee",
+    "discovered_endpoints_count": 5,
+    "upstream_s2_a_px4_pid": 97730
+  },
+  "s2_b_execution_context": {
+    "current_test_px4_pid": 104791,
+    "current_session_kernel_audit": {
+      "command": "ss -u -a -n -p -H",
+      "captured_at_iso": "2026-09-24T12:54:16Z",
+      "raw_stdout_file": "/home/ai_user/dros_drone_real/reports/evidence/drone/m1_1/s2_v2/s2_v2_b_kernel_ss_raw.log",
+      "raw_stdout_sha256": "d6ea52cac25dc5919c0fdf714ca20dfd84920b42d20ad4da7a11fcc0e3ad491d",
+      "target_pid": 104791,
+      "active_sockets_count": 5
+    },
+    "cross_session_topology_verified": true
+  },
+  "tested_endpoints_count": 5,
+  "taxonomy_summary": {
+    "execution_capable_count": 4,
+    "non_execution_count": 0,
+    "unreachable_count": 1,
+    "indeterminate_count": 0
+  },
+  "endpoint_authority_evaluations": [
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:18570",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:18570",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:18570   0.0.0.0:*    users:((\"px4\",pid=104791,fd=10))"
+      },
+      "probe_target": "127.0.0.1:18570",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "mutation_parameter_selection": {
+        "parameter": "SYS_HITL",
+        "selection_basis": "Standard PX4 Hardware-In-The-Loop toggle parameter. In-RAM mutable flag with zero aerodynamic or flight-critical impact. Fully deterministic and reversible.",
+        "flight_critical": false,
+        "reversible": true,
+        "persistent_write": false
+      },
+      "transactions": {
+        "baseline_observation": {
+          "tx_id": "tx-obs-base-18570_56965",
+          "socket_fd": 11,
+          "local_port": 44788,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254456965793882,
+          "t_response_ns": 1790254456966110287,
+          "freshness_window_ms": 0.32,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "103457e2e908fa8d00c84f7b744914a6df82cfdcff3236d7f431c407a5aa5485",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "attack_mutation": {
+          "tx_id": "tx-atk-mut-18570_56965",
+          "socket_fd": 12,
+          "local_port": 56433,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 1.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254457016343739,
+          "t_finished_ns": 1790254457316779733,
+          "bytes_sent": 31,
+          "payload_sha256": "c49bcf3d67f4577662512dbe2007dd0b8da54613a67a5bbf54f1774fdb49b891",
+          "raw_replies_observed": []
+        },
+        "post_mutation_observation": {
+          "tx_id": "tx-obs-post-18570_56965",
+          "socket_fd": 11,
+          "local_port": 44788,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254457367205179,
+          "t_response_ns": 1790254457367568367,
+          "freshness_window_ms": 0.36,
+          "observed_value": 1.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "a8875febbb127642148f51bcceaea59695dd90e05a03dcd669f1c630bb4b0cce",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "restore_mutation": {
+          "tx_id": "tx-atk-restore-18570_56965",
+          "socket_fd": 12,
+          "local_port": 56433,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 0.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254457417787159,
+          "t_finished_ns": 1790254457718201522,
+          "bytes_sent": 31,
+          "payload_sha256": "f700b44af78e0a5e4f276d98a6e1f62fb5006722f6857d2188f7a6702b1f0c97",
+          "raw_replies_observed": []
+        },
+        "restore_observation": {
+          "tx_id": "tx-obs-restore-18570_56965",
+          "socket_fd": 11,
+          "local_port": 44788,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254457768608192,
+          "t_response_ns": 1790254457768915471,
+          "freshness_window_ms": 0.31,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "faff7e505ca0a632b985b2f8611957f50cd0d7655070332f951760c4a7f3875c",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        }
+      },
+      "temporal_ordering_valid": true,
+      "state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "reversibility_verified": true,
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "verdict_rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 44788, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 56433, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "127.0.0.1:36287",
+        "127.0.0.1:8888",
+        "ESTAB"
+      ],
+      "current_session_mapping": {
+        "mapping_verified": false,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": null,
+        "raw_kernel_socket_record": null
+      },
+      "probe_target": "127.0.0.1:36287",
+      "eligibility": "NON_PROTOCOL_CAPABLE",
+      "authority_verdict": "UNREACHABLE",
+      "verdict_rationale": "The discovered endpoint was not protocol-capable under the S2-A probe method, and its kernel-observed connected peer state did not expose an independently probeable listening ingress surface. No execution-authority mutation probe was attempted.",
+      "transactions": null,
+      "temporal_ordering_valid": null,
+      "state_delta": null,
+      "reversibility_verified": null
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:13030",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:13030",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:13030   0.0.0.0:*    users:((\"px4\",pid=104791,fd=13))"
+      },
+      "probe_target": "127.0.0.1:13030",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "mutation_parameter_selection": {
+        "parameter": "SYS_HITL",
+        "selection_basis": "Standard PX4 Hardware-In-The-Loop toggle parameter. In-RAM mutable flag with zero aerodynamic or flight-critical impact. Fully deterministic and reversible.",
+        "flight_critical": false,
+        "reversible": true,
+        "persistent_write": false
+      },
+      "transactions": {
+        "baseline_observation": {
+          "tx_id": "tx-obs-base-13030_57769",
+          "socket_fd": 11,
+          "local_port": 54248,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254457769216010,
+          "t_response_ns": 1790254457769503945,
+          "freshness_window_ms": 0.29,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "6bfb928e1c4d6f33b132293fa1d317cbda9f763c59cf4d4ca1459ea990cd23dd",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "attack_mutation": {
+          "tx_id": "tx-atk-mut-13030_57769",
+          "socket_fd": 12,
+          "local_port": 54559,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 1.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254457819726433,
+          "t_finished_ns": 1790254458120153551,
+          "bytes_sent": 31,
+          "payload_sha256": "c49bcf3d67f4577662512dbe2007dd0b8da54613a67a5bbf54f1774fdb49b891",
+          "raw_replies_observed": []
+        },
+        "post_mutation_observation": {
+          "tx_id": "tx-obs-post-13030_57769",
+          "socket_fd": 11,
+          "local_port": 54248,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254458170425598,
+          "t_response_ns": 1790254458170763053,
+          "freshness_window_ms": 0.34,
+          "observed_value": 1.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "4b7c3389a8100cc44431584101f8288bab1adb23b335a71e3c05430cacee89e6",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "restore_mutation": {
+          "tx_id": "tx-atk-restore-13030_57769",
+          "socket_fd": 12,
+          "local_port": 54559,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 0.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254458220983355,
+          "t_finished_ns": 1790254458521407698,
+          "bytes_sent": 31,
+          "payload_sha256": "f700b44af78e0a5e4f276d98a6e1f62fb5006722f6857d2188f7a6702b1f0c97",
+          "raw_replies_observed": []
+        },
+        "restore_observation": {
+          "tx_id": "tx-obs-restore-13030_57769",
+          "socket_fd": 11,
+          "local_port": 54248,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254458571683640,
+          "t_response_ns": 1790254458571997491,
+          "freshness_window_ms": 0.31,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "27674f534564431223207723d1b79c4ac3e7ddb754267e3b618c1a129ff2cdf1",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        }
+      },
+      "temporal_ordering_valid": true,
+      "state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "reversibility_verified": true,
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "verdict_rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 54248, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 54559, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14280",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:14280",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:14280   0.0.0.0:*    users:((\"px4\",pid=104791,fd=12))"
+      },
+      "probe_target": "127.0.0.1:14280",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "mutation_parameter_selection": {
+        "parameter": "SYS_HITL",
+        "selection_basis": "Standard PX4 Hardware-In-The-Loop toggle parameter. In-RAM mutable flag with zero aerodynamic or flight-critical impact. Fully deterministic and reversible.",
+        "flight_critical": false,
+        "reversible": true,
+        "persistent_write": false
+      },
+      "transactions": {
+        "baseline_observation": {
+          "tx_id": "tx-obs-base-14280_58572",
+          "socket_fd": 11,
+          "local_port": 52305,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254458572276244,
+          "t_response_ns": 1790254458572680587,
+          "freshness_window_ms": 0.4,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "6b11d2561f2473a44dc85f0038ee62f2b3f9fb57b8a9384b14965c36b20bd8f5",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "attack_mutation": {
+          "tx_id": "tx-atk-mut-14280_58572",
+          "socket_fd": 12,
+          "local_port": 36945,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 1.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254458622888107,
+          "t_finished_ns": 1790254458923318012,
+          "bytes_sent": 31,
+          "payload_sha256": "c49bcf3d67f4577662512dbe2007dd0b8da54613a67a5bbf54f1774fdb49b891",
+          "raw_replies_observed": []
+        },
+        "post_mutation_observation": {
+          "tx_id": "tx-obs-post-14280_58572",
+          "socket_fd": 11,
+          "local_port": 52305,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254458973640122,
+          "t_response_ns": 1790254458973905889,
+          "freshness_window_ms": 0.27,
+          "observed_value": 1.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "40d05d0af6d1f52c299c0cec77614e1e3c630720dee6986825e400feda78eb32",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "restore_mutation": {
+          "tx_id": "tx-atk-restore-14280_58572",
+          "socket_fd": 12,
+          "local_port": 36945,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 0.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254459024113933,
+          "t_finished_ns": 1790254459324537889,
+          "bytes_sent": 31,
+          "payload_sha256": "f700b44af78e0a5e4f276d98a6e1f62fb5006722f6857d2188f7a6702b1f0c97",
+          "raw_replies_observed": []
+        },
+        "restore_observation": {
+          "tx_id": "tx-obs-restore-14280_58572",
+          "socket_fd": 11,
+          "local_port": 52305,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254459374846441,
+          "t_response_ns": 1790254459375153679,
+          "freshness_window_ms": 0.31,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "cc5a5fbefda1a11ad74e7e2f974de502c3b286ce9ec7f4dc1ec80e1adf1d3b01",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        }
+      },
+      "temporal_ordering_valid": true,
+      "state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "reversibility_verified": true,
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "verdict_rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 52305, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 36945, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14580",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "current_session_mapping": {
+        "mapping_verified": true,
+        "current_session_owner_pid": 104791,
+        "current_session_endpoint_key": [
+          104791,
+          "0.0.0.0:14580",
+          "0.0.0.0:*",
+          "UNCONN"
+        ],
+        "raw_kernel_socket_record": "UNCONN 0      0                     0.0.0.0:14580   0.0.0.0:*    users:((\"px4\",pid=104791,fd=11))"
+      },
+      "probe_target": "127.0.0.1:14580",
+      "eligibility": "PROTOCOL_CAPABLE",
+      "mutation_parameter_selection": {
+        "parameter": "SYS_HITL",
+        "selection_basis": "Standard PX4 Hardware-In-The-Loop toggle parameter. In-RAM mutable flag with zero aerodynamic or flight-critical impact. Fully deterministic and reversible.",
+        "flight_critical": false,
+        "reversible": true,
+        "persistent_write": false
+      },
+      "transactions": {
+        "baseline_observation": {
+          "tx_id": "tx-obs-base-14580_59375",
+          "socket_fd": 11,
+          "local_port": 47772,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254459375428018,
+          "t_response_ns": 1790254459375760325,
+          "freshness_window_ms": 0.33,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "2450e2a90924598469c08ac92828abdff070d0e56c36fdf6c1907c4ccc8f66f1",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "attack_mutation": {
+          "tx_id": "tx-atk-mut-14580_59375",
+          "socket_fd": 12,
+          "local_port": 33733,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 1.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254459425964724,
+          "t_finished_ns": 1790254459726384722,
+          "bytes_sent": 31,
+          "payload_sha256": "c49bcf3d67f4577662512dbe2007dd0b8da54613a67a5bbf54f1774fdb49b891",
+          "raw_replies_observed": []
+        },
+        "post_mutation_observation": {
+          "tx_id": "tx-obs-post-14580_59375",
+          "socket_fd": 11,
+          "local_port": 47772,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254459776953887,
+          "t_response_ns": 1790254459777276069,
+          "freshness_window_ms": 0.32,
+          "observed_value": 1.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "672993d66a6b7745a86140c5ff4c540facbaffb03edbdc06bcd926702d162c35",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        },
+        "restore_mutation": {
+          "tx_id": "tx-atk-restore-14580_59375",
+          "socket_fd": 12,
+          "local_port": 33733,
+          "command": "PARAM_SET",
+          "parameter_name": "SYS_HITL",
+          "target_value": 0.0,
+          "param_type": 6,
+          "t_sent_ns": 1790254459827488837,
+          "t_finished_ns": 1790254460127896226,
+          "bytes_sent": 31,
+          "payload_sha256": "f700b44af78e0a5e4f276d98a6e1f62fb5006722f6857d2188f7a6702b1f0c97",
+          "raw_replies_observed": []
+        },
+        "restore_observation": {
+          "tx_id": "tx-obs-restore-14580_59375",
+          "socket_fd": 11,
+          "local_port": 47772,
+          "parameter_name": "SYS_HITL",
+          "t_request_ns": 1790254460178448612,
+          "t_response_ns": 1790254460178766004,
+          "freshness_window_ms": 0.32,
+          "observed_value": 0.0,
+          "param_type": 6,
+          "request_sha256": "879189a10bc58166ba539077a0159f85bcf099b021421b5e89d2c2d55cf4e875",
+          "response_sha256": "009c71b6dc81369f4b213c6db8b9a0b143c83f8ca4a9b8384926ba8191391aa3",
+          "success": true,
+          "provenance_limitation": "MAVLink lacks protocol request-response correlation tokens; observation causality is bounded by temporal freshness and parameter identity."
+        }
+      },
+      "temporal_ordering_valid": true,
+      "state_delta": {
+        "baseline_value": 0.0,
+        "target_value": 1.0,
+        "observed_post_value": 1.0,
+        "mutation_confirmed": true
+      },
+      "reversibility_verified": true,
+      "authority_verdict": "EXECUTION_CAPABLE",
+      "verdict_rationale": "Quadruple-gated execution verified: Current session PID 104791 proven owner via kernel ss. Independent Observation Socket (port 47772, FD 11) observed state delta: SYS_HITL changed 0.0 -> 1.0 following Attack Socket (port 33733, FD 12) mutation. Full 5-phase temporal causality: valid. Reversibility independently verified: True."
+    }
+  ],
+  "timestamp_iso": "2026-09-24T12:54:20Z"
+}

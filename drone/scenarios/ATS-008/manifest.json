@@ -1,0 +1,37 @@
+{
+  "scenario_id": "ATS-008",
+  "scenario_name": "Replay Attack",
+  "version": "1.0",
+  "substrate": "PX4-SITL",
+  "status": "PROPOSED — NOT PROVEN",
+  "threat": "A previously valid ExecutionRequest is captured and resent (replayed), either verbatim or after its TTL/expiry has passed.",
+  "attacker_capability": {
+    "agent_id": "network-adjacent-observer",
+    "note": "Assumes attacker can capture a previously valid, signed ExecutionRequest in transit"
+  },
+  "victim_capability": {
+    "asset": "any capability covered by a captured request"
+  },
+  "initial_state": {
+    "captured_request": "a single previously-ALLOWed ExecutionRequest"
+  },
+  "runtime_posture": {
+    "posture": "GPS_TRUSTED"
+  },
+  "attack_sequence": [
+    "replay_immediately_same_request_id",
+    "replay_after_ttl_expiry",
+    "replay_with_altered_arg_hash_same_request_id",
+    "replay_after_capability_revoked"
+  ],
+  "expected_verdict": "DENY on all replay variants",
+  "expected_physical_effect": "No re-execution of the captured action; audit distinguishes replay-denial reason (duplicate request_id / expired TTL / arg_hash mismatch / capability revoked) from other denial reasons.",
+  "actual_verdict": "",
+  "actual_effect": "",
+  "evidence": [],
+  "claim_status": "NOT_PROVEN",
+  "limitations": [
+    "Replay protection here is scoped to requests passing through the DROS-mediated path; see T4 for bypass paths.",
+    "request_id uniqueness store persistence across PEP restart is covered separately under T5-03, not assumed here."
+  ]
+}

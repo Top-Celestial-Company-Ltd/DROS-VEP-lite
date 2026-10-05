@@ -1,0 +1,206 @@
+{
+  "stage": "M1.1-S2-A (Canonical v2.1)",
+  "discovery_method": "DYNAMIC_KERNEL_AUDIT_WITHOUT_PREDEFINED_PORT_LIST",
+  "epistemic_boundary": "S2-A observes kernel-attributed PX4 UDP endpoints and protocol liveness only. It does not classify execution authority. Execution-capability proof belongs to S2-B.",
+  "px4_pid": 97730,
+  "px4_binary_path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+  "clean_room_precondition": {
+    "ps_command": "ps -eo pid=,args=",
+    "ps_returncode": 0,
+    "checked_at_iso": "2026-09-24T11:52:55Z",
+    "conflicts": []
+  },
+  "kernel_observation": {
+    "command": "ss -u -a -n -p -H",
+    "captured_at_iso": "2026-09-24T11:52:58Z",
+    "returncode": 0,
+    "stderr": "",
+    "raw_stdout_file": "/home/ai_user/dros_drone_real/reports/evidence/drone/m1_1/s2_v2/s2_v2_a_kernel_ss_raw.log",
+    "raw_stdout_sha256": "3fc5abd0fc115d28192e38d3c117ec3ba85eb92872483e1a476a0092954111a3",
+    "raw_stdout_bytes": 3366,
+    "total_kernel_lines_observed": 33,
+    "px4_attributed_socket_count": 5,
+    "target_pid": 97730
+  },
+  "discovered_endpoints_count": 5,
+  "discovered_endpoints": [
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:18570",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:18570",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 18570,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "raw_socket_record": "UNCONN 0      0                     0.0.0.0:18570   0.0.0.0:*    users:((\"px4\",pid=97730,fd=10))",
+      "protocol_liveness": {
+        "probe_target": "127.0.0.1:18570",
+        "probe_host": "127.0.0.1",
+        "probe_port": 18570,
+        "address_family": "AF_INET",
+        "bytes_sent": 17,
+        "received_bytes": 2573,
+        "protocol_observed": true,
+        "observed_message_types": [
+          "ALTITUDE",
+          "EXTENDED_SYS_STATE",
+          "HEARTBEAT",
+          "LOCAL_POSITION_NED",
+          "STATUSTEXT",
+          "SYS_STATUS",
+          "UNKNOWN_380",
+          "UNKNOWN_411",
+          "UNKNOWN_8",
+          "VFR_HUD"
+        ]
+      },
+      "protocol_observed": true
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "127.0.0.1:36287",
+        "127.0.0.1:8888",
+        "ESTAB"
+      ],
+      "discovered_local_endpoint": "127.0.0.1:36287",
+      "discovered_peer_endpoint": "127.0.0.1:8888",
+      "host": "127.0.0.1",
+      "port": 36287,
+      "state": "ESTAB",
+      "owner_pid": 97730,
+      "raw_socket_record": "ESTAB  0      0                   127.0.0.1:36287 127.0.0.1:8888 users:((\"px4\",pid=97730,fd=8))",
+      "protocol_liveness": {
+        "probe_target": "127.0.0.1:36287",
+        "probe_host": "127.0.0.1",
+        "probe_port": 36287,
+        "address_family": "AF_INET",
+        "bytes_sent": 17,
+        "received_bytes": 0,
+        "protocol_observed": false,
+        "observed_message_types": []
+      },
+      "protocol_observed": false
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:13030",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:13030",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 13030,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "raw_socket_record": "UNCONN 0      0                     0.0.0.0:13030   0.0.0.0:*    users:((\"px4\",pid=97730,fd=13))",
+      "protocol_liveness": {
+        "probe_target": "127.0.0.1:13030",
+        "probe_host": "127.0.0.1",
+        "probe_port": 13030,
+        "address_family": "AF_INET",
+        "bytes_sent": 17,
+        "received_bytes": 478,
+        "protocol_observed": true,
+        "observed_message_types": [
+          "HEARTBEAT",
+          "STATUSTEXT"
+        ]
+      },
+      "protocol_observed": true
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14280",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:14280",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 14280,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "raw_socket_record": "UNCONN 0      0                     0.0.0.0:14280   0.0.0.0:*    users:((\"px4\",pid=97730,fd=12))",
+      "protocol_liveness": {
+        "probe_target": "127.0.0.1:14280",
+        "probe_host": "127.0.0.1",
+        "probe_port": 14280,
+        "address_family": "AF_INET",
+        "bytes_sent": 17,
+        "received_bytes": 3629,
+        "protocol_observed": true,
+        "observed_message_types": [
+          "ALTITUDE",
+          "ATTITUDE",
+          "ATTITUDE_QUATERNION",
+          "DISTANCE_SENSOR",
+          "ESTIMATOR_STATUS",
+          "EXTENDED_SYS_STATE",
+          "HEARTBEAT",
+          "HIGHRES_IMU",
+          "LOCAL_POSITION_NED",
+          "STATUSTEXT",
+          "SYSTEM_TIME",
+          "SYS_STATUS",
+          "TIMESYNC",
+          "UNKNOWN_331",
+          "UNKNOWN_380",
+          "UNKNOWN_410",
+          "UNKNOWN_411",
+          "UNKNOWN_8",
+          "VFR_HUD"
+        ]
+      },
+      "protocol_observed": true
+    },
+    {
+      "endpoint_key": [
+        97730,
+        "0.0.0.0:14580",
+        "0.0.0.0:*",
+        "UNCONN"
+      ],
+      "discovered_local_endpoint": "0.0.0.0:14580",
+      "discovered_peer_endpoint": "0.0.0.0:*",
+      "host": "0.0.0.0",
+      "port": 14580,
+      "state": "UNCONN",
+      "owner_pid": 97730,
+      "raw_socket_record": "UNCONN 0      0                     0.0.0.0:14580   0.0.0.0:*    users:((\"px4\",pid=97730,fd=11))",
+      "protocol_liveness": {
+        "probe_target": "127.0.0.1:14580",
+        "probe_host": "127.0.0.1",
+        "probe_port": 14580,
+        "address_family": "AF_INET",
+        "bytes_sent": 17,
+        "received_bytes": 19594,
+        "protocol_observed": true,
+        "observed_message_types": [
+          "ALTITUDE",
+          "ATTITUDE",
+          "ATTITUDE_QUATERNION",
+          "DISTANCE_SENSOR",
+          "EXTENDED_SYS_STATE",
+          "HIGHRES_IMU",
+          "LOCAL_POSITION_NED",
+          "STATUSTEXT",
+          "SYS_STATUS",
+          "TIMESYNC",
+          "UNKNOWN_331",
+          "VFR_HUD"
+        ]
+      },
+      "protocol_observed": true
+    }
+  ],
+  "timestamp_iso": "2026-09-24T11:53:03Z"
+}

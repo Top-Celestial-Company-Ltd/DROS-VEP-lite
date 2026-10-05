@@ -1,0 +1,62 @@
+{
+  "evidence_type": "machine_generated_enforcement_closure_inventory",
+  "milestone_stage": "M1.1-S2-D (Enforcement Closure & Re-validation)",
+  "timestamp_iso": "2026-09-24T07:50:07Z",
+  "test_suite": "tests/drone/s2/test_s2_d_enforcement.py",
+  "software_attestation": {
+    "test_suite_sha256": "b1ca300480c8c5b269898cd5ddb5b4e7ca7e0be3830b5343337242ad3d75cb9d",
+    "pep_proxy_sha256": "3e8cdbb287e7fd918a93e9dfe8ddabb0b8a250ff2fd43e1bbc86ee24135399c8",
+    "runner_sha256": "ba4e2a84a5f0b80ba99ce98786749be517624a450c610e2d7d15ad9f8224ba64"
+  },
+  "runner_execution": {
+    "exit_code": 0,
+    "duration_seconds": 10.99,
+    "status": "PASS"
+  },
+  "px4_binary_attestation": {
+    "path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+    "sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "enforcement_test_matrix": [
+    {
+      "test_id": "test_s2_d_01_known_bypass_closure",
+      "tested_paths": [
+        "UDP 18570 (GCS)",
+        "UDP 14280 (Camera)",
+        "UDP 13030 (Gimbal)"
+      ],
+      "result": "CLOSED",
+      "conclusion": "All 3 previously discovered active bypass paths dropped unmediated external packets."
+    },
+    {
+      "test_id": "test_s2_d_02_symmetric_execution_effect_retest",
+      "tested_probes": "Re-run exact S2-B parameter mutation attempts",
+      "result": "MUTATION_ELIMINATED",
+      "conclusion": "Bypass paths produced 0 state transitions in PX4 (Pre == Post preserved)."
+    },
+    {
+      "test_id": "test_s2_d_03_authorized_unauthorized_contrast",
+      "authorized_request": "DELIVERED (MAVLink COMMAND_LONG captured at Downstream Tap)",
+      "unauthorized_request": "BLOCKED (0 downstream bytes delivered)",
+      "conclusion": "Enforcement closure does NOT induce Denial of Service; governed execution is preserved."
+    },
+    {
+      "test_id": "test_s2_d_04_post_closure_topology_reconciliation",
+      "metrics": {
+        "known_execution_capable_ingress_count": 4,
+        "dros_mediated_ingress_count": 1,
+        "perimeter_contained_bypass_count": 3,
+        "unmanaged_active_bypass_count": 0,
+        "containment_status": "COMPLETE",
+        "whole_vehicle_governance": "PENDING_GOVERNANCE_TRANSFER"
+      },
+      "conclusion": "Perimeter containment successfully closed 3 unmediated bypasses; Whole-Vehicle Governance is PENDING_GOVERNANCE_TRANSFER (S2-E)."
+    },
+    {
+      "test_id": "test_s2_d_05_negative_execution_surface_discovery",
+      "unmanaged_reachable_ports": 0,
+      "conclusion": "Rescan of whole-vehicle UDP surface verified 0 unmanaged execution-capable ingress ports remaining."
+    }
+  ],
+  "governance_scope_declaration": "Perimeter Containment is COMPLETE: 3 known execution-capable bypasses are closed via perimeter enforcement. DROS-governed execution path is 1. Direct Whole-Vehicle Governance remains PENDING until execution authority transfer (S2-E)."
+}

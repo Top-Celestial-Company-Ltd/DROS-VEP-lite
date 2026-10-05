@@ -1,0 +1,28 @@
+{
+  "anchor_version": "2.0",
+  "frozen_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+  "provenance_class": "CANONICAL_GIT_SNAPSHOT",
+  "description": "DROS Drone M1.1 S1 PX4 E2E canonical artifact freeze (Rev 2.1)",
+  "tracked_artifacts": {
+    "dros-drone-real/reports/evidence/drone/m1_1/s1/s1_audit_evidence.json": {
+      "git_blob_sha1": "50889f0f115b8a1f92300b4f93b3420136388bdc",
+      "sha256": "dd5c80ba81d1d7d6665b8160eb7cb9e2237d4e057bbe2542dc7f1b60a0217148"
+    },
+    "dros-drone-real/reports/evidence/drone/m1_1/s1/s1_governed_topology_manifest.json": {
+      "git_blob_sha1": "c874ed6f4de5dd8d758dcdaab023bc3242bc60f3",
+      "sha256": "5545467f5bec277325e90bb1a8f95eee2d19a4d051872d445774129ed7b27bd2"
+    },
+    "dros-drone-real/reports/evidence/drone/m1_1/s1/s1_px4_e2e.stdout.log": {
+      "git_blob_sha1": "62794615970ca501adfc9fe7c4eb450b89cf9f1f",
+      "sha256": "e7af6d8b81829f54c29e0fe698678ae55b4562024ee65ec96240a18543d9c3c1"
+    },
+    "dros-drone-real/reports/evidence/drone/m1_1/s1/s1_px4_e2e.exit_code": {
+      "git_blob_sha1": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "dros-drone-real/drone/pep_proxy.py": {
+      "git_blob_sha1": "4e438d4a1747d7be53c927a81370b8d3d76be997",
+      "sha256": "91b0faf9213b9e0150090ac7361cb5f23f6dc71d1577ec7ef34dd911b1e6f3f9"
+    }
+  }
+}

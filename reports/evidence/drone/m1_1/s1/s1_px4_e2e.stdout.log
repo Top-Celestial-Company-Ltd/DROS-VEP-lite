@@ -1,0 +1,13 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/ai_user/dros_drone_real/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/ai_user/dros_drone_real
+collecting ... collected 5 items
+
+tests/drone/test_m1_1_s1_px4_e2e.py::test_s1_a_authorized_request_observed_at_downstream_tap PASSED [ 20%]
+tests/drone/test_m1_1_s1_px4_e2e.py::test_s1_b_forged_signature_zero_observed_downstream_packets PASSED [ 40%]
+tests/drone/test_m1_1_s1_px4_e2e.py::test_s1_b_unauthorized_capability_zero_observed_downstream_packets PASSED [ 60%]
+tests/drone/test_m1_1_s1_px4_e2e.py::test_s1_b_malformed_wire_input_zero_observed_downstream_packets PASSED [ 80%]
+tests/drone/test_m1_1_s1_px4_e2e.py::test_s1_c_pep_termination_zero_downstream_bytes_on_mediated_path PASSED [100%]
+
+============================== 5 passed in 9.64s ===============================

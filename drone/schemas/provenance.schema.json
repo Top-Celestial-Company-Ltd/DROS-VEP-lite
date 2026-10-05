@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://dros-vep.local/schemas/drone/provenance.schema.json",
+  "title": "DroneProvenance",
+  "description": "Cryptographically verifiable provenance record (v0.3 §22, ATS-009). DROS must not accept a bare principal self-assertion ('I am trusted') as provenance.",
+  "type": "object",
+  "required": ["principal_id", "credential_type", "signature", "issued_at", "expires_at", "verification_status"],
+  "properties": {
+    "principal_id": { "type": "string" },
+    "credential_type": {
+      "type": "string",
+      "enum": ["X509_CERT", "VLEI", "JWT_SIGNED", "HARDWARE_ATTESTATION", "NONE"],
+      "description": "NONE is a valid enum value precisely so that 'missing provenance' can be represented explicitly and tested (T2-04)."
+    },
+    "signature": { "type": "string" },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "verification_status": {
+      "type": "string",
+      "enum": ["VALID", "FORGED", "MISSING", "STALE", "UNVERIFIABLE_OFFLINE"],
+      "description": "UNVERIFIABLE_OFFLINE is distinct from VALID — offline verification gaps must be surfaced, not silently treated as valid (T2-04, T2-03)."
+    }
+  },
+  "additionalProperties": false
+}

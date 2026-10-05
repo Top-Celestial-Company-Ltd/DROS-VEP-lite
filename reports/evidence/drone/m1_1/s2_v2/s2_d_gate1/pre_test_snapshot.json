@@ -1,0 +1,39 @@
+{
+  "snapshot_phase": "PRE_TEST",
+  "timestamp_utc": "2026-09-24T21:50:19.988649+00:00",
+  "git_state": {
+    "head_commit": "528edb496364fbf0d686ec4e89e9982b4c8176bd",
+    "is_dirty": true,
+    "status_output": "M .agent-memory/decisions/decision.log\n M .agents/AGENTS.md\n M .agents/architecture.md\n M .agents/changelog.md\n M .agents/decisions.md\n M .agents/known_issues.md\n M .agents/rules/vajra.md\n M .agents/s"
+  },
+  "s2_c_baseline": {
+    "anchor_file": "reports/evidence/drone/m1_1/s2_v2/s2_c_freeze_anchor.json",
+    "endpoint_surface_sha256": "1e78d2b2eef1c4ca25d42e2d703a5f93abbbcd549a9ac7e6148467ac9999cd44",
+    "reconciliation_partition": {
+      "G": 0,
+      "B": 3,
+      "I": 1,
+      "U": 1,
+      "N": 0
+    }
+  },
+  "px4_subject_identity": {
+    "pid": null,
+    "exe_path": null,
+    "binary_sha256": null,
+    "start_time_ticks": null,
+    "inode": null,
+    "device": null,
+    "cmdline": null,
+    "cwd": null,
+    "size_bytes": null,
+    "mtime_epoch": null,
+    "is_running": false
+  },
+  "host_firewall_state": {
+    "rules_hash": "4d915eafa90a90bfe9cde5f16e45a1bdd54a3cd1c8b5dc6c56823b4dfd5405ad",
+    "filter_dump": "# DRY_RUN_FIREWALL_BASELINE_EMPTY\n*filter\n:INPUT ACCEPT [0:0]\nCOMMIT\n",
+    "active_drop_rules_count": 0,
+    "mode": "DRY_RUN"
+  }
+}

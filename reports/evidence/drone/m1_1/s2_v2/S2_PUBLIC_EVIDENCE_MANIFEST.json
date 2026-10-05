@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "manifest_class": "DROS_PUBLIC_EVIDENCE_MANIFEST",
+  "description": "Cryptographically sealed public evidence manifest mapping historical lineage to standalone VEP-lite artifacts",
+  "historical_provenance_repository": "volume1/GitRepos/dros-core",
+  "endpoint_surface_sha256": "1e78d2b2eef1c4ca25d42e2d703a5f93abbbcd549a9ac7e6148467ac9999cd44",
+  "reconciliation_verdict": {
+    "G": 0,
+    "B": 3,
+    "I": 1,
+    "U": 1,
+    "N": 0,
+    "whole_vehicle_governance": "NOT_PROVEN",
+    "coverage_label": "PARTIAL_GOVERNANCE_ACTIVE_BYPASS(G=0,B=3,I=1,U=1,N=0)"
+  },
+  "artifacts": {
+    "reports/evidence/drone/m1_1/s1/s1_freeze_anchor_v2.json": {
+      "role": "S1_FREEZE_ANCHOR",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "becc545e7b06debb60b35f9ca3c05ce7f6106c5a0ea4b76acf3cadd9ee3356d8",
+      "git_blob_sha1": "be2e3690e862b57cf8034c441acff55bc6518748",
+      "byte_count": 1407,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s1/s1_governed_topology_manifest.json": {
+      "role": "S1_GOVERNED_TOPOLOGY_MANIFEST",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "5545467f5bec277325e90bb1a8f95eee2d19a4d051872d445774129ed7b27bd2",
+      "git_blob_sha1": "c874ed6f4de5dd8d758dcdaab023bc3242bc60f3",
+      "byte_count": 1681,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s1/s1_audit_evidence.json": {
+      "role": "S1_AUDIT_EVIDENCE",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "dd5c80ba81d1d7d6665b8160eb7cb9e2237d4e057bbe2542dc7f1b60a0217148",
+      "git_blob_sha1": "50889f0f115b8a1f92300b4f93b3420136388bdc",
+      "byte_count": 1416,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s1/s1_px4_e2e.stdout.log": {
+      "role": "S1_STDOUT_LOG",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "e7af6d8b81829f54c29e0fe698678ae55b4562024ee65ec96240a18543d9c3c1",
+      "git_blob_sha1": "62794615970ca501adfc9fe7c4eb450b89cf9f1f",
+      "byte_count": 937,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s1/s1_px4_e2e.exit_code": {
+      "role": "S1_EXIT_CODE",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "git_blob_sha1": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56",
+      "byte_count": 2,
+      "disk_status": "PRESENT"
+    },
+    "drone/pep_proxy.py": {
+      "role": "S1_PEP_PROXY_SOURCE",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "91b0faf9213b9e0150090ac7361cb5f23f6dc71d1577ec7ef34dd911b1e6f3f9",
+      "git_blob_sha1": "4e438d4a1747d7be53c927a81370b8d3d76be997",
+      "byte_count": 9552,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_a_discovery.json": {
+      "role": "S2_A_DISCOVERY_RESULT",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "f4d67592444f663b75b139b7192ffc1a7afc6b7194468928799d80f449d43bee",
+      "git_blob_sha1": "896db88dac12e94a95864611712829303f100f72",
+      "byte_count": 6295,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_a_discovery_inventory.json": {
+      "role": "S2_A_DISCOVERY_INVENTORY",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "825b149f920142792863e899946d3d049766cd21d02bdd5bc7a022d0b8bf03e6",
+      "git_blob_sha1": "7f874111f6fda9b5e23661e88060478ff7f5d740",
+      "byte_count": 5763,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_a_discovery.exit_code": {
+      "role": "S2_A_EXIT_CODE",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "git_blob_sha1": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56",
+      "byte_count": 2,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_b_freeze_anchor.json": {
+      "role": "S2_B_FREEZE_ANCHOR",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "b4a81bac7b18cfd2370474a34ca7bf19dc5cb6f6a33b1f8a717f62e26888dcc1",
+      "git_blob_sha1": "b5e81b41e72479d030c1a0df6c643cba2cc9ecfb",
+      "byte_count": 1082,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority.json": {
+      "role": "S2_B_AUTHORITY_EVALUATION",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "7787d8e16cd0f8910a6446f891aba39a9cc379e05b90670308c396dca1072cd2",
+      "git_blob_sha1": "5f0a0343345cf0e9c6e90e748c7d37d18f7aad12",
+      "byte_count": 22653,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority_summary.json": {
+      "role": "S2_B_AUTHORITY_SUMMARY",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "3ed927546df21cfad8b67b97bac58d231ebc8dd42c131612713324e5b91e9d68",
+      "git_blob_sha1": "1fc433abeeac3fe4985bd55d4fe22cac47a17a84",
+      "byte_count": 22203,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_b_authority.exit_code": {
+      "role": "S2_B_EXIT_CODE",
+      "historical_source_commit": "591bc7d9e64aa3fe65d9838f1913f114c78c6db0",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "git_blob_sha1": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56",
+      "byte_count": 2,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_c_freeze_anchor.json": {
+      "role": "S2_C_FREEZE_ANCHOR",
+      "historical_source_commit": "c402bf05024613501083441c2f26316b47e88d78",
+      "sha256": "96d4198bc19c11b43c6372e42124311173d9a427ef605f0bb596805c2e92c0b2",
+      "git_blob_sha1": "cbf9e955f3174ee2234f0472c667b89bdccd1b74",
+      "byte_count": 1115,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation.json": {
+      "role": "S2_C_RECONCILIATION_RESULT",
+      "historical_source_commit": "c402bf05024613501083441c2f26316b47e88d78",
+      "sha256": "7d56c23d24de2a4d25ed80901da5cdf04fb92b1958923dfda50c821891edde31",
+      "git_blob_sha1": "55619273b37ce4ac896455c3a52d19ace20ba91b",
+      "byte_count": 3842,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation_summary.json": {
+      "role": "S2_C_RECONCILIATION_SUMMARY",
+      "historical_source_commit": "c402bf05024613501083441c2f26316b47e88d78",
+      "sha256": "53d4aa63ecfbe4c4a021d717c3ac5635fb19c5922c0a24c16046803358a9a30f",
+      "git_blob_sha1": "27ea2f8880d6920093dbad8041b2da2c7ba502b6",
+      "byte_count": 577,
+      "disk_status": "PRESENT"
+    },
+    "reports/evidence/drone/m1_1/s2_v2/s2_v2_c_reconciliation.exit_code": {
+      "role": "S2_C_EXIT_CODE",
+      "historical_source_commit": "c402bf05024613501083441c2f26316b47e88d78",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "git_blob_sha1": "18748286e5b8b4de5db905f87cdfed1a7d48fe60",
+      "byte_count": 3,
+      "disk_status": "PRESENT"
+    }
+  }
+}

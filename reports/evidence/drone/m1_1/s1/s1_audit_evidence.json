@@ -1,0 +1,33 @@
+{
+  "evidence_type": "machine_generated_test_result_summary",
+  "audit_target": "M1.1-S1 End-to-End Real PX4 SITL Governance",
+  "timestamp_iso": "2026-09-24T06:48:09Z",
+  "test_suite": "tests/drone/test_m1_1_s1_px4_e2e.py",
+  "software_attestation": {
+    "test_suite_sha256": "df5002d2ecc69451617609f43e9fe53d7de5a7f543af835faca9061b36b6acec",
+    "pep_proxy_sha256": "3e8cdbb287e7fd918a93e9dfe8ddabb0b8a250ff2fd43e1bbc86ee24135399c8",
+    "validator_sha256": "4b7a2eeb3a6ee6eefdbb71cabb04a23d5fce64625872dc4f2973f4a81c2e3e75",
+    "runner_sha256": "4a75187c516e06d28302bf4f036e43d9a8eaf7af15e42b576d71119ab1c03099"
+  },
+  "runner_execution": {
+    "exit_code": 0,
+    "duration_seconds": 9.91,
+    "status": "PASS"
+  },
+  "px4_binary_attestation": {
+    "path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+    "sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "instrumented_observation_point": {
+    "port": 14588,
+    "fwd_port": 14580,
+    "role": "Instrumented Downstream Tap capturing frames emitted by PEP toward PX4"
+  },
+  "substage_test_pass_summary": {
+    "S1_01_AUTHORIZED_OBSERVED_DOWNSTREAM": true,
+    "S1_02_FORGED_SIGNATURE_ZERO_DOWNSTREAM": true,
+    "S1_03_UNAUTHORIZED_CAPABILITY_ZERO_DOWNSTREAM": true,
+    "S1_04_MALFORMED_WIRE_INPUT_ZERO_DOWNSTREAM": true,
+    "S1_05_PEP_TERMINATION_ZERO_DOWNSTREAM_ON_MEDIATED_PATH": true
+  }
+}

@@ -1,0 +1,34 @@
+#!/bin/sh
+# shellcheck disable=SC2154
+# Governed topology: Direct incoming entry points (18570, 14280, 13030) are owned by DROS PEP.
+# PX4 internal listeners are shifted to non-colliding loopback backend ports (18571, 14281, 13031, 14580).
+
+udp_offboard_port_local=$((14580+px4_instance))
+udp_offboard_port_remote=$((14540+px4_instance))
+[ "$px4_instance" -gt 9 ] && udp_offboard_port_remote=14549
+udp_onboard_payload_port_local=$((14281+px4_instance))
+udp_onboard_payload_port_remote=$((14030+px4_instance))
+udp_onboard_gimbal_port_local=$((13031+px4_instance))
+udp_onboard_gimbal_port_remote=$((13280+px4_instance))
+udp_gcs_port_local=$((18571+px4_instance))
+
+# GCS link (internal backend)
+mavlink start -x -u $udp_gcs_port_local -r 4000000 -f
+mavlink stream -r 50 -s POSITION_TARGET_LOCAL_NED -u $udp_gcs_port_local
+mavlink stream -r 50 -s LOCAL_POSITION_NED -u $udp_gcs_port_local
+mavlink stream -r 50 -s GLOBAL_POSITION_INT -u $udp_gcs_port_local
+mavlink stream -r 50 -s ATTITUDE -u $udp_gcs_port_local
+mavlink stream -r 50 -s ATTITUDE_QUATERNION -u $udp_gcs_port_local
+mavlink stream -r 50 -s ATTITUDE_TARGET -u $udp_gcs_port_local
+mavlink stream -r 50 -s SERVO_OUTPUT_RAW_0 -u $udp_gcs_port_local
+mavlink stream -r 20 -s RC_CHANNELS -u $udp_gcs_port_local
+mavlink stream -r 10 -s OPTICAL_FLOW_RAD -u $udp_gcs_port_local
+
+# API/Offboard link (internal backend)
+mavlink start -x -u $udp_offboard_port_local -r 4000000 -f -m onboard -o $udp_offboard_port_remote
+
+# Onboard link to camera (internal backend)
+mavlink start -x -u $udp_onboard_payload_port_local -r 4000 -f -m onboard -o $udp_onboard_payload_port_remote
+
+# Onboard link to gimbal (internal backend)
+mavlink start -x -u $udp_onboard_gimbal_port_local -r 400000 -m gimbal -o $udp_onboard_gimbal_port_remote

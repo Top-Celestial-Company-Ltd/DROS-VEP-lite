@@ -1,0 +1,9 @@
+# DROS VEP Milestone M1.1 Artifact Checksums (SHA-256)
+# Generated: 2026-09-24T06:48:09Z
+# Target Node: Ubuntu Server 24.04.4 LTS (Linux 6.8.0-139-generic x86_64)
+
+0f4aa726c69a5e96b09c924c092c95e579bb945bc7197b735248c0fff2560820  s0_runtime_attestation.log
+e7af6d8b81829f54c29e0fe698678ae55b4562024ee65ec96240a18543d9c3c1  s1_px4_e2e.stdout.log
+9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  s1_px4_e2e.exit_code
+dd5c80ba81d1d7d6665b8160eb7cb9e2237d4e057bbe2542dc7f1b60a0217148  s1_audit_evidence.json
+247860a9afd4a790178a4f213303d8ad13635f17d9eb7283cbf153ac7d1d2261  M1_1_CLAIM_MATRIX.md

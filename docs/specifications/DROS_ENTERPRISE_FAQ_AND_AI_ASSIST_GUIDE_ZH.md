@@ -15,7 +15,7 @@
 ### Q1. 什麼是「開放身份，在地治理 (Open Identity, Localized Governance)」？外部 Agent 持護照來訪會威脅企業嗎？
 **A：完全不會！這正是 DROS 解決 Agentic Web 跨企業信任衝突的核心範式。**
 * 外部 Agent 攜帶 RFC-010 護照 (`libdros-id`) 來訪時，僅提供其身分歸因 (Principal) 與發行簽章。
-* **企業在地 GuardVM 網關保有 100% 的確定性執行裁量權**：企業在 VajraAgent 主控頁上，可直接為該外部護照設定在地 Capability Bitmaps (位元圖矩陣)。即使外部護照聲稱自己具備超級管理員權限，DROS 在 C-ABI 帶內層級 (26.1 μs) 依然僅允許其調用企業開通的特定 API。任何越權呼叫直接物理熔斷並返回 HTTP 403。
+* **企業在地 GuardVM 網關保有確定性策略執行裁量權**：企業可為外部護照設定在地 Capability Bitmaps。DROS 於 C-ABI 帶內層級依授權配置過濾呼叫，未授權呼叫可依政策被阻斷並返回 HTTP 403。
 
 ### Q2. 企業如何透過 VajraAgent 主控頁進行「對內」與「對外」的雙向權限區隔與操作？
 **A：VajraAgent 提供極致直觀的雙向治理控制台：**
@@ -25,17 +25,16 @@
 
 ### Q3. DROS 提出的「6-Pillars 確定性治理」與傳統的 IAM / OAuth 或 API Gateway 有何本質區別？
 **A：物理層 C-ABI 帶內硬熔斷 vs. 網路層軟邊界。**
-* **超低延遲**：傳統 API Gateway 運作在 Out-of-band HTTP 網路層 (4ms~50ms)，DROS-6P 在物理層 C-ABI / eBPF 直接運作，平均決策延遲僅 **26.1 μs** (p99 = 29.8 μs)，效能提升數千倍。
-* **密碼學證明**：內建 SHA-256 Merkle 雜湊稽核鏈與 Ed25519 簽章，產出具備不可否認性的法務級憑證。
+* **超低延遲**：DROS 於 C-ABI 帶內層級運作，純 PDP 查表延遲 <1.0 μs（不含 RPC 序列化開銷；歷史浸泡報告記錄之端到端 HTTP 來回延遲約為 26.2 ms）。
+* **密碼學紀錄**：內建記憶體內 SHA-256 決策雜湊鏈；支援簽署策略元數據之 Ed25519 簽章驗證，產出可驗證之決策歷程紀錄。
 
 ### Q4. 攻擊者若利用 Prompt Injection 誘騙 Agent 輸出客戶個資，DROS 如何防禦？
 **A：Pillar 4 Policy Gate + PII 動態遮蔽。**
 * 當 Agent 試圖調用敏感資料時，Policy Gate 會在二進位層級自動進行欄位動態遮蔽 (PII Redaction)；若涉及高風險資金轉帳或全域刪除，自動觸發 HITL (Human-In-The-Loop) 懸停等待人類雙簽核可，完全封殺語意越權。
 
 ### Q5. 企業部署 DROS 需要修改原有的 AI Agent 程式碼 (如 LangChain / AutoGen) 嗎？
-**A：完全不需要！零程式碼修改 ‧ 零系統停機。**
-* DROS 採用外部 C-ABI 帶內攔截與開箱即用的 `libdros-id` SDK。
-* 管理者透過宣告式策略合約 (`vajra.yaml`) 或 VajraAgent Web 主控台調整權限後，DROS 控制平面便會在微秒內完成熱加載 (Hot Reloading)，AI 員工運作零中斷。
+**A：Minimal code integration with hot-reloadable policies.**
+* Integrating DROS may require wrapping tool dispatch points with the lightweight libdros-id or VajraClaw SDK. Policy updates can be hot-reloaded dynamically without requiring process restarts in the tested integration model.
 
 ---
 
@@ -48,7 +47,7 @@
    * **多 Agent 蜂群與跨部門 IAM**：支援無上限 Agent 角色池，跨部門 Confused Deputy 權限隔離。
    * **長時間浸泡與生產級 SLA**：支援 24h/72h 浸泡評測（16 萬次無洩漏烘烤）、高可用 K8s DaemonSet 與專屬技術客服。
    * **三級階梯處置與硬熔斷狀態機**：支援滑動窗口違規隔離（Quarantine）與實體終止（SIGKILL）驅逐。
-   * **司法級合規存證**：提供連續 SHA-256 Merkle 鏈、Ed25519 數位簽章與一鍵產出歐盟 AI 法案 (EU AI Act Article 12) 合規報告。
+   * **結構化審計存證**：提供連續 SHA-256 決策雜湊記錄，支援結構化審計日誌導出以供治理與記錄保存工作流程。
    * **跨企業 B2B PKI 聯邦**：支援 `🔑 ROOT-2026` 3-Tier 證書鏈與最大跳數約束。
 
 ### Q7. 企業在內部私有雲 (Air-Gapped / VPC) 部署，需要向外連線驗證 License 嗎？

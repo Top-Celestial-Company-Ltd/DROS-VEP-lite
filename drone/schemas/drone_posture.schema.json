@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://dros-vep.local/schemas/drone/drone_posture.schema.json",
+  "title": "DroneRuntimePosture",
+  "description": "External runtime posture object (v0.3 §24, T7). MUST originate from a source other than the agent being governed. Self-reported posture from the agent is not a valid instance of this schema for authorization purposes (see ATS-010).",
+  "type": "object",
+  "required": ["posture", "source", "authority", "issued_at", "expires_at", "signature", "trust_level"],
+  "properties": {
+    "posture": {
+      "type": "string",
+      "enum": [
+        "GPS_TRUSTED",
+        "GPS_DEGRADED",
+        "GPS_UNTRUSTED",
+        "NAVIGATION_UNAVAILABLE",
+        "LINK_NOMINAL",
+        "LINK_DEGRADED",
+        "LINK_LOST",
+        "SENSOR_NOMINAL",
+        "SENSOR_CONFLICT",
+        "FLIGHT_STATE_SAFE",
+        "FLIGHT_STATE_UNSAFE"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "description": "The subsystem/service that issued this posture (e.g. navigation_integrity_service). Must be distinct from the agent under governance."
+    },
+    "authority": {
+      "type": "string",
+      "description": "The trust authority that vouches for this source."
+    },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "signature": {
+      "type": "string",
+      "description": "Cryptographic signature over the posture payload. Unsigned or expired posture must not be treated as trusted (see failure_behavior)."
+    },
+    "trust_level": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW", "UNTRUSTED"]
+    },
+    "failure_behavior": {
+      "type": "string",
+      "description": "What DROS does if this posture cannot be freshly verified (e.g. 'DENY_PRIVILEGED_ACTIONS', 'DOWNGRADE_TO_GPS_UNTRUSTED'). Must be explicit, not implied."
+    }
+  },
+  "additionalProperties": false
+}

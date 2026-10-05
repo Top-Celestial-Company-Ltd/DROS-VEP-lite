@@ -1,0 +1,62 @@
+{
+  "evidence_type": "machine_generated_bypass_discovery_summary",
+  "milestone_stage": "M1.1-S2-A (Unmediated Path Discovery)",
+  "timestamp_iso": "2026-09-24T07:02:00Z",
+  "test_suite": "tests/drone/s2/test_s2_discovery.py",
+  "software_attestation": {
+    "test_suite_sha256": "8ca547be572ddfa0b66c33696f7be3615de53f1730a5cdb3aa3d3302ccaf5ace",
+    "runner_sha256": "6a850b35c47a483adb9acf8bc06121670472f8ba2339a1e238d5f367601e2508"
+  },
+  "runner_execution": {
+    "exit_code": 0,
+    "duration_seconds": 6.85,
+    "status": "PASS"
+  },
+  "px4_binary_attestation": {
+    "path": "/home/ai_user/px4_build/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+    "sha256": "91fbf68980835c3272b0b9d77690ea366deed760f2da2c00365c790341d095eb"
+  },
+  "path_reconciliation_matrix": [
+    {
+      "interface_role": "Onboard Companion Autopilot Bus",
+      "target_endpoint": "UDP 127.0.0.1:14580",
+      "l0_network_reachable": true,
+      "l1_protocol_accepted": true,
+      "l2_application_handled": true,
+      "l3_execution_effect_possible": true,
+      "dros_pep_mediated": true,
+      "governance_status": "GOVERNED_IN_S1"
+    },
+    {
+      "interface_role": "Ground Control Station (GCS) Normal MAVLink",
+      "target_endpoint": "UDP 0.0.0.0:18570",
+      "l0_network_reachable": true,
+      "l1_protocol_accepted": true,
+      "l2_application_handled": true,
+      "l3_execution_effect_possible": true,
+      "dros_pep_mediated": false,
+      "governance_status": "UNMEDIATED_ACTIVE_BYPASS"
+    },
+    {
+      "interface_role": "Camera Control Interface",
+      "target_endpoint": "UDP 0.0.0.0:14280",
+      "l0_network_reachable": true,
+      "l1_protocol_accepted": true,
+      "l2_application_handled": true,
+      "l3_execution_effect_possible": true,
+      "dros_pep_mediated": false,
+      "governance_status": "UNMEDIATED_ACTIVE_BYPASS"
+    },
+    {
+      "interface_role": "Gimbal / Payload Control Interface",
+      "target_endpoint": "UDP 0.0.0.0:13030",
+      "l0_network_reachable": true,
+      "l1_protocol_accepted": true,
+      "l2_application_handled": true,
+      "l3_execution_effect_possible": true,
+      "dros_pep_mediated": false,
+      "governance_status": "UNMEDIATED_ACTIVE_BYPASS"
+    }
+  ],
+  "overall_finding": "3 active unmediated execution paths identified outside DROS PEP boundary. Whole-vehicle governance remains NOT_PROVEN."
+}

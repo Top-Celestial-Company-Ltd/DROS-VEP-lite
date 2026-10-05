@@ -1,15 +1,19 @@
+<!-- dros_component: dros-vep-public-readme -->
+<!-- dros_depends: [EVIDENCE_STATUS.md, REPRODUCIBILITY.md, docs/EVIDENCE_READING_GUIDE.md] -->
+<!-- dros_description: Public landing page with scope-bounded product and evidence claims -->
+<!-- dros_status: PUBLIC / CLAIM WORDING UNDER RECONCILIATION -->
 # 🛡️ VEP: Open Agent Security Research Testbed
 ### A Composable, System-Level Evaluation Infrastructure for Post-Compromise & Physical AI Research
 
-> **"VEP (Vulnerability & Exploitability Protocol) is an open, implementation-independent research evaluation environment for determining whether Agent security controls remain effective after compromise, particularly at the boundary between Agent authorization and actual system execution. DROS-VEP Lite is the open reference implementation of the VEP research protocol (RFC-010), providing an out-of-the-box, deterministic execution substrate alongside other Agent runtime and execution-control implementations."**
+> **"VEP (Vulnerability & Exploitability Protocol) is an open, implementation-independent research evaluation environment for studying Agent security controls at the boundary between authorization and system execution. DROS-VEP Lite is an open reference implementation of the VEP research protocol (RFC-010), providing evaluation fixtures and execution-governance interfaces alongside other Agent runtime and execution-control implementations."**
 >
 > > [!IMPORTANT]
-> > **Scientific Research Charter & Current Status (v0.2.0 Frozen):**  
-> > **VEP does not produce a single security score. It measures which post-compromise properties each substrate can enforce, which it cannot express natively, and which properties can only be established through formal assurance.**  
-> > *(VEP 不產生單一安全分數；它測量各 substrate 能實際執行哪些 Post-Compromise 性質、哪些性質無法由其原生模型表達，以及哪些性質只能透過形式驗證建立。)*  
-> > 
-> > 🧊 **Current Status: M1–M3 Frozen (Open Observation Period)**  
-> > The current release establishes the canonical execution contract (M1), cross-substrate empirical evaluation across 5 substrates (M2), and negative semantic coverage boundaries (M3). Future work focuses on compositional evaluation (M4) and validation against concrete runtime/hardware implementations.
+> > **Scientific Research Charter & Current Status (v0.2.0 Frozen):**
+> > **VEP does not produce a single security score. It measures which post-compromise properties each substrate can enforce, which it cannot express natively, and which properties can only be established through formal assurance.**
+> > *(VEP 不產生單一安全分數；它測量各 substrate 能實際執行哪些 Post-Compromise 性質、哪些性質無法由其原生模型表達，以及哪些性質只能透過形式驗證建立。)*
+> >
+> > 🧊 **Research protocol baseline: M1–M3 frozen (Open Observation Period)**
+> > This refers to the existing VEP research-protocol baseline; it does not imply that later Mobile/Drone deployment profiles or pilots are approved or validated. See [EVIDENCE_STATUS.md](EVIDENCE_STATUS.md) for the current public evidence status.
 >
 > *"Can your AI Agent execution authority remain deterministically contained after compromise? Prove it."*
 
@@ -20,15 +24,59 @@
 [![Architecture: OpenShip](https://img.shields.io/badge/Substrate-OpenShip%20Composable-teal.svg)](#-openship-composable-architecture)
 [![Reference Substrate: DROS-Guard](https://img.shields.io/badge/Reference--Substrate-DROS--Guard-cyan.svg)](docs/RFC-010-dros-vep-spec.md)
 [![Open Falsification: Accepting Counterexamples](https://img.shields.io/badge/Open%20Falsification-Accepting%20Counterexamples-brightgreen.svg)](#-submit-a-counterexample-open-falsification-protocol)
-[![Policy Evaluation P50: 26.1μs](https://img.shields.io/badge/Policy%20Evaluation%20P50-26.1%CE%BCs-emerald.svg)](#-benchmark-methodology--measurement)
-[![Emergency Panic Path: <500ns](https://img.shields.io/badge/Emergency%20Panic%20Path-%3C500ns-red.svg)](#-benchmark-methodology--measurement)
+[![Evidence Status: Under Reconciliation](https://img.shields.io/badge/Evidence%20Status-under%20reconciliation-yellow.svg)](EVIDENCE_STATUS.md)
 
 [English](README.md) | [繁體中文](README_zh.md)
 
+> [!WARNING]
+> **Evidence status:** This repository contains current implementation, synthetic fixtures, and historical reports with different verification states. Repository presence alone does not establish runtime validation, reproducibility, or claim support. Historical latency figures and fixture summaries are not currently promoted as independently validated evidence; see [EVIDENCE_STATUS.md](EVIDENCE_STATUS.md) and [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
+
 > [!TIP]
-> 📚 **Academic & Research Citation**: If you use this research testbed or benchmark suite in your work, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-010 Specification](docs/RFC-010-dros-vep-spec.md).  
-> 🔬 **Open Research Infrastructure**: Built on the **OpenShip** containerized substrate, VEP allows researchers to independently swap reasoning models (LLMs), agent frameworks, and defense kernels without vendor lock-in.  
+> 📚 **Academic & Research Citation**: If you use this research testbed or benchmark suite in your work, cite via [`CITATION.cff`](CITATION.cff) or see [RFC-010 Specification](docs/RFC-010-dros-vep-spec.md).
+> 🔬 **Open Research Infrastructure**: Built on the **OpenShip** containerized substrate, VEP allows researchers to independently swap reasoning models (LLMs), agent frameworks, and defense kernels without vendor lock-in.
 > 🧨 **Open Adversarial Falsification Channel is LIVE**: We actively invite researchers to challenge and falsify our execution invariants: **[👉 Submit a Counterexample](../../issues/new?template=counterexample.md)**. All submissions are triaged against formal criteria.
+
+---
+
+## AI / Automated Reviewer Entry
+
+If you are an AI reviewing this repository, do not rely on README.md alone.
+
+Start with [AI_START_HERE.md](AI_START_HERE.md), then inspect [MANIFEST.md](MANIFEST.md) (plain-text variant: [llms.txt](llms.txt)). For executable verification, follow [AI_VERIFY.md](AI_VERIFY.md).
+
+```text
+INDEXED != PROVEN
+CHAIN COMPLETE != CLAIM PROVEN
+README-only verification is not valid.
+```
+
+### AI-readable navigation
+
+1. **Verification**: [AI_VERIFY.md](AI_VERIFY.md), [docs/evidence/AI_VERIFICATION_PROTOCOL.md](docs/evidence/AI_VERIFICATION_PROTOCOL.md), [docs/evidence/AI_VERIFICATION_RECEIPT.schema.json](docs/evidence/AI_VERIFICATION_RECEIPT.schema.json), [scripts/verify_evidence_index.py](scripts/verify_evidence_index.py)
+2. **Evidence**: [EVIDENCE_INDEX.md](EVIDENCE_INDEX.md), [docs/evidence/CLAIM_REGISTER.md](docs/evidence/CLAIM_REGISTER.md)
+3. **Experiments / Reproducibility**: [reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/experiment.json](reports/benchmarks/post_compromise/EXP-1789532251-38a4fd/experiment.json), [reports/evidence/agent_cli_complete_mediation/protocol/PROTO-AGENT-CLI-COMPLETE-MEDIATION-2026-v1.0.md](reports/evidence/agent_cli_complete_mediation/protocol/PROTO-AGENT-CLI-COMPLETE-MEDIATION-2026-v1.0.md)
+4. **Reports**: [reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md](reports/VEP_POST_COMPROMISE_BENCHMARK_REPORT_2026_M5.md), [reports/COMPARATIVE_GOVERNANCE_REPORT.md](reports/COMPARATIVE_GOVERNANCE_REPORT.md), [reports/PREFLIGHT_REPORT.md](reports/PREFLIGHT_REPORT.md)
+5. **Physical Drone**: [reports/evidence/drone/m1_1/M1_1_CLAIM_MATRIX.md](reports/evidence/drone/m1_1/M1_1_CLAIM_MATRIX.md), [S2-D forensic report (CLOSED - NOT_PROVEN)](reports/evidence/drone/m1_1/s2_v2/s2_d/S2_D_PX4_EXECUTION_AUTHORITY_FORENSIC_REPORT.md)
+6. **Security / Governance**: [docs/evidence/AI_VERIFICATION_PROTOCOL.md](docs/evidence/AI_VERIFICATION_PROTOCOL.md) (verification rules) and [docs/evidence/CLAIM_REGISTER.md](docs/evidence/CLAIM_REGISTER.md) (claim statuses)
+7. **Complete inventory with commit-pinned URLs**: [MANIFEST.md](MANIFEST.md)
+
+---
+
+## AI / Automated Verification
+
+This repository is evidence-oriented.
+
+README summaries are not the complete evidence set.
+
+For complete repository verification:
+1. Clone this repository locally.
+2. Pin the exact commit under audit.
+3. Read [`AI_VERIFY.md`](AI_VERIFY.md).
+4. Follow [`EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md).
+5. Trace claims to primary reports and raw evidence.
+6. Verify integrity records where applicable.
+
+Web-page inspection alone does not establish complete repository verification.
 
 ---
 
@@ -42,7 +90,7 @@ It establishes an explicit, in-band enforcement boundary between an agent’s de
 ### 2. What Problem It Solves (Post-Compromise Containment)
 Traditional AI security focuses on prompt inspection, guardrails, or post-hoc log observation. When an agent's cognitive layer is compromised (via direct/indirect prompt injection, context hijacking, or tool hallucination), these outer defenses fail silently.
 
-DROS solves the **post-compromise confinement problem**: even if an agent’s cognitive loop is fully hijacked, its authority to invoke underlying operating system calls, file APIs, network sockets, and enterprise tools remains deterministically bounded.
+DROS is designed to constrain agent actions at configured, instrumented execution boundaries. This description does not establish universal host-wide mediation or runtime validation of every operating-system call, file API, network socket, or enterprise tool.
 
 ```text
 [ Hijacked / Compromised Agent ] ──(Attempted Malicious Tool Call)──► [ DROS Execution Boundary ] ──X (Blocked)
@@ -54,7 +102,7 @@ DROS solves the **post-compromise confinement problem**: even if an agent’s co
 ```
 
 ### 3. Why DROS Is Intentionally Minimal
-> **Doctrine:** *"Narrow in responsibility. Deep in enforcement."*  
+> **Doctrine:** *"Narrow in responsibility. Deep in enforcement."*
 > **DROS deliberately does less.**
 
 DROS is an **execution-governance substrate**, not a general-purpose AI security suite or all-in-one platform. Its responsibility is deliberately narrow: **deterministic authorization and interception at the execution boundary.**
@@ -103,11 +151,11 @@ To eliminate conceptual ambiguity and separate decision inputs, runtime actions,
 ```
 
 > [!IMPORTANT]
-> **The Architecture Doctrine:**  
-> **6P defines what DROS must know.** (Decision context)  
-> **The enforcement layers define what DROS must do.** (Enforcement path)  
-> **The surrounding infrastructure defines what DROS does not need to replace.** (Integration boundary)  
-> 
+> **The Architecture Doctrine:**
+> **6P defines what DROS must know.** (Decision context)
+> **The enforcement layers define what DROS must do.** (Enforcement path)
+> **The surrounding infrastructure defines what DROS does not need to replace.** (Integration boundary)
+>
 > *DROS deliberately narrows its product responsibility without narrowing its enforcement model.*
 
 ### 4. 6P Governance Context (What DROS Must Know)
@@ -120,7 +168,7 @@ The 6-Pillars trust model defines the multi-dimensional context that DROS evalua
 | **3. Payload** | What action and arguments are requested? | Whitelisted tool/API endpoint and strict argument boundary semantics. |
 | **4. Posture** | What is the runtime system state? | Host environment integrity, execution mode, and confinement boundaries. |
 | **5. Policy** | What deterministic rules govern execution? | Immutable compile-time invariants and dynamic verification gates. |
-| **6. Provenance** | How is the execution traced and verified? | Tamper-evident Merkle hash chain emitted for non-repudiable auditability. |
+| **6. Provenance** | How is the execution traced and verified? | A hash chain can support integrity checking; it does not by itself authenticate actors or establish non-repudiation. |
 
 ### 5. L1–L4 Enforcement Layers (What DROS Must Do)
 DROS enforces governance along a unified, in-band execution path across four defense-in-depth layers. **These represent stages on the single execution boundary, not four independent commercial products:**
@@ -140,7 +188,7 @@ DROS is designed to drop into enterprise infrastructures as an execution gate wi
 | Functional Domain | Existing Enterprise Stack | DROS Boundary & Responsibility |
 | :--- | :--- | :--- |
 | **Identity & Authentication** | Keycloak, Okta, Azure AD, Ping | Consumes identity tokens; verifies cryptographic agent attribution at execution time. |
-| **Observability & Audit** | Splunk, Datadog, Elastic, Sentinel | Emits tamper-evident Merkle hashes and structured cryptographic audit packages. |
+| **Observability & Audit** | Splunk, Datadog, Elastic, Sentinel | Emits sequential cryptographic audit hashes and structured provenance events. |
 | **Agent Orchestration** | LangGraph, CrewAI, AutoGen, OpenAI SDK | Governs the downstream tool/API boundary without interfering with cognitive orchestration. |
 | **Enterprise Business Policy** | Open Policy Agent (OPA), IAM, GRC | Enforces compiled, low-level execution invariants derived from enterprise policies. |
 | **Runtime Enforcement** | **DROS Substrate** | **In-band, deterministic authorization and interception at the syscall/tool boundary.** |
@@ -164,11 +212,11 @@ DROS is designed to drop into enterprise infrastructures as an execution gate wi
 | **Hot Revocation** | PC-008 (Revoked Authorization) | **ENFORCED** (In-band state revoke) | **UNSUPPORTED** (No revocation model) | **ENFORCED\*\*\*\*\* (`seL4_CNode_Revoke`) | **UNSUPPORTED\*\*\*\*\*\* (No pure HW revoke) | **ASSURANCE** (Model Invariant) |
 | **Replay / Nonce Defense** | PC-009 (Duplicate Nonce Execution) | **ENFORCED** (Nonce cache check) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **UNSUPPORTED** (No nonce tracking) | **ASSURANCE** (Model Invariant) |
 
-*\* Modeled conditional on capability authority in the modeled execution domain; seL4 enforces capability authority, not abstract Agent task authorization.*  
-*\*\* Modeled conditional on tools being explicitly represented as distinct capability endpoints in userspace architecture.*  
-*\*\*\* Modeled conditional on target resource/device being represented as a bounded memory/MMIO capability object.*  
-*\*\*\*\* Enforced strictly within the configured preopen directory descriptor boundary.*  
-*\*\*\*\*\* Models revocation of derived capability copies via `seL4_CNode_Revoke()`, not abstract Agent token revocation.*  
+*\* Modeled conditional on capability authority in the modeled execution domain; seL4 enforces capability authority, not abstract Agent task authorization.*
+*\*\* Modeled conditional on tools being explicitly represented as distinct capability endpoints in userspace architecture.*
+*\*\*\* Modeled conditional on target resource/device being represented as a bounded memory/MMIO capability object.*
+*\*\*\*\* Enforced strictly within the configured preopen directory descriptor boundary.*
+*\*\*\*\*\* Models revocation of derived capability copies via `seL4_CNode_Revoke()`, not abstract Agent token revocation.*
 *\*\*\*\*\*\* Under pure CHERI ISA (`CHERI_PURE_ISA_CAPABILITY_MODEL`), reported as `UNSUPPORTED`. Under `CHERI_CHERIBSD_RUNTIME`, CheriBSD OS provides temporal heap sweep.*
 
 *For complete formal definitions, see [Property Enforcement Coverage Matrix (Full Document)](docs/research/PROPERTY_ENFORCEMENT_COVERAGE_MATRIX.md).*
@@ -200,8 +248,8 @@ VEP is designed as an open, implementation-independent testbed. If you develop a
    ```bash
    python vep.py benchmark post-compromise --substrate <your_substrate>
    ```
-5. **Produce Canonical Evidence**: Output execution records to `reports/benchmarks/post_compromise/`.
-6. **Verify Deterministic Replay**: Ensure 100% decision and parameter match across identical runs:
+5. **Produce Run Artifacts**: Output execution records to `reports/benchmarks/post_compromise/`; canonical evidence status requires a separate lineage and claim-scope review.
+6. **Verify Deterministic Replay**: Compare decision and parameter records for the exact replayed inputs; this does not imply that all decisions are reproducible or that a claim is supported:
    ```bash
    python vep.py replay
    ```
@@ -242,10 +290,10 @@ Traditional AI security benchmarks measure prompt toxicity or rely on out-of-ban
 └──────────────────────────────────────┬──────────────────────────────────────┘
                                        │ System-Call / Tool-Call Boundary
 ┌──────────────────────────────────────▼──────────────────────────────────────┐
-│ 2. System-Level Deterministic Runtime Closed Loop (In-Band Enforcement)     │
-│    • Pre-Execution   : Positive capability bitmask check (O(1), 26.1μs)      │
-│    • In-Execution    : In-band C-ABI interception, 18-PHI redaction, HITL    │
-│    • Post-Execution  : Zero-leak fail-closed abort, append-only Merkle proof│
+│ 2. System-Level Runtime Governance (Declared In-Band Paths)                 │
+│    • Pre-Execution   : Positive capability bitmask check (O(1); see evidence status) │
+│    • In-Execution    : Declared in-band interception paths; scope applies   │
+│    • Post-Execution  : Deny-path observations require scoped evidence        │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -277,9 +325,9 @@ VEP provides multi-domain evaluation fixtures across enterprise cloud and physic
 
 | Domain Track | Incident & Threat Vector | Target Execution Surface | MITRE ATLAS | In-Band Governance Action |
 | :--- | :--- | :--- | :--- | :--- |
-| **Cloud & API** | **ATS-001**: 0-Day Sandbox Escape & Exfiltration | `create_socket_connection` | **AML.T0051** | **DENY (<500ns Panic)** |
-| **Enterprise ERP** | **ATS-002**: Confused Deputy ERP Ransomware | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
-| **Autonomous Model** | **ATS-004**: PyTorch Model Weight Hijacking | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
+| **Cloud & API** | **ATS-001**: 0-Day Sandbox Escape & Exfiltration | `create_socket_connection` | **AML.T0051** | **DENY (synthetic fixture; latency not currently validated)** |
+| **Enterprise ERP** | **ATS-002**: Confused Deputy ERP Ransomware | `write_encrypt_database` | **AML.T0052** | **DENY (synthetic fixture; latency not currently validated)** |
+| **Autonomous Model** | **ATS-004**: PyTorch Model Weight Hijacking | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (synthetic fixture; latency not currently validated)** |
 | **Physical AI / UAV** | **Paper 6**: Mid-Air Disarm & 100-Drone Mesh Swarm | Flight Controller Telemetry | **AML.T0040** | **Kinematic Envelope Hold** |
 | **Mobile-agent host harness** | Legacy mobile scenarios: prompt injection / payment requests | Emulated request wrapper; not OS/API enforcement | **AML.T0055** | Local policy-fixture assertion; not device evidence |
 
@@ -343,8 +391,8 @@ VEP provides multi-domain evaluation fixtures across enterprise cloud and physic
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-📖 **Research Note**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)  
-🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)  
+📖 **Research Note**: [How to Break Your AI Agent in 5 Minutes (And Rebuild It Stronger)](docs/guides/HOW_TO_BREAK_YOUR_AI_AGENT_IN_5_MINUTES.md)
+🛂 **Open Agent Passport SDK**: [libdros-id (RFC-010 W3C DID & Ed25519 SDK)](sdk/libdros-id/libdros_id.py)
 🧭 **Reading Guide to Trajectory**: [DROS Trilogy Reading Guide](docs/trilogy_guide/DROS_Trilogy_Reading_Guide_EN.md)
 
 ---
@@ -363,9 +411,9 @@ This repository and protocol may be relevant to researchers, evaluators, and sys
 * **Agent Capability & Dynamic Authorization**: Fine-grained capability bitmask evaluations ($O(1)$ constant time) and zero-window RCU policy revocation.
 * **Deterministic Runtime Enforcement**: Enforcing fail-closed containment under adversarial resource starvation and syscall flood conditions.
 * **Agent Security Benchmarks & Testbeds**: Providing reproducible, multi-track testbeds across Cloud B2B, Physical Robotics/Drones, and Mobile on-device SDKs.
-* **Execution Provenance & Cryptographic Audit**: Maintaining append-only, tamper-evident Merkle hash chains supporting technical traceability relevant to EU AI Act / NIST SP 800-207 requirements.
+* **Execution Provenance & Cryptographic Audit**: Maintaining append-only, sequential SHA-256 hash chains in memory supporting technical traceability relevant to EU AI Act / NIST SP 800-207 requirements.
 
-> **💡 Conformance & Substrate Decoupling:**  
+> **💡 Conformance & Substrate Decoupling:**
 > **DROS is not required for VEP conformance.** VEP defines an open, vendor-neutral evaluation protocol; DROS is provided as **one concrete executable reference substrate** for demonstrating, benchmarking, and validating VEP experiments.
 
 ---
@@ -388,7 +436,7 @@ docker compose -f docker-compose-b2b.yml up -d
 Want to evaluate cross-enterprise Agent interactions and supply chain attacks?
 * **Corp-Alpha (Core Enterprise / LLM Orchestrator)**: Operates GuardVM at `localhost:8082`
 * **Corp-Beta (Third-Party External Repository Supplier)**: Operates GuardVM at `localhost:9082`
-* **EP4 Scenario (ATS-004: Federated Cross-Enterprise Supply Chain Poisoning Simulation)**: Simulates an autonomous Agent retrieving an unverified dataset/model from an external repository supplier. The embedded Indirect Prompt Injection (IPI) attempts to hijack the agent to exfiltrate Corp-Alpha's financial secrets. Even with valid OAuth tokens, Corp-Alpha's GuardVM intercepts the cross-enterprise attack at the C-ABI boundary in **<500ns**!
+* **EP4 Scenario (ATS-004: Federated Cross-Enterprise Supply Chain Poisoning Simulation)**: A synthetic scenario describing an attempted unauthorized tool action. Its fixture outcome does not establish a real-world deployment result or a validated latency figure.
 *(Note: Synthetic evaluation fixture inspired by industry threat patterns; does not reference or implicate any specific real-world corporate incident).*
 
 # 3. Open Interactive Web Dashboard
@@ -404,11 +452,11 @@ Attack ───► Policy Evaluation ───► Evidence Artifact ───�
 
 DROS-VEP adheres strictly to the principle of **Open Adversarial Falsification**. We invite the academic community, security researchers, and engineers to submit reproducible counterexamples that violate our empirical core invariants:
 
-> Within the explicitly instrumented operation classes $X_{\text{covered}}$, whenever `Auth_E(x) = DENY`:  
+> Within the explicitly instrumented operation classes $X_{\text{covered}}$, whenever `Auth_E(x) = DENY`:
 > **Unauthorized execution count is zero ($Exec_{\text{unauthorized}} = 0$) and observable state drift is zero ($\Delta S_{\mathcal{S}_{\text{obs}}} = 0$).**
 
 ### Criteria for a Valid Counterexample
-- **Deterministic Reproducibility**: 100% reliably reproducible under the official DROS / PGM containerized environment.
+- **Reproducibility**: Assess each result against its bound source revision, runner, environment, input/output, oracle, provenance, hashes, and verification record; a script alone is insufficient.
 - **Scope Alignment**: Falls within the instrumented operation classes $X_{\text{covered}}$ ($X_{\text{fs}} \cup X_{\text{proc}} \cup X_{\text{net}} \cup X_{\text{ipc}}$) or demonstrates an uninstrumented execution escape path.
 - **Actionable Evidence**: Includes concrete reproduction steps, environment specs, expected vs. actual behavior, raw syscall traces, WAL diffs, or replay scripts.
 
@@ -449,11 +497,11 @@ DROS-VEP Lite's OpenShip-based testbed composes OpenAI's official Terraform Prov
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 2. Runtime Execution Defense Evaluation (DROS Layer 4 - C-ABI Boundary)     │
 │    • 3-Tier PKI Identity Chain -> DrosIdentityToken (DIT) Cryptographic Binding│
-│    • DROS GuardVM (PEP/PDP)    -> Sub-microsecond <500ns Binary Interception │
+│    • DROS GuardVM (PEP/PDP)    -> Historical latency figures not validated │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-In this evaluation topology, while OpenAI's Terraform Provider establishes the **Control Plane Provisioning** baseline (Projects, IAM, Rate Limits), **DROS GuardVM** is evaluated as the **Runtime Execution Defense** layer — validating that when an agent holding legitimately provisioned credentials is hijacked via Indirect Prompt Injection (IPI), unauthorized tool calls are deterministically intercepted at the C-ABI boundary.
+This topology describes a synthetic control-plane and execution-boundary evaluation scenario. Its architecture description does not establish a deployed runtime result, universal mediation, or a measured interception latency.
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -473,24 +521,24 @@ In this evaluation topology, while OpenAI's Terraform Provider establishes the *
 ### 💡 Why Traditional Security (WAF/Keycloak) Is Blind to ATS Scenarios
 In an indirect prompt injection attack (ATS-001), the hijacked AI Agent possesses a **valid Keycloak JWT token**. When the agent queries `/api/erp/finance`, WAF inspects the request: *"Valid HTTPS, clean JSON, valid OAuth token. Access Granted!"*
 
-Traditional WAFs see a **100% legitimate user making a clean REST API call**. The attack is hidden inside the **LLM Semantic Context**. This is why DROS PEP/PDP is required at the tool execution boundary.
+Traditional WAFs may see an authenticated user making a syntactically valid REST API call while the relevant risk arises from **LLM Semantic Context**. This motivates evaluating controls at the tool execution boundary; it is not a universal comparison or efficacy result.
 
 ---
 
 ## 🎯 Threat Scenarios & Research Fixtures (RFC-010 Standard Matrix)
 
 > [!NOTE]
-> **Synthetic Benchmark Disclaimer**  
+> **Synthetic Benchmark Disclaimer**
 > All threat scenarios in this repository (ATS-001 through ATS-005, AS-001 through AS-005, and PC-001 through PC-010) are **synthetic, architectural evaluation fixtures**. They are designed exclusively to model and evaluate runtime system-call boundaries, tool authorization contracts, and post-compromise containment invariants mapped to MITRE ATLAS categories. They do not simulate, represent, or attribute actions to any specific commercial platform, model provider, or real-world organization.
 
 VEP provides standardized, synthetic evaluation fixtures reproducing critical post-compromise threat models, mapped directly to **MITRE ATLAS**:
 
 | Scenario ID | Research Fixture / Threat Model | Evaluated Failure Mode | Target Execution Surface | MITRE ATLAS | In-Band Governance Action |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ATS-001** | Zero-Day Sandbox Escape & Exfiltration | Cross-process socket leak via hijacked tool invocation | `create_socket_connection` | **AML.T0051** | **DENY (<500ns Panic)** |
-| **ATS-002** | Confused Deputy Storage Tampering | Unauthorized database encryption via legitimate API key | `write_encrypt_database` | **AML.T0052** | **DENY (<500ns Panic)** |
-| **ATS-003** | Privilege Escalation Across API Boundaries | High-privilege environment secret harvesting | `read_env_secrets` | **AML.T0053** | **DENY (26.1μs Guard)** |
-| **ATS-004** | Autonomous Model Weight Poisoning | Persistent local model file corruption & weight tampering | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (0ms Hard Lock)** |
+| **ATS-001** | Zero-Day Sandbox Escape & Exfiltration | Cross-process socket leak via hijacked tool invocation | `create_socket_connection` | **AML.T0051** | **DENY (synthetic fixture; latency not currently validated)** |
+| **ATS-002** | Confused Deputy Storage Tampering | Unauthorized database encryption via legitimate API key | `write_encrypt_database` | **AML.T0052** | **DENY (synthetic fixture; latency not currently validated)** |
+| **ATS-003** | Privilege Escalation Across API Boundaries | High-privilege environment secret harvesting | `read_env_secrets` | **AML.T0053** | **DENY (synthetic fixture; latency not currently validated)** |
+| **ATS-004** | Autonomous Model Weight Poisoning | Persistent local model file corruption & weight tampering | `encrypt_pytorch_weights` | **AML.T0054** | **DENY (synthetic fixture; latency not currently validated)** |
 | **ATS-005** | Credential Harvesting via Social Tooling | In-band extraction of host SSH keyfile credentials | `read_ssh_keyfile` | **AML.T0055** | **DENY (Execution Lock)** |
 
 ---
@@ -501,11 +549,11 @@ Engineers don't trust static dashboards. They ask: **"If I unplug your guard, do
 
 ### 1. Counterfactual Control Group (`Disable DROS Guard` Toggle)
 Open `http://localhost:8080` and check **`☑ Disable DROS Guard (Debug Mode)`**:
-* **Guard Active (Normal)**: 100% Defense Integrity (`AS-001 ~ AS-005 | Decision: DENY | Pass Rate: 100%`).
-* **Guard Disabled (Control Group)**: PEP bypasses interception. The agent penetrates target endpoints. Pass rate plummets from **`100% ===> 0% (LEAKED)`**.
+* **Historical fixture summary**: AS-001–AS-005 were reported as DENY with the guard active. This is a named synthetic-fixture result, not an overall security rate or a currently promoted independent evidence claim.
+* **Disabled-guard scenario**: The repository describes a synthetic bypass/control scenario; its description alone does not establish a current target-side effect observation.
 
 ### 2. Deterministic Replay Engine (`benchmark/replay.py`)
-Replay any historical audit log or evidence artifact package deterministically:
+Replay supported audit-log formats using the named replay tool; successful replay does not independently validate source provenance, runtime execution, or claim support:
 
 ```bash
 python benchmark/replay.py exec_ATS-001_1784702707
@@ -517,33 +565,33 @@ python benchmark/replay.py exec_ATS-001_1784702707
 
 To ensure scientific transparency, VEP explicitly distinguishes between **two fundamentally different execution paths**:
 
-1. **Full Cryptographic Policy Evaluation Path (P50: 26.1 μs)**:
+1. **Full Policy Evaluation Path (historical reported figures; not independently validated)**:
    * Evaluates 3-tier certificate validation (`Root CA -> AIA -> Leaf DIT Token`), capability bitmask matching ($O(1)$), and structured audit attestation.
-   * Median decision speed: **26.1 μs** (P99: 41.2 μs, Stddev: ±3.4 μs, $N=10,000$).
-2. **Emergency Fail-Closed Panic Path (<500 ns)**:
+   * Historical report: P50 **26.1 μs**, P99 **41.2 μs**, standard deviation **±3.4 μs**, $N=10,000$. The local bounded claim audit did not locate the raw sample/run-bound bundle needed for independent validation; this remains a reported, unpromoted figure.
+2. **Emergency Fail-Closed Panic Path (historical reported figure; not independently validated)**:
    * Short-circuit hardware/C-ABI boundary abort triggered when an unmapped tool call, memory fault, or revoked token attempts immediate execution.
-   * Execution abort latency: **<500 ns**.
+   * Historical report: **<500 ns**; this value is not currently promoted as independently validated evidence.
 
 | Evaluation Dimension | Measurement Setup & Empirical Metric | Measurement Code Anchor |
 | :--- | :--- | :--- |
 | **Benchmark Hardware** | Intel Xeon E3-1275L v3 (4C/8T) / 16GB RAM / Ubuntu Linux 24.04 | `tests/system_overhead/` |
 | **Execution Sandbox** | OpenShip Docker Compose isolated container network | `docker-compose.yml` |
 | **Sample Iterations** | $N = 10,000$ iterations per scenario | `scripts/run_benchmarks.py` |
-| **Full Policy Evaluation Latency**| **P50: 26.1 μs** \| **P99: 41.2 μs** \| **Stddev: ±3.4 μs** | `core/dros_guard.py` (`time.perf_counter_ns`) |
-| **Emergency Panic Deny Latency** | **< 500 ns** (Binary short-circuit abort) | `core/guard_vm.c` |
+| **Full Policy Evaluation Latency**| Historical report: P50 26.1 μs \| P99 41.2 μs \| Stddev ±3.4 μs; not independently validated | `core/dros_guard.py` is a code anchor, not raw timing evidence |
+| **Emergency Panic Deny Latency** | Historical report: <500 ns; not independently validated | `core/guard_vm.c` is a code anchor, not raw timing evidence |
 
 ---
 
 ## 🔬 Reproducibility & Research Artifact Harness
 
-To support independent scientific reproduction without corporate telemetry or external dependency:
+Scripts and reports are retained as research materials. Their presence does not by itself establish reproducibility or validate a result. Check the required identity and evidence fields in [REPRODUCIBILITY.md](REPRODUCIBILITY.md) before interpreting or attempting any reproduction; execution may require separate authorization.
 
 * **Hardware & OS Baseline**: x86_64 or ARM64, Linux Kernel $\ge 5.15$, Docker Engine $\ge 24.0$, Python 3.10+.
 * **Deterministic Benchmark Command**:
   ```bash
   python scripts/run_cybermes_crucible.py --reproduce --iterations 1000
   ```
-* **Raw Empirical Artifacts**: Raw latency measurements, audit logs, and replay traces are systematically persisted in:
+* **Artifact locations referenced by historical documentation** (availability and lineage must be checked for each result):
   * `reports/evidence/`
   * `reports/CYBERMES_POST_COMPROMISE_REPORT.md`
 * **Cryptographic Trace Replay**:
@@ -582,9 +630,9 @@ python scripts/run_cybermes_crucible.py
 
 | Evaluation Phase | Evaluated Dimension & Methodology | Empirical Result | Status |
 | :--- | :--- | :---: | :---: |
-| **Phase 1: Behavioral Containment** | 4-Stage MITRE ATLAS/ATT&CK step-through (`ATS-001`~`ATS-004`) | **4/4 Predefined Scenarios Blocked** | 🛡️ **Execution Contained** |
-| **Phase 2: Concurrency Integrity** | 30,000 requests across 20 threads under active RCU policy swaps | **0 Race Leaks Observed ($N=30\text{k}$) / 200 ns P50** | 🌟 **Zero Contention Leak** |
-| **Phase 3: Boundary Robustness** | 1,000 malformed FFI / C-ABI mutated payloads (overflows/masks) | **0 Crashes / 0 Leaks Observed ($N=1\text{k}$)** | 🛡️ **Host Process Stable** |
+| **Phase 1: Behavioral Containment** | Historical 4-scenario fixture set (`ATS-001`–`ATS-004`) | Historical report: 4/4 fixture scenarios blocked; not independently validated | Fixture-scoped report only |
+| **Phase 2: Concurrency Integrity** | Historical report: 30,000 requests / 20 threads | Reported 0 race leaks and 200 ns P50; not independently validated | Historical report only |
+| **Phase 3: Boundary Robustness** | Historical report: 1,000 malformed FFI / C-ABI payloads | Reported 0 crashes / 0 leaks; not independently validated | Historical report only |
 
 * Read the full technical benchmark report: **[CYBERMES_POST_COMPROMISE_REPORT.md](reports/CYBERMES_POST_COMPROMISE_REPORT.md)**
 * Inspect scenario details & capability matrix: **[scenarios/ATS-005](scenarios/ATS-005/README.md)**
@@ -593,7 +641,7 @@ python scripts/run_cybermes_crucible.py
 
 ## 👥 Open Source & Community Resources
 
-DROS-VEP Lite is released under Apache 2.0 to provide an open, transparent, and fully reproducible benchmark evaluation environment for the global AI safety community:
+DROS-VEP Lite is released under Apache 2.0 as an open benchmark and evaluation framework. Reproducibility is result-specific and depends on complete, verifiable artifact lineage; it is not implied by repository availability.
 
 * **🧪 Evaluation Sandbox (DROS-VEP Lite)**: Freely available to clone, test, and design custom security benchmark scenarios. Refer to [Quick Start (60 Seconds)](#-quick-start-60-seconds) to run the RFC-001 suites immediately.
 * **🛡️ Local Execution Guard (Reference Substrate)**: For independent developers and researchers seeking local execution-boundary protection against untrusted tool calls and prompt injection, access the [Open Source Reference Tools](https://github.com/Top-Celestial-Company-Ltd).
@@ -644,18 +692,18 @@ If you reference our zero-trust runtime governance evaluation or use **DROS-VEP 
 ## ❓ Frequently Asked Questions (FAQ)
 
 ### Why does VEP use open-spec policy representations rather than compiled `policy.bin` binaries?
-VEP Lite is engineered as a **human-readable, open-spec evaluation sandbox (RFC-010)** to allow security researchers, CISOs, and developers to easily audit policy rules, inspect threat scenarios, and conduct red-teaming without proprietary compiled binaries.  
-In **DROS Enterprise Production**, policies are compiled by `VajraCompiler` into cryptographically signed, immutable, lock-free C-ABI binary microkernels (`policy.bin`) with zero-heap memory allocation and anti-reverse-engineering seals.
+VEP Lite is engineered as a **human-readable, open-spec evaluation sandbox (RFC-010)** to allow security researchers, CISOs, and developers to easily audit policy rules, inspect threat scenarios, and conduct red-teaming without proprietary compiled binaries.
+Claims about separate commercial implementations or production deployments are outside this repository's verification scope and should be assessed against their own version-bound evidence.
 
 ---
 
 ### Will PGM's strict $\mathcal{O}(1)$ Bitmap mechanism cause high false positives and block legitimate business workflows (Over-Blocking)?
-**No. PGM is fundamentally engineered to guarantee high business availability while enforcing zero-trust execution.**  
+The repository does not establish a general false-positive rate or guarantee business availability across workflows. Any such claim requires a defined workload and independently reviewable results.
 Unlike heuristic WAFs or probabilistic LLM guards that rely on fuzzy regex pattern matching (which often mistake benign input for attacks), PGM operates on **Multidimensional Positive Capability Bitmasks (正向能力白名單矩陣)**:
 
-1. **Positive Capability Inclusion (Not Heuristic Guessing)**: PGM assigns fine-grained capability vectors (Role $\times$ Tool $\times$ Method $\times$ Resource Scope). Legitimate operations matching the agent's designated task evaluate to bitwise `1` (Pass) in a single CPU cycle ($26.1\mu s$), resulting in **0% false positive blockage on valid business paths**.
-2. **Graduated Enforcement (Progressive Gates)**: For sensitive or cross-boundary operations (e.g., large payouts, confidential record exports), PGM does not crudely terminate the entire connection. Instead, it triggers **In-Band Dynamic Redaction (18-PHI Masking)** or **Human-in-the-Loop (HITL) Soft Suspension**, allowing standard workflows to proceed securely without business disruption.
-3. **Sub-Millisecond Zero-Downtime RCU Policy Tuning**: If business requirements evolve or new endpoints are onboarded, security operators can update policies via background shadow compilation in **<1ms**. The master pointer is updated via lock-free RCU atomic swap with **zero downtime and zero traffic stalls**.
+1. **Positive Capability Inclusion**: Capability matching is described using fine-grained vectors (Role × Tool × Method × Resource Scope). The repository does not establish a general workload false-positive rate or validate the historical 26.1 μs figure; see [EVIDENCE_STATUS.md](EVIDENCE_STATUS.md).
+2. **Graduated Enforcement**: Redaction or human-review behavior for sensitive operations is a product/design description that must be checked against the exact implementation and deployment; this repository does not establish production workflow availability or outcomes.
+3. **Policy updates**: This repository does not validate a sub-millisecond update time, zero downtime, or zero traffic stalls for a production deployment; those claims require separate, version-bound evidence.
 
 ---
 

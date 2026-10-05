@@ -255,7 +255,7 @@ Enterprise VajraAgent / DROS-Guard enforces a **Three-Tier Progressive Eviction 
 | **Regulatory & Legal** | Patent Filing Notice | 🟢 Filed / Pending | U.S. Provisional Patent App. No. 64/111,973 |
 | | Core Technical Trilogy | 🟢 Documented | Complete 3-Paper Architecture Matrix: DROS-6P (`paper_6p/`), DROS-4Layer (`paper_4layer/`), DROS-PGM (`paper_pgm/`) |
 | | License Tier Separation | 🟢 Enforced | Community Free License vs. Enterprise B2B License |
-| **Release Testing** | 72h Continuous Soak Test | 🟢 Verified | 160,611 requests, 0 MB RSS growth attributable to test workload |
+| **Legacy Soak Testing** | 24h Soak Test Log | 🟡 Historical Archive | 160,611 logged events (85.77% rejection ratio; raw timing samples unarchived) |
 | | Defined Adversarial Benchmarks| 🟢 Verified | 17/17 defined adversarial test cases passed (Suites A--F) |
 | | Public Falsification Channel | 🟢 Active | GitHub Issue Template (`0 counterexamples observed`) |
 
@@ -308,7 +308,7 @@ A DROS build may be designated as an enterprise production release (GA) only aft
 │  [✓] Security (Suites A--F: 17/17 Defined Cases Passed)      │
 │  [✓] Post-Compromise (PC-01--10: 10 Containment Vectors = 1.0)│
 │  [✓] Performance (Median < 30μs, P99 < 300μs, Swap ≈ 420ns)  │
-│  [✓] Reliability (72h Soak: 160,611 Reqs, 0MB Leak, 0 Panic)│
+│  [🟡] Reliability (Legacy 24h Soak: 160,611 Events Logged, 85.77% Rejection Ratio)│
 │  [✓] Falsification (0 Counterexamples Observed)              │
 │                                                              │
 │  Build Target: <immutable-sha256-commit>                     │

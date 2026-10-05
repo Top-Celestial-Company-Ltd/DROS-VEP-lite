@@ -24,7 +24,7 @@ DROS（確定性執行期治理基座）直接駐留在作業系統與 FFI 執�
 1. **亞微秒級帶內硬熔斷 (< 30 μs)**：不經過 LLM 二次推理，直接以 64 位元點陣圖在記憶體內實施 $O(1)$ 常數時間阻斷。
 2. **攻陷後完全邊界控制 (Post-Compromise Containment $\equiv 1.0$)**：假設 Agent 已被 100% 深度劫持，依然能硬性約束其無法產生未授權的系統副作用。
 3. **階梯式處置狀態機 (Graduated Eviction)**：兼顧一般業務 Agent 偶發錯誤的自愈容錯，與惡意 Agent 的物理終止 (SIGKILL) 驅逐。
-4. **不可否認性密碼學審計 (Cryptographic Audit)**：連續 SHA-256 哈希鏈存證，完全滿足歐盟 AI 法案與美國 NIST 零信任合規。
+4. **可驗證密碼學審計 (Cryptographic Audit)**：連續 SHA-256 決策雜湊鏈存證，支援結構化審計記錄導出以輔助治理流程。
 
 ---
 
@@ -38,7 +38,7 @@ DROS（確定性執行期治理基座）直接駐留在作業系統與 FFI 執�
 | **壓測與穩定性** | Quick Run 單次快速評測 | 24h Soak 浸泡 (1 萬次無洩漏) | 72h Stress 壓力測試 (16 萬次烘烤) |
 | **身分與憑證體系** | 本地環境變數 / Mock Token | W3C DID Agent 護照 + 本地 Merkle | 🔑 PKI CA: ROOT-2026 (ECDSA-P256) |
 | **部署支援拓撲** | 行程內 C-ABI / 單機 Docker | K8s DaemonSet / Helm / Systemd | 硬實時邊緣載具 / 離線隔離網閘 |
-| **合規報告產出** | 本地 Policy Inspector 彈窗 | 歐盟 AI 法案 / NIST 自動合規 PDF | 司法級取證包 (Ed25519 數位簽章) |
+| **合規報告產出** | 本地 Policy Inspector 彈窗 | 結構化審計日誌導出包 | 結構化審計日誌導出包 |
 
 ---
 
@@ -49,7 +49,7 @@ DROS（確定性執行期治理基座）直接駐留在作業系統與 FFI 執�
 │ 步驟 1: 概念驗證 (PoC) ➔ 下載 Startup-Edition 進行 5 分鐘快速壓測驗收      │
 │ 步驟 2: 架構評估 (Arch) ➔ 執行 `python cli.py doctor` 評估企業 IAM 複雜度   │
 │ 步驟 3: 正式部署 (Deploy) ➔ 透過 Helm Chart 部署 Enterprise K8s DaemonSet  │
-│ 步驟 4: 合規交付 (Audit) ➔ 匯出歐盟 AI 法案不可篡改 Merkle 審計報告         │
+│ 步驟 4: 審計交付 (Audit) ➔ 匯出決策雜湊審計報告                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
