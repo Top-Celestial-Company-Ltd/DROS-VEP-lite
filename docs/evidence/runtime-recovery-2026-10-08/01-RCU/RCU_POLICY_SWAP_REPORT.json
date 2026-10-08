@@ -1,0 +1,67 @@
+{
+  "experiment_id": "RCU-POLICY-SWAP-20261008",
+  "timestamp": "2026-10-08T05:37:17Z",
+  "policy_a_sha256": "f045cc23b59468c11b5575a7c2c088c7518178da1a0ddc1ab9e60e62ea4e84a3",
+  "policy_b_sha256": "f034e17f1efe0c5d9e40324d6892227c8a517202cd43f67b2bc0546263d2e6e8",
+  "total_reader_samples": 7428,
+  "torn_updates_observed": 0,
+  "final_policy_sha256": "f034e17f1efe0c5d9e40324d6892227c8a517202cd43f67b2bc0546263d2e6e8",
+  "expected_final_sha256": "f034e17f1efe0c5d9e40324d6892227c8a517202cd43f67b2bc0546263d2e6e8",
+  "final_hash_match": true,
+  "swap_events": [
+    {
+      "swap_id": "SWAP-1",
+      "target_name": "POLICY_B",
+      "target_hash": "f034e17f1efe0c5d9e40324d6892227c8a517202cd43f67b2bc0546263d2e6e8",
+      "new_generation": 2,
+      "prep_latency_ns": 3144,
+      "swap_latency_ns": 2247,
+      "prep_latency_us": 3.144,
+      "swap_latency_us": 2.247
+    },
+    {
+      "swap_id": "SWAP-2",
+      "target_name": "POLICY_A",
+      "target_hash": "f045cc23b59468c11b5575a7c2c088c7518178da1a0ddc1ab9e60e62ea4e84a3",
+      "new_generation": 3,
+      "prep_latency_ns": 3994,
+      "swap_latency_ns": 2115,
+      "prep_latency_us": 3.994,
+      "swap_latency_us": 2.115
+    },
+    {
+      "swap_id": "SWAP-3",
+      "target_name": "POLICY_B",
+      "target_hash": "f034e17f1efe0c5d9e40324d6892227c8a517202cd43f67b2bc0546263d2e6e8",
+      "new_generation": 4,
+      "prep_latency_ns": 3059,
+      "swap_latency_ns": 1807,
+      "prep_latency_us": 3.059,
+      "swap_latency_us": 1.807
+    },
+    {
+      "swap_id": "SWAP-4",
+      "target_name": "POLICY_A",
+      "target_hash": "f045cc23b59468c11b5575a7c2c088c7518178da1a0ddc1ab9e60e62ea4e84a3",
+      "new_generation": 5,
+      "prep_latency_ns": 2686,
+      "swap_latency_ns": 1403,
+      "prep_latency_us": 2.686,
+      "swap_latency_us": 1.403
+    },
+    {
+      "swap_id": "SWAP-5",
+      "target_name": "POLICY_B",
+      "target_hash": "f034e17f1efe0c5d9e40324d6892227c8a517202cd43f67b2bc0546263d2e6e8",
+      "new_generation": 6,
+      "prep_latency_ns": 3631,
+      "swap_latency_ns": 2210,
+      "prep_latency_us": 3.631,
+      "swap_latency_us": 2.21
+    }
+  ],
+  "mean_swap_latency_ns": 1956.4,
+  "mean_swap_latency_us": 1.9564000000000001,
+  "pass_criteria_met": true,
+  "verdict": "PASS"
+}

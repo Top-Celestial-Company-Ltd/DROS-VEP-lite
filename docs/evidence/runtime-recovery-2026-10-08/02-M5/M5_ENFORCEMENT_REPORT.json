@@ -1,0 +1,147 @@
+{
+  "experiment_id": "M5-RUNTIME-ENFORCEMENT-20261008",
+  "timestamp": "2026-10-08T05:36:43Z",
+  "total_tests": 6,
+  "passed_tests": 6,
+  "failed_tests": 0,
+  "overall_verdict": "PASS",
+  "test_results": [
+    {
+      "sequence_id": 1,
+      "test_id": "M5-001",
+      "description": "Authorized principal & authorized action",
+      "timestamp": "2026-10-08T05:36:43Z",
+      "agent_role": "support-agent",
+      "path": "api/erp/inventory",
+      "headers": {
+        "X-Agent-Role": "support-agent",
+        "X-Scenario-ID": "SCN-M5-001"
+      },
+      "expected_decision": "allow",
+      "observed_decision": "allow",
+      "expected_status": 200,
+      "observed_status": 200,
+      "expected_downstream_executed": true,
+      "observed_downstream_executed": true,
+      "decision_match": true,
+      "downstream_match": true,
+      "passed": true,
+      "latency_ms": 10.827302932739258,
+      "response_body": "{\"data\":\"INVENTORY_PAYLOAD\",\"status\":\"success\"}\n"
+    },
+    {
+      "sequence_id": 2,
+      "test_id": "M5-002",
+      "description": "Unauthorized principal (unregistered role)",
+      "timestamp": "2026-10-08T05:36:43Z",
+      "agent_role": "rogue-agent-99",
+      "path": "api/erp/inventory",
+      "headers": {
+        "X-Agent-Role": "rogue-agent-99",
+        "X-Scenario-ID": "SCN-M5-002"
+      },
+      "expected_decision": "deny",
+      "observed_decision": "deny",
+      "expected_status": 403,
+      "observed_status": 403,
+      "expected_downstream_executed": false,
+      "observed_downstream_executed": false,
+      "decision_match": true,
+      "downstream_match": true,
+      "passed": true,
+      "latency_ms": 4.805564880371094,
+      "response_body": "{\"latency_ms\":0.029186,\"reason\":\"DROS Policy Violation: Agent role 'rogue-agent-99' not registered.\",\"status\":\"blocked\"}\n"
+    },
+    {
+      "sequence_id": 3,
+      "test_id": "M5-003",
+      "description": "Authorized principal requesting prohibited endpoint",
+      "timestamp": "2026-10-08T05:36:43Z",
+      "agent_role": "support-agent",
+      "path": "api/erp/finance",
+      "headers": {
+        "X-Agent-Role": "support-agent",
+        "X-Scenario-ID": "SCN-M5-003"
+      },
+      "expected_decision": "deny",
+      "observed_decision": "deny",
+      "expected_status": 403,
+      "observed_status": 403,
+      "expected_downstream_executed": false,
+      "observed_downstream_executed": false,
+      "decision_match": true,
+      "downstream_match": true,
+      "passed": true,
+      "latency_ms": 4.531145095825195,
+      "response_body": "{\"latency_ms\":0.019016,\"reason\":\"DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/erp/finance'\",\"status\":\"blocked\"}\n"
+    },
+    {
+      "sequence_id": 4,
+      "test_id": "M5-004",
+      "description": "Authorized action with missing / invalid identity binding",
+      "timestamp": "2026-10-08T05:36:43Z",
+      "agent_role": "",
+      "path": "api/erp/inventory",
+      "headers": {
+        "X-Scenario-ID": "SCN-M5-004"
+      },
+      "expected_decision": "deny",
+      "observed_decision": "deny",
+      "expected_status": 403,
+      "observed_status": 403,
+      "expected_downstream_executed": false,
+      "observed_downstream_executed": false,
+      "decision_match": true,
+      "downstream_match": true,
+      "passed": true,
+      "latency_ms": 4.323244094848633,
+      "response_body": "{\"latency_ms\":0.020322,\"reason\":\"DROS Policy Violation: Agent role 'unknown' not registered.\",\"status\":\"blocked\"}\n"
+    },
+    {
+      "sequence_id": 5,
+      "test_id": "M5-005",
+      "description": "Prohibited devops endpoint for support-agent",
+      "timestamp": "2026-10-08T05:36:43Z",
+      "agent_role": "support-agent",
+      "path": "api/devops/deploy",
+      "headers": {
+        "X-Agent-Role": "support-agent",
+        "X-Scenario-ID": "SCN-M5-005"
+      },
+      "expected_decision": "deny",
+      "observed_decision": "deny",
+      "expected_status": 403,
+      "observed_status": 403,
+      "expected_downstream_executed": false,
+      "observed_downstream_executed": false,
+      "decision_match": true,
+      "downstream_match": true,
+      "passed": true,
+      "latency_ms": 4.416465759277344,
+      "response_body": "{\"latency_ms\":0.018681,\"reason\":\"DROS Policy Violation: Role 'support-agent' prohibited from accessing '/api/devops/deploy'\",\"status\":\"blocked\"}\n"
+    },
+    {
+      "sequence_id": 6,
+      "test_id": "M5-006",
+      "description": "CISO role authorized for finance endpoint",
+      "timestamp": "2026-10-08T05:36:43Z",
+      "agent_role": "ciso-agent",
+      "path": "api/erp/finance",
+      "headers": {
+        "X-Agent-Role": "ciso-agent",
+        "X-Scenario-ID": "SCN-M5-006"
+      },
+      "expected_decision": "allow",
+      "observed_decision": "allow",
+      "expected_status": 200,
+      "observed_status": 200,
+      "expected_downstream_executed": true,
+      "observed_downstream_executed": true,
+      "decision_match": true,
+      "downstream_match": true,
+      "passed": true,
+      "latency_ms": 7.497310638427734,
+      "response_body": "{\"data\":\"FINANCIAL_CONFIDENTIAL\",\"status\":\"success\"}\n"
+    }
+  ]
+}

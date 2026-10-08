@@ -319,13 +319,15 @@ $$\text{Decision}(tool\_id) = \begin{cases} \text{ALLOW} & \text{if } \text{Bitm
 
 #### Principle 2: $O(1)$ Constant-Time Policy Matching ($O(1)$ Algorithmic Lookup)
 
-| Comparison Dimension | LLM-Based Semantic Guardrail | DROS Bitmap Lookup |
+| **Comparison Dimension** | **LLM-Based Semantic Guardrail** | **DROS Bitmap Lookup** |
 | :--- | :--- | :--- |
-| **Decision Latency** | Tens to hundreds of milliseconds (LLM inference time) | 26.1 μs (P50), deterministic |
-| **Policy Scale Impact** | More policies → slower inference (linear degradation) | $O(1)$, policy count does not affect speed |
-| **Decision Type** | Probabilistic (confidence scores) | Deterministic (Boolean bit) |
-| **Zero-Day Bypass Risk** | High (semantically equivalent substitution) | None (binary boundary, semantics unreachable) |
-| **Performance Overhead (P99)** | Unpredictable, degrades sharply under load | 41.2 μs, constant |
+| **Decision Latency** | Typically milliseconds, model- and load-dependent | **26.1 μs (P50)\*** |
+| **Policy Scale Impact** | More policies may increase inference/matching overhead | **Bitmap lookup decision complexity does not scale linearly with policy count** |
+| **Decision Type** | Probabilistic / semantic judgment | **Deterministic bitwise decision** |
+| **Zero-Day Bypass Risk** | May be affected by semantically equivalent substitution | **Binary privilege boundary; does not rely on semantic similarity judgment** |
+| **Performance Overhead (P99)** | Varies by model, load, and deployment | **41.2 μs\*** |
+
+\* **Historical benchmark result; not independently revalidated in the current evidence set. Values are workload/configuration-specific and are not presented as a universal latency guarantee.**
 
 ##### Principle 3: C-ABI Boundary Interception & Dual-Layer Sandbox Synergy (Sub-Application Layer Semantic PEP & Kernel Sandbox Synergy)
 
@@ -491,6 +493,89 @@ DROS rejects unconstrained marketing generalizations, establishing precise physi
 To maintain scientific reproducibility, DROS's sub-microsecond latency and 95%+ memory savings are benchmarked against documented industry standards:
 * **95%~99% Memory Savings Baseline**: Measured against **Meta Llama Guard 3** (8B FP16 requires $\ge 16\text{ GB}$ VRAM, single A10G inference ~120-250ms; 1B quantized requires $\ge 2\text{ GB}$ RAM) and **NVIDIA NeMo Guardrails** multi-rail pipelines. DROS C-ABI core operates with $< 16\text{ MB}$ static memory.
 * **1,000x~10,000x Latency Advantage Baseline**: Measured against **Lakera Guard** (documented API latency 30-50ms RTT) and **Palo Alto Networks AI Runtime Security (AIRS)** (40-80ms RTT), alongside local model inference (150-500ms). DROS in-band microkernel evaluates policies in $26.1\ \mu\text{s}$ (P50) with panic abort in $< 500\text{ ns}$.
+
+### 7.5 VEP Empirical Evidence for UAV / Physical AI Runtime Governance
+
+The DROS-VEP (Verified Experiment Protocol) framework has completed Milestone M1.1, a formal staircased evaluation of DROS runtime governance applied to the PX4 autopilot SITL reference platform.
+
+#### 7.5.1 Test Subject and Execution Topology
+
+| Attribute | Specification |
+|:---|:---|
+| Flight Controller | Genuine C++ PX4 SITL v1.14.3, ELF 64-bit, SHA-256 91fbf689... |
+| Execution Host | Linux Ubuntu Server 24.04 LTS |
+| Communication Protocol | MAVLink UDP |
+| DROS Enforcement Point | pep_proxy.py listening on UDP 127.0.0.1:14540 |
+
+The PX4 SITL process listens on multiple UDP ports, each a potential AI-to-physical action path:
+
+| Port | Function | S2-C Classification |
+|:---|:---|---:|
+| 18570 | GCS MAVLink | Unmediated Active Bypass (B) |
+| 13030 | Gimbal MAVLink | Unmediated Active Bypass (B) |
+| 14280 | Camera MAVLink | Unmediated Active Bypass (B) |
+| 14580 | PX4 Native MAVLink | Indeterminate Boundary (I) |
+| 36287 | Internal Lockstep | Unreachable Probe Boundary (U) |
+
+#### 7.5.2 Evidence Ladder Summary
+
+| Stage | Experiment | Result | Evidence Level |
+|:---|:---|---:|---:|
+| S0 | Subject Authenticity | PROVEN | E3 Runtime |
+| S1 | Path Governance | PROVEN (5/5 tests) | E3 Runtime |
+| S2-A | Dynamic Discovery | PROVEN (5 endpoints) | E3 Runtime |
+| S2-B | Execution Authority | PROVEN (4 capable, 1 unreachable) | E3 Runtime |
+| S2-C | Governance Reconciliation: S = G(0) + B(3) + I(1) + U(1) + N(0) | PROVEN | E3 Runtime |
+| S2-D | Reversible Host-Level Perimeter Containment | CLOSED - NOT_PROVEN | E3 Runtime |
+| S2-E | Governance Transfer on Port 18570 (Mock Server) | PROVEN | E3 Runtime |
+| S2-F | Fresh Re-discovery | NOT YET EVIDENCED | - |
+
+#### 7.5.3 S2-D Honest Disclosure
+
+S2-D was formally closed as NOT_PROVEN because the evidence boundaries demand it:
+
+| Oracle | Verdict | Key Finding |
+|:---|---:|:---|
+| Oracle A (Network Enforcement) | FAIL | tcpdump arrival not established. iptables DROP before loopback creates observation blind spot. |
+| Oracle B (State Integrity) | PASS | Port 14280: MIS_TAKEOFF_ALT=30.0, TRIG_INTERVAL=50.0, delta=0 |
+| Oracle C (Control Path) | FAIL | 14540-14588-14580-COMMAND_ACK trace not obtained. Tap 14588=0 bytes. |
+| Oracle D (Rollback) | PASS | Firewall state restored. Pre=post hash. |
+
+Two distinct failure boundaries:
+
+- Boundary A (Continuous Runtime): PEP authorization, forwarding, ingress all PASS. COMMAND_ACK(400) NOT OBSERVED.
+- Boundary B (Fresh Restart): PDP authorization BLOCKED, ARGUMENT_HASH_MISMATCH observed.
+
+PDP Argument Hash Determinism Anomaly observed (same request, 3 different hashes). Root cause UNRESOLVED.
+
+#### 7.5.4 S1 Path Governance (Byte-Level Evidence)
+
+S1 passed 5/5 pytest (9.63s), establishing single-path PEP governance:
+
+| Test | Input | Observed Result |
+|:---|:---|---:|
+| Authorized ARM request | 41-byte COMMAND_LONG | Captured at Tap - PASS |
+| Forged signature | Invalid Ed25519 | 0 packets downstream - PASS |
+| Unauthorized capability | Valid sig, insufficient privilege | 0 packets downstream - PASS |
+| Malformed wire input | Unparseable bytes | 0 packets downstream - PASS |
+| PEP SIGKILL | OS kill signal | 0 packets downstream - PASS |
+
+#### 7.5.5 Governance Transfer Status
+
+WVG = NOT_PROVEN (since B>0 and I>0)
+S2-E (real PX4) = NOT_EXECUTED (Mock Server only: PROVEN)
+S2-F = NOT_EXECUTED
+HITL / Physical UAV = NOT_TESTED
+
+#### 7.5.6 Evidence Artifacts
+
+Public repository: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite
+Physical Drone Benchmark: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/tree/main/benchmarks/physical_drone
+S2-D Test Contract: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/drone/S2_D_TEST_CONTRACT.md
+
+#### 7.5.7 BYOD Evaluation for UAV Manufacturers
+
+DROS invites UAV manufacturers to a Bring Your Own Drone (BYOD) controlled technical evaluation. This is available for PX4 integration, AI companion computer governance, MAVLink execution authorization, and HITL validation.
 
 ---
 
@@ -759,3 +844,61 @@ The DROS 4-Layer Architecture (L1~L4) shifts the final defensive line from the p
 *DROS execution governance and security technology is protected under U.S. Provisional Patent Application (U.S. PPA No. 64/111,973, Patent Pending).*  
 *This whitepaper is provided for technical informational purposes and does not constitute legal or investment advice.*
 
+
+
+## VEP 2.0 Verified Runtime Evidence — 2026-10-08
+
+The following results are **verified measured evidence under explicitly defined test boundaries**. They are not universal performance guarantees and do not constitute a claim of complete mediation or production security certification.
+
+### PDP Microbenchmark
+
+- Samples: 100,000
+- P50: 730 ns
+- P95: 947 ns
+- P99: 1,223 ns
+- P99.9: 1,354 ns
+- Maximum: 13,482 ns
+- Boundary: policy-evaluation-only PDP measurement
+- Environment: Ubuntu 24.04.4, Intel Core i5-3450, Python 3.12.3
+
+### RCU Policy Swap
+
+- Reader observations: 7,428
+- Policy swaps: 5
+- Observed torn states: 0
+- Average publication time: 1.96 µs
+
+This is an observed result under the specified workload. It is not a formal proof of universal lock-free correctness or race freedom.
+
+### M5 Runtime Enforcement
+
+- Controlled authorization cases: 6/6
+- Expected authorization decisions matched: 6/6
+- Expected downstream effects matched: 6/6
+
+This is controlled runtime enforcement evidence and does not establish universal complete mediation or impossible bypass.
+
+### PGM 24-Hour Run
+
+- Raw observations: 268,120
+- Errors: 0
+- Timeouts: 0
+- Crashes: 0
+- Internal PDP P50: 18.99 µs
+- Internal PDP P99: 47.78 µs
+- Client E2E P50: 4.38 ms
+- Client E2E P99: 10.41 ms
+
+These results apply to the specified 24-hour workload and environment. They are not a universal production-stability guarantee.
+
+### Historical Results
+
+Earlier benchmark values remain preserved as historical reported results and are not silently replaced by these fresh measurements. Historical values include previously reported PDP, RCU, PGM, and comparative benchmark results.
+
+### Scope Boundary
+
+PX4 S2-D remains **NOT_PROVEN**.
+
+Historical OPA / ScopeGate comparisons remain **HISTORICAL / NOT_RETESTED**.
+
+Complete mediation against all raw syscall, kernel, or other bypass paths remains **NOT_PROVEN**.
