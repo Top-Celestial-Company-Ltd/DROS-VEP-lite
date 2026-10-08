@@ -1,0 +1,42 @@
+{
+  "ALL": {
+    "total_requests": 268120,
+    "requests_per_second": 3.1,
+    "allow_count": 45140,
+    "deny_count": 222980,
+    "error_count": 0,
+    "timeout_count": 0
+  },
+  "W-A": {
+    "total_requests": 66908,
+    "requests_per_second": 0.77,
+    "allow_count": 11289,
+    "deny_count": 55619,
+    "error_count": 0,
+    "timeout_count": 0
+  },
+  "W-B": {
+    "total_requests": 50161,
+    "requests_per_second": 0.58,
+    "allow_count": 8362,
+    "deny_count": 41799,
+    "error_count": 0,
+    "timeout_count": 0
+  },
+  "W-C": {
+    "total_requests": 126080,
+    "requests_per_second": 1.46,
+    "allow_count": 21260,
+    "deny_count": 104820,
+    "error_count": 0,
+    "timeout_count": 0
+  },
+  "W-D": {
+    "total_requests": 24971,
+    "requests_per_second": 0.29,
+    "allow_count": 4229,
+    "deny_count": 20742,
+    "error_count": 0,
+    "timeout_count": 0
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "run_id": "PGM-VEP2-FRESH-24H-20261007-01",
+  "measurement_domains": {
+    "metric_a": {
+      "name": "client_e2e_latency_ns",
+      "definition": "Client request start -> network socket -> Flask -> PEP -> PDP -> ERP mock -> HTTP response -> client request end",
+      "domain": "Client-Side End-to-End HTTP Round-Trip",
+      "unit": "nanoseconds (ns)",
+      "clock": "time.perf_counter_ns()"
+    },
+    "metric_b": {
+      "name": "internal_pdp_latency_ns",
+      "definition": "DROS Guard PEP proxy_intercept start -> RFC-010 Bitmap/Hashtable policy lookup -> Ed25519 execution signature -> DROS decision verdict return",
+      "domain": "Internal DROS Guard Policy Enforcement Point (PDP) Evaluation",
+      "unit": "nanoseconds (ns)",
+      "clock": "time.perf_counter_ns()"
+    }
+  },
+  "percentile_algorithm": {
+    "method": "Linear interpolation between closest ranks (NIST/SciPy compliant: method='linear')",
+    "formula": "k = (N - 1) * p; index = floor(k); fraction = k - floor(k); Q(p) = (1 - fraction) * sorted[index] + fraction * sorted[index + 1]",
+    "declared_ranks": [0.50, 0.90, 0.95, 0.99, 0.999]
+  },
+  "raw_observation_schema": {
+    "required_fields": [
+      "run_id",
+      "sequence_id",
+      "timestamp_start_ns",
+      "timestamp_end_ns",
+      "workload_id",
+      "scenario_id",
+      "payload_class",
+      "payload_hash",
+      "decision",
+      "internal_pdp_latency_ns",
+      "client_e2e_latency_ns",
+      "http_status",
+      "error"
+    ],
+    "storage_format": "JSON Lines (append-only, uncompressed during execution, hashed upon completion)",
+    "outlier_policy": "Preserve all observations. No deletion, no truncation, no winsorization. Raw data remains authoritative."
+  }
+}

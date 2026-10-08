@@ -319,13 +319,15 @@ $$\text{Decision}(tool\_id) = \begin{cases} \text{ALLOW} & \text{if } \text{Bitm
 
 #### 原則二：$O(1)$ 常數時間策略比對（$O(1)$ Algorithmic Policy Matching）
 
-| 對比維度 | 基於 LLM 的語意防護 | DROS Bitmap 查表 |
+| **對比維度** | **基於 LLM 的語意防護** | **DROS Bitmap 查表** |
 | :--- | :--- | :--- |
-| **決策延遲** | 數十至數百毫秒（LLM 推論耗時） | 26.1 μs (P50)，確定性 |
-| **策略規模影響** | 策略越多，推論越慢（線性退化） | $O(1)$，策略數量不影響速度 |
-| **決策類型** | 概率性（置信度分數） | 確定性（布林位元） |
-| **零日繞過風險** | 高（語意等效替換） | 無（二進位邊界，語意不可達） |
-| **效能負擔（P99）** | 不確定，高負載下急劇退化 | 41.2 μs，恆定 |
+| **決策延遲** | 通常為毫秒級，受模型與負載影響 | **26.1 μs (P50)\*** |
+| **策略規模影響** | 策略越多可能增加推論/匹配負擔 | **Bitmap 查表的決策複雜度不隨策略條目數線性增加** |
+| **決策類型** | 概率性 / 語意判斷 | **確定性位元判定** |
+| **零日繞過風險** | 可能受到語意等效替換等問題影響 | **二進位權限邊界；不依賴語意相似性判斷** |
+| **效能負擔（P99）** | 依模型、負載與部署而異 | **41.2 μs\*** |
+
+\* **Historical benchmark result；未經目前證據集獨立重新驗證。數值依負載/組態而定，不表示為通用延遲保證。**
 
 #### 原則三：C-ABI 邊界截獲與雙層縱深沙箱（Sub-Application Layer Semantic PEP & Kernel Sandbox Synergy）
 
@@ -493,6 +495,70 @@ DROS 拒絕無差別的「跨平台百搭」行銷話術，針對異質硬體平
 為確保數據具備科學可證偽性，DROS 的微秒級延遲與記憶體節省指標，正式對照以下業界標準實作：
 * **記憶體節省 95%~99% 之對照組**：指名對照 **Meta Llama Guard 3**（8B FP16 顯存需求 $\ge 16\text{ GB}$，單張 A10G 推理延遲約 120-250ms；1B 量化版記憶體 $\ge 2\text{ GB}$）與 **NVIDIA NeMo Guardrails** 多軌檢測流程。DROS C-ABI 常駐二進位記憶體 $< 16\text{ MB}$。
 * **決策延遲快 1,000x~10,000x 之對照組**：指名對照 **Lakera Guard**（官方標稱 API 延遲約 30-50ms RTT）與 **Palo Alto Networks AI Runtime Security (AIRS)**（40-80ms RTT）及本地大模型端到端推理延遲（150-500ms）。DROS 帶內微核心常規路徑為 $26.1\ \mu\text{s}$，硬熔斷路徑為 $< 500\text{ ns}$。
+
+### 7.5 VEP UAV / Physical AI 運行期治理實證成果
+
+DROS-VEP 已完成 Milestone M1.1，一個正式階梯式評估，針對 PX4 飛控 SITL 平台驗證 DROS 運行期治理。
+
+#### 7.5.1 測試主體與執行拓撲
+
+| 屬性 | 規格 |
+|:---|:---|
+| 飛控系統 | Genuine C++ PX4 SITL v1.14.3, SHA-256 91fbf689... |
+| 通訊協議 | MAVLink UDP |
+| DROS 執行點 | pep_proxy.py 監聽 UDP 127.0.0.1:14540 |
+
+PX4 SITL 監聽多個 UDP 埠：
+
+| 埠 | 功能 | S2-C 分類 |
+|:---|:---|---:|
+| 18570 | GCS 地面站 MAVLink | 未受管主動旁路 (B) |
+| 13030 | 雲台 MAVLink | 未受管主動旁路 (B) |
+| 14280 | 相機 MAVLink | 未受管主動旁路 (B) |
+| 14580 | PX4 原生 MAVLink | 邊界不確定 (I) |
+| 36287 | 內部 Lockstep | 不可達 (U) |
+
+治理其中一條路徑不等於治理整架 UAV。
+
+#### 7.5.2 實證階梯摘要
+
+| 階段 | 結果 |
+|:---|---:|
+| S0 主體真實性 | PROVEN |
+| S1 路徑治理 | PROVEN (5/5) |
+| S2-A 動態發現 | PROVEN (5 端點) |
+| S2-B 執行權威 | PROVEN (4 可變更) |
+| S2-C 治理調解 | PROVEN |
+| S2-D 可逆遏阻 | CLOSED - NOT_PROVEN |
+| S2-E 治理移轉 (Mock) | PROVEN |
+| S2-F 全新發現 | NOT YET EVIDENCED |
+
+#### 7.5.3 S2-D 誠實揭露
+
+S2-D = CLOSED - NOT_PROVEN
+
+Oracle A (網路遏阻): FAIL - tcpdump 到達證據未建立。
+Oracle B (狀態不變性): PASS - delta=0。
+Oracle C (控制路徑): FAIL - COMMAND_ACK 完整 trace 未取得。
+Oracle D (回滾驗證): PASS - 防火牆回復。
+
+PDP Argument Hash 確定性異常已觀察到，根本原因 UNRESOLVED。
+
+#### 7.5.4 治理狀態
+
+WVG = NOT_PROVEN (B>0 + I>0)
+S2-E (真實 PX4) = NOT_EXECUTED
+HITL / 實體 UAV = NOT_TESTED
+
+#### 7.5.5 證據工件
+
+公開 Repository: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite
+Physical Drone Benchmark: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/tree/main/benchmarks/physical_drone
+S2-D Test Contract: https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/drone/S2_D_TEST_CONTRACT.md
+
+#### 7.5.6 UAV 廠商 BYOD 驗證
+
+DROS 邀請 UAV 廠商進行 Bring Your Own Drone (BYOD) 可控技術評估，涵蓋 PX4 整合、AI Companion Computer 治理、MAVLink 執行授權與 HITL 驗證。
 
 ---
 
@@ -759,3 +825,61 @@ DROS 4 層防禦架構（L1~L4）將安全防線從不可靠的語義層推向�
 *DROS 執行治理與安全技術已申請美國臨時專利保護（U.S. PPA No. 64/111,973, Patent Pending）。*  
 *本白皮書旨在提供技術資訊，不構成法律或投資建議。*
 
+
+
+## VEP 2.0 Verified Runtime Evidence — 2026-10-08
+
+The following results are **verified measured evidence under explicitly defined test boundaries**. They are not universal performance guarantees and do not constitute a claim of complete mediation or production security certification.
+
+### PDP Microbenchmark
+
+- Samples: 100,000
+- P50: 730 ns
+- P95: 947 ns
+- P99: 1,223 ns
+- P99.9: 1,354 ns
+- Maximum: 13,482 ns
+- Boundary: policy-evaluation-only PDP measurement
+- Environment: Ubuntu 24.04.4, Intel Core i5-3450, Python 3.12.3
+
+### RCU Policy Swap
+
+- Reader observations: 7,428
+- Policy swaps: 5
+- Observed torn states: 0
+- Average publication time: 1.96 µs
+
+This is an observed result under the specified workload. It is not a formal proof of universal lock-free correctness or race freedom.
+
+### M5 Runtime Enforcement
+
+- Controlled authorization cases: 6/6
+- Expected authorization decisions matched: 6/6
+- Expected downstream effects matched: 6/6
+
+This is controlled runtime enforcement evidence and does not establish universal complete mediation or impossible bypass.
+
+### PGM 24-Hour Run
+
+- Raw observations: 268,120
+- Errors: 0
+- Timeouts: 0
+- Crashes: 0
+- Internal PDP P50: 18.99 µs
+- Internal PDP P99: 47.78 µs
+- Client E2E P50: 4.38 ms
+- Client E2E P99: 10.41 ms
+
+These results apply to the specified 24-hour workload and environment. They are not a universal production-stability guarantee.
+
+### Historical Results
+
+Earlier benchmark values remain preserved as historical reported results and are not silently replaced by these fresh measurements. Historical values include previously reported PDP, RCU, PGM, and comparative benchmark results.
+
+### Scope Boundary
+
+PX4 S2-D remains **NOT_PROVEN**.
+
+Historical OPA / ScopeGate comparisons remain **HISTORICAL / NOT_RETESTED**.
+
+Complete mediation against all raw syscall, kernel, or other bypass paths remains **NOT_PROVEN**.
