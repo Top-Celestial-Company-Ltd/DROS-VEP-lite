@@ -1,0 +1,64 @@
+case_id,category,method,uri,expected_decision,actual_decision,decision_code,token_issued,verdict,reason
+P34-01a,P34,POST,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P34-01b,P34,GET,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P34-01c,P34,GET,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P34-01d,P34,post,,OBSERVATION,ALLOW,0,True,OBSERVED,POLICY_ALLOW
+P34-02a,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1 Issuer key not recognized in active TrustBundle
+P34-02b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P3 Signature mismatch over canonical envelope
+P34-02c,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1 Invalid signature format or length
+P34-02d,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P3 Signature mismatch over canonical envelope
+P34-03a,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized action for Issuer in TrustBundle
+P34-03b,P34,DELETE,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized action for Issuer in TrustBundle
+P34-03c,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized action for Issuer in TrustBundle
+P34-04a,P34,GET,,DENY,DENY,1,False,PASS,UNKNOWN_EXECUTABLE
+P34-04b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Conflicting tenant between principal and payload
+P34-04c,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized tenant for Issuer in TrustBundle
+P34-04d,P34,GET,,DENY,DENY,1,False,PASS,UNKNOWN_EXECUTABLE
+P34-04e,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Conflicting tenant between target URI and payload
+P34-05a,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized action for Issuer in TrustBundle
+P34-05b,P34,GET,,DENY,DENY,1,False,PASS,UNKNOWN_EXECUTABLE
+P34-06a,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized action for Issuer in TrustBundle
+P34-06b,P34,GET,,DENY,DENY,1,False,PASS,UNKNOWN_EXECUTABLE
+P34-06c,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P3 target_uri failed canonicalization
+P34-06d,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized action for Issuer in TrustBundle
+P34-06f,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P3 Signature mismatch over canonical envelope
+P34-06e,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P3 target_uri failed canonicalization
+P34-07a,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P3 Signature mismatch over canonical envelope
+P34-07b,P34,GET,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P34-07c,P34,GET,,OBSERVATION,ALLOW,0,True,OBSERVED,POLICY_ALLOW
+P34-08a,P34,GET,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Unauthorized action for Issuer in TrustBundle
+P34-08b,P34,GET,,DENY,DENY,1,False,PASS,UNKNOWN_EXECUTABLE
+P34-09a,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P3 Signature mismatch over canonical envelope
+P34-09b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P3 Signature mismatch over canonical envelope
+P34-10a,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P3 payload is not in canonical RFC 8785 JSON representation
+P34-10b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P3 payload is not valid RFC 8259 JSON
+P34-10c,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 Privilege escalation attempt denied
+P34-10d,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P4 caller-supplied runtime_posture assertion is forbidden
+P34-10e,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 authorization TTL out of bounds (must be 1..=900s)
+P34-10f,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P2 authorization TTL out of bounds (must be 1..=900s)
+P34-10g,P34,POST,,OBSERVATION,ALLOW,0,True,OBSERVED,POLICY_ALLOW
+P34-11a,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P6 Credential expired or clock skew
+P34-11b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P6 Credential expired or clock skew
+P34-11c,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1/P6 Credential expired or clock skew
+P34-12a,P34,POST,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P34-12b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1 Key or Principal revoked
+P34-12c,P34,POST,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P34-12d,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1 Key or Principal revoked
+P34-13b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P5 unsupported policy version
+P34-14b,P34,POST,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P34-14c,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: Replay detected (nonce already consumed)
+P34-15a,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1 Unknown or unregistered principal identity
+P34-15b,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P1 Unknown or unregistered principal identity
+P34-15c,P34,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: P3 payload contains forbidden UTF-8 BOM
+P4-01,P4,POST,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW
+P4-02,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture measurement expired
+P4-03,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture measurement timestamp is in the future
+P4-04,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture integrity or isolation check failed
+P4-05,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture integrity or isolation check failed
+P4-06,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture integrity or isolation check failed
+P4-07,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture max_age_seconds out of bounds
+P4-08,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture max_age_seconds out of bounds
+P4-09,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: unsupported RuntimePosture schema_version
+P4-10,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: RuntimePosture provider_id is empty
+P4-11,P4,POST,,DENY,DENY,1,False,PASS,FAIL_CLOSED: injected provider failure
+P4-12,P4,POST,,ALLOW,ALLOW,0,True,PASS,POLICY_ALLOW

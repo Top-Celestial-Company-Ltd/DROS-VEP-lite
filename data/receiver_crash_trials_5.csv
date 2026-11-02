@@ -1,0 +1,6 @@
+trial,sent_before_kill,acked_200,in_flight_unacked,audit_records_after_kill,audit_parse_error,independent_chain_ok,audit_log_validator_error,acked_missing_from_audit,audit_not_acked,restart_ok,exact_replay_after_restart_status,inflight_resend_status,trial_result
+1,115,114,OBJ-K1-00115,114,,true,nil,0,0,true,403,200,PASS
+2,93,92,OBJ-K2-00093,92,,true,nil,0,0,true,403,200,PASS
+3,71,70,OBJ-K3-00071,70,,true,nil,0,0,true,403,200,PASS
+4,56,55,OBJ-K4-00056,55,,true,nil,0,0,true,403,200,PASS
+5,86,85,OBJ-K5-00086,85,,true,nil,0,0,true,403,200,PASS

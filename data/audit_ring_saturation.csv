@@ -1,0 +1,4 @@
+path,configured_capacity,attempted_events,accepted_events,dropped_events,loss_counter_delta,caller_visible_statuses,decisions_allowed,decisions_denied,lossless_audit_completeness,note
+audit_ring_enqueue_api(ring_buffer_push),4096,6000,4096,1904,not_applicable(ring_has_no_counter),Ok x4096 / Err(overflow) x1904,n/a,n/a,NO(records beyond capacity rejected by push; caller must act on Err),popped_after=4096
+decision_api(compat),4096,6000,4096,1904,1904,{0: 1904, 1: 4096},4096,1904,NO(loss counter increased),accepted=audit records drained from the ring; ALLOW only while the ring accepted the record (S2 repair)
+decision_explain_api(compat),4096,6000,4096,1904,1904,{0: 6000},4096,1904,NO(loss counter increased),call status is DROS_OK for every event even when the decision was forced to DENY

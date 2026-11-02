@@ -1,0 +1,10 @@
+case,description,records_in_file,audit_log_validator_result,independent_chain_check,classification
+T0_unmodified_control,unmodified copy,400,ACCEPTED (no error),chain consistent,CONTROL
+T1_modify_field_only,"change target_object text in one record, leave hashes/CRC",400,"REJECTED: audit record 201: CRC32 checksum mismatch (expected 3057016192, got 3110453678)",chain consistent,TAMPER_DETECTION_OBSERVED
+T2_modify_field_fix_CRC_only,modify a record and recompute only its CRC32,400,ACCEPTED (no error),chain consistent,TAMPER_NOT_DETECTED
+T3_delete_middle_record,remove one record from the middle,399,"REJECTED: audit record 201: sequence mismatch (expected 201, got 202)",inconsistent: current_hash mismatch at line 399,TAMPER_DETECTION_OBSERVED
+T4_insert_duplicate_record,insert a copy of an existing record after itself,401,"REJECTED: audit record 202: sequence mismatch (expected 202, got 201)",inconsistent: current_hash mismatch at line 401,TAMPER_DETECTION_OBSERVED
+T5_reorder_adjacent,swap two adjacent records,400,"REJECTED: audit record 201: sequence mismatch (expected 201, got 202)",inconsistent: current_hash mismatch at line 400,TAMPER_DETECTION_OBSERVED
+T6_delete_first_record,remove the first record,399,"REJECTED: audit record 1: sequence mismatch (expected 1, got 2)",inconsistent: current_hash mismatch at line 399,TAMPER_DETECTION_OBSERVED
+T7_truncate_tail_10,delete the last 10 records (no external anchor exists),390,ACCEPTED (no error),chain consistent,TAMPER_NOT_DETECTED
+T8_modify_and_recompute_chain,modify a record then recompute hash chain and CRC from that record to the end,400,ACCEPTED (no error),chain consistent,TAMPER_NOT_DETECTED

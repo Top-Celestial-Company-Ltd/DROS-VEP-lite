@@ -1,0 +1,10 @@
+measure,concurrency,N,mean_ns,p50_ns,p95_ns,p99_ns,max_ns,errors,duration_ms
+bitmap_only,1,20000,64.1,100,100,100,8300,0,3.16
+denial_primitive_bitmap,1,20000,47.5,0,100,100,4700,0,2.31
+pdp_dct_direct_no_audit,1,20000,707.8,600,1000,1200,308000,0,15.80
+dros_v2_decide_cabi_with_audit_push,1,20000,1129.8,900,1700,1900,512400,0,24.78
+dros_v2_decide_cabi_with_audit_push,5,20000,1813.5,1600,1800,2600,2817600,0,12.23
+dros_v2_decide_cabi_with_audit_push,10,20000,1709.3,1600,1800,3000,443700,0,11.39
+dros_v2_decide_cabi_with_audit_push,25,50000,1819.9,1600,2400,4300,1371400,0,24.41
+dros_v2_decide_cabi_with_audit_push,50,100000,2008.0,1600,2600,4400,1615100,0,47.58
+reload_call_full_publication,1,500,411580.0,394200,559900,1207100,2635800,0,206.73
